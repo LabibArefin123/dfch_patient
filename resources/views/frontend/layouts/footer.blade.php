@@ -1,8 +1,8 @@
 <footer class="main-footer d-flex justify-content-between align-items-center px-4 py-3 bg-light shadow-sm">
     <div>
         © {{ date('Y') }}
-        <a href="https://bidtrack.xyz" target="_blank" class="dev-link fw-bold text-decoration-none">
-            <strong>BidTrack.</strong>
+        <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
+            <strong>DFCH.</strong>
         </a> All rights reserved.
     </div>
 

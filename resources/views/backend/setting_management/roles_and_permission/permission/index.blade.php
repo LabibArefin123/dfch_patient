@@ -89,47 +89,73 @@
 @stop
 @section('js')
     <script>
-        // Select / Deselect all checkboxes
-        $('#select-all').on('click', function() {
-            const checked = $(this).prop('checked');
-            $('.row-checkbox').prop('checked', checked);
-        });
+        $(document).ready(function() {
+            let lastChecked = null;
 
-        // Uncheck "Select All" if any single checkbox is unchecked
-        $('#dataTables').on('change', '.row-checkbox', function() {
-            if (!$(this).prop('checked')) {
-                $('#select-all').prop('checked', false);
-            }
-        });
-
-        // Handle bulk delete
-        $('#delete-selected').on('click', function() {
-            const ids = $('.row-checkbox:checked').map(function() {
-                return $(this).val();
-            }).get();
-
-            if (ids.length === 0) {
-                alert('Please select at least one row to delete.');
-                return;
-            }
-
-            if (!confirm('Are you sure you want to delete selected permissions?')) return;
-
-            $.ajax({
-                url: '{{ route('permissions.deleteSelected') }}', // Route for bulk delete
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    ids: ids
-                },
-                success: function(res) {
-                    alert(res.message || 'Selected permissions deleted successfully.');
-                    location.reload();
-                },
-                error: function() {
-                    alert('Something went wrong!');
+            // Shift + Click to select range
+            $('.row-checkbox').on('click', function(e) {
+                if (!lastChecked) {
+                    lastChecked = this;
+                    return;
                 }
+
+                if (e.shiftKey) {
+                    let start = $('.row-checkbox').index(this);
+                    let end = $('.row-checkbox').index(lastChecked);
+
+                    $('.row-checkbox').slice(Math.min(start, end), Math.max(start, end) + 1)
+                        .prop('checked', lastChecked.checked);
+                }
+
+                lastChecked = this;
+
+                // Update "Select All" checkbox
+                const allChecked = $('.row-checkbox').length === $('.row-checkbox:checked').length;
+                $('#select-all').prop('checked', allChecked);
+            });
+
+            // Select / Deselect all checkboxes
+            $('#select-all').on('click', function() {
+                const checked = $(this).prop('checked');
+                $('.row-checkbox').prop('checked', checked);
+            });
+
+            // Uncheck "Select All" if any single checkbox is unchecked
+            $('#dataTables').on('change', '.row-checkbox', function() {
+                const allChecked = $('.row-checkbox').length === $('.row-checkbox:checked').length;
+                $('#select-all').prop('checked', allChecked);
+            });
+
+            // Handle bulk delete
+            $('#delete-selected').on('click', function() {
+                const ids = $('.row-checkbox:checked').map(function() {
+                    return $(this).val();
+                }).get();
+
+                if (ids.length === 0) {
+                    alert('Please select at least one row to delete.');
+                    return;
+                }
+
+                if (!confirm('Are you sure you want to delete selected permissions?')) return;
+
+                $.ajax({
+                    url: '{{ route('permissions.deleteSelected') }}', // Route for bulk delete
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        ids: ids
+                    },
+                    success: function(res) {
+                        alert(res.message || 'Selected permissions deleted successfully.');
+                        location.reload();
+                    },
+                    error: function() {
+                        alert('Something went wrong!');
+                    }
+                });
             });
         });
     </script>
+
 @endsection

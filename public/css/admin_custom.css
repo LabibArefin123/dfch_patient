@@ -4,6 +4,10 @@
     white-space: nowrap;
 }
 
+.main-sidebar {
+    overflow-x: hidden !important; /* hide horizontal scroll */
+}
+
 /* Brand container */
 .brand-link {
     display: flex;
@@ -15,10 +19,12 @@
 /* Rectangular logo fix */
 .brand-link .brand-image,
 .brand-link .bidtrack-logo {
-    max-height: 55px; /* INCREASE height */
-    height: auto;
+    max-height: 50px; /* increase height for rectangle */
+    height: auto; /* maintain aspect ratio */
+    max-width: 200px; /* control width so it doesn’t overflow */
     width: auto; /* preserve rectangle ratio */
-    max-width: 100%; /* prevent overflow */
+    display: block; /* helps margin auto work */
     margin: 0 auto; /* center horizontally */
-    box-shadow: none; /* cleaner look */
+    box-shadow: none; /* optional cleaner look */
+    object-fit: contain; /* ensure the image fits inside the box */
 }

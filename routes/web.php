@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\WelcomePageController;
-use App\Http\Controllers\TenderAwardedController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -10,13 +9,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SystemUserController;
 use App\Http\Controllers\BanUserController;
 use App\Http\Controllers\SettingController;
-use App\Http\Controllers\TenderController;
-use App\Http\Controllers\BGController;
-use App\Http\Controllers\PGController;
-use App\Http\Controllers\TenderProgressController;
-use App\Http\Controllers\TenderCompletedController;
-use App\Http\Controllers\TenderParticipatedController;
-use App\Http\Controllers\TenderArchivedController;
+
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\ViewPermissionManagement;
 use Illuminate\Support\Facades\Auth;
