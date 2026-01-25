@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use App\Models\BanUser;
 
@@ -34,6 +35,7 @@ class LoginController extends Controller
     /**
      * Handle login (Crypt-based)
      */
+
     public function login(LoginRequest $request)
     {
         $request->ensureIsNotRateLimited();
@@ -41,21 +43,18 @@ class LoginController extends Controller
         $loginInput = $request->input('login');
         $password   = $request->input('password');
 
-        $field = filter_var($loginInput, FILTER_VALIDATE_EMAIL)
-            ? 'email'
-            : 'username';
+        // Determine if login is email or username
+        $field = filter_var($loginInput, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
 
         $user = User::where($field, $loginInput)->first();
-        
+
         // -----------------------------
         // 1. Maintenance Mode Check
         // -----------------------------
         $globalMaintenance = User::where('is_maintenance', 1)->first();
 
-        if ($globalMaintenance) {
-            if (!$user || !$user->hasRole('admin')) {
-                return back()->with('maintenance', $globalMaintenance->maintenance_message);
-            }
+        if ($globalMaintenance && (!$user || !$user->hasRole('admin'))) {
+            return back()->with('maintenance', $globalMaintenance->maintenance_message);
         }
 
         // -----------------------------
@@ -71,7 +70,6 @@ class LoginController extends Controller
         // 3. BANNED USER CHECK ✅
         // -----------------------------
         if ($user->is_banned) {
-
             $ban = BanUser::where('user_id', $user->id)
                 ->where('is_banned', true)
                 ->latest('banned_at')
@@ -82,18 +80,11 @@ class LoginController extends Controller
                 $ban?->ban_reason ?? 'Your account has been banned. Please contact support.'
             );
         }
-        // -----------------------------
-        // 4. Crypt password check
-        // -----------------------------
-        try {
-            $decryptedPassword = Crypt::decryptString($user->password);
-        } catch (\Exception $e) {
-            return back()->withErrors([
-                'password' => 'Invalid password format.',
-            ]);
-        }
 
-        if ($password !== $decryptedPassword) {
+        // -----------------------------
+        // 4. Password check using Hash
+        // -----------------------------
+        if (!Hash::check($password, $user->password)) {
             return back()->withErrors([
                 'login' => trans('auth.failed'),
             ]);

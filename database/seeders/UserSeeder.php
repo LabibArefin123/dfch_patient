@@ -2,34 +2,109 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Role;
+use App\Models\User;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        $admin = User::Create([
-            'user_type' => 1,
-            'name' => 'System Admin',
-            'username' => 'admin',
-            'role_id' => 1,
-            'email' => 'admin@gmail.com',
-            'password' => Hash::make('AAaa00@@'),
-        ]);
+        // -----------------------------
+        // 1. Admin User
+        // -----------------------------
+        $admin = User::updateOrCreate(
+            ['email' => 'admin@gmail.com'],
+            [
+                'name' => 'Admin',
+                'username' => 'admin',
+                'phone' => '01776197999',
+                'phone_2' => '01776197999',
+                'password' => Hash::make('AAaa00@@'),
+                'profile_picture' => null,
+                'two_factor_enabled' => 0,
+                'session_timeout' => 5,
+                'is_maintenance' => 0,
+                'is_banned' => 0,
+            ]
+        );
+        $admin->assignRole('admin');
 
-        $role = Role::first();
+        // -----------------------------
+        // 2. Manager User
+        // -----------------------------
+        $manager = User::updateOrCreate(
+            ['email' => 'manager@gmail.com'],
+            [
+                'name' => 'Manager User',
+                'username' => 'manager',
+                'phone' => '01776197999',
+                'phone_2' => '01776197999',
+                'password' => Hash::make('AAaa00@@'),
+                'profile_picture' => null,
+                'two_factor_enabled' => 0,
+                'session_timeout' => 5,
+                'is_maintenance' => 0,
+                'is_banned' => 0,
+            ]
+        );
+        $manager->assignRole('manager');
 
-        if ($role && $role->name == 'admin') {
-            $admin->roles()->attach($role);
-        } else {
-            $this->command->warn('No role found or first role is not admin.');
-        }
+        // -----------------------------
+        // 3. Regular User
+        // -----------------------------
+        $user = User::updateOrCreate(
+            ['email' => 'demo@gmail.com'],
+            [
+                'name' => 'Demo User',
+                'username' => 'demo',
+                'phone' => '01776197999',
+                'phone_2' => '01776197999',
+                'password' => Hash::make('AAaa00@@'),
+                'profile_picture' => null,
+                'two_factor_enabled' => 0,
+                'session_timeout' => 5,
+                'is_maintenance' => 0,
+                'is_banned' => 0,
+            ]
+        );
+        $user->assignRole('user');
+
+        $user2 = User::updateOrCreate(
+            ['email' => 'demo2@gmail.com'],
+            [
+                'name' => 'Demo User 2',
+                'username' => 'demo_2',
+                'phone' => '01776197999',
+                'phone_2' => '01776197999',
+                'password' => Hash::make('AAaa00@@'),
+                'profile_picture' => null,
+                'two_factor_enabled' => 0,
+                'session_timeout' => 5,
+                'is_maintenance' => 0,
+                'is_banned' => 0,
+            ]
+        );
+        $user2->assignRole('user');
+
+        // -----------------------------
+        // Optional: Another admin
+        // -----------------------------
+        $admin2 = User::updateOrCreate(
+            ['email' => 'admin2@gmail.com'],
+            [
+                'name' => 'Admin 2',
+                'username' => 'admin2',
+                'phone' => '01776197999',
+                'phone_2' => '01776197999',
+                'password' => Hash::make('AAaa00@@'),
+                'profile_picture' => null,
+                'two_factor_enabled' => 0,
+                'session_timeout' => 5,
+                'is_maintenance' => 0,
+                'is_banned' => 0,
+            ]
+        );
+        $admin2->assignRole('admin');
     }
 }

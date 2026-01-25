@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Crypt;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -27,7 +27,7 @@ class LoginRequest extends FormRequest
     }
 
     /**
-     * Crypt-based authentication
+     * Authenticate the user using hashed password
      */
     public function authenticate(): void
     {
@@ -51,17 +51,10 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        try {
-            $decryptedPassword = Crypt::decryptString($user->password);
-        } catch (\Exception $e) {
-            RateLimiter::hit($this->throttleKey());
-
-            throw ValidationException::withMessages([
-                'password' => 'Invalid password format.',
-            ]);
-        }
-
-        if ($password !== $decryptedPassword) {
+        // -----------------------------
+        // Check password using Hash
+        // -----------------------------
+        if (!Hash::check($password, $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -72,6 +65,7 @@ class LoginRequest extends FormRequest
         // ✅ Manual login
         Auth::login($user, $this->boolean('remember'));
 
+        // Clear rate limiter after successful login
         RateLimiter::clear($this->throttleKey());
     }
 
