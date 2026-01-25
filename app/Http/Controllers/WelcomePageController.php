@@ -1,0 +1,18 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class WelcomePageController extends Controller
+{
+    public function index()
+    {
+        return view('frontend.welcome');
+    }
+
+    public function help()
+    {
+        return view('frontend.welcome_page.public.help');
+    }
+}

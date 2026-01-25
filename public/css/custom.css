@@ -1,0 +1,21 @@
+/* Remove extra white space */
+.content-wrapper {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Remove bottom margin from tables */
+table.table {
+    margin-bottom: 0 !important;
+}
+
+/* Pagination spacing */
+.pagination {
+    margin-top: 0 !important;
+}
+
+/* Adjust card spacing */
+.card {
+    margin: 0 !important;
+    padding: 0 !important;
+}

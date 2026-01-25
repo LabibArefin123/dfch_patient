@@ -1,0 +1,55 @@
+<footer class="main-footer d-flex justify-content-between align-items-center px-4 py-3 bg-light shadow-sm">
+    <div>
+        © {{ date('Y') }}
+        <a href="https://bidtrack.xyz" target="_blank" class="dev-link fw-bold text-decoration-none">
+            <strong>BidTrack.</strong>
+        </a> All rights reserved.
+    </div>
+
+    <div class="footer-right">
+        Design and Developed by
+        <a href="https://www.labib.work" target="_blank"
+            class="dev-link fw-bold text-decoration-none ms-1 totalofftec-link">
+            Labib Arefin
+        </a>
+    </div>
+</footer>
+
+<style>
+    @font-face {
+        font-family: 'OnStage';
+        src: url('{{ asset('fonts/OnStage_Regular.ttf') }}') format('truetype');
+        font-weight: normal;
+        font-style: normal;
+    }
+
+    .dev-link {
+        padding: 1px 1px;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+        color: #000;
+        text-decoration: none;
+    }
+
+    .dev-link:hover {
+        background-color: #ff9900;
+        color: #fff;
+    }
+
+    /* Right side TOTALOFFTEC custom styles */
+    .totalofftec-link {
+        font-family: 'OnStage', sans-serif;
+        font-size: 16px;
+        /* small text */
+        font-weight: bold;
+        gap: 0;
+    }
+
+    .totalofftec-link .total {
+        color: #ff9900;
+    }
+
+    .totalofftec-link .offtec {
+        color: #d9d9d9;
+    }
+</style>

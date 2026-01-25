@@ -1,0 +1,24 @@
+/* Hide brand text WITHOUT breaking AdminLTE layout */
+.brand-text-hidden {
+    visibility: hidden; /* keeps layout */
+    white-space: nowrap;
+}
+
+/* Brand container */
+.brand-link {
+    display: flex;
+    align-items: center;
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+}
+
+/* Rectangular logo fix */
+.brand-link .brand-image,
+.brand-link .bidtrack-logo {
+    max-height: 55px; /* INCREASE height */
+    height: auto;
+    width: auto; /* preserve rectangle ratio */
+    max-width: 100%; /* prevent overflow */
+    margin: 0 auto; /* center horizontally */
+    box-shadow: none; /* cleaner look */
+}
