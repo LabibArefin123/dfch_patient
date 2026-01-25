@@ -37,59 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/global-search', [DashboardController::class, 'globalSearch'])->name('global.search');
     Route::get('/search/result', [DashboardController::class, 'searchResult'])->name('search.result');
 
-    // Tender Routes
+    // Organization Routes
     Route::resource('organizations', OrganizationController::class);
-    Route::post('/add-supplier-option', [TenderController::class, 'addSupplierOption'])->name('supplier.create');
-
-    Route::resource('tenders', TenderController::class);
-    Route::get('tenders/{id}/download-spec', [TenderController::class, 'downloadSpec'])->name('tenders.downloadSpec');
-    Route::get('tenders/{id}/download-notice', [TenderController::class, 'downloadNotice'])->name('tenders.downloadNotice');
-    Route::post('tenders/mark-status/{id}', [TenderController::class, 'updateStatus'])->name('tenders.updateStatus');
-
-    Route::get('/pg_bg_management', [TenderController::class, 'bg_pg'])->name('bg_pg.index');
-    Route::resource('bg', BGController::class);
-    Route::resource('pg', PGController::class);
-
-    // Tender Archived
-    Route::resource('/archived_tenders', TenderArchivedController::class);
-
-    // Tender Participated
-    Route::get('/tender_participated/data', [TenderController::class, 'participatedData'])->name('tenders.participated.data');
-    Route::get('/tender_participated-letter/{id}', [TenderParticipatedController::class, 'letter'])->name('participated_tenders.letter');
-    Route::post('/tender_participated-letter-store/{id}', [TenderParticipatedController::class, 'letterStore'])->name('participated_tenders.letter.store');
-    Route::get('/tender_participated-letter-edit/{id}', [TenderParticipatedController::class, 'letterEdit'])->name('participated_tenders.letter.edit');
-    Route::put('/tender_participated-letter-update/{id}', [TenderParticipatedController::class, 'letterUpdate'])->name('participated_tenders.letter.update');
-    Route::delete('/tender_participated-letter-delete/{id}', [TenderParticipatedController::class, 'letterDestroy'])->name('participated_tenders.letter.destroy');
-    Route::resource('participated_tenders', TenderParticipatedController::class);
-
-    // Tender Awarded
-    Route::get('/get-tender-participate-details/{tenderId}', [TenderAwardedController::class, 'getTenderParticipateDetails'])->name('participate.data');
-    Route::get('/tender_awarded-letter/{tenderId}', [TenderAwardedController::class, 'letter'])->name('awarded_tenders.letter');
-    Route::post('/tender_awarded-letter-store/{id}', [TenderAwardedController::class, 'letterStore'])->name('awarded_tenders.letter.store');
-    Route::get('/tender_awarded-letter-edit/{id}', [TenderAwardedController::class, 'letterEdit'])->name('awarded_tenders.letter.edit');
-    Route::put('/tender_awarded-letter-update/{id}', [TenderAwardedController::class, 'letterUpdate'])->name('awarded_tenders.letter.update');
-    Route::delete('/tender_awarded-letter-delete/{id}', [TenderAwardedController::class, 'letterDestroy'])->name('awarded_tenders.letter.destroy');
-    Route::get('/awarded_tenders/first-time-data', [TenderAwardedController::class, 'firstTimeData'])->name('awarded_tenders.first_time_data');
-    Route::get('/awarded_tenders/partial-data', [TenderAwardedController::class, 'partialData'])->name('awarded_tenders.partial_data');
-    Route::resource('awarded_tenders', TenderAwardedController::class);
-
-    //Tender Progress
-    Route::get('/get-tender-awarded-details/{awardedId}', [TenderProgressController::class, 'getTenderAwardedDetails'])->name('awarded.data');
-    Route::get('/tender_progress-letter/{tenderId}', [TenderProgressController::class, 'letter'])->name('tender_progress.letter');
-    Route::post('/tender_progress-letter-store/{id}', [TenderProgressController::class, 'letterStore'])->name('tender_progress.letter.store');
-    Route::get('/tender_progress-letter-edit/{id}', [TenderProgressController::class, 'letterEdit'])->name('tender_progress.letter.edit');
-    Route::put('/tender_progress-letter-update/{id}', [TenderProgressController::class, 'letterUpdate'])->name('tender_progress.letter.update');
-    Route::delete('/tender_progress-letter-delete/{id}', [TenderProgressController::class, 'letterDestroy'])->name('tender_progress.letter.destroy');
-    Route::resource('tender_progress', TenderProgressController::class);
-
-    // Tender Completed
-    Route::get('/completed_tenders-letter/{tenderId}', [TenderCompletedController::class, 'letter'])->name('completed_tenders.letter');
-    Route::post('/completed_tenders-letter-store/{id}', [TenderCompletedController::class, 'letterStore'])->name('completed_tenders.letter.store');
-    Route::get('/completed_tenders-letter-edit/{id}', [TenderCompletedController::class, 'letterEdit'])->name('completed_tenders.letter.edit');
-    Route::put('/completed_tenders-letter-update/{id}', [TenderCompletedController::class, 'letterUpdate'])->name('completed_tenders.letter.update');
-    Route::delete('/completed_tenders-letter-delete/{id}', [TenderCompletedController::class, 'letterDestroy'])->name('completed_tenders.letter.destroy');
-    Route::resource('completed_tenders', TenderCompletedController::class);
-    Route::get('/get-tender-awarded-progress-details/{participateId}', [TenderCompletedController::class, 'getTenderProgressDetails'])->name('progress.data');
 
     Route::get('/user_profile', [ProfileController::class, 'user_profile_show'])->name('user_profile_show');
     Route::get('/user_profile_edit', [ProfileController::class, 'user_profile_edit'])->name('user_profile_edit');
