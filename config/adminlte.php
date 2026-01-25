@@ -417,65 +417,6 @@ return [
         ],
 
         [
-            'text' => 'Tender Management',
-            'icon' => 'fas fa-fw fa-file-contract',
-            // 'route' => 'tender_menu',
-            // No 'can' here to allow menu showing if any submenu is accessible
-            'submenu' => [
-                [
-                    'text' => 'All Tenders',
-                    'route' => 'tenders.index',
-                    'can' => 'tenders.index',
-                    'icon' => 'fas fa-fw fa-list',
-                    'active' => ['tenders/index'],
-                ],
-                [
-                    'text' => 'New Tenders',
-                    'route' => 'tenders.create',
-                    'can' => 'tenders.create',
-                    'icon' => 'fas fa-fw fa-plus',
-                    'active' => ['tenders/create'],
-                ],
-                [
-                    'text' => 'Participated Tenders',
-                    'route' => 'participated_tenders.index',
-                    'can' => 'participated_tenders.index',
-                    'icon' => 'fas fa-fw fa-handshake',
-                    'active' => ['participated_tenders*'],
-                ],
-                [
-                    'text' => 'Awarded Tenders',
-                    'route' => 'awarded_tenders.index',
-                    'can' => 'awarded_tenders.index',
-                    'icon' => 'fas fa-fw fa-award',
-                    'active' => ['awarded_tenders*'],
-                ],
-                [
-                    'text' => 'Tender Progress',
-                    'route' => 'tender_progress.index',
-                    'can' => 'tender_progress.index',
-                    'icon' => 'fas fa-tasks',
-                    'active' => ['tender_progress*'],
-                ],
-                [
-                    'text' => 'Completed Tenders',
-                    'route' => 'completed_tenders.index',
-                    'can' => 'completed_tenders.index',
-                    'icon' => 'fas fa-fw fa-check-circle',
-                    'active' => ['completed_tenders*'],
-                ],
-                [
-                    'text' => 'Archived Tenders',
-                    'route' => 'archived_tenders.index',
-                    'can' => 'archived_tenders.index',
-                    'icon' => '	fas fa-archive',
-                    'active' => ['archived_tenders*'],
-                ],
-            ],
-        ],
-
-
-        [
             'text'    => 'Setting Management',
             'icon'    => 'fas fa-cogs',
             // 'route'    => 'setting_menu',

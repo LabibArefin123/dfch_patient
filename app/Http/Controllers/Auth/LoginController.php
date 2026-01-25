@@ -100,9 +100,7 @@ class LoginController extends Controller
         $this->authenticated($request, $user);
 
         return redirect()->intended($this->redirectTo);
-    }
-
-
+    }   
     /**
      * Handle actions after successful login
      */

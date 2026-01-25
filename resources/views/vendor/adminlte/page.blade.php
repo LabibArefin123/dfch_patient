@@ -3,12 +3,12 @@
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
 @inject('preloaderHelper', 'JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper')
 
-<link rel="icon" type="image/png" href="{{ asset('uploads/images/bidtrack_icon.png') }}">
+<link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
 <link rel="stylesheet" href="{{ asset('css/custom_backend.css') }}">
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> --}}
 {{-- Custom Navbar Left Items --}}
-<nav class="main-header navbar navbar-expand navbar-white navbar-light border-bottom">
+{{-- <nav class="main-header navbar navbar-expand navbar-white navbar-light border-bottom">
     <div class="container-fluid w-100 d-flex justify-content-between align-items-center">
         <!-- Left side -->
         <div class="d-flex align-items-center gap-3">
@@ -25,7 +25,7 @@
             <!-- JS will fill this -->
         </div>
     </div>
-</nav>
+</nav> --}}
 
 @section('classes_body', $layoutHelper->makeBodyClasses())
 @section('body_data', $layoutHelper->makeBodyData())
