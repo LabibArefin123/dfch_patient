@@ -5,34 +5,65 @@
             @php
                 $slides = [
                     [
-                        'image' => 'tender1.jpg',
-                        'title' => 'Smart Tender Management',
-                        'subtitle' => 'Organize, Award & Complete Tenders Seamlessly',
+                        'type' => 'doctor',
+                        'align' => 'right',
+                        'image' => 'image_1.png',
+                        'name' => 'Prof. Dr. AKM Fazlul Haque',
+                        'designation' => 'Fellow, Colorectal Surgery (Singapore)',
+                        'extra' => 'International Scholar, Colorectal Surgery (USA)<br>
+                        Founder Chairman (RETD), Department of Colorectal Surgery<br>
+                        Bangladesh Medical University, Dhaka<br>
+                        <strong>25 Years of Dedicated Service in Colon & Rectal Surgery</strong>',
                     ],
                     [
-                        'image' => 'tender2.jpg',
-                        'title' => 'Transparency in Every Step',
-                        'subtitle' => 'Track Participation & Awards with Accuracy',
-                    ],
-                    [
-                        'image' => 'tender3.jpg',
-                        'title' => 'Built for Government & Enterprise',
-                        'subtitle' => 'Secure, Scalable, and Built for Compliance',
+                        'type' => 'doctor',
+                        'align' => 'left',
+                        'image' => 'image_2.png',
+                        'name' => 'Dr. Asif Almas Haque',
+                        'designation' => 'MBBS (SSMC), MRCS (ENG)',
+                        'extra' => 'FCPS (Surgery), FCPS (Colorectal Surgery), FRCS (ENG)<br>
+                        Fellow of American College of Surgeons (FACS)<br>
+                        Fellow of American Society of Colon & Rectal Surgeons (FASCRS)',
                     ],
                 ];
             @endphp
 
             @foreach ($slides as $index => $slide)
-                <div class="slide {{ $index === 0 ? 'active' : '' }} position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center text-center"
-                    style="background-image: url('{{ asset('uploads/images/welcome_page/slider/' . $slide['image']) }}'); background-size: cover; background-position: center;">
-                    <div class="overlay position-absolute top-0 start-0 w-100 h-100"></div>
-                    <div class="position-relative z-2">
-                        <div class="text-bg px-4 py-3 rounded-4 shadow">
-                            <h2 class="display-5 fw-bold animate__animated animate__fadeInDown mb-2">
-                                {{ $slide['title'] }}</h2>
-                            <p class="lead animate__animated animate__fadeInUp mb-0">{{ $slide['subtitle'] }}</p>
+                <div class="slide {{ $index === 0 ? 'active' : '' }} position-absolute top-0 start-0 w-100 h-100">
+
+                    {{-- DOCTOR PROFILE SLIDE --}}
+                    @if ($slide['type'] === 'doctor')
+                        <div class="doctor-slide h-100">
+                            <div class="container h-100">
+                                <div class="row h-100 align-items-center">
+
+                                    {{-- IMAGE LEFT --}}
+                                    @if ($slide['align'] === 'left')
+                                        <div class="col-md-6 position-relative h-100 order-1 order-md-0">
+                                            <img src="{{ asset('uploads/images/welcome_page/slider/' . $slide['image']) }}"
+                                                class="doctor-img left" alt="{{ $slide['name'] }}">
+                                        </div>
+                                    @endif
+
+                                    {{-- CONTENT --}}
+                                    <div class="col-md-6 text-white z-2">
+                                        <h2 class="fw-bold display-6 mb-1">{{ $slide['name'] }}</h2>
+                                        <p class="fs-5 text-light-emphasis mb-2">{{ $slide['designation'] }}</p>
+                                        <p class="opacity-90 lh-lg">{!! $slide['extra'] !!}</p>
+                                    </div>
+
+                                    {{-- IMAGE RIGHT --}}
+                                    @if ($slide['align'] === 'right')
+                                        <div class="col-md-6 position-relative h-100">
+                                            <img src="{{ asset('uploads/images/welcome_page/slider/' . $slide['image']) }}"
+                                                class="doctor-img right" alt="{{ $slide['name'] }}">
+                                        </div>
+                                    @endif
+
+                                </div>
+                            </div>
                         </div>
-                    </div>
+                    @endif
                 </div>
             @endforeach
 
@@ -133,6 +164,60 @@
         height: 16px;
     }
 
+    /* Doctor Slide */
+    .doctor-slide {
+        background: linear-gradient(135deg, #4b4f54, #2f3136);
+        color: #fff;
+        position: relative;
+    }
+
+    /* Doctor Image Base */
+    .doctor-img {
+        position: absolute;
+        bottom: 0;
+        max-height: 88%;
+        object-fit: contain;
+        filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.55));
+        transition: transform 0.6s ease;
+    }
+
+    .slide.active .doctor-img {
+        transform: translateY(-6px);
+    }
+
+    /* Alignments */
+    .doctor-img.right {
+        right: 8%;
+    }
+
+    .doctor-img.left {
+        left: 8%;
+    }
+
+    /* Typography polish */
+    .doctor-slide h2 {
+        letter-spacing: 0.3px;
+    }
+
+    .doctor-slide p {
+        font-size: 1.05rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .doctor-img {
+            position: static;
+            max-height: 300px;
+            margin: 1rem auto 0;
+            display: block;
+        }
+
+        .doctor-slide {
+            text-align: center;
+            padding-top: 2rem;
+        }
+    }
+
     @media (max-width: 768px) {
         #slider {
             height: 50vh;
@@ -184,6 +269,6 @@
         showSlide(index);
     }
 
-    setInterval(nextSlide, 8000);
+    setInterval(nextSlide, 15000);
     showSlide(currentSlideIndex);
 </script>

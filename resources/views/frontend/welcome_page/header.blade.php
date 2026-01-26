@@ -22,7 +22,7 @@
         <!-- Left: Logo -->
         <a href="#" class="navbar-brand d-flex align-items-center">
             <img src="{{ asset('uploads/images/logo.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
-                style="width:200px; height:75px;">
+                style="width:350px; height:75px;">
         </a>
 
         <!-- Toggle button for mobile -->
@@ -44,9 +44,6 @@
                 <li class="nav-item"><a href="#about" class="nav-link custom-link">About</a></li>
                 <li class="nav-item"><a href="#features" class="nav-link custom-link">Features</a></li>
                 <li class="nav-item"><a href="#services" class="nav-link custom-link">Services</a></li>
-                {{-- <li class="nav-item"><a href="#client-feedback" class="nav-link custom-link">Feedback</a></li>
-                <li class="nav-item"><a href="#faq" class="nav-link custom-link">FAQ</a></li>
-                <li class="nav-item"><a href="#blog" class="nav-link custom-link">Blog</a></li> --}}
             </ul>
         </div>
 

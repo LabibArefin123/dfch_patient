@@ -20,9 +20,9 @@
 <!-- Footer -->
 <footer class="text-center text-muted small py-3 border-top">
     &copy;
-    <a href="https://bidtrack.xyz" target="_blank" class="text-decoration-none text-primary fw-semibold"
+    <a href="https://fazlulhaquehospital.com/" target="_blank" class="text-decoration-none text-primary fw-semibold"
         rel="noopener noreferrer">
-        BidTrack.
+        DFCH.
     </a> All rights reserved |
     Design & Developed by
     <a href="https://www.labib.work" target="_blank" rel="noopener noreferrer"
