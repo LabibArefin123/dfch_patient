@@ -1,0 +1,51 @@
+/* Top Bar */
+.top-info-bar {
+    background: #003366;
+    font-size: 14px;
+}
+
+/* Links */
+.top-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.top-link:hover {
+    color: #ff6b6b;
+}
+
+/* Map Button */
+.map-btn {
+    background: #ff6b6b;
+    color: #fff;
+    border-radius: 20px;
+    padding: 2px 12px;
+    font-size: 13px;
+}
+
+.map-btn:hover {
+    background: #e63946;
+    color: #fff;
+}
+
+/* Social Icons */
+.social-icon {
+    width: 30px;
+    height: 30px;
+    background: #e63946; /* sky red */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    background: #8b0000;
+}

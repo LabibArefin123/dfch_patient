@@ -1,19 +1,51 @@
 <!-- Top Info Bar -->
-<div class="py-1" style="background-color: #003366; color: #fff; font-size: 14px;">
-    <div class="container-fluid d-flex justify-content-between align-items-center">
-        <!-- Left: Email + Phone -->
-        <div class="d-flex align-items-center">
-            <i class="fas fa-envelope mr-2"></i> mdlabibarefin@gmail.com
-            <span class="mx-3">|</span>
-            <i class="fas fa-phone mr-2"></i> +8801776197999
+<div class="top-info-bar py-2">
+    <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
+
+        <!-- LEFT : Address + WhatsApp + Map -->
+        <div class="d-flex align-items-center flex-wrap gap-2 text-white">
+            <i class="fas fa-map-marker-alt"></i>
+            <span>
+                86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
+            </span>
+
+            <span class="mx-2">|</span>
+
+            <a href="https://wa.me/8801755697173" target="_blank" class="top-link">
+                <i class="fab fa-whatsapp"></i> 01755697173
+            </a>
+
+            <span>-</span>
+
+            <a href="https://wa.me/8801755697176" target="_blank" class="top-link">
+                01755697176
+            </a>
+
+            <span>|</span>
+
+            <a>
+                0241023155
+            </a>
+
+            <a href="https://www.google.com/maps?q=Satmasjid+Road+Dhanmondi+Dhaka" target="_blank"
+                class="btn btn-sm map-btn ms-2">
+                Go to Map
+            </a>
         </div>
-        <!-- Right: Date & Time -->
-        <div id="currentDateTime">
-            {{ now()->format('d M Y, h:i A') }}
+
+        <!-- RIGHT : SOCIAL ICONS -->
+        <div class="d-flex align-items-center gap-2">
+            <a href="https://www.youtube.com/@ProfDrAKMFazlulHaque" target="_blank" class="social-icon">
+                <i class="fab fa-youtube"></i>
+            </a>
+            <a href="https://www.facebook.com/DrFazlulHaqueColorectalHospitalLtd/" class="social-icon" target="_blank">
+                <i class="fab fa-facebook-f"></i>
+            </a>
         </div>
     </div>
 </div>
 
+<link rel="stylesheet" href="{{ asset('css/custom_header.css') }}">
 <!-- Main Navbar -->
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white"
     style="padding-left: 30px; padding-right: 30px;">
