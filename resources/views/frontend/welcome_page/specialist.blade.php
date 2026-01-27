@@ -74,7 +74,6 @@
                 {{-- <button class="spec-arrow right" onclick="nextDoctor()">›</button> --}}
             </div>
 
-
             <!-- RIGHT : DOCTOR INFO -->
             <div class="col-lg-7">
                 <div id="spec-info">
