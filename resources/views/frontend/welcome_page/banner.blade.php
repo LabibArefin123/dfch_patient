@@ -1,6 +1,6 @@
-<section id="banner" class="py-5 bg-light">
+<section id="banner" class="py-5 bg-white">
     <div class="container">
-        <div id="slider" class="position-relative rounded-4 overflow-hidden" style="height: 70vh;">
+        <div id="slider" class="position-relative" style="height: 70vh;">
             <!-- Slides -->
             @php
                 $slides = [

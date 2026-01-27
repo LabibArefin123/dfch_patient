@@ -1,8 +1,18 @@
-#slider {
-    position: relative;
+/* =========================
+   SLIDER WIDTH BOOST (15%)
+========================= */
+#banner > .container {
+    max-width: 1500px; /* ~15% wider than default */
 }
 
+/* =========================
+   SLIDER BASE
+========================= */
+
+/* Each slide */
 .slide {
+    position: absolute;
+    inset: 0;
     opacity: 0;
     transition: opacity 1.2s ease-in-out;
     z-index: 1;
@@ -13,31 +23,78 @@
     z-index: 2;
 }
 
-.overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
+/* =========================
+   DOCTOR SLIDE
+========================= */
+.doctor-slide {
+    position: relative;
     height: 100%;
     background: linear-gradient(
-        to bottom right,
-        rgba(0, 0, 0, 0.5),
-        rgba(10, 10, 10, 0.3)
+        135deg,
+        #fff1f1,
+        /* very light red */ #ffe4e6,
+        /* blush */ #fffafa /* airy white */
     );
+    color: #2b2b2b;
+    overflow: hidden;
+}
+
+/* Content always above image */
+.doctor-slide .container,
+.doctor-slide .row,
+.doctor-slide .col-md-6 {
+    position: relative;
+    z-index: 3;
+}
+
+/* =========================
+   TEXT CONTENT
+========================= */
+.doctor-slide h2 {
+    letter-spacing: 0.3px;
+    color: #8b0000; /* deep medical red */
+}
+
+.doctor-slide p {
+    font-size: 1.05rem;
+    color: #333;
+}
+/* EXTRA FIX FOR AKM (RIGHT IMAGE SLIDE) */
+.slide:first-child .col-md-6.text-white {
+    padding-right: 3rem;
+    padding-left: 1.5rem;
+}
+
+/* =========================
+   DOCTOR IMAGE
+========================= */
+.doctor-img {
+    position: absolute;
+    bottom: 0;
+    max-height: 92%;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.55));
+    transition: transform 0.6s ease;
     z-index: 1;
 }
 
-.text-bg {
-    background-color: rgba(50, 50, 50, 0.6);
-    /* Ash tone */
-    color: #fff;
-    max-width: 800px;
-    margin: 0 auto;
-    backdrop-filter: blur(4px);
-    -webkit-backdrop-filter: blur(4px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+.slide.active .doctor-img {
+    transform: translateY(-6px);
 }
 
+/* LEFT IMAGE (ASIF – DO NOT TOUCH MUCH) */
+.doctor-img.left {
+    left: 6%;
+}
+
+/* RIGHT IMAGE (AKM – PUSH OUT SLIGHTLY) */
+.doctor-img.right {
+    right: 3%;
+}
+
+/* =========================
+   NAVIGATION ARROWS
+========================= */
 .arrow-btn {
     position: absolute;
     top: 50%;
@@ -45,12 +102,11 @@
     padding: 0.6rem 0.9rem;
     border-radius: 50%;
     border: none;
-    background-color: rgba(0, 0, 0, 0.5);
     color: #fff;
     font-size: 1.25rem;
     cursor: pointer;
     z-index: 5;
-    transition: background 0.3s;
+    transition: background 0.3s ease;
 }
 
 .arrow-btn:hover {
@@ -65,90 +121,54 @@
     right: 15px;
 }
 
+/* =========================
+   DOT INDICATORS
+========================= */
 .dot {
     width: 14px;
     height: 14px;
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     cursor: pointer;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.3s ease;
 }
 
 .dot.active {
-    background-color: white;
+    background-color: #fff;
     width: 16px;
     height: 16px;
 }
 
-/* Doctor Slide */
-.doctor-slide {
-    background: linear-gradient(135deg, #4b4f54, #2f3136);
-    color: #fff;
-    position: relative;
-}
-
-/* Doctor Image Base */
-.doctor-img {
-    position: absolute;
-    bottom: 0;
-    max-height: 88%;
-    object-fit: contain;
-    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.55));
-    transition: transform 0.6s ease;
-}
-
-.slide.active .doctor-img {
-    transform: translateY(-6px);
-}
-
-/* Alignments */
-.doctor-img.right {
-    right: 8%;
-}
-
-.doctor-img.left {
-    left: 8%;
-}
-
-/* Typography polish */
-.doctor-slide h2 {
-    letter-spacing: 0.3px;
-}
-
-.doctor-slide p {
-    font-size: 1.05rem;
-}
-
-/* Responsive */
+/* =========================
+   RESPONSIVE FIXES
+========================= */
 @media (max-width: 768px) {
+    #slider {
+        height: 50vh;
+    }
+
     .doctor-img {
         position: static;
-        max-height: 300px;
+        max-height: 260px;
         margin: 1rem auto 0;
         display: block;
+        transform: none !important;
     }
 
     .doctor-slide {
         text-align: center;
         padding-top: 2rem;
     }
-}
 
-@media (max-width: 768px) {
-    #slider {
-        height: 50vh;
-    }
-
-    .display-5 {
+    .doctor-slide h2 {
         font-size: 1.5rem;
     }
 
-    .lead {
+    .doctor-slide p {
         font-size: 1rem;
     }
 
-    .text-bg {
-        padding: 1rem;
-        max-width: 90%;
+    .slide:first-child .col-md-6.text-white {
+        padding: 0 1rem;
     }
 }
