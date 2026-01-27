@@ -19,7 +19,6 @@
     position: relative;
     overflow: hidden;
     border-radius: 8px;
-    background: #f5f5f5; /* optional light bg */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -59,25 +58,32 @@
     align-items: center;
     justify-content: center;
 }
+
 /* SMALL IMAGE CARD – DEFAULT (PARALLELOGRAM) */
 .strip-item {
     width: 60px;
     height: 60px;
     overflow: hidden;
-    transform: skewX(-20deg);
+    transform: skewX(-20deg); /* parallelogram card */
     opacity: 0.6;
     transition:
         transform 0.3s ease,
         opacity 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
 }
 
-/* IMAGE DEFAULT (counter-skew to look normal) */
+/* IMAGE DEFAULT (counter-skew to appear normal) */
 .strip-item img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    transform: skewX(20deg);
+    object-fit: contain; /* fit full image, no cropping */
+    object-position: center; /* center the image */
+    transform: skewX(20deg); /* counter-skew to match parallelogram */
     transition: transform 0.3s ease;
+    display: block;
 }
 
 /* HOVER / ACTIVE → STRAIGHT SQUARE */
@@ -87,10 +93,12 @@
     transform: skewX(0deg); /* card straight */
 }
 
-/* IMAGE STRAIGHT (NO ULTA SKEW) */
+/* IMAGE STRAIGHT ON HOVER (NO SKEW, FULL IMAGE FIT) */
 .strip-item:hover img,
 .strip-item.active img {
-    transform: scale(1.05); /* ONLY scale, no skew */
+    transform: scale(1.05); /* just a slight zoom, no skew */
+    object-fit: contain; /* keep full image */
+    object-position: center;
 }
 
 /* =========================
