@@ -10,33 +10,28 @@
         <div class="row align-items-center">
             <!-- LEFT : PARALLELOGRAM CARD SLIDER -->
             <div class="col-lg-5 position-relative specialist-left">
-
-                <!-- Arrow Left -->
-                <button class="spec-arrow left" onclick="prevDoctor()">‹</button>
                 @php
                     $doctors = [
                         [
                             'image' => 'image_1.jpg',
                             'name' => 'Prof. Dr. AKM Fazlul Haque',
                             'degree' => 'MBBS, FCPS, FICS',
-                            'details' => 'Fellow, Colorectal Surgery (Singapore), International Scholar (USA)<br>
-                            Founder Chairman (RETD.), Department of Colorectal Surgery<br>
-                            Bangladesh Medical University, Dhaka<br>
-                            Chief Consultant, DFCH',
+                            'details' =>
+                                'Fellow, Colorectal Surgery (Singapore), International Scholar (USA)<br> Founder Chairman (RETD.), Department of Colorectal Surgery<br> Bangladesh Medical University, Dhaka<br> Chief Consultant, DFCH',
                         ],
                         [
                             'image' => 'image_2.jpg',
                             'name' => 'Dr. Asif Almas Haque',
                             'degree' => 'MBBS, FCPS, FRCS, FACS, FASCRS',
-                            'details' => 'Consultant, Colorectal, Laparoscopic & Laser Surgeon<br>
-                Member, American Society of Colon & Rectal Surgeons',
+                            'details' =>
+                                'Consultant, Colorectal, Laparoscopic & Laser Surgeon<br> Member, American Society of Colon & Rectal Surgeons',
                         ],
                         [
                             'image' => 'image_3.jpg',
                             'name' => 'Dr. Fatema Sharmin (Anny)',
                             'degree' => 'MBBS, DA, FCPS (Final)',
-                            'details' => 'Consultant (Anesthesiology), DFCH<br>
-                Junior Consultant, Bangladesh Medical College Hospital',
+                            'details' =>
+                                'Consultant (Anesthesiology), DFCH<br> Junior Consultant, Bangladesh Medical College Hospital',
                         ],
                         [
                             'image' => 'image_4.jpg',
@@ -52,28 +47,31 @@
                         ],
                     ];
                 @endphp
+                <!-- BIG PREVIEW -->
+                <div class="spec-preview">
+                    <div class="preview-wrap">
+                        <img id="previewImg"
+                            src="{{ asset('uploads/images/welcome_page/doctors/' . $doctors[0]['image']) }}">
+                        <div class="preview-hover">View More</div>
+                    </div>
+                </div>
 
-                <div class="spec-image-slider">
+                <!-- ARROWS -->
+                {{-- <button class="spec-arrow left" onclick="prevDoctor()">‹</button> --}}
+
+                <!-- SMALL IMAGE STRIP -->
+                <div class="spec-strip">
                     @foreach ($doctors as $i => $doc)
-                        <a href="#" class="spec-image-card {{ $i == 0 ? 'active' : '' }}"
+                        <a href="#" class="strip-item {{ $i == 0 ? 'active' : '' }}"
+                            onmouseenter="hoverDoctor({{ $i }})"
                             onclick="updateDoctor({{ $i }}); return false;">
 
-                            <div class="image-wrap">
-                                <img src="{{ asset('uploads/images/welcome_page/doctors/' . $doc['image']) }}"
-                                    alt="{{ $doc['name'] }}">
-
-                                <div class="image-hover">
-                                    <span>View Information</span>
-                                </div>
-                            </div>
-
-                            <div class="image-footer"></div>
+                            <img src="{{ asset('uploads/images/welcome_page/doctors/' . $doc['image']) }}"
+                                alt="{{ $doc['name'] }}">
                         </a>
                     @endforeach
                 </div>
-
-                <!-- Arrow Right -->
-                <button class="spec-arrow right" onclick="nextDoctor()">›</button>
+                {{-- <button class="spec-arrow right" onclick="nextDoctor()">›</button> --}}
             </div>
 
 
@@ -93,21 +91,28 @@
 
 <script>
     let currentDoctor = 0;
+    let autoSlide = setInterval(nextDoctor, 10000);
     const doctors = @json($doctors);
 
+    function hoverDoctor(index) {
+        document.getElementById('previewImg').src =
+            "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctors[index].image;
+    }
+
     function updateDoctor(index) {
-        document.querySelectorAll('.spec-image-card').forEach((el, i) => {
+        document.querySelectorAll('.strip-item').forEach((el, i) => {
             el.classList.toggle('active', i === index);
         });
+
+        document.getElementById('previewImg').src =
+            "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctors[index].image;
 
         document.getElementById('docName').innerText = doctors[index].name;
         document.getElementById('docDegree').innerText = doctors[index].degree;
         document.getElementById('docDetails').innerHTML = doctors[index].details;
 
-        // MOVE SLIDER
-        document.querySelector('.spec-image-slider').style.transform =
-            `translateX(-${index * 242}px)`;
-
+        clearInterval(autoSlide);
+        autoSlide = setInterval(nextDoctor, 10000);
         currentDoctor = index;
     }
 

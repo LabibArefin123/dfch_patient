@@ -1,151 +1,104 @@
-/* LEFT AREA */
+/* LEFT CONTAINER */
 .specialist-left {
     min-height: 320px;
-    overflow: hidden;
-}
-
-/* HORIZONTAL SLIDER */
-.spec-image-slider {
-    display: flex;
-    gap: 22px;
-    transition: transform 0.6s ease;
-}
-
-/* IMAGE CARD */
-.spec-image-card {
     position: relative;
-    min-width: 220px;
-    text-decoration: none;
-    cursor: pointer;
 }
 
-.spec-card-wrapper {
+/* =========================
+   BIG PREVIEW IMAGE
+========================= */
+.spec-preview {
     display: flex;
-    flex-direction: column;
-    gap: 14px;
+    justify-content: center;
+    margin-bottom: 18px;
 }
 
-/* Parallelogram cards */
-.spec-card {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    padding: 12px 18px;
-    background: #f5f7fa;
-    transform: skewX(-15deg);
-    cursor: pointer;
-    transition: all 0.3s ease;
-    opacity: 0.5;
-}
-
-.spec-card img {
-    width: 52px;
-    height: 52px;
-    object-fit: cover;
-    border-radius: 50%;
-    transform: skewX(15deg);
-}
-
-.spec-card span {
-    font-weight: 600;
-    transform: skewX(15deg);
-}
-
-.spec-card.active {
-    background: linear-gradient(135deg, #ff6b6b, #e63946);
-    color: #fff;
-    opacity: 1;
-}
-/* ARROWS */
-.spec-arrow {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2.4rem;
-    background: transparent;
-    border: none;
-    color: #8b0000;
-    cursor: pointer;
-    z-index: 10;
-}
-
-.spec-arrow.left {
-    left: -35px;
-}
-
-.spec-arrow.right {
-    right: -35px;
-}
-
-/* RIGHT INFO */
-#spec-info {
-    animation: fadeSlide 0.5s ease;
-}
-
-/* PARALLELOGRAM IMAGE */
-.image-wrap {
+.preview-wrap {
+    width: 150px;
+    height: 150px;
     position: relative;
-    height: 180px;
     overflow: hidden;
-    transform: skewX(-20deg); /* ~45% feel */
+    border-radius: 8px;
 }
 
-.image-wrap img {
+.preview-wrap img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transform: skewX(20deg) scale(1.1);
-    transition: transform 0.4s ease;
 }
 
-/* HOVER OVERLAY */
-.image-hover {
+.preview-hover {
     position: absolute;
     inset: 0;
-    background: rgba(255, 107, 107, 0.85); /* sky red */
+    background: rgba(255, 107, 107, 0.9); /* sky red */
+    color: #fff;
+    font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.35s ease;
+    transition: 0.3s;
 }
 
-.image-hover span {
-    color: #fff;
-    font-weight: 600;
-    font-size: 1rem;
-    transform: skewX(20deg);
-    border-bottom: 2px solid #fff;
-    padding-bottom: 3px;
-}
-
-/* BOTTOM STRAIGHT BOX */
-.image-footer {
-    height: 12px;
-    background: #e63946;
-    margin-top: 6px;
-}
-
-/* ACTIVE SLIDE */
-.spec-image-card.active .image-footer {
-    background: #8b0000;
-}
-/* HOVER EFFECT */
-.spec-image-card:hover .image-hover {
+.preview-wrap:hover .preview-hover {
     opacity: 1;
 }
 
-.spec-image-card:hover img {
-    transform: skewX(20deg) scale(1.15);
+/* =========================
+   SMALL STRIP
+========================= */
+.spec-strip {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    justify-content: center;
 }
 
-@keyframes fadeSlide {
-    from {
-        opacity: 0;
-        transform: translateY(15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+/* SMALL IMAGE CARD */
+.strip-item {
+    width: 60px;
+    height: 25px;
+    overflow: hidden;
+    transform: skewX(-20deg);
+    opacity: 0.6;
+    transition: all 0.3s ease;
+}
+
+.strip-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: skewX(20deg);
+}
+
+/* ACTIVE / HOVER */
+.strip-item.active,
+.strip-item:hover {
+    opacity: 1;
+    transform: skewX(0deg);
+}
+
+.strip-item:hover img {
+    transform: scale(1.05);
+}
+
+/* =========================
+   ARROWS
+========================= */
+.spec-arrow {
+    position: absolute;
+    top: 65%;
+    font-size: 20px;
+    background: none;
+    border: none;
+    color: #8b0000;
+    cursor: pointer;
+}
+
+.spec-arrow.left {
+    left: -20px;
+}
+
+.spec-arrow.right {
+    right: -20px;
 }
