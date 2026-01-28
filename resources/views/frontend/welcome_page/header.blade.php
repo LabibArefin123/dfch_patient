@@ -5,9 +5,9 @@
         <!-- LEFT : Address + WhatsApp + Map -->
         <div class="d-flex align-items-center flex-wrap gap-2 text-white">
             <i class="fas fa-map-marker-alt"></i>
-            <span>
+            <a href="#" class="header-link">
                 86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
-            </span>
+            </a>
 
             <span class="mx-2">|</span>
 
@@ -25,11 +25,6 @@
 
             <a>
                 0241023155
-            </a>
-
-            <a href="https://www.google.com/maps?q=Satmasjid+Road+Dhanmondi+Dhaka" target="_blank"
-                class="btn btn-sm map-btn ms-2">
-                Go to Map
             </a>
         </div>
 
@@ -74,7 +69,7 @@
                 </li>
 
                 <li class="nav-item"><a href="#about" class="nav-link custom-link">About</a></li>
-                <li class="nav-item"><a href="#features" class="nav-link custom-link">Features</a></li>
+                <li class="nav-item"><a href="#specialists" class="nav-link custom-link">Our Specialists</a></li>
                 <li class="nav-item"><a href="#services" class="nav-link custom-link">Services</a></li>
             </ul>
         </div>
