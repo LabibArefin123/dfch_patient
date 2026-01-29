@@ -73,6 +73,8 @@
     justify-content: center;
     align-items: center;
     border-radius: 4px;
+    border: 2px solid transparent;
+    box-sizing: border-box;
 }
 
 /* IMAGE DEFAULT (counter-skew to appear normal) */
@@ -93,31 +95,19 @@
     transform: skewX(0deg); /* card straight */
 }
 
+.strip-item.active {
+    border-color: #ff6b6b;
+}
+
+/* OPTIONAL: also show border on hover */
+.strip-item:hover {
+    border-color: rgba(139, 0, 0, 0.4);
+}
+
 /* IMAGE STRAIGHT ON HOVER (NO SKEW, FULL IMAGE FIT) */
 .strip-item:hover img,
 .strip-item.active img {
     transform: scale(1.05); /* just a slight zoom, no skew */
     object-fit: contain; /* keep full image */
     object-position: center;
-}
-
-/* =========================
-   ARROWS
-========================= */
-.spec-arrow {
-    position: absolute;
-    top: 65%;
-    font-size: 20px;
-    background: none;
-    border: none;
-    color: #8b0000;
-    cursor: pointer;
-}
-
-.spec-arrow.left {
-    left: -20px;
-}
-
-.spec-arrow.right {
-    right: -20px;
 }

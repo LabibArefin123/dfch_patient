@@ -1,11 +1,11 @@
 <!-- Top Info Bar -->
-<div class="top-info-bar py-2">
+<div class="bg-info  py-2">
     <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
 
         <!-- LEFT : Address + WhatsApp + Map -->
         <div class="d-flex align-items-center flex-wrap gap-2 text-white">
             <i class="fas fa-map-marker-alt"></i>
-            <a href="#" class="header-link">
+            <a href="#" class="header-link" id="openMapModal">
                 86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
             </a>
 
@@ -38,6 +38,34 @@
             </a>
         </div>
     </div>
+
+    <div id="mapModal" class="map-modal">
+        <div class="map-modal-content">
+            <span class="close-modal">&times;</span>
+            <h4>Our Location</h4>
+
+            <!-- Bigger Map -->
+            <iframe src="https://www.google.com/maps?q=726/A+Satmasjid+Road,+Dhaka+1209,+Bangladesh&output=embed"
+                width="100%" height="380" style="border:0; border-radius:8px;" allowfullscreen loading="lazy">
+            </iframe>
+
+            <!-- Map Action Buttons -->
+            <div class="map-actions">
+                <button class="map-btn google" onclick="openMap('google')">
+                    🗺️ Google Maps
+                </button>
+
+                <button class="map-btn pathao" onclick="openMap('pathao')">
+                    🚕 Pathao
+                </button>
+
+                <button class="map-btn uber" onclick="openMap('uber')">
+                    🚖 Uber
+                </button>
+            </div>
+        </div>
+    </div>
+
 </div>
 
 <link rel="stylesheet" href="{{ asset('css/custom_header.css') }}">
@@ -47,7 +75,7 @@
     <div class="container-fluid">
 
         <!-- Left: Logo -->
-        <a href="#" class="navbar-brand d-flex align-items-center">
+        <a href="{{ route('welcome') }}" class="navbar-brand d-flex align-items-center">
             <img src="{{ asset('uploads/images/logo.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
                 style="width:350px; height:75px;">
         </a>
@@ -81,3 +109,71 @@
 
     </div>
 </nav>
+
+<!----start of map js--->
+<script>
+    const address = "726/A Satmasjid Road, Dhaka 1209, Bangladesh";
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const openBtn = document.getElementById("openMapModal");
+        const modal = document.getElementById("mapModal");
+        const closeBtn = document.querySelector(".close-modal");
+
+        if (openBtn && modal) {
+            openBtn.addEventListener("click", function(e) {
+                e.preventDefault();
+                modal.style.display = "flex";
+            });
+        }
+
+        if (closeBtn && modal) {
+            closeBtn.addEventListener("click", function() {
+                modal.style.display = "none";
+            });
+        }
+
+        if (modal) {
+            modal.addEventListener("click", function(e) {
+                if (e.target === modal) {
+                    modal.style.display = "none";
+                }
+            });
+        }
+    });
+
+    // ✅ MUST be global for onclick buttons
+    function openMap(app) {
+        const encoded = encodeURIComponent(address);
+
+        const links = {
+            google: `https://www.google.com/maps/search/?api=1&query=${encoded}`,
+            pathao: `pathao://maps?destination=${encoded}`,
+            uber: `uber://?action=setPickup&dropoff[formatted_address]=${encoded}`
+        };
+
+        const fallbackUrl = links.google;
+        const targetUrl = links[app] || fallbackUrl;
+
+        let fallbackTriggered = false;
+
+        const fallbackTimer = setTimeout(() => {
+            fallbackTriggered = true;
+            window.open(fallbackUrl, "_blank");
+        }, 800);
+
+        window.location.href = targetUrl;
+
+        window.addEventListener(
+            "blur",
+            () => {
+                if (!fallbackTriggered) {
+                    clearTimeout(fallbackTimer);
+                }
+            }, {
+                once: true
+            }
+        );
+    }
+</script>
+<!------end of map js--->
+

@@ -8,5 +8,6 @@
     @include('frontend.welcome_page.banner')
     @include('frontend.welcome_page.about')
     @include('frontend.welcome_page.specialist')
+    @include('frontend.welcome_page.services')
     @include('frontend.welcome_page.footer')
 @endsection
