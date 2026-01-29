@@ -68,14 +68,13 @@
         <!-- Bottom copyright -->
         <div class="text-center small mt-4 pt-3 border-top border-white">
             &copy;
-            <a href="https://fazlulhaquehospital.com/" target="_blank"
-                class="text-warning fw-semibold text-decoration-none">
+            <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
                 DFCH
             </a> All rights reserved |
             Design & Developed by
-            <a href="https://www.labib.work" target="_blank" rel="noopener noreferrer"
-                class="text-decoration-none fw-semibold">
-                <span class="onstage-text">Labib Arefin</span>
+            <a href="https://www.labib.work" target="_blank"
+                            class="dev-link fw-bold text-decoration-none">
+                Labib Arefin
             </a>
         </div>
     </div>
@@ -109,5 +108,5 @@
     </style>
 
     <!-- FontAwesome for icons (required) -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    {{-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> --}}
 </footer>
