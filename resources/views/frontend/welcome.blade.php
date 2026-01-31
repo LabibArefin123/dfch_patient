@@ -7,8 +7,10 @@
     @include('frontend.welcome_page.header')
     @include('frontend.welcome_page.banner')
     @include('frontend.welcome_page.about')
-    @include('frontend.welcome_page.goals')
-    @include('frontend.welcome_page.specialist')
-    @include('frontend.welcome_page.services')
+    @include('frontend.welcome_page.department')
+    @include('frontend.welcome_page.facilities') 
+    @include('frontend.welcome_page.services') 
+    @include('frontend.welcome_page.specialist') 
+    @include('frontend.welcome_page.goals') 
     @include('frontend.welcome_page.footer')
 @endsection

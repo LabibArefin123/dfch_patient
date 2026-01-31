@@ -1,0 +1,80 @@
+.facility-tabs {
+    row-gap: 12px;
+}
+
+.facility-tab {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    border: 1px solid #ff6b6b;
+    background: #fff;
+    color: #ff6b6b;
+
+    padding: 12px 24px;
+    border-radius: 30px;
+
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+}
+
+.facility-tab i {
+    font-size: 16px;
+}
+
+.facility-tab:hover {
+    background: #ff6b6b;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.25);
+}
+
+.facility-tab.active {
+    background: #ff6b6b;
+    color: #fff;
+    box-shadow: 0 10px 25px rgba(255, 107, 107, 0.35);
+}
+
+.facility-tab.active i {
+    animation: pulse 1.2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(1.15);
+    }
+
+    100% {
+        transform: scale(1);
+    }
+}
+
+.facility-content {
+    display: none;
+}
+
+.facility-content.active {
+    display: block;
+}
+
+.facility-image {
+    max-height: 420px;
+    width: 100%;
+    object-fit: cover;
+}
+
+.facility-list {
+    padding-left: 18px;
+}
+
+.facility-list li {
+    margin-bottom: 10px;
+}

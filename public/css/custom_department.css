@@ -1,0 +1,45 @@
+.department-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 35px 20px;
+    text-align: center;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.06);
+    transition: all 0.35s ease;
+    cursor: pointer;
+    height: 100%;
+}
+
+.department-card i {
+    font-size: 36px;
+    color: #ff6b6b;
+    margin-bottom: 15px;
+    transition: color 0.35s ease;
+}
+
+.department-card h6 {
+    font-weight: 600;
+    margin: 0;
+    transition: color 0.35s ease;
+}
+
+#departments a {
+    color: #000;
+}
+
+/* Hover Effect */
+.department-card:hover {
+    transform: scale(1.08);
+    background-color: #ff6b6b;
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.35);
+}
+
+.department-card:hover i,
+.department-card:hover h6 {
+    color: #ffffff;
+}
+
+@media (max-width: 768px) {
+    .department-card {
+        padding: 28px 15px;
+    }
+}

@@ -96,10 +96,29 @@
                     </a>
                 </li>
 
-                <li class="nav-item"><a href="#about" class="nav-link custom-link">About</a></li>
-                <li class="nav-item"><a href="#specialists" class="nav-link custom-link">Our Specialists</a></li>
-                <li class="nav-item"><a href="#goals" class="nav-link custom-link">Our Goals</a></li>
-                <li class="nav-item"><a href="#services" class="nav-link custom-link">Services</a></li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link custom-link">About</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#departments" class="nav-link custom-link">Departments</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#facilities" class="nav-link custom-link">Facilities</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#services" class="nav-link custom-link">Services</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#specialists" class="nav-link custom-link">Our Specialists</a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="#goals" class="nav-link custom-link">Our Goals</a>
+                </li>
             </ul>
         </div>
 
@@ -177,4 +196,3 @@
     }
 </script>
 <!------end of map js--->
-
