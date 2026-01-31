@@ -1,6 +1,7 @@
     <section id="glance" class="bg-info text-white position-relative"
-        style="background-color:#00a0d6; overflow:hidden;">
-        <div class="container py-3 position-relative" style="z-index:1;">
+        style="background-color:#00a0d6; overflow:hidden; padding-bottom:10px;">
+
+        {{-- <div class="container py-3 position-relative" style="bottom:10px; z-index:1;"> --}}
             <div class="row g-0 align-items-start">
                 <!-- Right: Text -->
                 <div class="col-md-6 offset-md-6 d-flex flex-column justify-content-center ps-md-5">
@@ -19,13 +20,13 @@
                     </ul>
                 </div>
             </div>
-        </div>
+        
 
         <!-- Left Image: Outside container -->
         <div class="glance-image position-absolute start-0 bottom-0" style="z-index:0; max-width:50%;">
             <img src="{{ asset('uploads/images/welcome_page/glance/glance.png') }}" alt="DFCH at a Glance"
                 class="img-fluid" style="display:block; object-fit:contain; object-position:bottom; width:90%;">
         </div>
- <!-- Styles -->
-       <link rel="stylesheet" href="{{ asset('css/custom_glance.css') }}">
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/custom_glance.css') }}">
     </section>

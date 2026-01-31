@@ -1,6 +1,7 @@
 <!-- Top Info Bar -->
 <div class="bg-info  py-2">
     <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
+
         <!-- LEFT : Address + WhatsApp + Map -->
         <div class="d-flex align-items-center flex-wrap gap-2 text-white">
             <i class="fas fa-map-marker-alt"></i>
@@ -72,6 +73,7 @@
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white"
     style="padding-left: 30px; padding-right: 30px;">
     <div class="container-fluid">
+
         <!-- Left: Logo -->
         <a href="{{ route('welcome') }}" class="navbar-brand d-flex align-items-center">
             <img src="{{ asset('uploads/images/logo.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
@@ -88,10 +90,17 @@
         <div class="collapse navbar-collapse justify-content-center order-2" id="navbarCollapse">
             <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a href="#glance" class="nav-link custom-link {{ request()->routeIs('welcome') ? 'active' : '' }}">
+                    <a href="{{ route('welcome') }}"
+                        class="nav-link custom-link {{ request()->routeIs('welcome') ? 'active' : '' }}">
                         Overview
                     </a>
                 </li>
+                {{-- <li class="nav-item">
+                    <a href="#glance" class="nav-link custom-link {{ request()->routeIs('welcome') ? 'active' : '' }}">
+                        Overview
+                    </a>
+                </li> --}}
+
                 <li class="nav-item">
                     <a href="#about" class="nav-link custom-link">About</a>
                 </li>
@@ -122,6 +131,7 @@
         <div class="order-3 ml-auto d-flex align-items-center">
             <a href="{{ route('login') }}" class="btn btn-outline-primary" style="margin-right: 10px;">Login</a>
         </div>
+
     </div>
 </nav>
 

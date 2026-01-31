@@ -1,9 +1,6 @@
 /* =========================
    SLIDER WIDTH BOOST (15%)
 ========================= */
-#banner > .container {
-    max-width: 1500px; /* ~15% wider than default */
-}
 
 /* =========================
    SLIDER BASE
