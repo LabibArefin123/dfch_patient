@@ -26,40 +26,6 @@
             <img src="{{ asset('uploads/images/welcome_page/glance/glance.png') }}" alt="DFCH at a Glance"
                 class="img-fluid" style="display:block; object-fit:contain; object-position:bottom; width:90%;">
         </div>
-
-        <style>
-            .glance-list li {
-                margin-bottom: 10px;
-                font-size: 16px;
-                position: relative;
-                padding-left: 25px;
-            }
-
-            .glance-list li::before {
-                content: "\f0da";
-                font-family: "Font Awesome 5 Free";
-                font-weight: 900;
-                position: absolute;
-                left: 0;
-                top: 0;
-                color: #fff;
-            }
-
-            @media (max-width: 768px) {
-                #glance .glance-image {
-                    position: relative !important;
-                    width: 100% !important;
-                    max-width: 100% !important;
-                    margin-bottom: 15px;
-                }
-
-                #glance .row {
-                    flex-direction: column-reverse;
-                }
-
-                .ps-md-5 {
-                    padding-left: 0 !important;
-                }
-            }
-        </style>
+ <!-- Styles -->
+       <link rel="stylesheet" href="{{ asset('css/custom_glance.css') }}">
     </section>
