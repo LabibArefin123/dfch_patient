@@ -6,6 +6,7 @@
 @section('content')
     @include('frontend.welcome_page.header')
     @include('frontend.welcome_page.banner')
+    @include('frontend.welcome_page.glance')
     @include('frontend.welcome_page.about')
     @include('frontend.welcome_page.department')
     @include('frontend.welcome_page.facilities') 
