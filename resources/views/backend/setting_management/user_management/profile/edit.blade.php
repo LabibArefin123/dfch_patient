@@ -38,7 +38,7 @@
                         <label for="name">Full Name</label>
                         <input type="text" name="name" id="name"
                             class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $user->name) }}"
-                            required>
+                            >
                         @error('name')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -48,7 +48,7 @@
                         <label for="username">Username</label>
                         <input type="text" name="username" id="username"
                             class="form-control @error('username') is-invalid @enderror"
-                            value="{{ old('username', $user->username) }}" required>
+                            value="{{ old('username', $user->username) }}" >
                         @error('username')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -58,7 +58,7 @@
                         <label for="email">Email Address</label>
                         <input type="email" name="email" id="email"
                             class="form-control @error('email') is-invalid @enderror"
-                            value="{{ old('email', $user->email) }}" required>
+                            value="{{ old('email', $user->email) }}" >
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -96,7 +96,7 @@
                         <label for="current_password">Current Password</label>
                         <div class="input-group">
                             <input type="password" name="current_password" id="current_password" class="form-control"
-                                required>
+                                >
                             <button type="button" class="btn btn-outline-secondary toggle-password"
                                 data-target="current_password">
                                 <i class="fa fa-eye"></i>
@@ -107,7 +107,7 @@
                     <div class="col-md-6 mb-3">
                         <label for="new_password">New Password</label>
                         <div class="input-group">
-                            <input type="password" name="new_password" id="new_password" class="form-control" required>
+                            <input type="password" name="new_password" id="new_password" class="form-control" >
                             <button type="button" class="btn btn-outline-secondary toggle-password"
                                 data-target="new_password">
                                 <i class="fa fa-eye"></i>
@@ -119,7 +119,7 @@
                         <label for="confirm_password">Confirm New Password</label>
                         <div class="input-group">
                             <input type="password" name="confirm_password" id="confirm_password" class="form-control"
-                                required>
+                                >
                             <button type="button" class="btn btn-outline-secondary toggle-password"
                                 data-target="confirm_password">
                                 <i class="fa fa-eye"></i>
@@ -127,16 +127,6 @@
                         </div>
                     </div>
                 </div>
-
-                @include('backend.setting_management.user_management.profile.form.enlistment')
-                @include('backend.setting_management.user_management.profile.form.document.trade')
-                @include('backend.setting_management.user_management.profile.form.document.tax')
-                @include('backend.setting_management.user_management.profile.form.document.bin')
-                @include('backend.setting_management.user_management.profile.form.document.irc')
-                @include('backend.setting_management.user_management.profile.form.document.erc')
-                @include('backend.setting_management.user_management.profile.form.document.irc_indenting')
-                @include('backend.setting_management.user_management.profile.form.document.nid')
-                @include('backend.setting_management.user_management.profile.form.document.member')
                 <button type="submit" class="btn btn-primary" id="updateProfileBtn">Update Profile</button>
                 <div class="mt-4" style="height:50px;"></div>
             </form>

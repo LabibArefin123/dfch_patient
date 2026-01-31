@@ -20,24 +20,14 @@ class ProfileController extends Controller
     public function user_profile_show()
     {
         $user = Auth::user();
-        $roles = Role::all(); // Fetch all roles
-        $organization = Organization::with('enlistments')
-            ->first();
-
-        return view('backend.setting_management.user_management.profile.show', compact('user', 'roles', 'organization'));
+        return view('backend.setting_management.user_management.profile.show', compact('user'));
     }
 
     public function user_profile_edit()
     {
         $user = Auth::user();
-
-        // Load the first organization with enlistments & documents
-        $organization = Organization::with(['enlistments', 'documents'])->first();
-
-        // Fetch all roles for user type selection
         $roles = Role::all();
-
-        return view('backend.setting_management.user_management.profile.edit', compact('user', 'roles', 'organization'));
+        return view('backend.setting_management.user_management.profile.edit', compact('user', 'roles'));
     }
 
     public function user_profile_update(Request $request)

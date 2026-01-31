@@ -21,7 +21,7 @@
 .brand-link .bidtrack-logo {
     max-height: 50px; /* increase height for rectangle */
     height: auto; /* maintain aspect ratio */
-    max-width: 200px; /* control width so it doesn’t overflow */
+    max-width: 220px; /* control width so it doesn’t overflow */
     width: auto; /* preserve rectangle ratio */
     display: block; /* helps margin auto work */
     margin: 0 auto; /* center horizontally */
