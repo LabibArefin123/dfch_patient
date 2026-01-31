@@ -1,4 +1,4 @@
-<section id="banner" class="py-5 bg-white w-100">
+<section id="banner" class="bg-white w-100">
     <div id="slider" class="position-relative w-100" style="height: 70vh;">
         <!-- Slides -->
         @php
