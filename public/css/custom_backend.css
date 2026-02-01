@@ -16,7 +16,7 @@ s.main-header.navbar {
 
 /* Hover effect only for phone & email */
 .main-header .nav-link:hover {
-    background-color: #ff9900 !important;
+    background-color: #ff6b6b !important;
     color: #000 !important;
 }
 
@@ -46,7 +46,7 @@ body {
 }
 
 .hover-box:hover {
-    background-color: #ff9900;
+    background-color: #ff6b6b;
     color: #fff;
 }
 
@@ -76,7 +76,7 @@ table.dataTable {
 }
 
 .hover-box:hover {
-    background-color: #ff9900;
+    background-color: #ff6b6b;
     color: #fff;
 }
 
@@ -115,7 +115,7 @@ table.dataTable {
 .global-search-results .list-group-item:hover,
 .global-search-results .list-group-item:focus {
     background-color: #f0f0f0;
-    color: #ff9900;
+    color: #ff6b6b;
     /* subtle highlight on hover */
     outline: none;
 }

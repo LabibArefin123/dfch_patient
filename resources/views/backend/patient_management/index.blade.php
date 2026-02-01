@@ -36,37 +36,45 @@
                             <td>{{ $loop->iteration }}</td>
 
                             <td>
-                                {{ $patient->patient_code ?? '—' }}
+                                <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                    {{ $patient->patient_code ?? '—' }}</a>
                             </td>
 
                             <td>
-                                <strong>{{ $patient->patient_name }}</strong><br>
+                                <a href="{{ route('patients.show', $patient->id) }}"
+                                    class="dev-link"><strong>{{ $patient->patient_name }}</strong></a><br>
                                 <small class="text-muted">
-                                    Father's Name: {{ $patient->patient_f_name ?? 'N/A' }}
+                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link"> Father's Name:
+                                        {{ $patient->patient_f_name ?? 'N/A' }}</a>
                                 </small><br>
                                 <small class="text-muted">
-                                    Mother's Name: {{ $patient->patient_m_name ?? 'N/A' }}
-                                </small>
+                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Mother's Name:
+                                        {{ $patient->patient_m_name ?? 'N/A' }}
+                                </small></a>
                             </td>
 
-                            <td>{{ $patient->age ?? '—' }}</td>
+                            <td><a href="{{ route('patients.show', $patient->id) }}"
+                                    class="dev-link">{{ $patient->age ?? '—' }}</a></td>
 
                             <td>
-                                {{ ucfirst($patient->gender ?? '—') }}
+                                <a href="{{ route('patients.show', $patient->id) }}"
+                                    class="dev-link">{{ ucfirst($patient->gender ?? '—') }}</a>
                             </td>
 
                             <td>
-                                {{ $patient->phone_1 }}<br>
+                                <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                    {{ $patient->phone_1 }}</a><br>
                                 <small class="text-muted">
-                                    Alt {{ $patient->phone_2 ?? 'N/A' }}
+                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Alt
+                                        {{ $patient->phone_2 ?? 'N/A' }}</a>
                                 </small>
                                 <br>
                                 <small class="text-muted">
-                                    Father's Phone {{ $patient->phone_f_1 ?? 'N/A' }}
+                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Father's Phone {{ $patient->phone_f_1 ?? 'N/A' }}</a>
                                 </small>
                                 <br>
                                 <small class="text-muted">
-                                    Mother's Phone {{ $patient->phone_m_1 ?? 'N/A' }}
+                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Mother's Phone {{ $patient->phone_m_1 ?? 'N/A' }}</a>
                                 </small>
                             </td>
 
@@ -89,7 +97,7 @@
                             </td>
 
                             <td>
-                                {{ optional($patient->date_of_patient_added)->format('d M Y') }}
+                                <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">{{ optional($patient->date_of_patient_added)->format('d M Y') }}</a>
                             </td>
 
                             <td>

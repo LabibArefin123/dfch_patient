@@ -32,7 +32,7 @@
     }
 
     .dev-link:hover {
-        background-color: #ff9900;
+        background-color: #ff6b6b;
         color: #fff;
     }
 
@@ -46,7 +46,7 @@
     }
 
     .totalofftec-link .total {
-        color: #ff9900;
+        color: #ff6b6b;
     }
 
     .totalofftec-link .offtec {

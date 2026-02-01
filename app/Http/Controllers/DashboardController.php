@@ -161,7 +161,7 @@ class DashboardController extends Controller
 
         return preg_replace(
             "/(" . preg_quote($term, '/') . ")/i",
-            '<span style="color:#ff9900;">$1</span>',
+            '<span style="color:#ff6b6b;">$1</span>',
             e($text)
         );
     }

@@ -62,3 +62,36 @@
     box-shadow: none; /* optional cleaner look */
     object-fit: contain; /* ensure the image fits inside the box */
 }
+
+.dev-link {
+    position: relative;
+    color: #000000;
+    text-decoration: none;
+    padding: 2px 6px;
+    z-index: 1;
+    transition: color 0.25s ease;
+    overflow: hidden;
+}
+
+/* Parallelogram background */
+.dev-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 0;
+    height: 100%;
+    background-color: #ff6b6b; /* sky red */
+    transform: skewX(-20deg);
+    transform-origin: left;
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.dev-link:hover {
+    color: #fff; /* readable on red */
+}
+
+.dev-link:hover::after {
+    width: 100%;
+}
