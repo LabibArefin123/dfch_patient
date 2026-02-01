@@ -6,6 +6,38 @@
 
 .main-sidebar {
     overflow-x: hidden !important; /* hide horizontal scroll */
+    background-color: #ffffff !important;
+}
+
+/* Sidebar text */
+.nav-sidebar .nav-link {
+    color: #444;
+    border-radius: 6px;
+    margin: 2px 8px;
+}
+
+/* Hover */
+.nav-sidebar .nav-link:hover {
+    background-color: rgba(255, 107, 107, 0.12);
+    color: #ff6b6b;
+}
+
+/* ACTIVE menu item */
+.nav-sidebar .nav-link.active {
+    background-color: #ff6b6b !important;
+    color: #ffffff !important;
+    font-weight: 600;
+}
+
+/* Active icon */
+.nav-sidebar .nav-link.active i {
+    color: #ffffff !important;
+}
+
+/* Treeview open */
+.nav-sidebar .menu-open > .nav-link {
+    background-color: rgba(255, 107, 107, 0.15);
+    color: #ff6b6b;
 }
 
 /* Brand container */
@@ -14,6 +46,8 @@
     align-items: center;
     padding-left: 1.25rem;
     padding-right: 1.25rem;
+    background-color: #ffffff !important;
+    border-bottom: 1px solid #eee;
 }
 
 /* Rectangular logo fix */
