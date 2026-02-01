@@ -69,7 +69,6 @@
                             <option value="">Select</option>
                             <option value="male" {{ old('gender') == 'male' ? 'selected' : '' }}>Male</option>
                             <option value="female" {{ old('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                            <option value="other" {{ old('gender') == 'other' ? 'selected' : '' }}>Other</option>
                         </select>
                     </div>
 
@@ -180,10 +179,22 @@
                     </div>
 
                     {{-- Date --}}
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label>Date of Registration</label>
                         <input type="date" name="date_of_patient_added" class="form-control"
                             value="{{ date('Y-m-d') }}">
+                    </div>
+
+                    <div class="w-100"></div>
+
+                     <div class="form-group col-md-6">
+                        <label>Patient's Problem <span class="text-danger">*</span></label>
+                         <textarea name="patient_problem_description" class="form-control"></textarea>
+                    </div>
+
+                     <div class="form-group col-md-6">
+                        <label>Patient's Drug Description <span class="text-danger">*</span></label>
+                        <textarea name="patient_drug_description" class="form-control"></textarea>
                     </div>
 
                     {{-- Remarks --}}
