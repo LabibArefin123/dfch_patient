@@ -412,6 +412,43 @@ return [
         ],
 
         [
+            'text'    => 'Patient Management',
+            'icon'    => 'fas fa-user-injured',
+            'submenu' => [
+
+                [
+                    'text'  => 'Patient List',
+                    'route' => 'patients.index',
+                    'can'   => 'patients.index',
+                    'icon'  => 'fas fa-list',
+                ],
+
+                [
+                    'text'  => 'Add New Patient',
+                    // 'route' => 'patients.create',
+                    // 'can'   => 'patients.create',
+                    'icon'  => 'fas fa-user-plus',
+                ],
+
+                [
+                    'text'  => 'Recommended Patients',
+                    // 'route' => 'patients.recommended',
+                    // 'can'   => 'patients.recommended',
+                    'icon'  => 'fas fa-user-md',
+                ],
+
+                [
+                    'text'  => 'Patient Documents',
+                    // 'route' => 'patient-documents.index',
+                    // 'can'   => 'patient-documents.index',
+                    'icon'  => 'fas fa-file-medical',
+                ],
+
+            ],
+        ],
+
+
+        [
             'text'    => 'Setting Management',
             'icon'    => 'fas fa-cogs',
             // 'route'    => 'setting_menu',

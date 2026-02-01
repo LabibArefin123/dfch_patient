@@ -15,7 +15,7 @@ class PermissionSeeder extends Seeder
     {
         $permissions = [
             // Profile
-            'home',
+            'dashboard',
             'user_profile_show',
             'user_profile_edit',
             'user_profile_update',

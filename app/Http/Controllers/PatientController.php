@@ -11,12 +11,12 @@ class PatientController extends Controller
     public function index()
     {
         $patients = Patient::latest()->get();
-        return view('patients.index', compact('patients'));
+        return view('backend.patient_management.index', compact('patients'));
     }
 
     public function create()
     {
-        return view('patients.create');
+        return view('backend.patient_management.create');
     }
 
     public function store(Request $request)
@@ -46,7 +46,7 @@ class PatientController extends Controller
 
     public function edit(Patient $patient)
     {
-        return view('patients.edit', compact('patient'));
+        return view('backend.patient_management.edit', compact('patient'));
     }
 
     public function update(Request $request, Patient $patient)
