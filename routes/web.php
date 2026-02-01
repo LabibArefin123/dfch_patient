@@ -5,6 +5,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SystemUserController;
 use App\Http\Controllers\BanUserController;
@@ -40,6 +41,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user_password_edit', [ProfileController::class, 'editPassword'])->name('user_password_edit');
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
+    Route::resource('patients', PatientController::class);
     // Permissions & Roles
     // Route::get('/all-permissions', [Roles_And_Permissions::class, 'permissionsIndex'])->name('permissions.index');
     Route::resource('roles', RoleController::class);

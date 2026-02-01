@@ -16,16 +16,10 @@ class PermissionSeeder extends Seeder
         $permissions = [
             // Profile
             'home',
-            'profile.management',
-            'profile',
+            'user_profile_show',
             'user_profile_edit',
             'user_profile_update',
-            'profile_picture_edit',
-            'profile_picture_update',
-            'user_password_update',
-            'user_password_edit',
-            'user_password_reset',
-
+        
             'organizations.index',
             'organizations.create',
             'organizations.store',
@@ -33,59 +27,6 @@ class PermissionSeeder extends Seeder
             'organizations.edit',
             'organizations.update',
             'organizations.destroy',
-
-            // Tenders
-            'tenders.index',
-            'tenders.create',
-            'tenders.store',
-            'tenders.update',
-            'tenders.edit',
-            'tenders.destroy',
-            'tenders.downloadSpec',
-            'tenders.downloadNotice',
-            'tenders.updateStatus',
-            'bg_pg.index',
-
-            // BG & PG
-            'bg.index',
-            'bg.create',
-            'bg.store',
-            'bg.show',
-            'bg.edit',
-            'bg.update',
-            'bg.destroy',
-            'pg.index',
-            'pg.create',
-            'pg.store',
-            'pg.show',
-            'pg.edit',
-            'pg.update',
-            'pg.destroy',
-
-            // Participated Tenders
-            'participated_tenders.index',
-            'tenders.participated.data',
-            'participated_tenders.create',
-            'participated_tenders.store',
-            'participated_tenders.edit',
-            'participated_tenders.update',
-            'participated_tenders.destroy',
-            'tender.mytender',
-            'participated_tenders.reject',
-            'rejected_tenders.index',
-
-            // Awarded Tenders
-            'awarded_tenders.index',
-            'awarded_tenders.create',
-            'awarded_tenders.store',
-            'awarded_tenders.edit',
-            'awarded_tenders.update',
-            'awarded_tenders.destroy',
-            'awarded_tenders.first_time_data',
-            'awarded_tenders.partial_data',
-
-            // Completed Tenders
-            'completed_tenders.index',
 
             // Permissions & Roles
             'permissions.index',
@@ -101,14 +42,6 @@ class PermissionSeeder extends Seeder
             'roles.edit',
             'roles.update',
             'roles.destroy',
-
-            'view-permission.index',
-            'view-permission.create',
-            'view-permission.store',
-            'view-permission.show',
-            'view-permission.edit',
-            'view-permission.update',
-            'view-permission.destroy',
 
             // Users & Settings
             'system_users.index',

@@ -2,10 +2,6 @@
 
 namespace App\Providers;
 use Illuminate\Support\ServiceProvider;
-use Carbon\Carbon;
-use App\Models\Tender;
-use App\Models\TenderParticipate;
-use App\Models\TenderAwarded;
 
 class AppServiceProvider extends ServiceProvider
 {
