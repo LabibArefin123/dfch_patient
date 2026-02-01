@@ -10,7 +10,7 @@ class PatientController extends Controller
 {
     public function index()
     {
-        $patients = Patient::latest()->get();
+        $patients = Patient::latest()->paginate(10);
         return view('backend.patient_management.index', compact('patients'));
     }
 
@@ -35,22 +35,23 @@ class PatientController extends Controller
             'patient_problem_description'        => 'nullable|string|max:255',
             'patient_drug_description'           => 'nullable|string|max:255',
             'remarks'                            => 'nullable|string|max:255',
+            'date_of_patient_added'              => 'required|date',
             'documents.*'                        => 'nullable|file|mimes:pdf,jpg,jpeg,png',
         ]);
 
         /* ============================
         AUTO PATIENT CODE
-    ============================ */
+        ============================ */
         $validated['patient_code'] = 'DFCH-' . now()->format('Y') . '-' . str_pad(
             Patient::max('id') + 1,
-            4,
+            9,
             '0',
             STR_PAD_LEFT
         );
 
         /* ============================
         BOOLEAN FIX
-    ============================ */
+        ============================ */
         $validated['is_recommend'] = $request->boolean('is_recommend');
 
         /* ============================
@@ -74,7 +75,7 @@ class PatientController extends Controller
 
         /* ============================
         CREATE PATIENT
-    ============================ */
+        ============================ */
         $patient = Patient::create(
             array_merge(
                 $validated,
@@ -84,7 +85,7 @@ class PatientController extends Controller
 
         /* ============================
         DOCUMENT UPLOAD
-    ============================ */
+         ============================ */
         if ($request->hasFile('documents')) {
             foreach ($request->file('documents') as $file) {
 
@@ -132,11 +133,21 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $validated = $request->validate([
-            'patient_name'   => 'required|string|max:255',
-            'phone_1'        => 'required|string|max:20',
-            'location_type'  => 'required|in:1,2,3',
-
-            'documents.*'    => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+            'patient_name'                       => 'required|string|max:255',
+            'patient_f_name'                     => 'required|string|max:255',
+            'patient_m_name'                     => 'required|string|max:255',
+            'phone_1'                            => 'required|string|max:20',
+            'phone_2'                            => 'nullable|string|max:20',
+            'phone_f_1'                          => 'nullable|string|max:20',
+            'phone_m_1'                          => 'nullable|string|max:20',
+            'age'                                => 'required|string|max:101',
+            'gender'                             => 'required|string',
+            'location_type'                      => 'required|in:1,2,3',
+            'patient_problem_description'        => 'nullable|string|max:255',
+            'patient_drug_description'           => 'nullable|string|max:255',
+            'remarks'                            => 'nullable|string|max:255',
+            'date_of_patient_added'              => 'required|date|',
+            'documents.*'                        => 'nullable|file|mimes:pdf,jpg,jpeg,png',
         ]);
 
         /* ============================
@@ -179,12 +190,25 @@ class PatientController extends Controller
         if ($request->hasFile('documents')) {
             foreach ($request->file('documents') as $file) {
 
-                $path = $file->store('patient_documents', 'public');
+                $extension = $file->getClientOriginalExtension();
+
+                $filename = 'recommend_doc_' .
+                    now()->format('dmy') . '_' .
+                    now()->format('sih') . '.' . $extension;
+
+                $destinationPath = public_path('uploads/documents/recommend_doc');
+
+                // Create directory if not exists
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0755, true);
+                }
+
+                $file->move($destinationPath, $filename);
 
                 PatientDocument::create([
                     'patient_id'    => $patient->id,
                     'document_name' => $file->getClientOriginalName(),
-                    'file_path'     => $path,
+                    'file_path'     => 'uploads/documents/recommend_doc/' . $filename,
                     'document_type' => 'recommendation',
                 ]);
             }

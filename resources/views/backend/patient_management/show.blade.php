@@ -17,174 +17,133 @@
 @stop
 
 @section('content')
-    <div class="row">
+    <div class="card shadow-sm">
+        <div class="card-body">
 
-        {{-- BASIC INFO --}}
-        <div class="col-md-6">
-            <div class="card card-info">
-                <div class="card-header">
-                    <h3 class="card-title">Basic Information</h3>
-                </div>
-                <div class="card-body">
-                    <p><strong>Patient Code:</strong> {{ $patient->patient_code ?? 'N/A' }}</p>
-                    <p><strong>Name:</strong> {{ $patient->patient_name }}</p>
-                    <p><strong>Father:</strong> {{ $patient->patient_f_name ?? 'N/A' }}</p>
-                    <p><strong>Mother:</strong> {{ $patient->patient_m_name ?? 'N/A' }}</p>
-                    <p><strong>Age:</strong> {{ $patient->age ?? 'N/A' }}</p>
-                    <p><strong>Gender:</strong>
-                        <span class="badge badge-secondary text-uppercase">
-                            {{ $patient->gender ?? 'N/A' }}
-                        </span>
-                    </p>
-                </div>
-            </div>
-        </div>
+            <div class="row">
 
-        {{-- CONTACT --}}
-        <div class="col-md-6">
-            <div class="card card-success">
-                <div class="card-header">
-                    <h3 class="card-title">Contact Information</h3>
-                </div>
-                <div class="card-body">
-                    <p><strong>Phone 1:</strong> {{ $patient->phone_1 }}</p>
-                    <p><strong>Phone 2:</strong> {{ $patient->phone_2 ?? 'N/A' }}</p>
-                    <p><strong>Father Phone:</strong> {{ $patient->phone_f_1 ?? 'N/A' }}</p>
-                    <p><strong>Mother Phone:</strong> {{ $patient->phone_m_1 ?? 'N/A' }}</p>
-                </div>
-            </div>
-        </div>
+                {{-- LEFT: PATIENT DETAILS --}}
+                <div class="col-md-8">
 
-        {{-- LOCATION --}}
-        <div class="col-md-12">
-            <div class="card card-warning">
-                <div class="card-header">
-                    <h3 class="card-title">Location Details</h3>
-                </div>
-                <div class="card-body">
+                    <h4 class="mb-3">
+                        {{ $patient->patient_name }}
+                        <small class="text-muted">
+                            ({{ $patient->patient_code ?? 'N/A' }})
+                        </small>
+                    </h4>
 
+                    <hr>
+
+                    {{-- BASIC INFO --}}
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Father:</strong> {{ $patient->patient_f_name ?? 'N/A' }}</p>
+                            <p><strong>Mother:</strong> {{ $patient->patient_m_name ?? 'N/A' }}</p>
+                            <p><strong>Age:</strong> {{ $patient->age ?? 'N/A' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p>
+                                <strong>Gender:</strong>
+                                <span class="text-uppercase">
+                                    {{ $patient->gender ?? 'N/A' }}
+                                </span>
+                            </p>
+                            <p><strong>Registered On:</strong> {{ $patient->date_of_patient_added?->format('d M Y') }}</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    {{-- CONTACT --}}
+                    <h6 class="mb-2">Contact Information</h6>
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Phone:</strong> {{ $patient->phone_1 }}</p>
+                            <p><strong>Alt Phone:</strong> {{ $patient->phone_2 ?? 'N/A' }}</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Father Phone:</strong> {{ $patient->phone_f_1 ?? 'N/A' }}</p>
+                            <p><strong>Mother Phone:</strong> {{ $patient->phone_m_1 ?? 'N/A' }}</p>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <h6 class="mb-2">Location</h6>
                     @if ($patient->location_type == 1)
-                        <p><strong>Type:</strong> Simple</p>
                         <p>{{ $patient->location_simple }}</p>
                     @elseif ($patient->location_type == 2)
-                        <p><strong>Type:</strong> Bangladesh</p>
-                        <p><strong>House:</strong> {{ $patient->house_address }}</p>
-                        <p><strong>City:</strong> {{ $patient->city }}</p>
-                        <p><strong>District:</strong> {{ $patient->district }}</p>
-                        <p><strong>Post Code:</strong> {{ $patient->post_code }}</p>
-                    @else
-                        <p><strong>Type:</strong> Outside Bangladesh</p>
-                        <p><strong>Country:</strong> {{ $patient->country }}</p>
-                        <p><strong>Passport No:</strong> {{ $patient->passport_no }}</p>
-                    @endif
-
-                </div>
-            </div>
-        </div>
-
-        {{-- RECOMMENDATION --}}
-        <div class="col-md-12">
-            <div class="card card-danger">
-                <div class="card-header">
-                    <h3 class="card-title">Doctor Recommendation</h3>
-                </div>
-                <div class="card-body">
-
-                    @if ($patient->is_recommend)
                         <p>
-                            <span class="badge badge-success">Recommended</span>
+                            {{ $patient->house_address }}<br>
+                            {{ $patient->city }}, {{ $patient->district }} - {{ $patient->post_code }}
                         </p>
-                        <p><strong>Doctor Name:</strong> {{ $patient->recommend_doctor_name }}</p>
-                        <p><strong>Note:</strong> {{ $patient->recommend_note }}</p>
                     @else
-                        <span class="badge badge-secondary">Not Recommended</span>
+                        <p>
+                            {{ $patient->country }} <br>
+                            Passport: {{ $patient->passport_no }}
+                        </p>
                     @endif
 
-                </div>
-            </div>
-        </div>
+                    <hr>
 
-        {{-- DOCUMENTS --}}
-        <div class="col-md-12">
-            <div class="card card-primary">
-                <div class="card-header">
-                    <h3 class="card-title">Patient Documents</h3>
-                </div>
-                <div class="card-body p-0">
-                    @if ($patient->documents->count())
-                        <table class="table table-striped mb-0">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Document Name</th>
-                                    <th>Type</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach ($patient->documents as $doc)
-                                    <tr>
-                                        <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $doc->document_name ?? 'Document' }}</td>
-                                        <td>
-                                            <span class="badge badge-info text-uppercase">
-                                                {{ $doc->document_type }}
-                                            </span>
-                                        </td>
-                                        <td>
-                                            <a href="{{ asset('storage/' . $doc->file_path) }}" target="_blank"
-                                                class="btn btn-sm btn-outline-primary">
-                                                View
-                                            </a>
-                                        </td>
-                                    </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
+                    {{-- RECOMMENDATION --}}
+                    <h6 class="text-muted mb-2">Doctor Recommendation</h6>
+                    @if ($patient->is_recommend)
+                        <p><strong>Doctor:</strong> {{ $patient->recommend_doctor_name }}</p>
+                        <p class="mb-0">{{ $patient->recommend_note }}</p>
                     @else
-                        <p class="p-3 mb-0 text-muted">No documents uploaded.</p>
+                        <p class="text-muted">Not Recommended</p>
                     @endif
                 </div>
-            </div>
-        </div>
 
-        {{-- REMARKS --}}
-        <div class="col-md-6">
-            <div class="card card-secondary">
-                <div class="card-header">
-                    <h3 class="card-title">Patient's Problem</h3>
-                </div>
-                <div class="card-body">
-                    {{ $patient->patient_problem_description ?? 'No remarks' }}
-                </div>
-            </div>
-        </div>
+                {{-- RIGHT: PATIENT PHOTO --}}
+                <div class="col-md-4 text-center">
 
-        <div class="col-md-6">
-            <div class="card card-secondary">
-                <div class="card-header">
-                    <h3 class="card-title">Patient's Drug Description</h3>
-                </div>
-                <div class="card-body">
-                    {{ $patient->patient_drug_description ?? 'No remarks' }}
-                </div>
-            </div>
-        </div>
-        <div class="col-md-12">
-            <div class="card card-secondary">
-                <div class="card-header">
-                    <h3 class="card-title">Remarks</h3>
-                </div>
-                <div class="card-body">
-                    {{ $patient->remarks ?? 'No remarks' }}
-                </div>
-            </div>
-        </div>
+                    <div class="border rounded p-2 mb-3" style="width:220px;height:220px;margin:auto;">
+                        <img src="{{ $patient->photo_path ? asset($patient->photo_path) : asset('images/patient_placeholder.png') }}"
+                            alt="Patient Photo" class="img-fluid" style="object-fit:cover;width:100%;height:100%;">
+                    </div>
 
+                    <small class="text-muted">Patient Photo</small>
+
+                </div>
+
+            </div>
+
+            <hr>
+
+            {{-- DOCUMENTS --}}
+            <h6 class="text-muted mb-2">Documents</h6>
+
+            @if ($patient->documents->count())
+                <ul class="list-unstyled">
+                    @foreach ($patient->documents as $doc)
+                        <li class="mb-1">
+                            📄 {{ $doc->document_name ?? 'Document' }}
+                            <a href="{{ asset($doc->file_path) }}" target="_blank" class="ml-2">
+                                View
+                            </a>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p class="text-muted">No documents uploaded.</p>
+            @endif
+
+            <hr>
+
+            {{-- MEDICAL NOTES --}}
+            <h6 class="mb-2">Medical Notes</h6>
+            <p><strong>Problem:</strong> {{ $patient->patient_problem_description ?? 'N/A' }}</p>
+            <p><strong>Drug Description:</strong> {{ $patient->patient_drug_description ?? 'N/A' }}</p>
+
+            <hr>
+
+            {{-- REMARKS --}}
+            <h6 class="text-muted mb-2">Remarks</h6>
+            <p>{{ $patient->remarks ?? 'No remarks' }}</p>
+
+        </div>
     </div>
-      <div class="card mt-4">
-        <div class="card-body" style="height:50px;">
-            <!-- Intentionally left blank -->
-        </div>
-    </div>
+
 @stop

@@ -37,7 +37,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="small-box bg-info shadow-sm">
                     <div class="inner">
-                        <h3>00</h3>
+                        <h3>{{ $totalPatients }}</h3>
                         <p>Total Registered Patients</p>
                     </div>
                     <div class="icon">
@@ -50,7 +50,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="small-box bg-success shadow-sm">
                     <div class="inner">
-                        <h3>00</h3>
+                        <h3>{{ $todayPatients }}</h3>
                         <p>Patients Registered Today</p>
                     </div>
                     <div class="icon">
@@ -63,7 +63,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="small-box bg-warning shadow-sm">
                     <div class="inner">
-                        <h3>00</h3>
+                        <h3>{{ $weeklyPatients }}</h3>
                         <p>Weekly Patient Registration</p>
                     </div>
                     <div class="icon">
@@ -76,7 +76,7 @@
             <div class="col-lg-3 col-md-6 col-sm-12">
                 <div class="small-box bg-danger shadow-sm">
                     <div class="inner">
-                        <h3>00</h3>
+                        <h3>{{ $monthlyPatients }}</h3>
                         <p>Monthly Patient Registration</p>
                     </div>
                     <div class="icon">

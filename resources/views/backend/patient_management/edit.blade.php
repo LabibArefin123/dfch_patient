@@ -26,7 +26,7 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data" data-confirm="edit">
                 @csrf
                 @method('PUT')
 
@@ -34,59 +34,57 @@
 
                     {{-- Patient Name --}}
                     <div class="form-group col-md-6">
-                        <label>Patient Name *</label>
+                        <label>Patient's Name <span class="text-danger">*</span></label>
                         <input type="text" name="patient_name" class="form-control"
                             value="{{ old('patient_name', $patient->patient_name) }}">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Father Name</label>
+                        <label>Patient's Father Name<span class="text-danger">*</span></label>
                         <input type="text" name="patient_f_name" class="form-control"
                             value="{{ old('patient_f_name', $patient->patient_f_name) }}">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Mother Name</label>
+                        <label>Patient's Mother Name<span class="text-danger">*</span></label>
                         <input type="text" name="patient_m_name" class="form-control"
                             value="{{ old('patient_m_name', $patient->patient_m_name) }}">
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label>Age</label>
+                        <label>Age<span class="text-danger">*</span></label>
                         <input type="number" name="age" class="form-control" value="{{ old('age', $patient->age) }}">
                     </div>
 
                     <div class="form-group col-md-3">
-                        <label>Gender</label>
+                        <label>Gender<span class="text-danger">*</span></label>
                         <select name="gender" class="form-control">
                             <option value="">Select</option>
                             <option value="male" {{ $patient->gender == 'male' ? 'selected' : '' }}>Male</option>
                             <option value="female" {{ $patient->gender == 'female' ? 'selected' : '' }}>Female</option>
-                            <option value="other" {{ $patient->gender == 'other' ? 'selected' : '' }}>Other</option>
                         </select>
                     </div>
 
-                    {{-- Phones --}}
                     <div class="form-group col-md-6">
-                        <label>Phone 1 *</label>
+                        <label>Patient's Phone 1 <span class="text-danger">*</span></label>
                         <input type="text" name="phone_1" class="form-control"
                             value="{{ old('phone_1', $patient->phone_1) }}">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Phone 2</label>
+                        <label>Patient's Phone 2</label>
                         <input type="text" name="phone_2" class="form-control"
                             value="{{ old('phone_2', $patient->phone_2) }}">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Father Phone</label>
+                        <label>Patient's Father Phone</label>
                         <input type="text" name="phone_f_1" class="form-control"
                             value="{{ old('phone_f_1', $patient->phone_f_1) }}">
                     </div>
 
                     <div class="form-group col-md-6">
-                        <label>Mother Phone</label>
+                        <label>Patient's Mother Phone</label>
                         <input type="text" name="phone_m_1" class="form-control"
                             value="{{ old('phone_m_1', $patient->phone_m_1) }}">
                     </div>
@@ -145,7 +143,7 @@
                     </div>
 
                     {{-- Recommendation --}}
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label>Recommended?</label>
                         <select name="is_recommend" id="is_recommend" class="form-control">
                             <option value="0" {{ !$patient->is_recommend ? 'selected' : '' }}>No</option>
@@ -171,15 +169,25 @@
                         </div>
                     </div>
 
-                    <div class="form-group col-md-4">
+                    <div class="form-group col-md-6">
                         <label>Date</label>
                         <input type="date" name="date_of_patient_added" class="form-control"
                             value="{{ $patient->date_of_patient_added }}">
                     </div>
 
-                    <div class="form-group col-md-12">
+                    <div class="form-group col-md-6">
                         <label>Remarks</label>
                         <textarea name="remarks" class="form-control">{{ $patient->remarks }}</textarea>
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label>Patient's Problem</label>
+                        <textarea name="patient_problem_description" class="form-control">{{ $patient->patient_problem_description }}</textarea>
+                    </div>
+
+                    <div class="form-group col-md-12">
+                        <label>Patient's Drug Description</label>
+                        <textarea name="patient_drug_description" class="form-control">{{ $patient->patient_drug_description }}</textarea>
                     </div>
 
                 </div>
@@ -187,6 +195,11 @@
                 <button class="btn btn-primary mt-2">Update</button>
             </form>
 
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-body" style="height:50px;">
+            <!-- Intentionally left blank -->
         </div>
     </div>
 @stop

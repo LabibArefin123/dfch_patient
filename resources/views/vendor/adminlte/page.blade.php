@@ -5,27 +5,8 @@
 
 <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
 <link rel="stylesheet" href="{{ asset('css/custom_backend.css') }}">
-{{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"> --}}
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> --}}
-{{-- Custom Navbar Left Items --}}
-{{-- <nav class="main-header navbar navbar-expand navbar-white navbar-light border-bottom">
-    <div class="container-fluid w-100 d-flex justify-content-between align-items-center">
-        <!-- Left side -->
-        <div class="d-flex align-items-center gap-3">
-            <a href="mailto:mdlabibarefin@gmail.com" class="nav-link d-flex align-items-center">
-                <i class="fas fa-envelope me-1"></i> mdlabibarefin@gmail.com
-            </a>
-            <a href="tel:+8801776197999" class="nav-link d-flex align-items-center">
-                <i class="fas fa-phone me-1"></i> +8801776197999
-            </a>
-        </div>
-
-        <!-- Right side: Date & Time -->
-        <div class="navbar-right-time" id="navbar-time" style="font-weight:500; color:#000;">
-            <!-- JS will fill this -->
-        </div>
-    </div>
-</nav> --}}
 
 @section('classes_body', $layoutHelper->makeBodyClasses())
 @section('body_data', $layoutHelper->makeBodyData())
@@ -618,6 +599,13 @@
         @endif
     </script>
     <!-- end of notification toaster notification -->
+    <!-- start of data table format table -->
+    <script>
+        $(document).ready(function() {
+            $('#dataTables').DataTable();
+        });
+    </script>
+    <!-- end of data table format table -->
 
     <!-- start of jquery and bootstrap table -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
@@ -724,4 +712,5 @@
         });
     </script>
     {{-- end of date --}}
+@section('plugins.Datatables', true)
 @stop

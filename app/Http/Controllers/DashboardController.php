@@ -2,20 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tender;
-use App\Models\TenderLetter;
-use App\Models\TenderParticipate;
-use App\Models\TenderParticipateCompany;
-use App\Models\TenderAwarded;
-use App\Models\TenderProgress;
-use App\Models\TenderCompleted;
 use Illuminate\Http\Request;
+use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\File;
 use App\Models\User;
 
 class DashboardController extends Controller
@@ -27,12 +18,28 @@ class DashboardController extends Controller
     public function index()
     {
         $user = Auth::user();
-        $company = $user->company_name;
+
         $today = Carbon::today();
-        $daysToCheck = [15, 7, 3, 2, 1];
-        return view(
-            'backend.dashboard',
-        );
+
+        $totalPatients = Patient::count();
+
+        $todayPatients = Patient::whereDate('date_of_patient_added', $today)->count();
+
+        $weeklyPatients = Patient::whereBetween(
+            'date_of_patient_added',
+            [$today->copy()->startOfWeek(), $today->copy()->endOfWeek()]
+        )->count();
+
+        $monthlyPatients = Patient::whereMonth('date_of_patient_added', $today->month)
+            ->whereYear('date_of_patient_added', $today->year)
+            ->count();
+
+        return view('backend.dashboard', compact(
+            'totalPatients',
+            'todayPatients',
+            'weeklyPatients',
+            'monthlyPatients'
+        ));
     }
 
 
@@ -86,55 +93,60 @@ class DashboardController extends Controller
 
     public function globalSearch(Request $request)
     {
-        $term = $request->input('term');
+        $term = trim($request->input('term'));
         Log::info('Global search term: ' . $term);
+
+        if (!$term || strlen($term) < 2) {
+            return response()->json([]);
+        }
 
         $results = [];
 
-        // Try to parse date
+        /* ==========================
+       Try to parse date
+    ========================== */
         $parsedDate = null;
         try {
             $parsedDate = Carbon::parse($term)->format('Y-m-d');
         } catch (\Exception $e) {
+            // ignore
         }
 
-        $now = now()->toDateString();
-
-        $tenders = Tender::query()
+        /* ==========================
+       Patient Query
+    ========================== */
+        $patients = Patient::query()
             ->where(function ($q) use ($term) {
-                $q->where('tender_no', 'like', "%{$term}%")
-                    ->orWhere('title', 'like', "%{$term}%");
+                $q->where('patient_name', 'like', "%{$term}%")
+                    ->orWhere('patient_code', 'like', "%{$term}%")
+                    ->orWhere('phone_1', 'like', "%{$term}%")
+                    ->orWhere('phone_2', 'like', "%{$term}%")
+                    ->orWhere('phone_f_1', 'like', "%{$term}%")
+                    ->orWhere('phone_m_1', 'like', "%{$term}%")
+                    ->orWhere('patient_f_name', 'like', "%{$term}%")
+                    ->orWhere('patient_m_name', 'like', "%{$term}%")
+                    ->orWhere('district', 'like', "%{$term}%")
+                    ->orWhere('city', 'like', "%{$term}%");
             })
             ->when($parsedDate, function ($q) use ($parsedDate) {
-                $q->orWhereDate('publication_date', $parsedDate)
-                    ->orWhereDate('submission_date', $parsedDate);
+                $q->orWhereDate('date_of_patient_added', $parsedDate);
             })
+            ->limit(15)
             ->get();
 
-        foreach ($tenders as $tender) {
+        /* ==========================
+       Build Results
+    ========================== */
+        foreach ($patients as $patient) {
 
-            // 🔹 Status text from SINGLE source
-            $statusText = match ($tender->status) {
-                0 => ($tender->submission_date && $tender->submission_date < $now)
-                    ? 'Expired'
-                    : 'Pending',
-                1 => 'Not Participated',
-                2 => 'Participated',
-                3 => 'Awarded',
-                4 => 'In Progress',
-                5 => 'Completed',
-                default => 'Unknown',
-            };
-
-            $title    = $this->highlightMatch($tender->title, $term);
-            $tenderNo = $this->highlightMatch($tender->tender_no, $term);
+            $name = $this->highlightMatch($patient->patient_name, $term);
+            $code = $this->highlightMatch($patient->patient_code, $term);
+            $fathers_name = $this->highlightMatch($patient->patient_f_name, $term);
+            $mothers_name = $this->highlightMatch($patient->patient_m_name, $term);
 
             $results[] = [
-                'label' => "[{$statusText}] {$title} ({$tenderNo})",
-                'url'   => route('search.result', [
-                    'id'   => $tender->id,
-                    'type' => 'tender', // 🔥 always tender
-                ]),
+                'label' => "{$name} ({$code}) [Father's Name - {$fathers_name}] [Mother's Name - {$mothers_name}]",
+                'url'   => route('patients.show', $patient->id),
             ];
         }
 
@@ -154,153 +166,6 @@ class DashboardController extends Controller
         );
     }
 
-    public function searchResult(Request $request)
-    {
-        $tender = Tender::findOrFail($request->id);
-
-        $participate = null;
-        $awarded     = null;
-        $progress    = null;
-        $completed   = null;
-
-        /**
-         * 1️⃣ PARTICIPATE
-         */
-        if ($tender->status >= 2) {
-            $participate = TenderParticipate::with('tender')
-                ->where('tender_id', $tender->id)
-                ->latest()
-                ->first();
-        }
-
-        /**
-         * 2️⃣ AWARDED
-         */
-        if ($tender->status >= 3 && $participate) {
-            $awarded = TenderAwarded::with(['singleDelivery', 'partialDeliveries'])
-                ->where('tender_participate_id', $participate->id)
-                ->latest()
-                ->first();
-        }
-
-        /**
-         * 3️⃣ PROGRESS
-         */
-        if ($tender->status >= 4 && $awarded) {
-            $progress = TenderProgress::where('tender_awarded_id', $awarded->id)
-                ->latest()
-                ->first();
-        }
-
-        /**
-         * 4️⃣ CHECK COMPLETION BY ALL 5 STAGES
-         */
-        $isCompletedByProgress = false;
-
-        if ($progress) {
-            $isCompletedByProgress =
-                $progress->is_delivered == 1 &&
-                $progress->is_inspection_completed == 1 &&
-                $progress->is_inspection_accepted == 1 &&
-                $progress->is_bill_submitted == 1 &&
-                $progress->is_bill_received == 1;
-        }
-
-        /**
-         * 5️⃣ COMPLETED
-         */
-        if (($tender->status == 5 || $isCompletedByProgress) && $awarded) {
-            $completed = TenderCompleted::with([
-                'tenderProgress.tenderAwarded.singleDelivery',
-                'tenderProgress.tenderAwarded.partialDeliveries',
-            ])
-                ->whereHas('tenderProgress', function ($q) use ($awarded) {
-                    $q->where('tender_awarded_id', $awarded->id);
-                })
-                ->latest()
-                ->first();
-        }
-
-        /**
-         * 6️⃣ FINAL TYPE DECISION (🔥 FIXED)
-         */
-        $type = match (true) {
-            $tender->status <= 1          => 'tender',
-            $tender->status == 2          => 'participate',
-            $tender->status == 3          => 'awarded',
-            $isCompletedByProgress        => 'completed', // ✅ MAIN FIX
-            $tender->status == 5          => 'completed',
-            $progress !== null            => 'progress',
-            default                       => 'tender',
-        };
-
-        /**
-         * 7️⃣ UNIFIED DATA FOR VIEW
-         */
-        $data = match ($type) {
-            'tender'      => $tender,
-            'participate' => $participate,
-            'awarded'     => $awarded,
-            'progress'    => $progress,
-            'completed'   => $completed ?? $progress,
-            default       => $tender,
-        };
-
-        /**
-         * 8️⃣ LETTERS
-         */
-        $participateLetters = TenderLetter::where('tender_id', $tender->id)->where('type', 1)->latest()->get();
-        $awardedLetters     = TenderLetter::where('tender_id', $tender->id)->where('type', 2)->latest()->get();
-        $progressLetters    = TenderLetter::where('tender_id', $tender->id)->where('type', 3)->latest()->get();
-        $completedLetters   = TenderLetter::where('tender_id', $tender->id)->where('type', 4)->latest()->get();
-
-        /**
-         * 9️⃣ ITEMS & TOTAL
-         */
-        $items = json_decode($tender->items ?? '[]', true);
-
-        $grandTotal = collect($items)->sum(
-            fn($item) => ($item['quantity'] ?? 0) * ($item['unit_price'] ?? 0)
-        );
-
-        /**
-         * 🔟 PARTICIPANTS
-         */
-        $currentTenderParticipants = collect();
-
-        if ($participate) {
-            $currentTenderParticipants = TenderParticipateCompany::where(
-                'tender_participate_id',
-                $participate->id
-            )
-                ->orderBy('offered_price', 'asc')
-                ->get();
-        }
-
-        /**
-         * 1️⃣1️⃣ DELIVERY
-         */
-        $singleDelivery    = $awarded?->singleDelivery;
-        $partialDeliveries = $awarded?->partialDeliveries ?? collect();
-
-        return view('backend.search_result', compact(
-            'data',
-            'tender',
-            'type',
-            'items',
-            'grandTotal',
-            'currentTenderParticipants',
-            'singleDelivery',
-            'partialDeliveries',
-            'participateLetters',
-            'awardedLetters',
-            'progressLetters',
-            'completedLetters',
-            'participate',
-            'awarded',
-            'completed'
-        ));
-    }
 
     public function system_index()
     {
