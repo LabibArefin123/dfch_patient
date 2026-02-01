@@ -25,17 +25,21 @@
                 </h4>
 
                 <p style="font-size: 1rem; line-height: 1.9; text-align: justify;">
-                    <strong> <a href="https://fazlulhaquehospital.com/" target="_blank"
-                            class="dev-link fw-bold text-decoration-none">Dr. Fazlul Haque Colorectal Hospital Limited
-                            (DFCH)</a></strong> stands as a trusted center of
+                    <strong>
+                        <a href="https://fazlulhaquehospital.com/" target="_blank"
+                            class="dev-link fw-bold text-decoration-none">
+                            {{ $orgName }} (DFCH)
+                        </a>
+                    </strong>stands as a trusted center of
                     excellence in colorectal care. Established on <strong>23rd June 2024</strong>, our hospital was
                     founded with a clear purpose—to deliver compassionate, specialized, and world-class treatment for
                     colorectal conditions.
                 </p>
 
                 <p style="font-size: 1rem; line-height: 1.9; text-align: justify;">
-                    With a strong legacy of clinical expertise and continuous innovation, <a href="https://fazlulhaquehospital.com/" target="_blank"
-                            class="dev-link fw-bold text-decoration-none">DFCH</a> is dedicated to
+                    With a strong legacy of clinical expertise and continuous innovation, <a
+                        href="https://fazlulhaquehospital.com/" target="_blank"
+                        class="dev-link fw-bold text-decoration-none">DFCH</a> is dedicated to
                     addressing
                     every aspect of colorectal health—from early diagnosis to advanced surgical care—while always
                     prioritizing patient comfort, dignity, and recovery.

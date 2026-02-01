@@ -19,7 +19,7 @@
                     <tr>
                         <th style="width: 60px;">SL</th>
                         <th>Organization Name</th>
-                        <th style="width: 160px;" class="text-center">Action</th>
+                        <th style="width: 200px;" class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,7 +27,7 @@
                         <tr>
                             <td>{{ $key + 1 }}</td>
                             <td>{{ $organization->name }}</td>
-                            <td class="text-center">
+                            <td>
                                 <a href="{{ route('organizations.edit', $organization->id) }}"
                                     class="btn btn-sm btn-primary">
                                     Edit
