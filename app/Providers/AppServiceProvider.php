@@ -16,7 +16,9 @@ class AppServiceProvider extends ServiceProvider
     {
         app('router')->aliasMiddleware('permission', \App\Http\Middleware\CheckPermission::class);
         $org = Organization::select('name')->first();
+        $orgLogo = Organization::select('organization_logo_name')->first();
 
         View::share('orgName', $org?->name ?? 'Organization Name');
+        View::share('orgLogo', $orgLogo?->organization_logo_name ?? 'Organization Logo');
     }
 }

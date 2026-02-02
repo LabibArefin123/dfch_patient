@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center mb-2">
-        <h1>Organizations</h1>
+        <h1>Organization List</h1>
         <a href="{{ route('organizations.create') }}" class="btn btn-success btn-sm">
             + Add Organization
         </a>

@@ -2,7 +2,7 @@
     <div>
         © {{ date('Y') }}
         <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
-            <strong>DFCH.</strong>
+            <strong> {{ $orgLogo }}.</strong>
         </a> All rights reserved.
     </div>
 
