@@ -18,6 +18,7 @@
                 <thead class="thead-dark">
                     <tr>
                         <th class="text-center">SL</th>
+                        <th class="text-center">Logo</th>
                         <th class="text-center">Logo Name</th>
                         <th>Name</th>
                         <th class="text-center">Location</th>
@@ -29,6 +30,51 @@
                     @forelse($organizations as $key => $organization)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
+                            {{-- Organization Logo / Document --}}
+                            <td class="text-center">
+                                @php
+                                    $filePath = null;
+                                    $fileType = null;
+
+                                    if ($organization->organization_picture) {
+                                        foreach (['jpg', 'jpeg', 'png', 'webp', 'pdf'] as $ext) {
+                                            $path = public_path(
+                                                'uploads/images/backend/organization/' .
+                                                    $organization->organization_picture .
+                                                    '.' .
+                                                    $ext,
+                                            );
+
+                                            if (file_exists($path)) {
+                                                $filePath = asset(
+                                                    'uploads/images/backend/organization/' .
+                                                        $organization->organization_picture .
+                                                        '.' .
+                                                        $ext,
+                                                );
+                                                $fileType = $ext;
+                                                break;
+                                            }
+                                        }
+                                    }
+                                @endphp
+
+                                @if ($filePath)
+                                    @if ($fileType === 'pdf')
+                                        <a href="{{ $filePath }}" target="_blank"
+                                            class="badge bg-info text-decoration-none">
+                                            PDF
+                                        </a>
+                                    @else
+                                        <a href="{{ $filePath }}" target="_blank">
+                                            <img src="{{ $filePath }}" alt="Org Logo" 
+                                               style="width:200px; height:50px;">
+                                        </a>
+                                    @endif
+                                @else
+                                    <span class="badge bg-danger">No File</span>
+                                @endif
+                            </td>
                             <td class="text-center">{{ $organization->organization_logo_name }}</td>
                             <td>{{ $organization->name }}</td>
                             <td class="text-center">{{ $organization->organization_location }}</td>
