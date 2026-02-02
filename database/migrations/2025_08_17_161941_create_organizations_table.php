@@ -14,10 +14,14 @@ return new class extends Migration
         Schema::create('organizations', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
+            $table->string('organization_logo_name', 50)->nullable();
+            $table->string('organization_picture')->nullable();
+            $table->string('organization_location')->nullable();
+            $table->string('organization_slogan')->nullable();
             $table->timestamps();
         });
     }
-
+    
     /**
      * Reverse the migrations.
      */

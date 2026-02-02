@@ -7,6 +7,8 @@ use App\Models\Patient;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\File;
 use App\Models\User;
 
 class DashboardController extends Controller

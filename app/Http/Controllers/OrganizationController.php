@@ -30,10 +30,17 @@ class OrganizationController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:organizations,name',
+            'organization_logo_name' => 'required|string',
+            'organization_location' => 'required|string',
+            'organization_slogan' => 'required|string',
+            
         ]);
 
         Organization::create([
             'name' => $request->name,
+            'organization_logo_name' => $request->organization_logo_name,
+            'organization_location' => $request->organization_location,
+            'organization_slogan' => $request->organization_slogan,
         ]);
 
         return redirect()->route('organizations.index')

@@ -129,7 +129,7 @@
 
         <!-- Right: Login Button -->
         <div class="order-3 ml-auto d-flex align-items-center">
-            <a href="{{ route('login') }}" class="btn btn-outline-primary" style="margin-right: 10px;">Login</a>
+            <a href="{{ route('login') }}" class="btn login-btn" style="margin-right: 10px;">Login</a>
         </div>
 
     </div>

@@ -5,7 +5,7 @@
             <!-- Left: Logo / Image -->
             <div class="col-md-3 text-center text-md-start">
                 <!-- Placeholder for logo -->
-                <a href="{{ route('welcome') }}" class="navbar-brand d-flex align-items-center">
+                <a  href="https://fazlulhaquehospital.com/" target="_blank" class="navbar-brand d-flex align-items-center">
                     <img src="{{ asset('uploads/images/logo.png') }}" alt="DFCH Logo" class="img-fluid mb-3"
                         style="width:250px; height:50px;">
                 </a>
@@ -83,11 +83,11 @@
     <style>
         .onstage-text {
             font-family: 'OnStage', sans-serif;
-            color: #ff9900;
+            color: #ff6b6b;
         }
 
         footer a:hover {
-            color: #ff9900 !important;
+            color: #fff !important;
             text-decoration: underline;
         }
 

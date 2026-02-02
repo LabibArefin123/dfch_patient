@@ -1,3 +1,19 @@
+/* Login button: blue border, red text */
+.login-btn {
+    color: #000 !important;
+    border-color: #007bff; /* Bootstrap primary */
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover state */
+.login-btn:hover,
+.login-btn:focus {
+    background-color: #ff6b6b !important;
+    color: #ffffff !important;
+    border-color: #ff6b6b !important;
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+}
+
 .hover-bounce:hover {
     animation: bounce 0.5s;
 }

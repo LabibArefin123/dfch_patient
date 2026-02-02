@@ -12,22 +12,28 @@
 @stop
 
 @section('content')
-    <div class="card">
+    <div class="card shadow-sm">
         <div class="card-body table-responsive">
-            <table class="table table-bordered table-hover">
-                <thead class="table-light">
+            <table class="table table-striped table-hover text-nowrap" id="dataTables">
+                <thead class="thead-dark">
                     <tr>
-                        <th style="width: 60px;">SL</th>
-                        <th>Organization Name</th>
+                        <th class="text-center">SL</th>
+                        <th class="text-center">Logo Name</th>
+                        <th>Name</th>
+                        <th class="text-center">Location</th>
+                        <th class="text-center">Slogun</th>
                         <th style="width: 200px;" class="text-center">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($organizations as $key => $organization)
                         <tr>
-                            <td>{{ $key + 1 }}</td>
+                            <td class="text-center">{{ $loop->iteration }}</td>
+                            <td class="text-center">{{ $organization->organization_logo_name }}</td>
                             <td>{{ $organization->name }}</td>
-                            <td>
+                            <td class="text-center">{{ $organization->organization_location }}</td>
+                            <td class="text-center">{{ $organization->organization_slogan }}</td>
+                            <td class="text-center">
                                 <a href="{{ route('organizations.edit', $organization->id) }}"
                                     class="btn btn-sm btn-primary">
                                     Edit

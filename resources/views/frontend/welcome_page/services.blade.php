@@ -12,7 +12,7 @@
             At
             <strong>
                 <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
-                    Dr. Fazlul Haque Colorectal Hospital Limited (DFCH)
+                    {{ $orgName }} (DFCH)
                 </a>
             </strong>,
             we provide complete diagnosis and treatment for colorectal and anal conditions.
