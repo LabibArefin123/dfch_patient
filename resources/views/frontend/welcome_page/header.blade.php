@@ -76,9 +76,32 @@
 
         <!-- Left: Logo -->
         <a href="{{ route('welcome') }}" class="navbar-brand d-flex align-items-center">
-            <img src="{{ asset('uploads/images/logo.png') }}" alt="Logo" class="brand-image img-circle elevation-3"
-                style="width:350px; height:75px;">
+
+            @php
+                $logoPath = null;
+
+                if (!empty($orgPicture)) {
+                    foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
+                        $path = public_path('uploads/images/backend/organization/' . $orgPicture . '.' . $ext);
+
+                        if (file_exists($path)) {
+                            $logoPath = asset('uploads/images/backend/organization/' . $orgPicture . '.' . $ext);
+                            break;
+                        }
+                    }
+                }
+            @endphp
+
+            @if ($logoPath)
+                <img src="{{ $logoPath }}" alt="{{ $orgName }}" class="brand-image elevation-3"
+                    style="width:350px; height:75px; object-fit: contain;">
+            @else
+                {{-- Fallback --}}
+                <img src="{{ asset('uploads/images/logo.png') }}" alt="Default Logo" class="brand-image elevation-3"
+                    style="width:350px; height:75px; object-fit: contain;">
+            @endif
         </a>
+
 
         <!-- Toggle button for mobile -->
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
