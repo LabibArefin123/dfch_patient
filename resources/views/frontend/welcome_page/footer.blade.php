@@ -5,7 +5,7 @@
             <!-- Left: Logo / Image -->
             <div class="col-md-3 text-center text-md-start">
                 <!-- Placeholder for logo -->
-                <a  href="https://fazlulhaquehospital.com/" target="_blank" class="navbar-brand d-flex align-items-center">
+                <a href="https://fazlulhaquehospital.com/" target="_blank" class="navbar-brand d-flex align-items-center">
                     <img src="{{ asset('uploads/images/logo.png') }}" alt="DFCH Logo" class="img-fluid mb-3"
                         style="width:250px; height:50px;">
                 </a>
@@ -69,11 +69,10 @@
         <div class="text-center small mt-4 pt-3 border-top border-white">
             &copy;
             <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
-                DFCH
+                <strong> {{ $orgLogo }}.</strong>
             </a> All rights reserved |
             Design & Developed by
-            <a href="https://www.labib.work" target="_blank"
-                            class="dev-link fw-bold text-decoration-none">
+            <a href="https://www.labib.work" target="_blank" class="dev-link fw-bold text-decoration-none">
                 Labib Arefin
             </a>
         </div>

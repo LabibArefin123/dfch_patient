@@ -19,7 +19,7 @@ class AppServiceProvider extends ServiceProvider
         $org = Organization::select(
             'name',
             'organization_logo_name',
-            'organization_picture'
+            'organization_picture',
         )->first();
 
         View::share('orgName', $org?->name ?? 'Organization Name');
