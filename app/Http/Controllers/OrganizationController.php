@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Models\Organization;
 use Illuminate\Http\Request;
 
@@ -33,17 +34,37 @@ class OrganizationController extends Controller
             'organization_logo_name' => 'required|string',
             'organization_location' => 'required|string',
             'organization_slogan' => 'required|string',
-            
+            'organization_picture' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        $imageNameWithoutExt = null;
+
+        if ($request->hasFile('organization_picture')) {
+
+            $image      = $request->file('organization_picture');
+            $extension  = $image->getClientOriginalExtension();
+
+            // org_ddmmyyHHMMSS
+            $imageNameWithoutExt = 'org_' . now()->format('dmyHis');
+
+            $imageName = $imageNameWithoutExt . '.' . $extension;
+
+            $image->move(
+                public_path('uploads/images/backend/organization'),
+                $imageName
+            );
+        }
 
         Organization::create([
-            'name' => $request->name,
+            'name'                   => $request->name,
             'organization_logo_name' => $request->organization_logo_name,
-            'organization_location' => $request->organization_location,
-            'organization_slogan' => $request->organization_slogan,
+            'organization_location'  => $request->organization_location,
+            'organization_slogan'    => $request->organization_slogan,
+            'organization_picture'   => $imageNameWithoutExt,
         ]);
 
-        return redirect()->route('organizations.index')
+        return redirect()
+            ->route('organizations.index')
             ->with('success', 'Organization created successfully.');
     }
 
@@ -70,15 +91,57 @@ class OrganizationController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255|unique:organizations,name,' . $organization->id,
+            'organization_logo_name' => 'required|string',
+            'organization_location' => 'required|string',
+            'organization_slogan' => 'required|string',
+            'organization_picture' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
+
+        $imageNameWithoutExt = $organization->organization_picture;
+
+        if ($request->hasFile('organization_picture')) {
+
+            // 🔥 Delete old image if exists
+            if ($organization->organization_picture) {
+                foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
+                    $oldPath = public_path(
+                        'uploads/images/backend/organization/' .
+                            $organization->organization_picture . '.' . $ext
+                    );
+
+                    if (file_exists($oldPath)) {
+                        unlink($oldPath);
+                        break;
+                    }
+                }
+            }
+
+            // 🔥 Upload new image
+            $image     = $request->file('organization_picture');
+            $extension = $image->getClientOriginalExtension();
+
+            $imageNameWithoutExt = 'org_' . now()->format('dmyHis');
+            $imageName = $imageNameWithoutExt . '.' . $extension;
+
+            $image->move(
+                public_path('uploads/images/backend/organization'),
+                $imageName
+            );
+        }
 
         $organization->update([
-            'name' => $request->name,
+            'name'                   => $request->name,
+            'organization_logo_name' => $request->organization_logo_name,
+            'organization_location'  => $request->organization_location,
+            'organization_slogan'    => $request->organization_slogan,
+            'organization_picture'   => $imageNameWithoutExt,
         ]);
 
-        return redirect()->route('organizations.index')
+        return redirect()
+            ->route('organizations.index')
             ->with('success', 'Organization updated successfully.');
     }
+
 
     /**
      * Remove the specified organization from storage.
