@@ -10,6 +10,10 @@ class WelcomePageController extends Controller
     {
         return view('frontend.welcome');
     }
+    public function doc_1()
+    {
+        return view('frontend.welcome_page.doctor.doc_1');
+    }
 
     public function help()
     {
