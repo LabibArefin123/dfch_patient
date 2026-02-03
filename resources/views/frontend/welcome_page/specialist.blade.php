@@ -55,10 +55,6 @@
                         <div class="preview-hover">View More</div>
                     </div>
                 </div>
-
-                <!-- ARROWS -->
-                {{-- <button class="spec-arrow left" onclick="prevDoctor()">‹</button> --}}
-
                 <!-- SMALL IMAGE STRIP -->
                 <div class="spec-strip">
                     @foreach ($doctors as $i => $doc)
@@ -90,40 +86,60 @@
 
 <script>
     let currentDoctor = 0;
-    let autoSlide = setInterval(nextDoctor, 10000);
+    let autoSlide;
+    const slideInterval = 10000; // 10 seconds
     const doctors = @json($doctors);
 
-    function hoverDoctor(index) {
-        document.getElementById('previewImg').src =
-            "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctors[index].image;
+    // Start auto sliding
+    function startAutoSlide() {
+        clearInterval(autoSlide);
+        autoSlide = setInterval(() => nextDoctor(), slideInterval);
     }
 
-    function updateDoctor(index) {
+    // Update the main doctor display
+    function updateDoctor(index, resetTimer = true) {
+        // Update active strip
         document.querySelectorAll('.strip-item').forEach((el, i) => {
             el.classList.toggle('active', i === index);
         });
 
-        document.getElementById('previewImg').src =
-            "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctors[index].image;
-
+        // Update main image and info
+        const imgPath = "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctors[index].image;
+        document.getElementById('previewImg').src = imgPath;
         document.getElementById('docName').innerText = doctors[index].name;
         document.getElementById('docDegree').innerText = doctors[index].degree;
         document.getElementById('docDetails').innerHTML = doctors[index].details;
 
-        clearInterval(autoSlide);
-        autoSlide = setInterval(nextDoctor, 10000);
         currentDoctor = index;
+
+        // Reset auto-slide timer if needed
+        if (resetTimer) startAutoSlide();
     }
 
+    // Hover effect for preview
+    function hoverDoctor(index) {
+        const imgPath = "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctors[index].image;
+        document.getElementById('previewImg').src = imgPath;
+    }
+
+    // Go to next/previous doctor
     function nextDoctor() {
-        updateDoctor((currentDoctor + 1) % doctors.length);
+        updateDoctor((currentDoctor + 1) % doctors.length, false);
     }
 
     function prevDoctor() {
-        updateDoctor((currentDoctor - 1 + doctors.length) % doctors.length);
+        updateDoctor((currentDoctor - 1 + doctors.length) % doctors.length, false);
     }
 
-    document.querySelectorAll('.spec-card').forEach((card, index) => {
-        card.addEventListener('click', () => updateDoctor(index));
+    // Attach click events to strip items
+    document.querySelectorAll('.strip-item').forEach((item, index) => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            updateDoctor(index);
+        });
     });
+
+    // Initialize
+    updateDoctor(0);
+    startAutoSlide();
 </script>

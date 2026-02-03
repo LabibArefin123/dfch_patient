@@ -1,0 +1,42 @@
+.stat-box {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 30px 15px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.stat-box:hover {
+    transform: translateY(-6px);
+}
+
+.stat-icon-wrap {
+    width: 70px;
+    height: 70px;
+    margin-bottom: 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.stat-icon-wrap i {
+    font-size: 42px;
+    color: #ff6b6b;
+}
+
+.stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #222;
+}
+
+.stat-label {
+    font-size: 15px;
+    color: #666;
+}

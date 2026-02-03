@@ -1,5 +1,5 @@
 .department-card {
-    background: #ffffff;
+    background: #fff;
     border-radius: 14px;
     padding: 35px 20px;
     text-align: center;
@@ -10,23 +10,17 @@
 }
 
 .department-card i {
-    font-size: 36px;
+    font-size: 38px;
     color: #ff6b6b;
     margin-bottom: 15px;
-    transition: color 0.35s ease;
+    display: block;
 }
 
 .department-card h6 {
     font-weight: 600;
     margin: 0;
-    transition: color 0.35s ease;
 }
 
-#departments a {
-    color: #000;
-}
-
-/* Hover Effect */
 .department-card:hover {
     transform: scale(1.08);
     background-color: #ff6b6b;
@@ -35,11 +29,5 @@
 
 .department-card:hover i,
 .department-card:hover h6 {
-    color: #ffffff;
-}
-
-@media (max-width: 768px) {
-    .department-card {
-        padding: 28px 15px;
-    }
+    color: #fff;
 }

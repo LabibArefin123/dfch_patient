@@ -11,79 +11,70 @@
 
         <!-- Departments Grid -->
         <div class="row g-4">
+
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none">
-                    <div class="department-card">
-                        <i class="fas fa-procedures"></i>
-                        <h6>Operation Theater (OT)</h6>
-                    </div>
-                </a>
+                <div class="department-card">
+                    <i class="bi bi-scissors"></i>
+                    <h6>Operation Theater (OT)</h6>
+                </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none">
-                    <div class="department-card">
-                        <i class="fas fa-bed"></i>
-                        <h6>Post-Operative Room</h6>
-                    </div>
-                </a>
+                <div class="department-card">
+                    <!-- bi-bed replacement: bi-house-door-fill (symbolizing a room) -->
+                    <i class="bi bi-house-door-fill"></i>
+                    <h6>Post-Operative Room</h6>
+                </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none">
-                    <div class="department-card">
-                        <i class="fas fa-stethoscope"></i>
-                        <h6>Colonoscopy</h6>
-                    </div>
-                </a>
+                <div class="department-card">
+                    <i class="bi bi-heart-pulse"></i>
+                    <h6>Colonoscopy</h6>
+                </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none">
-                    <div class="department-card">
-                        <i class="fas fa-x-ray"></i>
-                        <h6>X-Ray Diagnostic</h6>
-                    </div>
-                </a>
+                <div class="department-card">
+                    <!-- bi-x-ray replacement: bi-activity (symbolizing diagnostics/activity) -->
+                    <i class="bi bi-activity"></i>
+                    <h6>X-Ray Diagnostic</h6>
+                </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none">
-                    <div class="department-card">
-                        <i class="fas fa-heartbeat"></i>
-                        <h6>ICU</h6>
-                    </div>
-                </a>
+                <div class="department-card">
+                    <i class="bi bi-heart"></i>
+                    <h6>ICU</h6>
+                </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none" style="">
-                    <div class="department-card">
-                        <i class="fas fa-brain"></i>
-                        <h6>MRI</h6>
-                    </div>
-                </a>
+                <div class="department-card">
+                    <i class="bi bi-cpu"></i>
+                    <h6>MRI</h6>
+                </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none">
-                    <div class="department-card">
-                        <i class="fas fa-flask"></i>
-                        <h6>Laboratory Services</h6>
-                    </div>
-                </a>
+                <div class="department-card">
+                    <!-- bi-flask replacement: bi-droplet (for lab/liquid tests) -->
+                    <i class="bi bi-droplet"></i>
+                    <h6>Laboratory Services</h6>
+                </div>
             </div>
 
             <div class="col-lg-3 col-md-4 col-sm-6">
-                <a href="#" class="text-decoration-none">
-                    <div class="department-card emergency">
-                        <i class="fas fa-ambulance"></i>
-                        <h6>Emergency Help</h6>
-                    </div>
-                </a>
+                <div class="department-card emergency">
+                    <!-- bi-ambulance replacement: bi-truck (for emergency vehicle) -->
+                    <i class="bi bi-truck"></i>
+                    <h6>Emergency Help</h6>
+                </div>
             </div>
+
         </div>
 
+
         <!-- Styles -->
-       <link rel="stylesheet" href="{{ asset('css/custom_department.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/custom_department.css') }}">
 </section>
