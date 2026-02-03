@@ -1,4 +1,5 @@
 <section id="services" class="content py-5">
+    <link rel="stylesheet" href="{{ asset('css/custom_service.css') }}">
     <div class="container">
         <div class="text-center mb-5">
             <h3 class="fw-bold">Our Services</h3>
@@ -79,45 +80,4 @@
             </div>
         </div>
     </div>
-
-    <style>
-        .service-card {
-            background: #ffffff;
-            border-radius: 12px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.06);
-        }
-
-        .service-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .service-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            padding: 12px 14px;
-            border-radius: 8px;
-            margin-bottom: 8px;
-            transition: background-color 0.3s ease, color 0.3s ease;
-            cursor: default;
-        }
-
-        .service-list li:hover {
-            background-color: #ff6b6b;
-            color: #ffffff;
-        }
-
-        .arrow-icon {
-            font-size: 16px;
-            line-height: 1.4;
-            color: #ff6b6b;
-            transition: color 0.3s ease;
-        }
-
-        .service-list li:hover .arrow-icon {
-            color: #ffffff;
-        }
-    </style>
 </section>

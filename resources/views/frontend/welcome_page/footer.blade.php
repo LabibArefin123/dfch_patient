@@ -1,5 +1,6 @@
 <!-- Footer -->
 <footer class="footer bg-info text-white pt-5">
+    <link rel="stylesheet" href="{{ asset('css/custom_footer.css') }}">
     <div class="container">
         <div class="row align-items-start g-4">
             <!-- Left: Logo / Image -->
@@ -77,35 +78,4 @@
             </a>
         </div>
     </div>
-
-    <!-- Icons & custom styles -->
-    <style>
-        .onstage-text {
-            font-family: 'OnStage', sans-serif;
-            color: #ff6b6b;
-        }
-
-        footer a:hover {
-            color: #fff !important;
-            text-decoration: underline;
-        }
-
-        footer h6 {
-            font-size: 16px;
-        }
-
-        footer p,
-        footer li {
-            font-size: 14px;
-        }
-
-        /* Icon spacing */
-        .fas {
-            width: 18px;
-            text-align: center;
-        }
-    </style>
-
-    <!-- FontAwesome for icons (required) -->
-    {{-- <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script> --}}
 </footer>

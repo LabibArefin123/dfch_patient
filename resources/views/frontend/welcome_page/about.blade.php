@@ -1,8 +1,13 @@
 <section id="about" class="content py-5 bg-white">
     <div class="container" data-aos="fade-up">
-
         <div class="text-center mb-5">
             <h2 class="fw-bold" style="font-size: 3rem;">About Us</h2>
+
+            <!-- Tagline in all caps -->
+            <p class="text-danger fw-bold mb-3" style="font-size: 1.25rem;">
+                THE FIRST SPECIALIZED COLORECTAL HOSPITAL IN BANGLADESH & THE SUBCONTINENT
+            </p>
+
             <p class="text-muted" style="font-size: 1.25rem;">
                 Compassionate care, advanced treatment, and a lifelong commitment to colorectal health.
             </p>
@@ -65,4 +70,5 @@
             </div>
         </div>
     </div>
+
 </section>

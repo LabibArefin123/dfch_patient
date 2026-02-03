@@ -87,7 +87,7 @@
 <script>
     let currentDoctor = 0;
     let autoSlide;
-    const slideInterval = 10000; // 10 seconds
+    const slideInterval = 15000; // 15 seconds
     const doctors = @json($doctors);
 
     // Start auto sliding

@@ -1,5 +1,4 @@
 <section id="stats" class="py-5 bg-light">
-    
     <link rel="stylesheet" href="{{ asset('css/custom_stat.css') }}">
     <div class="container">
         <div class="row text-center g-4">
@@ -9,7 +8,7 @@
                     <div class="stat-icon-wrap">
                         <i class="bi bi-emoji-smile"></i>
                     </div>
-                    <h2 class="stat-number" data-target="1200">0</h2>
+                    <h2 class="stat-number" data-target="1800">0</h2>
                     <p class="stat-label">Happy Patients</p>
                 </div>
             </div>
@@ -29,7 +28,7 @@
                     <div class="stat-icon-wrap">
                         <i class="bi bi-hospital"></i>
                     </div>
-                    <h2 class="stat-number" data-target="350">0</h2>
+                    <h2 class="stat-number" data-target="1500">0</h2>
                     <p class="stat-label">Major Operations</p>
                 </div>
             </div>
