@@ -140,7 +140,7 @@
     </div>
 
     <!-- Styles -->
-    <link rel="stylesheet" href="{{ asset('css/custom_facilities.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_facilities.css') }}">
 
     <!-- Script -->
     <script>

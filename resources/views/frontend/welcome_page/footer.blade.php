@@ -1,6 +1,6 @@
 <!-- Footer -->
 <footer class="footer bg-info text-white pt-5">
-    <link rel="stylesheet" href="{{ asset('css/custom_footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_footer.css') }}">
     <div class="container">
         <div class="row align-items-start g-4">
             <!-- Left: Logo / Image -->

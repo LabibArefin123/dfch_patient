@@ -28,5 +28,5 @@
                 class="img-fluid" style="display:block; object-fit:contain; object-position:bottom; width:90%;">
         </div>
         <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/custom_glance.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/frontend/custom_glance.css') }}">
     </section>

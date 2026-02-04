@@ -1,4 +1,5 @@
 <section class="py-5 bg-white" id="departments">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_department.css') }}">
     <div class="container">
         <!-- Section Header -->
         <div class="text-center mb-5">
@@ -74,7 +75,4 @@
 
         </div>
 
-
-        <!-- Styles -->
-        <link rel="stylesheet" href="{{ asset('css/custom_department.css') }}">
 </section>

@@ -68,7 +68,7 @@
 
 </div>
 
-<link rel="stylesheet" href="{{ asset('css/custom_header.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/custom_header.css') }}">
 <!-- Main Navbar -->
 <nav class="main-header navbar navbar-expand-md navbar-light navbar-white"
     style="padding-left: 30px; padding-right: 30px;">

@@ -94,7 +94,7 @@
     </div>
 </section>
 
-<link rel="stylesheet" href="{{ asset('css/custom_specialist.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/custom_specialist.css') }}">
 <script>
     let currentDoctor = 0;
     let autoSlide;

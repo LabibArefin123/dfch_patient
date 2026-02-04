@@ -1,5 +1,5 @@
 <section id="stats" class="py-5 bg-light">
-    <link rel="stylesheet" href="{{ asset('css/custom_stat.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_stat.css') }}">
     <div class="container">
         <div class="row text-center g-4">
 

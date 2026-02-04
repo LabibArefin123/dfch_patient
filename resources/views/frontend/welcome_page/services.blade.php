@@ -1,5 +1,5 @@
 <section id="services" class="content py-5">
-    <link rel="stylesheet" href="{{ asset('css/custom_service.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_service.css') }}">
     <div class="container">
         <div class="text-center mb-5">
             <h3 class="fw-bold">Our Services</h3>

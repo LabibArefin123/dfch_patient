@@ -1,4 +1,5 @@
 <section id="banner" class="bg-white w-100">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_banner.css') }}">
     <div id="slider" class="position-relative w-100" style="height: 70vh;">
         <!-- Slides -->
         @php
@@ -84,7 +85,7 @@
 
 </section>
 
-<link rel="stylesheet" href="{{ asset('css/custom_banner.css') }}">
+
 
 <script>
     let currentSlideIndex = 0;
