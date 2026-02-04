@@ -31,7 +31,7 @@
                             'degree' => 'MBBS, FCPS, FRCS, FACS, FASCRS',
                             'details' => 'Consultant, Colorectal, Laparoscopic & Laser Surgeon<br>
                                  Member, American Society of Colon & Rectal Surgeons',
-                            'route' => null,
+                            'route' => route('doc_2'),
                         ],
                         [
                             'image' => 'image_3.jpg',
