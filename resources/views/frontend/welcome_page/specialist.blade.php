@@ -39,21 +39,21 @@
                             'degree' => 'MBBS, DA, FCPS (Final)',
                             'details' => 'Consultant (Anesthesiology), DFCH<br>
                                  Junior Consultant, Bangladesh Medical College Hospital',
-                            'route' => null,
+                            'route' => route('doc_3'),
                         ],
                         [
                             'image' => 'image_4.jpg',
                             'name' => 'Dr. Sakib Sarwat Haque',
                             'degree' => 'MBBS, FCPS, MRCS (Edinburgh)',
                             'details' => 'Consultant Surgeon, DFCH',
-                            'route' => null,
+                            'route' => route('doc_4'),
                         ],
                         [
                             'image' => 'image_5.jpg',
                             'name' => 'Dr. Asma Husain Noora',
                             'degree' => 'MBBS, FCPS, MRCS (Edinburgh)',
                             'details' => 'Consultant Surgeon, DFCH',
-                            'route' => null,
+                            'route' => route('doc_5'),
                         ],
                     ];
                 @endphp

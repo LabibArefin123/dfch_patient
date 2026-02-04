@@ -21,8 +21,19 @@ class WelcomePageController extends Controller
         return view('frontend.welcome_page.doctor.doc_2');
     }
 
-    public function help()
+    public function doc_3()
     {
-        return view('frontend.welcome_page.public.help');
+        return view('frontend.welcome_page.doctor.doc_3');
     }
+
+    public function doc_4()
+    {
+        return view('frontend.welcome_page.doctor.doc_4');
+    }
+
+    public function doc_5()
+    {
+        return view('frontend.welcome_page.doctor.doc_5');
+    }
+
 }

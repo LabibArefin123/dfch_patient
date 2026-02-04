@@ -19,6 +19,9 @@ use Illuminate\Http\Request;
 Route::get('/', [WelcomePageController::class, 'index'])->name('welcome');
 Route::get('/prof-dr-akm-fazlul-hoque', [WelcomePageController::class, 'doc_1'])->name('doc_1');
 Route::get('/dr-asif-almas-haque', [WelcomePageController::class, 'doc_2'])->name('doc_2');
+Route::get('/dr-fatema-sharmin-anny', [WelcomePageController::class, 'doc_3'])->name('doc_3');
+Route::get('/dr-sakib-sarwat-haque', [WelcomePageController::class, 'doc_4'])->name('doc_4');
+Route::get('/dr-asma-husain-noora', [WelcomePageController::class, 'doc_5'])->name('doc_5');
 
 Route::get('/user_profile', function () {
     return view('user_profile');
@@ -81,12 +84,3 @@ Route::group(['middleware' => 'auth'], function () {
 Auth::routes([
     'register' => false, // disables register
 ]);
-
-Route::post('/logout', function (Request $request) {
-    Auth::logout();
-
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-
-    return redirect('/login');
-})->middleware('auth')->name('logout');
