@@ -224,3 +224,23 @@
     }
 </script>
 <!------end of map js--->
+
+<!------start of welcome link js--->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const welcomeUrl = "{{ route('welcome') }}";
+
+        document.querySelectorAll('a.nav-link[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+
+                // If NOT on welcome page
+                if (window.location.pathname !== new URL(welcomeUrl).pathname) {
+                    e.preventDefault();
+                    window.location.href = welcomeUrl + targetId;
+                }
+            });
+        });
+    });
+</script>
+<!------end of welcome link js--->
