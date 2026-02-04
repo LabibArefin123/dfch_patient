@@ -120,12 +120,13 @@
             el.classList.toggle('active', i === index);
         });
 
-        previewImg.src = "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctor.image;
+        previewImg.src =
+            "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctor.image;
+
         docName.innerText = doctor.name;
         docDegree.innerText = doctor.degree;
         docDetails.innerHTML = doctor.details;
 
-        // Enable link ONLY if route exists
         if (doctor.route) {
             doctorLink.href = doctor.route;
             doctorLink.style.pointerEvents = 'auto';
@@ -142,18 +143,21 @@
         updateDoctor((currentDoctor + 1) % doctors.length, false);
     }
 
-    // Hover preview
+    // ✅ FIXED: Hover updates EVERYTHING (but doesn’t reset timer)
     stripItems.forEach(item => {
-        const index = item.dataset.index;
+        const index = Number(item.dataset.index);
 
         item.addEventListener('mouseenter', () => {
-            previewImg.src =
-                "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctors[index].image;
+            updateDoctor(index, false);
+        });
+
+        item.addEventListener('mouseleave', () => {
+            updateDoctor(currentDoctor, false);
         });
 
         item.addEventListener('click', e => {
             e.preventDefault();
-            updateDoctor(index);
+            updateDoctor(index, true);
         });
     });
 
