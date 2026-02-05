@@ -49,7 +49,7 @@
                 <div class="facility-image">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/Pharmacy.jpeg') }}"
                         alt="Hospital Pharmacy"
-                        class="facility-img">
+                        class="facility-img magnify-img">
                 </div>
 
             </div>

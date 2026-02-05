@@ -51,7 +51,7 @@
                 <div class="facility-image">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/colonoscopy.jpeg') }}"
                         alt="Colonoscopy Services"
-                        class="facility-img">
+                        class="facility-img magnify-img">
                 </div>
 
             </div>

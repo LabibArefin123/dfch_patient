@@ -20,9 +20,9 @@
             <!-- TOP IMAGES -->
             <div class="facility-top-images">
                 <img src="{{ asset('uploads/images/welcome_page/facilities/xray.jpeg') }}"
-                    alt="Radiology Room" class="top-img">
+                    alt="Radiology Room" class="top-img magnify-img">
                 <img src="{{ asset('uploads/images/welcome_page/facilities/radio.jpeg') }}"
-                    alt="Imaging Room" class="top-img">
+                    alt="Imaging Room" class="top-img magnify-img">
             </div>
 
             <div class="facility-content">

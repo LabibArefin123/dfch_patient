@@ -30,7 +30,7 @@
                     <div class="col-md-5 mb-4 mb-md-0">
                         <div class="doctor-image">
                             <img src="{{ asset('uploads/images/welcome_page/doctors/image_4.jpg') }}"
-                                alt="Dr. Sakib Sarwat Haque">
+                                alt="Dr. Sakib Sarwat Haque" class="magnify-img">
 
                             <a href="#" class="book-btn">Book Now</a>
                         </div>

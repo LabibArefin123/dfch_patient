@@ -64,7 +64,7 @@
             <div class="col-lg-6">
                 <div class="about-image-placeholder">
                     <img src="{{ asset('uploads/images/welcome_page/goals/family.jpeg') }}"
-                        alt="Dr. FazlulHaque Colorectal Hospital" class=""
+                        alt="Dr. FazlulHaque Colorectal Hospital" class="magnify-img"
                         style="max-height: 480px; object-fit: cover;">
                 </div>
             </div>

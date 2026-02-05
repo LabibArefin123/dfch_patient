@@ -55,7 +55,7 @@
                 <div class="facility-image">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/cabin.jpg') }}"
                         alt="Private Cabin"
-                        class="facility-img">
+                        class="facility-img magnify-img">
                 </div>
 
             </div>

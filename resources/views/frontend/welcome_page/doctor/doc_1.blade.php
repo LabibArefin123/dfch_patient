@@ -20,7 +20,7 @@
                 <div class="col-lg-4 text-center text-lg-start">
                     <div class="doctor-avatar-wrap overlap-avatar">
                         <img src="{{ asset('uploads/images/welcome_page/doctors/image_1.jpg') }}"
-                            alt="Prof. Dr. AKM Fazlul Haque" class="doctor-avatar">
+                            alt="Prof. Dr. AKM Fazlul Haque" class="doctor-avatar magnify-img">
                     </div>
 
                     <a href="#" class="btn btn-danger mt-3 book-btn">

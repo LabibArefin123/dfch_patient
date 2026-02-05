@@ -38,7 +38,7 @@
             <div class="row align-items-center g-5">
                 <div class="col-md-5">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/icu.jpeg') }}" alt="ICU Facility at DFCH"
-                        class="img-fluid rounded shadow-sm facility-image">
+                        class="img-fluid rounded shadow-sm facility-image magnify-img">
                 </div>
                 <div class="col-md-7">
                     <h4 class="fw-bold">Intensive Care Unit (ICU)</h4>
@@ -63,7 +63,8 @@
             <div class="row align-items-center g-5">
                 <div class="col-md-5">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/laboratory.jpeg') }}"
-                        alt="Laboratory Services at DFCH" class="img-fluid rounded shadow-sm facility-image">
+                        alt="Laboratory Services at DFCH"
+                        class="img-fluid rounded shadow-sm facility-image magnify-img">
                 </div>
                 <div class="col-md-7">
                     <h4 class="fw-bold">Laboratory Services</h4>
@@ -88,7 +89,7 @@
             <div class="row align-items-center g-5">
                 <div class="col-md-5">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/ot.jpeg') }}"
-                        alt="Operation Theater at DFCH" class="img-fluid rounded shadow-sm facility-image">
+                        alt="Operation Theater at DFCH" class="img-fluid rounded shadow-sm facility-image magnify-img">
                 </div>
                 <div class="col-md-7">
                     <h4 class="fw-bold">Operation Theater (OT)</h4>
@@ -117,7 +118,8 @@
             <div class="row align-items-center g-5">
                 <div class="col-md-5">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/xray.jpeg') }}"
-                        alt="Radiology and Imaging at DFCH" class="img-fluid rounded shadow-sm facility-image">
+                        alt="Radiology and Imaging at DFCH"
+                        class="img-fluid rounded shadow-sm facility-image magnify-img">
                 </div>
                 <div class="col-md-7">
                     <h4 class="fw-bold">Radiology & Imaging</h4>

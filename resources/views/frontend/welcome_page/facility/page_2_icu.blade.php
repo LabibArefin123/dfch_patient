@@ -54,7 +54,8 @@
 
                 <!-- RIGHT IMAGE -->
                 <div class="facility-image">
-                    <img src="{{ asset('uploads/images/welcome_page/facilities/icu.jpeg') }}" alt="Intensive Care Unit" class="facility-img">
+                    <img src="{{ asset('uploads/images/welcome_page/facilities/icu.jpeg') }}" alt="Intensive Care Unit"
+                        class="facility-img magnify-img">
                 </div>
             </div>
         </div>

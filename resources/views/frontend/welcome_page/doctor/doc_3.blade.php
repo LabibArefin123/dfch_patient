@@ -29,7 +29,7 @@
                     <div class="col-md-5 mb-4 mb-md-0">
                         <div class="doctor-image">
                             <img src="{{ asset('uploads/images/welcome_page/doctors/image_3.jpg') }}"
-                                 alt="Dr. Fatema Sharmin (Anny)">
+                                alt="Dr. Fatema Sharmin (Anny)" class="magnify-img">
 
                             <a href="#" class="book-btn">Book Now</a>
                         </div>

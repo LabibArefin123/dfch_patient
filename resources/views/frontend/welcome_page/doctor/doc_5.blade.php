@@ -30,7 +30,7 @@
                     <div class="col-md-5 mb-4 mb-md-0">
                         <div class="doctor-image">
                             <img src="{{ asset('uploads/images/welcome_page/doctors/image_5.jpg') }}"
-                                alt="Dr. Asma Husain Noora">
+                                alt="Dr. Asma Husain Noora" class="magnify-img">
 
                             <a href="#" class="book-btn">Book Now</a>
                         </div>

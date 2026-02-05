@@ -57,7 +57,7 @@
                 <!-- RIGHT IMAGE -->
                 <div class="facility-image">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/ecg.jpeg') }}" alt="ECG Services"
-                        class="facility-img">
+                        class="facility-img magnify-img">
                 </div>
 
             </div>

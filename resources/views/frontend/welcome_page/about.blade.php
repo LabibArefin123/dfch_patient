@@ -18,7 +18,7 @@
             <!-- Image (Vertical Hospital Image) -->
             <div class="col-lg-5 mb-4 mb-lg-0 text-center">
                 <img src="{{ asset('uploads/images/welcome_page/about/building.jpg') }}"
-                    alt="Dr. FazlulHaque Colorectal Hospital" class="img-fluid rounded shadow-sm"
+                    alt="Dr. FazlulHaque Colorectal Hospital" class="img-fluid rounded shadow-sm magnify-img"
                     style="max-height: 480px; object-fit: cover;">
             </div>
 

@@ -57,7 +57,7 @@
                 <!-- RIGHT IMAGE -->
                 <div class="facility-image">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/post-op.jpeg') }}"
-                        alt="Post-Operative Recovery Room" class="facility-img">
+                        alt="Post-Operative Recovery Room" class="facility-img magnify-img">
                 </div>
 
             </div>

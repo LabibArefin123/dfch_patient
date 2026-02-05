@@ -1,4 +1,4 @@
-@extends('frontend.layouts.app')    
+@extends('frontend.layouts.app')
 
 <link rel="stylesheet" href="{{ asset('css/frontend/facility/page_12_emergency.css') }}">
 
@@ -49,9 +49,8 @@
                 <!-- RIGHT IMAGE -->
                 <div class="facility-image">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/ambulance.jpeg') }}" alt="Emergency Services"
-                        class="facility-img">
+                        class="facility-img magnify-img">
                 </div>
-
             </div>
         </div>
     </section>
