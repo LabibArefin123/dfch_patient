@@ -1,0 +1,92 @@
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-glass {
+    width: 95%;
+    max-width: 1200px;
+    height: 600px;
+    display: flex;
+    overflow: hidden;
+    backdrop-filter: blur(18px);
+    background: rgba(103, 186, 255, 0.15);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    transition: transform 0.8s ease;
+}
+
+/* DEFAULT → LOGIN ON RIGHT */
+.login-glass.login-active {
+    transform: translateX(0);
+}
+
+/* SLIDE TO ABOUT */
+.login-glass.about-active {
+    transform: translateX(-45%);
+}
+
+.hospital-logo {
+    width: 520px;
+    /* increased width only */
+    height: 150px;
+    /* height unchanged */
+    object-fit: contain;
+    margin-bottom: 25px;
+}
+
+.about-slider {
+    width: 55%;
+    padding: 45px;
+    background: hsl(0, 63%, 82%);
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.about-content {
+    transition: all 0.5s ease;
+}
+
+.about-content.full {
+    display: none;
+    max-height: 320px;
+    overflow-y: auto;
+    padding-right: 10px;
+}
+
+/* Scrollbar (clean & subtle) */
+.about-content.full::-webkit-scrollbar {
+    width: 5px;
+}
+
+.about-content.full::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.4);
+    border-radius: 10px;
+}
+
+.login-panel {
+    width: 45%;
+    padding: 55px;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+    .login-glass {
+        flex-direction: column;
+        height: auto;
+        transform: none !important;
+    }
+
+    .about-slider,
+    .login-panel {
+        width: 100%;
+    }
+}

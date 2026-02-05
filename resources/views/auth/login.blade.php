@@ -10,7 +10,7 @@
 
                 {{-- SHORT ABOUT --}}
                 <div class="about-content short" id="aboutShort">
-                    <h4 class="fw-bold mb-3">About DFCH</h4>
+                    <h4 class="fw-bold mb-3">About The Hospital</h4>
                     <p>
                         <strong>Dr. Fazlul Haque Colorectal Hospital Limited (DFCH)</strong> is a
                         specialized center of excellence in colorectal surgery, established on
@@ -62,7 +62,7 @@
             {{-- RIGHT : LOGIN --}}
             <div class="login-panel">
                 <div class="text-center mb-4">
-                    <h4 class="fw-bold text-success">Secure Login</h4>
+                    <h4 class="fw-bold">Secure Login</h4>
                     <p class="text-muted">Hospital Management System</p>
                 </div>
 
@@ -89,114 +89,18 @@
                             Forgot Password?
                         </a>
                     </div>
-
                 </form>
             </div>
-
         </div>
     </div>
 
     {{-- STYLES --}}
     <style>
         body {
-            background: url('{{ asset('uploads/images/login_page/wallpaper.jpg') }}') center/cover no-repeat;
-        }
-
-        .login-wrapper {
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .login-glass {
-            width: 95%;
-            max-width: 1200px;
-            height: 600px;
-            display: flex;
-            border-radius: 25px;
-            overflow: hidden;
-            backdrop-filter: blur(18px);
-            background: rgba(255, 255, 255, .15);
-            box-shadow: 0 25px 60px rgba(0, 0, 0, .35);
-            transition: transform .8s ease;
-        }
-
-        /* DEFAULT → LOGIN ON RIGHT */
-        .login-glass.login-active {
-            transform: translateX(0);
-        }
-
-        /* SLIDE TO ABOUT */
-        .login-glass.about-active {
-            transform: translateX(-45%);
-        }
-
-        .hospital-logo {
-            width: 520px;
-            /* increased width only */
-            height: 150px;
-            /* height unchanged */
-            object-fit: contain;
-            margin-bottom: 25px;
-        }
-
-        .about-slider {
-            width: 55%;
-            padding: 45px;
-            background: linear-gradient(135deg, #0f5132, #198754);
-            color: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            position: relative;
-        }
-
-        .about-content {
-            transition: all .5s ease;
-        }
-
-        .about-content.full {
-            display: none;
-            max-height: 320px;
-            overflow-y: auto;
-            padding-right: 10px;
-        }
-
-        /* Scrollbar (clean & subtle) */
-        .about-content.full::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        .about-content.full::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, .4);
-            border-radius: 10px;
-        }
-
-        .login-panel {
-            width: 45%;
-            padding: 55px;
-            background: #fff;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
-
-        /* Responsive */
-        @media(max-width:992px) {
-            .login-glass {
-                flex-direction: column;
-                height: auto;
-                transform: none !important;
-            }
-
-            .about-slider,
-            .login-panel {
-                width: 100%;
-            }
+            background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
         }
     </style>
-
+    <link rel="stylesheet" href="{{ asset('css/backend/login.css') }}">
     {{-- SLIDER JS --}}
     <script>
         function toggleAbout(showFull) {

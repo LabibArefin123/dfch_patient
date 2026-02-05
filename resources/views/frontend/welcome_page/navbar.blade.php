@@ -104,7 +104,7 @@
 
     </div>
 </nav>
-<link rel="stylesheet" href="{{ asset('css/frontend/custom_header.css') }}">
+
 <!------start of welcome link js--->
 <script>
     document.addEventListener('DOMContentLoaded', function() {

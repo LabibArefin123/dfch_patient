@@ -48,23 +48,7 @@
             once: true, // Only animate once
         });
     </script>
-    <script>
-        $(document).ready(function() {
-            $('a[href^="#"]').on('click', function(e) {
-                e.preventDefault();
-                var target = this.hash;
-                $('html, body').animate({
-                    scrollTop: $(target).offset().top
-                }, 800);
-            });
-        });
-
-        function changeBackground(color) {
-            document.getElementById('features').style.transition = "background 1.5s ease-in-out";
-            document.getElementById('features').style.background =
-                `radial-gradient(circle at center, ${color} 0%, #f8f9fa 80%)`;
-        }
-    </script>
+    
     <!-- Back to Top Button -->
     <button id="backToTop" class="back-to-top" aria-label="Back to Top">
         <i class="bi bi-arrow-up"></i>
