@@ -22,7 +22,7 @@
                 <div class="d-flex align-items-start mb-2">
                     <i class="fas fa-map-marker-alt me-2 mt-1"></i>
 
-                    <a href="#" class="custom-map-link text-white text-decoration-none d-block" id="openMapModal">
+                    <a class="custom-map-link text-white text-decoration-none d-block" id="openMapModal">
                         86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
                     </a>
                 </div>
@@ -56,10 +56,10 @@
             <div class="col-md-6">
                 <div class="row">
                     <div class="col-6">
-                        <h6 class="text-warning fw-bold mb-3">About Clinic</h6>
+                        <h6 class="text-warning fw-bold mb-3">About Hospital</h6>
                         <ul class="list-unstyled small mb-0">
-                            <li><a href="#" class="text-white text-decoration-none">About Clinic</a></li>
-                            <li><a href="#" class="text-white text-decoration-none">Careers</a></li>
+                            <li><a href="#" class="text-white text-decoration-none">About Hospital</a></li>
+                            <li><a href="#" class="text-white text-decoration-none">Career</a></li>
                             <li><a href="#" class="text-white text-decoration-none">Press & Media</a></li>
                             <li><a href="#" class="text-white text-decoration-none">Our Blog</a></li>
                             <li><a href="#" class="text-white text-decoration-none">Advertising</a></li>

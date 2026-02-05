@@ -80,12 +80,12 @@
                             placeholder="Enter password">
                     </div>
 
-                    <button class="btn btn-success w-100 py-2 rounded-pill mt-3">
+                <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
                         Login
                     </button>
 
                     <div class="text-center mt-3">
-                        <a href="{{ route('password.request') }}" id="forgotPasswordLink" class="text-decoration-none">
+                        <a href="{{ route('password.request') }}" id="forgotPasswordLink" class="text-decoration-none dev-link">
                             Forgot Password?
                         </a>
                     </div>

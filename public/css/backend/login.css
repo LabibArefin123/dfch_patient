@@ -77,6 +77,55 @@
     justify-content: center;
 }
 
+.dev-link {
+    position: relative;
+    color: #2b2b2b;
+    text-decoration: none;
+    padding: 2px 6px;
+    z-index: 1;
+    transition: color 0.25s ease;
+    overflow: hidden;
+}
+
+/* Parallelogram background */
+.dev-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 0;
+    height: 100%;
+    background-color: #ff6b6b; /* sky red */
+    transform: skewX(-20deg);
+    transform-origin: left;
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.dev-link:hover {
+    color: #fff; /* readable on red */
+}
+
+.dev-link:hover::after {
+    width: 100%;
+}
+
+/* Login button: blue border, red text */
+.login-btn {
+    color: #000 !important;
+    border-color: #ff6b6b; /* Bootstrap primary */
+    transition: all 0.2s ease-in-out;
+}
+
+/* Hover state */
+.login-btn:hover,
+.login-btn:focus {
+    background-color: #ff6b6b !important;
+    color: #ffffff !important;
+    border-color: #ff6b6b !important;
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+}
+
 /* Responsive */
 @media (max-width: 992px) {
     .login-glass {
