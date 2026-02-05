@@ -1,4 +1,4 @@
-<section id="services" class="content py-5">
+<section id="services" class="content py-5 bg-white">
     <link rel="stylesheet" href="{{ asset('css/frontend/custom_service.css') }}">
     <div class="container">
         <div class="text-center mb-5">
@@ -12,7 +12,8 @@
         <p class="mb-4">
             At
             <strong>
-                <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
+                <a href="https://fazlulhaquehospital.com/" target="_blank"
+                    class="dev-link fw-bold text-decoration-none">
                     {{ $orgName }} (DFCH)
                 </a>
             </strong>,

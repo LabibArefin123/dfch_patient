@@ -8,7 +8,7 @@
                     <div class="stat-icon-wrap">
                         <i class="bi bi-emoji-smile"></i>
                     </div>
-                    <h2 class="stat-number" data-target="1800">0</h2>
+                    <h2 class="stat-number" data-target="3000">0</h2>
                     <p class="stat-label">Happy Patients</p>
                 </div>
             </div>
@@ -28,7 +28,7 @@
                     <div class="stat-icon-wrap">
                         <i class="bi bi-hospital"></i>
                     </div>
-                    <h2 class="stat-number" data-target="1500">0</h2>
+                    <h2 class="stat-number" data-target="3500">0</h2>
                     <p class="stat-label">Major Operations</p>
                 </div>
             </div>

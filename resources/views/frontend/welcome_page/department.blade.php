@@ -1,4 +1,4 @@
-<section class="py-5 bg-white" id="departments">
+<section class="py-5 bg-green" id="departments">
     <link rel="stylesheet" href="{{ asset('css/frontend/custom_department.css') }}">
     <div class="container">
         <!-- Section Header -->

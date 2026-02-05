@@ -1,4 +1,4 @@
-<section id="specialists" class="py-5 bg-white">
+<section id="specialists" class="py-5">
     <div class="container">
 
         <!-- SECTION HEADER -->
