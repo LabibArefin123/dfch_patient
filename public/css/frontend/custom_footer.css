@@ -22,3 +22,33 @@ footer li {
     width: 18px;
     text-align: center;
 }
+.custom-map-link {
+    position: relative;
+    display: block;
+    padding: 1px 10px;
+    line-height: 1.5;
+    text-align: justify;
+    z-index: 1;
+    overflow: hidden;
+    transition: color 0.25s ease;
+}
+
+/* Parallelogram hover */
+.custom-map-link::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    width: 0;
+    background-color: #ff6b6b;
+    transform-origin: left;
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.custom-map-link:hover {
+    color: #fff;
+}
+
+.custom-map-link:hover::after {
+    width: 115%;
+}

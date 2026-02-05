@@ -25,7 +25,7 @@
 
     .dev-link {
         padding: 1px 1px;
-        text-decoration: none;
+    text-decoration: none;
         border-radius: 4px;
         transition: background-color 0.3s ease;
         color: #000;

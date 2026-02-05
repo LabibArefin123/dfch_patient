@@ -1,5 +1,5 @@
 <!-- Footer -->
-<footer class="footer bg-info text-white pt-5">
+<footer class="footer bg-info text-white pt-2">
     <link rel="stylesheet" href="{{ asset('css/frontend/custom_footer.css') }}">
     <div class="container">
         <div class="row align-items-start g-4">
@@ -18,24 +18,37 @@
             <!-- Middle: Contact Info -->
             <div class="col-md-3">
                 <h6 class="text-warning fw-bold mb-3">Contact Us</h6>
-                <p class="mb-1">
-                    <i class="fas fa-map-marker-alt me-2"></i>
-                    86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
-                </p>
+
+                <div class="d-flex align-items-start mb-2">
+                    <i class="fas fa-map-marker-alt me-2 mt-1"></i>
+
+                    <a href="#" class="custom-map-link text-white text-decoration-none d-block" id="openMapModal">
+                        86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
+                    </a>
+                </div>
+
                 <p class="mb-1">
                     <i class="fas fa-envelope me-2"></i>
-                    <a href="mailto:info@fazlulhaquehospital.com" class="text-white text-decoration-none">
+                    <a href="mailto:info@fazlulhaquehospital.com" class="text-white text-decoration-none dev-link">
                         info@fazlulhaquehospital.com
                     </a>
                 </p>
+
                 <p class="mb-1">
-                    <i class="fas fa-phone me-2"></i>01755697173 / 01755697176
+                    <i class="fas fa-phone me-2"></i>
+                    <a href="https://wa.me/8801755697176" target="_blank"
+                        class="dev-link text-white text-decoration-none">
+                        01755697176
+                    </a> /
+                    <a href="https://wa.me/01755697173" target="_blank"
+                        class="dev-link text-white text-decoration-none">
+                        01755697173
+                    </a>
                 </p>
+
                 <p class="mb-1">
-                    <i class="fas fa-phone me-2"></i>0241023155
-                </p>
-                <p class="mb-0">
-                    <i class="fas fa-phone me-2"></i>09646710720
+                    <i class="fas fa-fax me-2"></i>
+                    0241023155 / 09646710720
                 </p>
             </div>
 
