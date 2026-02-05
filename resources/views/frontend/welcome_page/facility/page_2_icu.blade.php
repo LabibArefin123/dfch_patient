@@ -1,6 +1,5 @@
 @extends('frontend.layouts.app')
 
-
 <link rel="stylesheet" href="{{ asset('css/frontend/facility/page_2_icu.css') }}">
 
 @section('title', 'Intensive Care Unit (ICU) | Dr. Fazlul Haque Colorectal Hospital Limited')
