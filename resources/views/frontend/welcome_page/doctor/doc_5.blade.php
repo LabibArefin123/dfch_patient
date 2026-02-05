@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 
 @section('title', 'Dr. Asma Husain Noora | DFCH')
-<link rel="stylesheet" href="{{ asset('css/doctor/doc_5.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/doctor/doc_5.css') }}">
 
 @section('content')
 

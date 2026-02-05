@@ -3,9 +3,8 @@
 @section('title', 'Prof. Dr. AKM Fazlul Haque | DFCH')
 
 @section('content')
-
     @include('frontend.welcome_page.header')
-    <link rel="stylesheet" href="{{ asset('css/doctor/doc_1.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/doctor/doc_1.css') }}">
 
     <!-- ================= COVER PHOTO ================= -->
     <section class="doctor-cover">

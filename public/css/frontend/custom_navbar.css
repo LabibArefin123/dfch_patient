@@ -70,7 +70,6 @@
 
 .navbar-nav .nav-item .nav-link:hover {
     color: #000;
-    transform: skewX(-20deg);
 }
 
 .navbar-nav .nav-item .nav-link:hover,

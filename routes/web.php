@@ -16,12 +16,17 @@ use App\Http\Controllers\ViewPermissionManagement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-Route::get('/home', [WelcomePageController::class, 'index'])->name('welcome');
+Route::get('/', [WelcomePageController::class, 'index'])->name('welcome');
+
+//Specialist Part
 Route::get('/prof-dr-akm-fazlul-hoque', [WelcomePageController::class, 'doc_1'])->name('doc_1');
 Route::get('/dr-asif-almas-haque', [WelcomePageController::class, 'doc_2'])->name('doc_2');
 Route::get('/dr-fatema-sharmin-anny', [WelcomePageController::class, 'doc_3'])->name('doc_3');
 Route::get('/dr-sakib-sarwat-haque', [WelcomePageController::class, 'doc_4'])->name('doc_4');
 Route::get('/dr-asma-husain-noora', [WelcomePageController::class, 'doc_5'])->name('doc_5');
+
+//Facility Part 
+Route::get('/emergency', [WelcomePageController::class, 'facility_1_emergency'])->name('facility_1');
 
 Route::get('/user_profile', function () {
     return view('user_profile');
