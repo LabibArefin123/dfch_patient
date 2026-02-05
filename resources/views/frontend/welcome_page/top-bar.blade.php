@@ -21,17 +21,16 @@
                 86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
             </a>
             <span class="mx-2">|</span>
-            <a href="https://wa.me/8801755697173" target="_blank" class="top-link">
+            <a href="https://wa.me/8801755697173" target="_blank" class="header-link">
                 <i class="fab fa-whatsapp"></i> 01755697173
             </a>
             <span>-</span>
-            <a href="https://wa.me/8801755697176" target="_blank" class="top-link">
+            <a href="https://wa.me/8801755697176" target="_blank" class="header-link">
                 01755697176
             </a>
             <span>|</span>
-            <a>
-                0241023155
-            </a>
+            <a href="#" class="phone-link header-link">0241023155</a>
+
         </div>
         <!-- Hidden Google Translate Widget -->
         <div id="google_translate_element" style="display:none;"></div>

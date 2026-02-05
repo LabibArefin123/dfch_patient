@@ -4,25 +4,18 @@
 <link rel="stylesheet" href="{{ asset('css/frontend/doctor/doc_4.css') }}">
 
 @section('content')
-
     @include('frontend.welcome_page.header')
+    <div class="doctor-banner" style="background-image: url('{{ asset('uploads/images/welcome_page/cover.png') }}');">
+        <nav class="breadcrumb-custom">
+            <a href="{{ route('welcome') }}" class="doc-link text-decoration-none">Home</a>
+            <span>></span>
+
+            <a href="{{ route('doc_4') }}" class="doc-link text-decoration-none ">Dr. Sakib Sarwat Haque</a>
+        </nav>
+    </div>
 
     <section class="doctor-profile">
-        <div class="container">
-
-            <!-- Top Banner -->
-            <div class="doctor-banner">
-                <nav class="breadcrumb-custom">
-                    <a href="{{ route('welcome') }}" class="doc-link text-decoration-none">Home</a>
-                    <span>→</span>
-                    <span>Our Specialists</span>
-                    <span>→</span>
-                    <a href="{{ route('doc_4') }}" class="doc-link text-decoration-none">
-                        Dr. Sakib Sarwat Haque
-                    </a>
-                </nav>
-            </div>
-
+       
             <div class="doctor-card">
                 <div class="row align-items-start">
 
@@ -65,7 +58,6 @@
 
                 </div>
             </div>
-        </div>
     </section>
 
     @include('frontend.welcome_page.footer')

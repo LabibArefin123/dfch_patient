@@ -1,57 +1,144 @@
-/* COVER */
-.doctor-cover {
-    width: 100%;
-    height: 300px;
-    background: #f8f9fa;
-    overflow: hidden;
-}
-
-.doctor-cover img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-}
-/* PROFILE HEADER */
-.doctor-profile-header {
-    position: relative;
-    background: #fff;
-    padding-top: 0;
-}
-
-/* AVATAR */
-.doctor-avatar-wrap {
-    display: inline-block;
-    background: #fff;
-    padding: 8px;
-    border-radius: 50%;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-}
-.overlap-avatar {
-    margin-top: -35px; /* 🔥 overlap amount */
-}
-
-/* Avatar Image */
-.doctor-avatar {
-    width: 220px;
+/* Top Banner */
+.doctor-banner {
     height: 220px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid #fff;
+    margin-bottom: 25px;
+    background: linear-gradient(135deg, #fff1f1, #ffe4e6, #fffafa);
+    display: flex;
+    align-items: flex-end;
+    padding: 20px 30px;
+}
+
+/* Breadcrumb */
+.breadcrumb-custom {
+    background: transparent;
+    padding: 0;
+    margin: 0;
+    font-size: 30px;
+    font-weight: 500;
+}
+.breadcrumb-custom a {
+    color: #000;
+    text-decoration: none;
+}
+
+.breadcrumb-custom a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb-custom span {
+    color: #000;
+    margin: 0 6px;
+}
+
+
+.doctor-card {
+    background: #ffffff;
+    border-radius: 14px;
+    padding: 35px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Image + Button */
+.doctor-image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.doctor-image img {
+    max-width: 100%;
+    width: 500px;
+    height: 500px;
+    object-fit: contain;
+    border-radius: 14px;
+    border: 4px solid #eee;
+    background: #fff;
 }
 
 /* Book Button */
 .book-btn {
-    width: 220px;
+    margin-top: 18px;
+    padding: 12px 34px;
+    background: #ff6b6b;
+    color: #fff;
     font-weight: 600;
-} /* CONTENT CARDS */
-.profile-card {
-    background: #fff;
-    padding: 25px;
-    border-radius: 8px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+    border-radius: 30px;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
-.section-title {
-    color: #dc3545;
+.book-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+    color: #fff;
+}
+
+/* Text Content */
+.doctor-name {
+    font-size: 28px;
     font-weight: 700;
+    color: #222;
+}
+
+.doctor-degree {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 15px;
+    line-height: 1.7;
+}
+
+.doctor-designation {
+    font-size: 16px;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 14px;
+}
+
+/* Section Titles */
+.section-title {
+    font-weight: 700;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* Breadcrumb Link Effect */
+.doc-link {
+    position: relative;
+    color: #2b2b2b;
+    text-decoration: none;
+    padding: 2px 6px;
+    z-index: 1;
+    transition: color 0.25s ease;
+    overflow: hidden;
+}
+
+.doc-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 0;
+    height: 100%;
+    background-color: #ff6b6b;
+    transform: skewX(-20deg);
+    transform-origin: left;
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.doc-link:hover {
+    color: #fff;
+}
+
+.doc-link:hover::after {
+    width: 100%;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .doctor-image img {
+        width: 100%;
+        height: auto;
+    }
 }
