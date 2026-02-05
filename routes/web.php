@@ -16,7 +16,7 @@ use App\Http\Controllers\ViewPermissionManagement;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
-Route::get('/', [WelcomePageController::class, 'index'])->name('welcome');
+Route::get('/home', [WelcomePageController::class, 'index'])->name('welcome');
 Route::get('/prof-dr-akm-fazlul-hoque', [WelcomePageController::class, 'doc_1'])->name('doc_1');
 Route::get('/dr-asif-almas-haque', [WelcomePageController::class, 'doc_2'])->name('doc_2');
 Route::get('/dr-fatema-sharmin-anny', [WelcomePageController::class, 'doc_3'])->name('doc_3');

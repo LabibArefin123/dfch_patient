@@ -1,10 +1,9 @@
 @extends('frontend.layouts.app')
 
 @section('title', 'Dr. Fatema Sharmin (Anny) | DFCH')
-<link rel="stylesheet" href="{{ asset('css/doctor/doc_2.css') }}">
+<link rel="stylesheet" href="{{ asset('css/doctor/doc_3.css') }}">
 
 @section('content')
-
     @include('frontend.welcome_page.header')
 
     <section class="doctor-profile">

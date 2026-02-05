@@ -1,0 +1,106 @@
+/* Links */
+.top-link {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.top-link:hover {
+    color: #ff6b6b;
+}
+
+/* Map Button */
+.map-btn {
+    background: #ff6b6b;
+    color: #fff;
+    border-radius: 20px;
+    padding: 2px 12px;
+    font-size: 13px;
+}
+
+.map-btn:hover {
+    background: #e63946;
+    color: #fff;
+}
+
+/* Social Icons */
+.social-icon {
+    width: 30px;
+    height: 30px;
+    background: #e63946; /* sky red */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    transition:
+        transform 0.3s ease,
+        background 0.3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    background: #ff6b6b;
+}
+
+.map-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+}
+
+.map-modal-content {
+    background: #fff;
+    width: 95%;
+    max-width: 650px; /* increased */
+    border-radius: 12px;
+    padding: 20px;
+    position: relative;
+    animation: zoomIn 0.3s ease;
+}
+
+.close-modal {
+    position: absolute;
+    top: 12px;
+    right: 16px;
+    font-size: 22px;
+    cursor: pointer;
+}
+
+/* Action buttons */
+.map-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.map-btn {
+    flex: 1;
+    border: none;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    color: #fff;
+    font-weight: 600;
+}
+
+/* Button colors */
+.map-btn.google {
+    background: #4285f4;
+}
+.map-btn.pathao {
+    background: #00b14f;
+}
+.map-btn.uber {
+    background: #000000;
+}
+
+.map-btn:hover {
+    opacity: 0.9;
+}
