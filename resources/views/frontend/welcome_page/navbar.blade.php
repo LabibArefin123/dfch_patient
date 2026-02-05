@@ -68,10 +68,10 @@
                         <li><a href="{{ route('facility_6') }}" class="dropdown-item">Cabin</a></li>
                         <li><a href="{{ route('facility_7') }}" class="dropdown-item">Laboratory</a></li>
                         <li><a href="{{ route('facility_8') }}" class="dropdown-item">Radiology & Imaging</a></li>
-                        <li><a href="#ecg" class="dropdown-item">ECG</a></li>
-                        <li><a href="#colonoscopy" class="dropdown-item">Colonoscopy</a></li>
-                        <li><a href="#pharmacy" class="dropdown-item">Pharmacy</a></li>
-                        <li><a href="#ambulance" class="dropdown-item">24-Hour Ambulance Service</a></li>
+                        <li><a href="{{ route('facility_9') }}" class="dropdown-item">ECG</a></li>
+                        <li><a href="{{ route('facility_10') }}" class="dropdown-item">Colonoscopy</a></li>
+                        <li><a href="{{ route('facility_11') }}" class="dropdown-item">Pharmacy</a></li>
+                        <li><a href="{{ route('facility_12') }}" class="dropdown-item">24-Hour Ambulance Service</a></li>
                     </ul>
                 </li>
 

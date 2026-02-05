@@ -34,6 +34,10 @@ Route::get('/ward', [WelcomePageController::class, 'facility_5_ward'])->name('fa
 Route::get('/cabin', [WelcomePageController::class, 'facility_6_cabin'])->name('facility_6');
 Route::get('/laboratory', [WelcomePageController::class, 'facility_7_laboratory'])->name('facility_7');
 Route::get('/radiology-and-imaging', [WelcomePageController::class, 'facility_8_radiology_and_image'])->name('facility_8');
+Route::get('/ecg', [WelcomePageController::class, 'facility_9_ecg'])->name('facility_9');
+Route::get('/colonoscopy', [WelcomePageController::class, 'facility_10_colonoscopy'])->name('facility_10');
+Route::get('/pharmacy', [WelcomePageController::class, 'facility_11_pharmacy'])->name('facility_11');
+Route::get('/24-hour-ambulance-service', [WelcomePageController::class, 'facility_12_emergency'])->name('facility_12');
 
 Route::get('/user_profile', function () {
     return view('user_profile');

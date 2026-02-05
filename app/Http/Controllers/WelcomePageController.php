@@ -76,4 +76,24 @@ class WelcomePageController extends Controller
         return view('frontend.welcome_page.facility.page_8_radiology_and_image');
     }
 
+    public function facility_9_ecg()
+    {
+        return view('frontend.welcome_page.facility.page_9_ecg');
+    }
+
+    public function facility_10_colonoscopy()
+    {
+        return view('frontend.welcome_page.facility.page_10_colonoscopy');
+    }
+
+    public function facility_11_pharmacy()
+    {
+        return view('frontend.welcome_page.facility.page_11_pharmacy');
+    }
+
+    public function facility_12_emergency()
+    {
+        return view('frontend.welcome_page.facility.page_12_emergency');
+    }
+
 }
