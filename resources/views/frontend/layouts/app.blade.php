@@ -8,7 +8,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'DFCH - Dr. Fazlul Haque Colorectal Hospital Limited') }}</title>
+    <title>{{ config('app.name', 'Dr. Fazlul Haque Colorectal Hospital Limited(DFCH)') }}</title>
 
     <!-- Fonts -->
     <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">

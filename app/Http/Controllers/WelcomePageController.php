@@ -41,4 +41,9 @@ class WelcomePageController extends Controller
         return view('frontend.welcome_page.facility.page_1_emergency');
     }
 
+    public function facility_2_icu()
+    {
+        return view('frontend.welcome_page.facility.page_2_icu');
+    }
+
 }

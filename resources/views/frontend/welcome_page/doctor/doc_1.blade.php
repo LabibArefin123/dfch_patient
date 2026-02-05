@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Prof. Dr. AKM Fazlul Haque | DFCH')
+@section('title', 'Prof. Dr. AKM Fazlul Haque | Dr. Fazlul Haque Colorectal Hospital Limited(DFCH)')
 
 @section('content')
     @include('frontend.welcome_page.header')

@@ -1,6 +1,6 @@
 @extends('frontend.layouts.app')
 
-@section('title', 'Dr. Asif Almas Haque | DFCH')
+@section('title', 'Dr. Asif Almas Haque | Dr. Fazlul Haque Colorectal Hospital Limited(DFCH)')
 <link rel="stylesheet" href="{{ asset('css/frontend/doctor/doc_2.css') }}">
 
 @section('content')

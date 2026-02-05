@@ -27,6 +27,7 @@ Route::get('/dr-asma-husain-noora', [WelcomePageController::class, 'doc_5'])->na
 
 //Facility Part 
 Route::get('/emergency', [WelcomePageController::class, 'facility_1_emergency'])->name('facility_1');
+Route::get('/icu', [WelcomePageController::class, 'facility_2_icu'])->name('facility_2');
 
 Route::get('/user_profile', function () {
     return view('user_profile');

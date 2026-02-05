@@ -61,7 +61,7 @@
 
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('facility_1') }}" class="dropdown-item">Emergency Department</a></li>
-                        <li><a href="#icu" class="dropdown-item">Intensive Care Unit (ICU)</a></li>
+                        <li><a href="{{ route('facility_2') }}" class="dropdown-item">Intensive Care Unit (ICU)</a></li>
                         <li><a href="#ot" class="dropdown-item">Operation Theatre (OT)</a></li>
                         <li><a href="#post-op" class="dropdown-item">Post Operative Room</a></li>
                         <li><a href="#ward" class="dropdown-item">Ward</a></li>
