@@ -46,4 +46,34 @@ class WelcomePageController extends Controller
         return view('frontend.welcome_page.facility.page_2_icu');
     }
 
+    public function facility_3_ot()
+    {
+        return view('frontend.welcome_page.facility.page_3_ot');
+    }
+
+    public function facility_4_post_op()
+    {
+        return view('frontend.welcome_page.facility.page_4_post_operative_room');
+    }
+
+    public function facility_5_ward()
+    {
+        return view('frontend.welcome_page.facility.page_5_ward');
+    }
+
+    public function facility_6_cabin()
+    {
+        return view('frontend.welcome_page.facility.page_6_private_cabin');
+    }
+
+    public function facility_7_laboratory()
+    {
+        return view('frontend.welcome_page.facility.page_7_laboratory');
+    }
+
+    public function facility_8_radiology_and_image()
+    {
+        return view('frontend.welcome_page.facility.page_8_radiology_and_image');
+    }
+
 }

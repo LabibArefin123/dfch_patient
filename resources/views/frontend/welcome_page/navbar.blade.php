@@ -62,12 +62,12 @@
                     <ul class="dropdown-menu">
                         <li><a href="{{ route('facility_1') }}" class="dropdown-item">Emergency Department</a></li>
                         <li><a href="{{ route('facility_2') }}" class="dropdown-item">Intensive Care Unit (ICU)</a></li>
-                        <li><a href="#ot" class="dropdown-item">Operation Theatre (OT)</a></li>
-                        <li><a href="#post-op" class="dropdown-item">Post Operative Room</a></li>
-                        <li><a href="#ward" class="dropdown-item">Ward</a></li>
-                        <li><a href="#cabin" class="dropdown-item">Cabin</a></li>
-                        <li><a href="#lab" class="dropdown-item">Laboratory</a></li>
-                        <li><a href="#radiology" class="dropdown-item">Radiology & Imaging</a></li>
+                        <li><a href="{{ route('facility_3') }}" class="dropdown-item">Operation Theatre (OT)</a></li>
+                        <li><a href="{{ route('facility_4') }}" class="dropdown-item">Post Operative Room</a></li>
+                        <li><a href="{{ route('facility_5') }}" class="dropdown-item">Ward</a></li>
+                        <li><a href="{{ route('facility_6') }}" class="dropdown-item">Cabin</a></li>
+                        <li><a href="{{ route('facility_7') }}" class="dropdown-item">Laboratory</a></li>
+                        <li><a href="{{ route('facility_8') }}" class="dropdown-item">Radiology & Imaging</a></li>
                         <li><a href="#ecg" class="dropdown-item">ECG</a></li>
                         <li><a href="#colonoscopy" class="dropdown-item">Colonoscopy</a></li>
                         <li><a href="#pharmacy" class="dropdown-item">Pharmacy</a></li>

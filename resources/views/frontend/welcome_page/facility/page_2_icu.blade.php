@@ -9,7 +9,7 @@
         <div class="container">
             <!-- Breadcrumb -->
             <div class="facility-breadcrumb">
-                <a href="{{ route('welcome') }}">Home</a>
+                <a href="{{ route('welcome') }}" class="dev-link">Home</a>
                 <span>/</span>
                 <span>Intensive Care Unit (ICU)</span>
             </div>

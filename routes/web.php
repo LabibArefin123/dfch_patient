@@ -26,8 +26,14 @@ Route::get('/dr-sakib-sarwat-haque', [WelcomePageController::class, 'doc_4'])->n
 Route::get('/dr-asma-husain-noora', [WelcomePageController::class, 'doc_5'])->name('doc_5');
 
 //Facility Part 
-Route::get('/emergency', [WelcomePageController::class, 'facility_1_emergency'])->name('facility_1');
-Route::get('/icu', [WelcomePageController::class, 'facility_2_icu'])->name('facility_2');
+Route::get('/emergency-department', [WelcomePageController::class, 'facility_1_emergency'])->name('facility_1');
+Route::get('/intensive-care-unit-icu', [WelcomePageController::class, 'facility_2_icu'])->name('facility_2');
+Route::get('/operation-theater-ot', [WelcomePageController::class, 'facility_3_ot'])->name('facility_3');
+Route::get('/post-operative-recovery-room', [WelcomePageController::class, 'facility_4_post_op'])->name('facility_4');
+Route::get('/ward', [WelcomePageController::class, 'facility_5_ward'])->name('facility_5');
+Route::get('/cabin', [WelcomePageController::class, 'facility_6_cabin'])->name('facility_6');
+Route::get('/laboratory', [WelcomePageController::class, 'facility_7_laboratory'])->name('facility_7');
+Route::get('/radiology-and-imaging', [WelcomePageController::class, 'facility_8_radiology_and_image'])->name('facility_8');
 
 Route::get('/user_profile', function () {
     return view('user_profile');
