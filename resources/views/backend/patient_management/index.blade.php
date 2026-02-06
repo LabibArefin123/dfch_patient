@@ -62,19 +62,52 @@
                             </td>
 
                             <td>
-                                <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                    {{ $patient->phone_1 }}</a><br>
-                                <small class="text-muted">
-                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Alt
-                                        {{ $patient->phone_2 ?? 'N/A' }}</a>
-                                </small>
+                                {{-- Primary Phone --}}
+                                @if ($patient->phone_1)
+                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                        {{ $patient->phone_1 }}
+                                    </a>
+                                @else
+                                    <span class="text-muted">N/A</span>
+                                @endif
+
                                 <br>
+
+                                {{-- Alternate Phone --}}
                                 <small class="text-muted">
-                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Father's Phone {{ $patient->phone_f_1 ?? 'N/A' }}</a>
+                                    @if ($patient->phone_2)
+                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                            Alt: {{ $patient->phone_2 }}
+                                        </a>
+                                    @else
+                                        Alt: N/A
+                                    @endif
                                 </small>
+
                                 <br>
+
+                                {{-- Father Phone --}}
                                 <small class="text-muted">
-                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Mother's Phone {{ $patient->phone_m_1 ?? 'N/A' }}</a>
+                                    @if ($patient->phone_f_1)
+                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                            Father’s Phone: {{ $patient->phone_f_1 }}
+                                        </a>
+                                    @else
+                                        Father’s Phone: N/A
+                                    @endif
+                                </small>
+
+                                <br>
+
+                                {{-- Mother Phone --}}
+                                <small class="text-muted">
+                                    @if ($patient->phone_m_1)
+                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                            Mother’s Phone: {{ $patient->phone_m_1 }}
+                                        </a>
+                                    @else
+                                        Mother’s Phone: N/A
+                                    @endif
                                 </small>
                             </td>
 
@@ -97,7 +130,8 @@
                             </td>
 
                             <td>
-                                <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">{{ optional($patient->date_of_patient_added)->format('d M Y') }}</a>
+                                <a href="{{ route('patients.show', $patient->id) }}"
+                                    class="dev-link">{{ optional($patient->date_of_patient_added)->format('d M Y') }}</a>
                             </td>
 
                             <td>
