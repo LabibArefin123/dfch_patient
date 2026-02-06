@@ -113,11 +113,39 @@
 
                             <td>
                                 @if ($patient->location_type == 1)
-                                    {{ $patient->location_simple }}
+                                    @if ($patient->location_simple)
+                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                            {{ $patient->location_simple }}
+                                        </a>
+                                    @else
+                                        <span class="text-muted">N/A</span>
+                                    @endif
                                 @elseif ($patient->location_type == 2)
-                                    {{ $patient->city }}, {{ $patient->district }}
+                                    @if ($patient->city)
+                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                            {{ $patient->city }}
+                                        </a>
+                                    @else
+                                        <span class="text-muted">City: N/A</span>
+                                    @endif
+
+                                    <br>
+
+                                    @if ($patient->district)
+                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                            {{ $patient->district }}
+                                        </a>
+                                    @else
+                                        <span class="text-muted">District: N/A</span>
+                                    @endif
                                 @else
-                                    {{ $patient->country }}
+                                    @if ($patient->country)
+                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
+                                            {{ $patient->country }}
+                                        </a>
+                                    @else
+                                        <span class="text-muted">N/A</span>
+                                    @endif
                                 @endif
                             </td>
 

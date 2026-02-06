@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="mb-0">Patient Details {{  }}</h1>
+        <h1 class="mb-0">Patient Details </h1>
         <div>
             <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-sm btn-primary">
                 <i class="fas fa-edit"></i> Edit
@@ -67,7 +67,7 @@
                     <h6 class="text-muted mt-3">Contact Information</h6>
                     <div class="row">
                         <div class="col-md-3">
-                            <input type="text" class="form-control mb-2" disabled value="📞 {{ $patient->phone_1 }}">
+                            <input type="text" class="form-control mb-2" disabled value="Personal: {{ $patient->phone_1 }}">
                         </div>
                         <div class="col-md-3">
                             <input type="text" class="form-control mb-2" disabled
