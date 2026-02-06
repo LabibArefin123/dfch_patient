@@ -11,7 +11,12 @@ class PatientSeeder extends Seeder
 {
     public function run(): void
     {
-        $faker = Faker::create('en_US'); // FIXED
+        // Faker (South Asia friendly)
+        $faker = Faker::create('en_IN');
+
+        /* ===============================
+           BANGLADESH REALISTIC DATA
+        =============================== */
 
         $maleNames = [
             'Abdul Karim',
@@ -28,25 +33,36 @@ class PatientSeeder extends Seeder
         $femaleNames = [
             'Ayesha Begum',
             'Fatema Khatun',
-            'Rokeya Begum',
-            'Salma Akter',
-            'Nasrin Akter',
             'Shamima Begum'
         ];
 
         $fatherNames = [
-            'Abdul Gafur',
-            'Abdul Jalil',
-            'Md. Yunus',
-            'Md. Sirajul Islam',
-            'Md. Shamsul Haque'
+            'dsaFWFAGWG WADW',
+            'SGWBWDAWD FWFWArWR',
+            'SDADADSDA WFOIAJFOJOW',
+            'SFWAFDAWD DOAWJPJ',
+            'WRRWFAGGDA WDAS',
+            'SDSDDDDHW FPOAKFK',
+            'WGWHEHHHH DAWFAFGG',
+            'WDGWBBWAFD DADAFG',
+            'WAWGWGGGG OJOFIVOH',
+            'HHHHQEDQQ MGOICD',
+            'GWIJWDOJAOD DKPOAJPJA',
+            'WPPWOAFPJJ KDPAWPDWAJ',
+            'WJFOJAFOHF MMDPADPOKP'
         ];
 
         $motherNames = [
-            'Rahima Begum',
-            'Halima Khatun',
-            'Amena Begum',
-            'Nurjahan Begum'
+            'WIFAOFHHOF DAWDBAB',
+            'WJFPWAJFFW JFPOJWJFA',
+            'SAFsFAFWFW FPOAWJFO',
+            'GGWNWRNTA WJFPADW',
+            'OJDOIHWDOAN AKFPDAW',
+            'WDYHIAUHDIU PWOJFAPJFJPOAF',
+            'JDOWJAODJ FAKFPJWAPJFPJD',
+            'JDPAJDJJJAO AKFKAGPFKAWWW',
+            'GIJIOWGONF APLDPWLAD',
+            'DWADADWWFFWA DWJDPWAJFPWJA'
         ];
 
         $districts = [
@@ -60,14 +76,64 @@ class PatientSeeder extends Seeder
             'Sylhet'
         ];
 
+        // Common colorectal & hospital problems (BD context)
+        $patientProblems = [
+            'Chronic abdominal pain with constipation',
+            'Rectal bleeding during defecation',
+            'Hemorrhoids with pain and itching',
+            'Anal fissure with bleeding',
+            'Suspected colorectal carcinoma',
+            'Chronic diarrhea with weight loss',
+            'Inflammatory bowel disease symptoms',
+            'Post-operative follow-up visit',
+            'Lower abdominal pain with anemia',
+            'Piles with prolapse'
+        ];
+
+        // Realistic OPD / hospital drug prescriptions
+        $drugPrescriptions = [
+            'Tab Napa 500mg 1+1+1 after meal',
+            'Tab Seclo 20mg 1+0+1 before meal',
+            'Tab Domperidone 10mg 1+0+1',
+            'Syrup Lactulose 15ml at night',
+            'Tab Flagyl 400mg 1+1+1 for 7 days',
+            'Tab Cefixime 200mg 1+0+1 for 5 days',
+            'Suppository Proctosedyl at night',
+            'ORS after each loose motion',
+            'Tab Napa Extend 665mg 1+0+1',
+            'Injection Ceftriaxone 1gm IV BD'
+        ];
+
+        // Local doctor names
+        $doctorNames = [
+            'Dr. ABC',
+            'Dr. AAA',
+            'Dr. ACC',
+            'Dr. ABCD',
+            'Dr. AZZZZ',
+            'Dr. XYZ',
+            'Dr. ZZZ',
+            'Dr. AAAS',
+            'Dr. SDDDA',
+            'Dr. MBO'
+        ];
+
+        /* ===============================
+           DATE RANGE
+        =============================== */
+
         $startDate = Carbon::now()->subMonths(6)->startOfDay();
         $endDate   = Carbon::now()->startOfDay();
 
         $baseId = Patient::max('id') ?? 0;
 
+        /* ===============================
+           MAIN LOOP
+        =============================== */
+
         while ($startDate <= $endDate) {
 
-            $dailyCount = $startDate->isToday() ? 120 : rand(100, 300);
+            $dailyCount = $startDate->isToday() ? 120 : rand(100, 150);
 
             for ($i = 1; $i <= $dailyCount; $i++) {
 
@@ -79,7 +145,7 @@ class PatientSeeder extends Seeder
                     ? $maleNames[array_rand($maleNames)]
                     : $femaleNames[array_rand($femaleNames)];
 
-                $locationType = rand(1, 3);
+                $locationType = rand(1, 3); // 1=Local, 2=Domestic, 3=Foreign
                 $isRecommend  = rand(1, 100) <= 15;
 
                 Patient::create([
@@ -92,32 +158,36 @@ class PatientSeeder extends Seeder
                     'age'    => rand(2, 85),
                     'gender' => $gender,
 
-                    'location_type' => $locationType,
+                    'location_type'   => $locationType,
+                    'location_simple' => $locationType === 1 ? 'Local Area' : null,
 
-                    'location_simple' => $locationType == 1 ? 'Local Area' : null,
+                    // Domestic patient
+                    'house_address' => $locationType === 2 ? $faker->streetAddress : null,
+                    'city'          => $locationType === 2 ? 'Dhaka' : null,
+                    'district'      => $locationType === 2 ? $districts[array_rand($districts)] : null,
+                    'post_code'     => $locationType === 2 ? rand(1000, 9999) : null,
 
-                    'house_address' => $locationType == 2 ? $faker->streetAddress : null,
-                    'city'          => $locationType == 2 ? 'Dhaka' : null,
-                    'district'      => $locationType == 2 ? $districts[array_rand($districts)] : null,
-                    'post_code'     => $locationType == 2 ? rand(1000, 9999) : null,
+                    // Foreign patient
+                    'country'     => $locationType === 3 ? 'India' : null,
+                    'passport_no' => $locationType === 3 ? strtoupper($faker->bothify('A######')) : null,
 
-                    'country'     => $locationType == 3 ? 'India' : null,
-                    'passport_no' => $locationType == 3 ? strtoupper($faker->bothify('A######')) : null,
-
+                    // Bangladesh mobile format
                     'phone_1'   => '01' . rand(3, 9) . rand(10000000, 99999999),
                     'phone_2'   => rand(0, 1) ? '01' . rand(3, 9) . rand(10000000, 99999999) : null,
                     'phone_f_1' => rand(0, 1) ? '01' . rand(3, 9) . rand(10000000, 99999999) : null,
                     'phone_m_1' => rand(0, 1) ? '01' . rand(3, 9) . rand(10000000, 99999999) : null,
 
-                    'patient_problem_description' => $faker->sentence(6),
-                    'patient_drug_description'    => $faker->sentence(5),
+                    // Medical info
+                    'patient_problem_description' => $patientProblems[array_rand($patientProblems)],
+                    'patient_drug_description'    => $drugPrescriptions[array_rand($drugPrescriptions)],
 
+                    // Recommendation
                     'is_recommend'           => $isRecommend,
-                    'recommend_doctor_name' => $isRecommend ? 'Dr. ' . $faker->name : null,
-                    'recommend_note'        => $isRecommend ? $faker->sentence(8) : null,
+                    'recommend_doctor_name' => $isRecommend ? $doctorNames[array_rand($doctorNames)] : null,
+                    'recommend_note'        => $isRecommend ? 'Advised further evaluation and follow-up.' : null,
 
                     'date_of_patient_added' => $startDate->toDateString(),
-                    'remarks'               => rand(0, 1) ? $faker->sentence(6) : null,
+                    'remarks'               => rand(0, 1) ? 'Patient advised follow-up visit.' : null,
 
                     'created_at' => $startDate->copy()->addMinutes(rand(1, 600)),
                     'updated_at' => $startDate->copy()->addMinutes(rand(1, 600)),

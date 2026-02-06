@@ -4,12 +4,12 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1>Patient Details</h1>
+        <h1 class="mb-0">Patient Details {{  }}</h1>
         <div>
             <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-sm btn-primary">
                 <i class="fas fa-edit"></i> Edit
             </a>
-            <a href="{{ route('patients.index') }}" class="btn btn-sm btn-warning">
+            <a href="{{ route('patients.index') }}" class="btn btn-sm btn-secondary">
                 <i class="fas fa-arrow-left"></i> Back
             </a>
         </div>
@@ -22,128 +22,120 @@
 
             <div class="row">
 
-                {{-- LEFT: PATIENT DETAILS --}}
-                <div class="col-md-8">
+                {{-- LEFT CONTENT --}}
+                <div class="col-md-9">
 
-                    <h4 class="mb-3">
-                        {{ $patient->patient_name }}
-                        <small class="text-muted">
-                            ({{ $patient->patient_code ?? 'N/A' }})
-                        </small>
-                    </h4>
-
-                    <hr>
+                    {{-- HEADER --}}
+                    <div class="form-group">
+                        <label>Patient Name</label>
+                        <input type="text" class="form-control" disabled
+                            value="{{ $patient->patient_name }} ({{ $patient->patient_code ?? 'N/A' }})">
+                    </div>
 
                     {{-- BASIC INFO --}}
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Father:</strong> {{ $patient->patient_f_name ?? 'N/A' }}</p>
-                            <p><strong>Mother:</strong> {{ $patient->patient_m_name ?? 'N/A' }}</p>
-                            <p><strong>Age:</strong> {{ $patient->age ?? 'N/A' }}</p>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Father's Name</label>
+                                <input type="text" class="form-control" disabled
+                                    value="{{ $patient->patient_f_name ?? 'N/A' }}">
+                            </div>
                         </div>
-                        <div class="col-md-6">
-                            <p>
-                                <strong>Gender:</strong>
-                                <span class="text-uppercase">
-                                    {{ $patient->gender ?? 'N/A' }}
-                                </span>
-                            </p>
-                            <p><strong>Registered On:</strong> {{ $patient->date_of_patient_added?->format('d M Y') }}</p>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Mother's Name</label>
+                                <input type="text" class="form-control" disabled
+                                    value="{{ $patient->patient_m_name ?? 'N/A' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Age</label>
+                                <input type="text" class="form-control" disabled value="{{ $patient->age ?? 'N/A' }}">
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label>Gender</label>
+                                <input type="text" class="form-control text-uppercase" disabled
+                                    value="{{ $patient->gender ?? 'N/A' }}">
+                            </div>
                         </div>
                     </div>
-
-                    <hr>
 
                     {{-- CONTACT --}}
-                    <h6 class="mb-2">Contact Information</h6>
-                    <div class="row mb-3">
-                        <div class="col-md-6">
-                            <p><strong>Phone:</strong> {{ $patient->phone_1 }}</p>
-                            <p><strong>Alt Phone:</strong> {{ $patient->phone_2 ?? 'N/A' }}</p>
+                    <h6 class="text-muted mt-3">Contact Information</h6>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control mb-2" disabled value="📞 {{ $patient->phone_1 }}">
                         </div>
-                        <div class="col-md-6">
-                            <p><strong>Father Phone:</strong> {{ $patient->phone_f_1 ?? 'N/A' }}</p>
-                            <p><strong>Mother Phone:</strong> {{ $patient->phone_m_1 ?? 'N/A' }}</p>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control mb-2" disabled
+                                value="Alt: {{ $patient->phone_2 ?? 'N/A' }}">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control mb-2" disabled
+                                value="Father: {{ $patient->phone_f_1 ?? 'N/A' }}">
+                        </div>
+                        <div class="col-md-3">
+                            <input type="text" class="form-control mb-2" disabled
+                                value="Mother: {{ $patient->phone_m_1 ?? 'N/A' }}">
                         </div>
                     </div>
 
-                    <hr>
+                    {{-- LOCATION --}}
+                    <h6 class="text-muted mt-3">Location</h6>
 
-                    <h6 class="mb-2">Location</h6>
-                    @if ($patient->location_type == 1)
-                        <p>{{ $patient->location_simple }}</p>
-                    @elseif ($patient->location_type == 2)
-                        <p>
-                            {{ $patient->house_address }}<br>
-                            {{ $patient->city }}, {{ $patient->district }} - {{ $patient->post_code }}
-                        </p>
-                    @else
-                        <p>
-                            {{ $patient->country }} <br>
-                            Passport: {{ $patient->passport_no }}
-                        </p>
-                    @endif
-
-                    <hr>
+                    <p class="form-control mb-2 bg-light">
+                        @if ($patient->location_type == 1)
+                            {{ $patient->location_simple }}
+                        @elseif ($patient->location_type == 2)
+                            {{ $patient->house_address }},
+                            {{ $patient->city }},
+                            {{ $patient->district }} - {{ $patient->post_code }}
+                        @else
+                            {{ $patient->country }}
+                            <br>
+                            <strong>Passport:</strong> {{ $patient->passport_no }}
+                        @endif
+                    </p>
 
                     {{-- RECOMMENDATION --}}
-                    <h6 class="text-muted mb-2">Doctor Recommendation</h6>
                     @if ($patient->is_recommend)
-                        <p><strong>Doctor:</strong> {{ $patient->recommend_doctor_name }}</p>
-                        <p class="mb-0">{{ $patient->recommend_note }}</p>
-                    @else
-                        <p class="text-muted">Not Recommended</p>
+                        <h6 class="text-muted mt-3">Doctor Recommendation</h6>
+                        <input type="text" class="form-control mb-2" disabled
+                            value="{{ $patient->recommend_doctor_name }}">
+
+                        <input type="text" class="form-control mb-3" disabled
+                            value="{{ $patient->recommend_note ?? '-' }}">
                     @endif
+
+                    {{-- MEDICAL --}}
+                    <h6 class="text-muted">Medical Information</h6>
+                    <textarea class="form-control mb-2" rows="2" disabled>{{ $patient->patient_problem_description ?? 'N/A' }}</textarea>
+                    <h6 class="text-muted">Drug Information</h6>
+                    <textarea class="form-control mb-3" rows="2" disabled>{{ $patient->patient_drug_description ?? 'N/A' }}</textarea>
+
+                    {{-- REMARKS --}}
+                    <h6 class="text-muted">Remarks</h6>
+                    <textarea class="form-control" rows="2" disabled>{{ $patient->remarks ?? 'No remarks' }}</textarea>
+
                 </div>
 
-                {{-- RIGHT: PATIENT PHOTO --}}
-                <div class="col-md-4 text-center">
-
-                    <div class="border rounded p-2 mb-3" style="width:220px;height:220px;margin:auto;">
-                        <img src="{{ $patient->photo_path ? asset($patient->photo_path) : asset('images/patient_placeholder.png') }}"
-                            alt="Patient Photo" class="img-fluid" style="object-fit:cover;width:100%;height:100%;">
+                {{-- RIGHT IMAGE --}}
+                <div class="col-md-3 d-flex justify-content-end">
+                    <div class="text-center">
+                        <div class="border rounded mb-2" style="width:200px;height:200px;">
+                            <img src="{{ $patient->photo_path ? asset($patient->photo_path) : asset('images/patient_placeholder.png') }}"
+                                alt="Patient Photo" class="img-fluid rounded"
+                                style="width:100%;height:100%;object-fit:cover;">
+                        </div>
+                        <small class="text-muted">Patient Photo</small>
                     </div>
-
-                    <small class="text-muted">Patient Photo</small>
-
                 </div>
 
             </div>
 
-            <hr>
-
-            {{-- DOCUMENTS --}}
-            <h6 class="text-muted mb-2">Documents</h6>
-
-            @if ($patient->documents->count())
-                <ul class="list-unstyled">
-                    @foreach ($patient->documents as $doc)
-                        <li class="mb-1">
-                            📄 {{ $doc->document_name ?? 'Document' }}
-                            <a href="{{ asset($doc->file_path) }}" target="_blank" class="ml-2">
-                                View
-                            </a>
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <p class="text-muted">No documents uploaded.</p>
-            @endif
-
-            <hr>
-
-            {{-- MEDICAL NOTES --}}
-            <h6 class="mb-2">Medical Notes</h6>
-            <p><strong>Problem:</strong> {{ $patient->patient_problem_description ?? 'N/A' }}</p>
-            <p><strong>Drug Description:</strong> {{ $patient->patient_drug_description ?? 'N/A' }}</p>
-
-            <hr>
-
-            {{-- REMARKS --}}
-            <h6 class="text-muted mb-2">Remarks</h6>
-            <p>{{ $patient->remarks ?? 'No remarks' }}</p>
-
         </div>
     </div>
-
 @stop

@@ -93,7 +93,7 @@
 }
 
 /* Show dropdown on hover */
-.navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+.navbar-nav .nav-item.dropdown:hover > .dropdown-menu {
     display: block;
 }
 
@@ -121,6 +121,18 @@
     transition:
         background-color 0.25s ease,
         color 0.25s ease;
+}
+
+.dropdown-submenu > .dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 100%;
+    /* margin-left: 6px; */
+}
+
+.dropdown-submenu:hover > .dropdown-menu {
+    display: block;
 }
 
 .dropdown-menu .dropdown-item:hover {
