@@ -86,10 +86,20 @@
     top: 100%;
     left: 0;
     display: none;
-    min-width: 200px;
+    min-width: 220px;
     padding: 8px 0;
     background-color: #ffffff;
     z-index: 9999;
+    border-radius: 6px;
+}
+
+.navbar-nav .dropdown-menu.show {
+    display: block;
+    animation: dropdownFade 0.25s ease-in-out;
+}
+
+.navbar-nav .nav-item.dropdown > .nav-link {
+    background-color: transparent !important;
 }
 
 /* Show dropdown on hover */

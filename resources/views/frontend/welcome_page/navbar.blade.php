@@ -54,8 +54,9 @@
                     <a href="#departments" class="nav-link custom-link">Departments</a>
                 </li>
 
-                <li class="nav-item dropdown">
-                    <a href="#facilities" class="nav-link custom-link dropdown-toggle">
+                <li class="nav-item dropdown" id="facility_dropdown">
+                    <a href="#facilities" class="nav-link custom-link dropdown-toggle" role="button"
+                        aria-expanded="false">
                         Facilities
                     </a>
 
@@ -71,10 +72,10 @@
                         <li><a href="{{ route('facility_9') }}" class="dropdown-item">ECG</a></li>
                         <li><a href="{{ route('facility_10') }}" class="dropdown-item">Colonoscopy</a></li>
                         <li><a href="{{ route('facility_11') }}" class="dropdown-item">Pharmacy</a></li>
-                        <li><a href="{{ route('facility_12') }}" class="dropdown-item">24-Hour Ambulance Service</a></li>
+                        <li><a href="{{ route('facility_12') }}" class="dropdown-item">24-Hour Ambulance Service</a>
+                        </li>
                     </ul>
                 </li>
-
 
                 <li class="nav-item">
                     <a href="#services" class="nav-link custom-link">Services</a>
@@ -99,7 +100,7 @@
 
         <!-- Right: Login Button -->
         <div class="order-3 ml-auto d-flex align-items-center">
-            <a href="{{ route('login') }}" class="btn login-btn" style="margin-right: 10px;">Login</a>
+            <a href="{{ route('login') }}" class="btn login-btn" style="margin-right: 10px;">Hospital Login</a>
         </div>
 
     </div>
@@ -124,3 +125,34 @@
     });
 </script>
 <!------end of welcome link js--->
+
+<!------start of facility js--->
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdown = document.getElementById('facility_dropdown');
+    const toggleLink = dropdown.querySelector('.dropdown-toggle');
+    const menu = dropdown.querySelector('.dropdown-menu');
+
+    // Toggle on click
+    toggleLink.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const isOpen = menu.classList.contains('show');
+        document.querySelectorAll('.dropdown-menu.show').forEach(el => {
+            el.classList.remove('show');
+        });
+
+        menu.classList.toggle('show', !isOpen);
+        toggleLink.setAttribute('aria-expanded', !isOpen);
+    });
+
+    // Close when clicking outside
+    document.addEventListener('click', function (e) {
+        if (!dropdown.contains(e.target)) {
+            menu.classList.remove('show');
+            toggleLink.setAttribute('aria-expanded', 'false');
+        }
+    });
+});
+</script>
+<!------end of facility js--->
