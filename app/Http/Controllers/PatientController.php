@@ -7,10 +7,40 @@ use App\Models\PatientDocument;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
-{
-    public function index()
+{   
+    public function index(Request $request)
     {
-        $patients = Patient::latest()->paginate(10);
+        $patients = Patient::query()
+
+            ->when($request->patient_code, function ($q) use ($request) {
+                $q->where('patient_code', 'like', '%' . $request->patient_code . '%');
+            })
+
+            ->when($request->patient_name, function ($q) use ($request) {
+                $q->where('patient_name', 'like', '%' . $request->patient_name . '%');
+            })
+
+            ->when($request->phone, function ($q) use ($request) {
+                $q->where(function ($sub) use ($request) {
+                    $sub->where('phone_1', 'like', '%' . $request->phone . '%')
+                        ->orWhere('phone_2', 'like', '%' . $request->phone . '%')
+                        ->orWhere('phone_f_1', 'like', '%' . $request->phone . '%')
+                        ->orWhere('phone_m_1', 'like', '%' . $request->phone . '%');
+                });
+            })
+
+            ->when($request->gender, function ($q) use ($request) {
+                $q->where('gender', $request->gender);
+            })
+
+            ->when($request->filled('is_recommend'), function ($q) use ($request) {
+                $q->where('is_recommend', $request->is_recommend);
+            })
+
+            ->latest()
+            ->paginate(10)
+            ->withQueryString();
+
         return view('backend.patient_management.index', compact('patients'));
     }
 
