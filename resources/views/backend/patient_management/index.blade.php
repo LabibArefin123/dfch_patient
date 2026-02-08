@@ -19,27 +19,31 @@
 
                 <h4 class="mb-4">Filter Patients</h4>
 
-                {{-- ROW 1 : Patient Identity --}}
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <input type="text" name="patient_code" class="form-control form-control-sm"
-                            placeholder="Patient Code" value="{{ request('patient_code') }}">
-                    </div>
-
-                    <div class="col-md-4">
-                        <input type="text" name="patient_name" class="form-control form-control-sm"
-                            placeholder="Patient Name" value="{{ request('patient_name') }}">
-                    </div>
-
-                    <div class="col-md-4">
-                        <input type="text" name="phone" class="form-control form-control-sm" placeholder="Phone Number"
-                            value="{{ request('phone') }}">
-                    </div>
-                </div>
-
                 {{-- ROW 2 : Patient Type --}}
                 <div class="row mb-3">
                     <div class="col-md-4">
+                        <label class="small text-muted">Location Type</label>
+                        <select name="location_type" class="form-control form-control-sm">
+                            <option value="">All Locations</option>
+                            <option value="1" {{ request('location_type') == '1' ? 'selected' : '' }}>
+                                Local Area
+                            </option>
+                            <option value="2" {{ request('location_type') == '2' ? 'selected' : '' }}>
+                                City / District
+                            </option>
+                            <option value="3" {{ request('location_type') == '3' ? 'selected' : '' }}>
+                                Abroad
+                            </option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="small text-muted">Location Keyword</label>
+                        <input type="text" name="location_value" class="form-control form-control-sm"
+                            placeholder="e.g. Dhaka, Chittagong, USA" value="{{ request('location_value') }}">
+                    </div>
+                    <div class="col-md-4">
+                        <label class="small text-muted">Filter by Gender</label>
                         <select name="gender" class="form-control form-control-sm">
                             <option value="">All Genders</option>
                             <option value="male" {{ request('gender') == 'male' ? 'selected' : '' }}>Male</option>
@@ -48,6 +52,7 @@
                     </div>
 
                     <div class="col-md-4">
+                        <label class="small text-muted">Filter by Recommendation</label>
                         <select name="is_recommend" class="form-control form-control-sm">
                             <option value="">Recommended?</option>
                             <option value="1" {{ request('is_recommend') === '1' ? 'selected' : '' }}>Yes</option>
@@ -55,13 +60,13 @@
                         </select>
                     </div>
 
-                    
+
                 </div>
 
                 {{-- ROW 3 : Date Range --}}
                 <div class="row mb-3">
                     <div class="col-md-3">
-                       <label class="small text-muted">Date Range</label>
+                        <label class="small text-muted">Date Range</label>
                         <select name="date_filter" class="form-control form-control-sm">
                             <option value="">All Time</option>
                             <option value="last_week" {{ request('date_filter') == 'last_week' ? 'selected' : '' }}>
@@ -78,7 +83,7 @@
                                 Custom Date Range
                             </option>
                         </select>
-                    
+
                     </div>
 
                     <div class="col-md-3">

@@ -7,34 +7,61 @@ use App\Models\PatientDocument;
 use Illuminate\Http\Request;
 
 class PatientController extends Controller
-{   
+{
     public function index(Request $request)
     {
         $patients = Patient::query()
-
-            ->when($request->patient_code, function ($q) use ($request) {
-                $q->where('patient_code', 'like', '%' . $request->patient_code . '%');
-            })
-
-            ->when($request->patient_name, function ($q) use ($request) {
-                $q->where('patient_name', 'like', '%' . $request->patient_name . '%');
-            })
-
-            ->when($request->phone, function ($q) use ($request) {
-                $q->where(function ($sub) use ($request) {
-                    $sub->where('phone_1', 'like', '%' . $request->phone . '%')
-                        ->orWhere('phone_2', 'like', '%' . $request->phone . '%')
-                        ->orWhere('phone_f_1', 'like', '%' . $request->phone . '%')
-                        ->orWhere('phone_m_1', 'like', '%' . $request->phone . '%');
-                });
-            })
-
+            // Gender
             ->when($request->gender, function ($q) use ($request) {
                 $q->where('gender', $request->gender);
             })
 
+            // Recommendation
             ->when($request->filled('is_recommend'), function ($q) use ($request) {
                 $q->where('is_recommend', $request->is_recommend);
+            })
+
+            // Location Type + Value
+            ->when($request->location_type, function ($q) use ($request) {
+
+                $q->where('location_type', $request->location_type);
+
+                if ($request->filled('location_value')) {
+
+                    if ($request->location_type == 1) {
+                        // Local area
+                        $q->where('location_simple', 'like', '%' . $request->location_value . '%');
+                    }
+
+                    if ($request->location_type == 2) {
+                        // City or District
+                        $q->where(function ($sub) use ($request) {
+                            $sub->where('city', 'like', '%' . $request->location_value . '%')
+                                ->orWhere('district', 'like', '%' . $request->location_value . '%');
+                        });
+                    }
+
+                    if ($request->location_type == 3) {
+                        // Abroad
+                        $q->where('country', 'like', '%' . $request->location_value . '%');
+                    }
+                }
+            })
+
+            // Date Filter
+            ->when($request->date_filter, function ($q) use ($request) {
+                match ($request->date_filter) {
+                    'last_week' => $q->whereDate('date_of_patient_added', '>=', now()->subWeek()),
+                    'last_month' => $q->whereDate('date_of_patient_added', '>=', now()->subMonth()),
+                    'last_2_months' => $q->whereDate('date_of_patient_added', '>=', now()->subMonths(2)),
+                    'custom' => $q->when($request->from_date && $request->to_date, function ($qq) use ($request) {
+                        $qq->whereBetween('date_of_patient_added', [
+                            $request->from_date,
+                            $request->to_date
+                        ]);
+                    }),
+                    default => null
+                };
             })
 
             ->latest()
@@ -43,6 +70,7 @@ class PatientController extends Controller
 
         return view('backend.patient_management.index', compact('patients'));
     }
+
 
     public function create()
     {

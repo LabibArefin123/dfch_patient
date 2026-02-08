@@ -44,7 +44,7 @@
                     </p>
 
                     <p class="doctor-designation">
-                        Junior Consultant (Anesthesiology)<br>
+                        Assistant Professor (Anesthesiology)<br>
                         Bangladesh Medical College Hospital, Dhanmondi
                     </p>
 
