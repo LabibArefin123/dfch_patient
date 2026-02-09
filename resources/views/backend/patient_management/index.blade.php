@@ -13,106 +13,12 @@
 
 @section('content')
     {{-- Filter Form --}}
-    <div class="card mb-3">
-        <div class="card-body">
-            <form method="GET" action="{{ route('patients.index') }}">
-
-                <h4 class="mb-4">Filter Patients</h4>
-
-                {{-- ROW 2 : Patient Type --}}
-                <div class="row mb-3">
-                    <div class="col-md-4">
-                        <label class="small text-muted">Location Type</label>
-                        <select name="location_type" class="form-control form-control-sm">
-                            <option value="">All Locations</option>
-                            <option value="1" {{ request('location_type') == '1' ? 'selected' : '' }}>
-                                Local Area
-                            </option>
-                            <option value="2" {{ request('location_type') == '2' ? 'selected' : '' }}>
-                                City / District
-                            </option>
-                            <option value="3" {{ request('location_type') == '3' ? 'selected' : '' }}>
-                                Abroad
-                            </option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="small text-muted">Location Keyword</label>
-                        <input type="text" name="location_value" class="form-control form-control-sm"
-                            placeholder="e.g. Dhaka, Chittagong, USA" value="{{ request('location_value') }}">
-                    </div>
-                    <div class="col-md-4">
-                        <label class="small text-muted">Filter by Gender</label>
-                        <select name="gender" class="form-control form-control-sm">
-                            <option value="">All Genders</option>
-                            <option value="male" {{ request('gender') == 'male' ? 'selected' : '' }}>Male</option>
-                            <option value="female" {{ request('gender') == 'female' ? 'selected' : '' }}>Female</option>
-                        </select>
-                    </div>
-
-                    <div class="col-md-4">
-                        <label class="small text-muted">Filter by Recommendation</label>
-                        <select name="is_recommend" class="form-control form-control-sm">
-                            <option value="">Recommended?</option>
-                            <option value="1" {{ request('is_recommend') === '1' ? 'selected' : '' }}>Yes</option>
-                            <option value="0" {{ request('is_recommend') === '0' ? 'selected' : '' }}>No</option>
-                        </select>
-                    </div>
-
-
-                </div>
-
-                {{-- ROW 3 : Date Range --}}
-                <div class="row mb-3">
-                    <div class="col-md-3">
-                        <label class="small text-muted">Date Range</label>
-                        <select name="date_filter" class="form-control form-control-sm">
-                            <option value="">All Time</option>
-                            <option value="last_week" {{ request('date_filter') == 'last_week' ? 'selected' : '' }}>
-                                Last Week
-                            </option>
-                            <option value="last_month" {{ request('date_filter') == 'last_month' ? 'selected' : '' }}>
-                                Last Month
-                            </option>
-                            <option value="last_2_months"
-                                {{ request('date_filter') == 'last_2_months' ? 'selected' : '' }}>
-                                Last 2 Months
-                            </option>
-                            <option value="custom" {{ request('date_filter') == 'custom' ? 'selected' : '' }}>
-                                Custom Date Range
-                            </option>
-                        </select>
-
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="small text-muted">Start Date</label>
-                        <input type="date" name="from_date" class="form-control form-control-sm"
-                            value="{{ request('from_date') }}">
-                    </div>
-
-                    <div class="col-md-3">
-                        <label class="small text-muted">End Date</label>
-                        <input type="date" name="to_date" class="form-control form-control-sm"
-                            value="{{ request('to_date') }}">
-                    </div>
-
-                    <div class="col-md-3 d-flex align-items-end">
-                        <button type="submit" class="btn btn-primary w-10">
-                            Apply Filter
-                        </button>
-                    </div>
-                </div>
-
-            </form>
-        </div>
-    </div>
+    @include('backend.patient_management.filter.filter')
 
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
-            <table class="table table-striped table-hover text-nowrap" id="dataTables">
-                <thead class="thead-dark">
+            <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
+                <thead class="table-dark">
                     <tr>
                         <th>#</th>
                         <th>Patient Code</th>
@@ -122,177 +28,90 @@
                         <th>Phone</th>
                         <th>Location</th>
                         <th>Recommended</th>
-                        <th>Date of Patient Added</th>
+                        <th>Date Added</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
-
-                <tbody>
-                    @forelse ($patients as $patient)
-                        <tr>
-                            <td>{{ $loop->iteration }}</td>
-
-                            <td>
-                                <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                    {{ $patient->patient_code ?? '—' }}</a>
-                            </td>
-
-                            <td>
-                                <a href="{{ route('patients.show', $patient->id) }}"
-                                    class="dev-link"><strong>{{ $patient->patient_name }}</strong></a><br>
-                                <small class="text-muted">
-                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link"> Father's Name:
-                                        {{ $patient->patient_f_name ?? 'N/A' }}</a>
-                                </small><br>
-                                <small class="text-muted">
-                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">Mother's Name:
-                                        {{ $patient->patient_m_name ?? 'N/A' }}
-                                </small></a>
-                            </td>
-
-                            <td><a href="{{ route('patients.show', $patient->id) }}"
-                                    class="dev-link">{{ $patient->age ?? '—' }}</a></td>
-
-                            <td>
-                                <a href="{{ route('patients.show', $patient->id) }}"
-                                    class="dev-link">{{ ucfirst($patient->gender ?? '—') }}</a>
-                            </td>
-
-                            <td>
-                                {{-- Primary Phone --}}
-                                @if ($patient->phone_1)
-                                    <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                        {{ $patient->phone_1 }}
-                                    </a>
-                                @else
-                                    <span class="text-muted">N/A</span>
-                                @endif
-
-                                <br>
-
-                                {{-- Alternate Phone --}}
-                                <small class="text-muted">
-                                    @if ($patient->phone_2)
-                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                            Alt: {{ $patient->phone_2 }}
-                                        </a>
-                                    @else
-                                        Alt: N/A
-                                    @endif
-                                </small>
-
-                                <br>
-
-                                {{-- Father Phone --}}
-                                <small class="text-muted">
-                                    @if ($patient->phone_f_1)
-                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                            Father’s Phone: {{ $patient->phone_f_1 }}
-                                        </a>
-                                    @else
-                                        Father’s Phone: N/A
-                                    @endif
-                                </small>
-
-                                <br>
-
-                                {{-- Mother Phone --}}
-                                <small class="text-muted">
-                                    @if ($patient->phone_m_1)
-                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                            Mother’s Phone: {{ $patient->phone_m_1 }}
-                                        </a>
-                                    @else
-                                        Mother’s Phone: N/A
-                                    @endif
-                                </small>
-                            </td>
-
-                            <td>
-                                @if ($patient->location_type == 1)
-                                    @if ($patient->location_simple)
-                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                            {{ $patient->location_simple }}
-                                        </a>
-                                    @else
-                                        <span class="text-muted">N/A</span>
-                                    @endif
-                                @elseif ($patient->location_type == 2)
-                                    @if ($patient->city)
-                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                            {{ $patient->city }}
-                                        </a>
-                                    @else
-                                        <span class="text-muted">City: N/A</span>
-                                    @endif
-
-                                    <br>
-
-                                    @if ($patient->district)
-                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                            {{ $patient->district }}
-                                        </a>
-                                    @else
-                                        <span class="text-muted">District: N/A</span>
-                                    @endif
-                                @else
-                                    @if ($patient->country)
-                                        <a href="{{ route('patients.show', $patient->id) }}" class="dev-link">
-                                            {{ $patient->country }}
-                                        </a>
-                                    @else
-                                        <span class="text-muted">N/A</span>
-                                    @endif
-                                @endif
-                            </td>
-
-                            <td>
-                                @if ($patient->is_recommend)
-                                    <span class="badge badge-success">Yes</span>
-                                @else
-                                    <span class="badge badge-secondary">No</span>
-                                @endif
-                            </td>
-
-                            <td>
-                                <a href="{{ route('patients.show', $patient->id) }}"
-                                    class="dev-link">{{ optional($patient->date_of_patient_added)->format('d M Y') }}</a>
-                            </td>
-
-                            <td>
-                                <a href="{{ route('patients.show', $patient->id) }}" class="btn btn-info btn-sm mb-1">
-                                    View
-                                </a>
-
-                                <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-warning btn-sm mb-1">
-                                    Edit
-                                </a>
-
-                                <form action="{{ route('patients.destroy', $patient->id) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-danger btn-sm"
-                                        onclick="triggerDeleteModal('{{ route('patients.destroy', $patient->id) }}')">
-                                        Delete
-                                    </button>
-                                </form>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="10" class="text-center text-muted">
-                                No patients found.
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
             </table>
         </div>
     </div>
+
     <div class="card mt-4">
         <div class="card-body" style="height:50px;">
             <!-- Intentionally left blank -->
         </div>
     </div>
 @stop
+@section('js')
+    <script>
+        $(function() {
+            $('#patientsTable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: {
+                    url: "{{ route('patients.index') }}",
+                    data: function(d) {
+                        d.gender = $('select[name=gender]').val();
+                        d.is_recommend = $('select[name=is_recommend]').val();
+                        d.location_type = $('select[name=location_type]').val();
+                        d.location_value = $('input[name=location_value]').val();
+                        d.date_filter = $('select[name=date_filter]').val();
+                        d.from_date = $('input[name=from_date]').val();
+                        d.to_date = $('input[name=to_date]').val();
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        name: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'patient_code',
+                        name: 'patient_code'
+                    },
+                    {
+                        data: 'name',
+                        name: 'patient_name'
+                    },
+                    {
+                        data: 'age',
+                        name: 'age'
+                    },
+                    {
+                        data: 'gender',
+                        name: 'gender'
+                    },
+                    {
+                        data: 'phone',
+                        name: 'phone_1'
+                    },
+                    {
+                        data: 'location',
+                        name: 'location'
+                    },
+                    {
+                        data: 'is_recommend',
+                        name: 'is_recommend'
+                    },
+                    {
+                        data: 'date',
+                        name: 'date_of_patient_added'
+                    },
+                    {
+                        data: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+
+            // Reload table when filter form changes
+            $('form').on('submit', function(e) {
+                e.preventDefault();
+                $('#patientsTable').DataTable().ajax.reload();
+            });
+        });
+    </script>
+@endsection

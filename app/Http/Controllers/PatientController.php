@@ -5,70 +5,128 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use App\Models\PatientDocument;
 use Illuminate\Http\Request;
+use Yajra\DataTables\Facades\DataTables;
 
 class PatientController extends Controller
 {
+
     public function index(Request $request)
     {
-        $patients = Patient::query()
-            // Gender
-            ->when($request->gender, function ($q) use ($request) {
-                $q->where('gender', $request->gender);
-            })
+        if ($request->ajax()) {
 
-            // Recommendation
-            ->when($request->filled('is_recommend'), function ($q) use ($request) {
-                $q->where('is_recommend', $request->is_recommend);
-            })
+            $patients = Patient::query()
 
-            // Location Type + Value
-            ->when($request->location_type, function ($q) use ($request) {
+                // Gender
+                ->when(
+                    $request->gender,
+                    fn($q) =>
+                    $q->where('gender', $request->gender)
+                )
 
-                $q->where('location_type', $request->location_type);
+                // Recommendation
+                ->when(
+                    $request->filled('is_recommend'),
+                    fn($q) =>
+                    $q->where('is_recommend', $request->is_recommend)
+                )
 
-                if ($request->filled('location_value')) {
+                // Location filtering
+                ->when($request->location_type, function ($q) use ($request) {
 
-                    if ($request->location_type == 1) {
-                        // Local area
-                        $q->where('location_simple', 'like', '%' . $request->location_value . '%');
+                    $q->where('location_type', $request->location_type);
+
+                    if ($request->filled('location_value')) {
+
+                        if ($request->location_type == 1) {
+                            $q->where('location_simple', 'like', "%{$request->location_value}%");
+                        }
+
+                        if ($request->location_type == 2) {
+                            $q->where(function ($sub) use ($request) {
+                                $sub->where('city', 'like', "%{$request->location_value}%")
+                                    ->orWhere('district', 'like', "%{$request->location_value}%");
+                            });
+                        }
+
+                        if ($request->location_type == 3) {
+                            $q->where('country', 'like', "%{$request->location_value}%");
+                        }
                     }
+                })
 
-                    if ($request->location_type == 2) {
-                        // City or District
-                        $q->where(function ($sub) use ($request) {
-                            $sub->where('city', 'like', '%' . $request->location_value . '%')
-                                ->orWhere('district', 'like', '%' . $request->location_value . '%');
-                        });
-                    }
+                // Date filters
+                ->when(
+                    $request->date_filter === 'last_week',
+                    fn($q) =>
+                    $q->whereDate('date_of_patient_added', '>=', now()->subWeek())
+                )
+                ->when(
+                    $request->date_filter === 'last_month',
+                    fn($q) =>
+                    $q->whereDate('date_of_patient_added', '>=', now()->subMonth())
+                )
+                ->when(
+                    $request->date_filter === 'last_2_months',
+                    fn($q) =>
+                    $q->whereDate('date_of_patient_added', '>=', now()->subMonths(2))
+                )
+                ->when(
+                    $request->filled(['from_date', 'to_date']),
+                    fn($q) =>
+                    $q->whereBetween('date_of_patient_added', [$request->from_date, $request->to_date])
+                );
 
-                    if ($request->location_type == 3) {
-                        // Abroad
-                        $q->where('country', 'like', '%' . $request->location_value . '%');
-                    }
-                }
-            })
+            return DataTables::of($patients)
+                ->addIndexColumn()
 
-            // Date Filter
-            ->when($request->date_filter, function ($q) use ($request) {
-                match ($request->date_filter) {
-                    'last_week' => $q->whereDate('date_of_patient_added', '>=', now()->subWeek()),
-                    'last_month' => $q->whereDate('date_of_patient_added', '>=', now()->subMonth()),
-                    'last_2_months' => $q->whereDate('date_of_patient_added', '>=', now()->subMonths(2)),
-                    'custom' => $q->when($request->from_date && $request->to_date, function ($qq) use ($request) {
-                        $qq->whereBetween('date_of_patient_added', [
-                            $request->from_date,
-                            $request->to_date
-                        ]);
-                    }),
-                    default => null
-                };
-            })
+                ->editColumn(
+                    'name',
+                    fn($p) =>
+                    '<strong>' . $p->patient_name . '</strong><br>
+                 <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
+                 <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small>'
+                )
 
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
+                ->editColumn('gender', fn($p) => ucfirst($p->gender))
 
-        return view('backend.patient_management.index', compact('patients'));
+                ->editColumn(
+                    'phone',
+                    fn($p) =>
+                    $p->phone_1 . '<br><small>Alt: ' . ($p->phone_2 ?? 'N/A') . '</small>'
+                )
+
+                ->addColumn('location', function ($p) {
+                    if ($p->location_type == 1) return $p->location_simple;
+                    if ($p->location_type == 2) return $p->city . '<br>' . $p->district;
+                    return $p->country;
+                })
+
+                ->editColumn(
+                    'is_recommend',
+                    fn($p) =>
+                    $p->is_recommend
+                        ? '<span class="badge badge-success">Yes</span>'
+                        : '<span class="badge badge-secondary">No</span>'
+                )
+
+                ->editColumn(
+                    'date',
+                    fn($p) =>
+                    optional($p->date_of_patient_added)->format('d M Y')
+                )
+
+                ->addColumn(
+                    'action',
+                    fn($p) =>
+                    '<a href="' . route('patients.show', $p->id) . '" class="btn btn-info btn-sm">View</a>
+                 <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>'
+                )
+
+                ->rawColumns(['name', 'phone', 'location', 'is_recommend', 'action'])
+                ->make(true);
+        }
+
+        return view('backend.patient_management.index');
     }
 
 
