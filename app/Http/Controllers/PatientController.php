@@ -116,12 +116,27 @@ class PatientController extends Controller
                     optional($p->date_of_patient_added)->format('d M Y')
                 )
 
-                ->addColumn(
-                    'action',
-                    fn($p) =>
-                    '<a href="' . route('patients.show', $p->id) . '" class="btn btn-info btn-sm">View</a>
-                 <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>'
-                )
+                ->addColumn('action', function ($p) {
+                    return '
+                    <a href="' . route('patients.show', $p->id) . '" class="btn btn-info btn-sm me-1">
+                        View
+                    </a>
+
+                    <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm me-1">
+                        Edit
+                    </a>
+
+                    <form action="' . route('patients.destroy', $p->id) . '" method="POST"
+                        style="display:inline-block;"
+                        onsubmit="return confirm(\'Are you sure you want to delete this patient?\')">
+                        ' . csrf_field() . '
+                        ' . method_field('DELETE') . '
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            Delete
+                        </button>
+                    </form>
+                ';
+                })
 
                 ->rawColumns(['name', 'phone', 'location', 'is_recommend', 'action'])
                 ->make(true);
