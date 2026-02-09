@@ -28,7 +28,7 @@ class Patient extends Model
 
         'phone_1',
         'phone_2',
-        'phone_f_1',
+        '   ',
         'phone_m_1',
         'patient_problem_description',
         'patient_drug_description',

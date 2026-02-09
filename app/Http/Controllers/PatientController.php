@@ -89,11 +89,12 @@ class PatientController extends Controller
 
                 ->editColumn('gender', fn($p) => ucfirst($p->gender))
 
-                ->editColumn(
-                    'phone',
-                    fn($p) =>
-                    $p->phone_1 . '<br><small>Alt: ' . ($p->phone_2 ?? 'N/A') . '</small>'
-                )
+                ->editColumn('phone', function ($p) {
+                    return ($p->phone_1 ?? 'N/A') .
+                        '<br><small>Alt Phone: ' . ($p->phone_2 ?? 'N/A') . '</small>' .
+                        '<br><small>Father\'s Phone: ' . ($p->phone_f_1 ?? 'N/A') . '</small>' .
+                        '<br><small>Mother\'s Phone: ' . ($p->phone_m_1 ?? 'N/A') . '</small>';
+                })
 
                 ->addColumn('location', function ($p) {
                     if ($p->location_type == 1) return $p->location_simple;
