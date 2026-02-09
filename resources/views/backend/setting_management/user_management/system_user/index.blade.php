@@ -2,7 +2,6 @@
 
 @section('title', 'System Users')
 
-
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center flex-wrap">
         <h1 class="mb-0">System Users</h1>
