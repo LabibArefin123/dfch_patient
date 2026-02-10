@@ -74,10 +74,34 @@
                             placeholder="Enter email or username">
                     </div>
 
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Password</label>
-                        <input type="password" name="password" class="form-control form-control-lg"
-                            placeholder="Enter password">
+                    <div class="mb-4">
+                        <label for="password" class="form-label fw-semibold"></label>
+                        <input id="password" type="password"
+                            class="form-control form-control-lg rounded-3 shadow-sm @error('password') is-invalid @enderror"
+                            name="password" placeholder="Enter your password" required>
+
+                        {{-- Show password errors only if maintenance is OFF --}}
+                        @error('password')
+                            @unless (session('maintenance'))
+                                <div class="invalid-feedback d-block mt-1"><strong>{{ $message }}</strong></div>
+                            @endunless
+                        @enderror
+
+                        {{-- Maintenance Message --}}
+                        @if (session('maintenance'))
+                            <div class="alert alert-warning mt-3 mb-0 py-2 px-3 rounded-3">
+                                <i class="fas fa-tools mr-1"></i>
+                                {{ session('maintenance') }}
+                            </div>
+                        @endif
+
+                        {{-- Banned Message --}}
+                        @if (session('banned'))
+                            <div class="alert alert-danger mt-3 mb-0 py-2 px-3 rounded-3">
+                                <i class="fas fa-ban mr-1"></i>
+                                {{ session('banned') }}
+                            </div>
+                        @endif
                     </div>
 
                     <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
@@ -127,20 +151,19 @@
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Problem Title</label>
-                    <input type="text" name="problem_title" class="form-control" 
+                    <input type="text" name="problem_title" class="form-control"
                         placeholder="Example: Login not working">
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Describe the Problem</label>
-                    <textarea name="problem_description" class="form-control" rows="4" 
-                        placeholder="Please explain what happened..."></textarea>
+                    <textarea name="problem_description" class="form-control" rows="4" placeholder="Please explain what happened..."></textarea>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label fw-semibold">Priority Level</label>
-                    <select name="status" class="form-control" >
-                        <option value="low">Low</option> 
+                    <select name="status" class="form-control">
+                        <option value="low">Low</option>
                         <option value="medium">Medium</option>
                         <option value="high">High</option>
                         <option value="critical">Critical</option>

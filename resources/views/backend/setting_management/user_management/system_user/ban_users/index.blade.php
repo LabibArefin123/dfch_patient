@@ -12,7 +12,6 @@
 @stop
 
 @section('content')
-    <div class="container">
         <div class="card shadow-sm">
             <div class="card-body table-responsive">
                 <table class="table table-striped table-hover text-nowrap" id="dataTables">
@@ -61,7 +60,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="7" class="text-center text-muted">
+                                <td colspan="8" class="text-center text-muted">
                                     No banned users found.
                                 </td>
                             </tr>
@@ -70,5 +69,4 @@
                 </table>
             </div>
         </div>
-    </div>
 @stop
