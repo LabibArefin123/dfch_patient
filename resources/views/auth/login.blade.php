@@ -80,17 +80,89 @@
                             placeholder="Enter password">
                     </div>
 
-                <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
+                    <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
                         Login
                     </button>
 
                     <div class="text-center mt-3">
-                        <a href="{{ route('password.request') }}" id="forgotPasswordLink" class="text-decoration-none dev-link">
+                        <a href="{{ route('password.request') }}" id="forgotPasswordLink"
+                            class="text-decoration-none dev-link">
                             Forgot Password?
                         </a>
                     </div>
+                    <hr class="my-4">
+
+                    <div class="text-center">
+                        <a href="javascript:void(0)" onclick="openProblemModal()"
+                            class="text-decoration-none dev-link fw-semibold">
+                            ⚠ Facing a system problem?
+                        </a>
+                        <p class="text-muted small mt-1">
+                            Let us know — our technical team will take care of it.
+                        </p>
+                    </div>
+
+
                 </form>
             </div>
+        </div>
+    </div>
+
+    {{-- SYSTEM PROBLEM MODAL --}}
+    <div id="problemModal" class="problem-modal">
+        <div class="problem-modal-content">
+
+            <div class="modal-header">
+                <h5 class="fw-bold mb-0">Report a System Problem</h5>
+                <button type="button" class="close-btn" onclick="closeProblemModal()">×</button>
+            </div>
+
+            <form method="POST" action="{{ route('system_problem.store') }}" enctype="multipart/form-data">
+                @csrf
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Problem ID</label>
+                    <input type="text" class="form-control" value="Auto Generated" readonly>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Problem Title</label>
+                    <input type="text" name="problem_title" class="form-control" 
+                        placeholder="Example: Login not working">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Describe the Problem</label>
+                    <textarea name="problem_description" class="form-control" rows="4" 
+                        placeholder="Please explain what happened..."></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">Priority Level</label>
+                    <select name="status" class="form-control" >
+                        <option value="low">Low</option> 
+                        <option value="medium">Medium</option>
+                        <option value="high">High</option>
+                        <option value="critical">Critical</option>
+                        {{-- <option value="low">Low – Minor issue</option> 
+                        <option value="medium">Medium – Needs attention</option>
+                        <option value="high">High – Affects work</option>
+                        <option value="critical">Critical – System unusable</option> --}}
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-semibold">
+                        Attachment (Optional)
+                    </label>
+                    <input type="file" name="problem_file" class="form-control" accept="image/*,.pdf">
+                </div>
+
+                <button class="btn btn-primary w-100 rounded-pill">
+                    Submit Problem
+                </button>
+            </form>
+
         </div>
     </div>
 
@@ -115,5 +187,21 @@
                 shortAbout.style.display = 'block';
             }
         }
+    </script>
+    <script>
+        function openProblemModal() {
+            document.getElementById('problemModal').classList.add('show');
+        }
+
+        function closeProblemModal() {
+            document.getElementById('problemModal').classList.remove('show');
+        }
+
+        // Close when clicking outside
+        document.getElementById('problemModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeProblemModal();
+            }
+        });
     </script>
 @endsection

@@ -104,6 +104,18 @@
         </div>
         <!-- end of edit animation model -->
 
+        <div id="dtErrorToast" class="dt-error-toast">
+            <div class="dt-error-box">
+                <h5>⚠ System Notice</h5>
+                <p id="dtErrorMessage">
+                    Something went wrong while loading data.
+                </p>
+                <button onclick="closeDtToast()" class="btn btn-sm btn-secondary mt-2">
+                    Close
+                </button>
+            </div>
+        </div>
+
         <!-- start of delete animation model -->
         <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmLabel"
             aria-hidden="true">

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Hash;
+use App\Models\SystemProblem;
+use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\BanUser;
 
@@ -100,7 +102,9 @@ class LoginController extends Controller
         $this->authenticated($request, $user);
 
         return redirect()->intended($this->redirectTo);
-    }   
+    }
+
+   
     /**
      * Handle actions after successful login
      */

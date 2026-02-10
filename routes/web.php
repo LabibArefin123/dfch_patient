@@ -10,13 +10,14 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SystemUserController;
 use App\Http\Controllers\BanUserController;
 use App\Http\Controllers\SettingController;
-
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\ViewPermissionManagement;
+use App\Http\Controllers\SystemProblemController;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 Route::get('/', [WelcomePageController::class, 'index'])->name('welcome');
+Route::post('/system-problem/store', [WelcomePageController::class, 'system_problem_store'])->name('system_problem.store');
 
 //Specialist Part
 Route::get('/prof-dr-akm-fazlul-hoque', [WelcomePageController::class, 'doc_1'])->name('doc_1');
@@ -70,6 +71,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/permissions/delete-selected', [PermissionController::class, 'deleteSelected'])->name('permissions.deleteSelected');
     Route::resource('system_users', SystemUserController::class);
     Route::resource('ban_users', BanUserController::class);
+    Route::resource('system_problems', SystemProblemController::class);
     Route::post( '/system-users/{user}/change-password',[SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
     //Setting 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
@@ -92,9 +94,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/settings/datetime/update', [SettingController::class, 'updateDateTime'])->name('settings.datetime.update');
     Route::get('/settings/theme', [SettingController::class, 'theme'])->name('settings.theme');
     Route::post('/settings/theme/update', [SettingController::class, 'updateTheme'])->name('settings.theme.update');
-    Route::get('/organization_menu', fn() => abort(403))->name('organization_menu');
-    Route::get('/tender_menu', fn() => abort(403))->name('tender_menu');
-    Route::get('/setting_menu', fn() => abort(403))->name('setting_menu');
 });
 
 Auth::routes([

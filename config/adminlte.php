@@ -483,9 +483,15 @@ return [
                     'route' => 'ban_users.index',
                     'can' => 'ban_users.index',
                     'active' => ['ban_users*'],
-                    'icon' => 'fas fa-users-cog',  // users with cog icon
+                    'icon' => 'fas fa-user-slash',
                 ],
-
+                [
+                    'text' => 'System Problems',
+                    'route' => 'system_problems.index',
+                    'can' => 'system_problems.index',
+                    'active' => ['system_problems*'],
+                    'icon' => 'fas fa-bug',
+                ],
             ],
         ],
     ],
