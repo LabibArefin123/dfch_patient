@@ -449,7 +449,24 @@ return [
 
             ],
         ],
-
+        [
+            'text' => 'Report Management',
+            'icon' => 'fas fa-file-alt',
+            'submenu' => [
+                [
+                    'text' => 'Daily Patient Report',
+                    'route' => 'report.daily',
+                    'can' => 'report.daily',
+                    'icon' => 'fas fa-calendar-day',
+                ],
+                [
+                    'text' => 'Daily Patient PDF',
+                    'route' => 'report.daily.pdf',
+                    'can' => 'report.daily',
+                    'icon' => 'fas fa-file-pdf',
+                ],
+            ],
+        ],
 
         [
             'text'    => 'Setting Management',

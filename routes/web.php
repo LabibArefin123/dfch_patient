@@ -5,7 +5,11 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DashboardController;
+
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\ReportController;
+
+
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SystemUserController;
 use App\Http\Controllers\BanUserController;
@@ -64,6 +68,9 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
     Route::resource('patients', PatientController::class);
+
+    Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');
+    Route::get('daily_report/pdf', [ReportController::class, ' daily_report_pdf'])->name('report.daily.pdf');
     // Permissions & Roles
     // Route::get('/all-permissions', [Roles_And_Permissions::class, 'permissionsIndex'])->name('permissions.index');
     Route::resource('roles', RoleController::class);
@@ -72,7 +79,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('system_users', SystemUserController::class);
     Route::resource('ban_users', BanUserController::class);
     Route::resource('system_problems', SystemProblemController::class);
-    Route::post( '/system-users/{user}/change-password',[SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
+    Route::post('/system-users/{user}/change-password', [SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
     //Setting 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::get('/settings/password_policy', [SettingController::class, 'password_policy'])->name('settings.password_policy');
