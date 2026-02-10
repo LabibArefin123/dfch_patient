@@ -39,6 +39,7 @@
     </div>
     <!-- Bootstrap JS + dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <script>
@@ -48,7 +49,7 @@
             once: true, // Only animate once
         });
     </script>
-    
+
     <!-- Back to Top Button -->
     <button id="backToTop" class="back-to-top" aria-label="Back to Top">
         <i class="bi bi-arrow-up"></i>
@@ -72,6 +73,56 @@
             });
         });
     </script>
+
+    {{-- Start of SweetAlert2 notifications --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            // SUCCESS MESSAGE
+            @if (session('success'))
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Problem Submitted',
+                    text: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 2500,
+                    timerProgressBar: true,
+                    position: 'center',
+                    didOpen: (toast) => {
+                        toast.addEventListener('mouseenter', Swal.stopTimer)
+                        toast.addEventListener('mouseleave', Swal.resumeTimer)
+                    }
+                }).then(() => {
+                    if (typeof closeProblemModal === "function") {
+                        closeProblemModal(); // Close modal after success
+                    }
+                });
+            @endif
+
+            // VALIDATION ERRORS
+            @if ($errors->any())
+                let errorMessages = `
+        @foreach ($errors->all() as $error)
+            • {{ $error }}\n
+        @endforeach
+        `;
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Submission Failed',
+                    text: errorMessages,
+                    confirmButtonColor: '#dc3545',
+                    position: 'center'
+                });
+
+                // Keep modal open if error
+                if (typeof openProblemModal === "function") {
+                    openProblemModal();
+                }
+            @endif
+        });
+    </script>
+    {{-- End of SweetAlert2 notifications --}}
 
     {{-- Start of image modal --}}
     <script>
