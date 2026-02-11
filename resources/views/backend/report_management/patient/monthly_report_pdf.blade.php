@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="utf-8">
+
+    <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
     <title>Monthly Patient Report</title>
     <style>
         body {
@@ -33,6 +35,7 @@
             vertical-align: top;
         }
     </style>
+
 </head>
 
 <body>
@@ -90,13 +93,45 @@
     {{-- Report Title --}}
     <h3>
         Monthly Patient Report
+
         @if (request()->filled('month') && request()->filled('year'))
             for {{ \Carbon\Carbon::create()->month((int) request()->month)->format('F') }}, {{ request()->year }}
-        @else
-            (All Months)
         @endif
-
     </h3>
+    
+    <table width="100%" style="margin-top:10px;">
+        <tr>
+            <td style="text-align:left;">
+                <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
+                <strong>Total Records:</strong> {{ $totalRecords }}
+            </td>
+
+            <td style="text-align:right;">
+                @if ($totalPages > 1)
+
+                    @if ($page > 1)
+                        <a href="{{ request()->fullUrlWithQuery(['page' => $page - 1]) }}">
+                            ◀ Previous
+                        </a>
+                    @endif
+
+                    @if ($page < $totalPages)
+                        @if ($page > 1)
+                            &nbsp; | &nbsp;
+                        @endif
+                        <a href="{{ request()->fullUrlWithQuery(['page' => $page + 1]) }}">
+                            Next ▶
+                        </a>
+                    @endif
+
+                @endif
+            </td>
+        </tr>
+    </table>
+
+
+    </p>
+
 
     {{-- Table --}}
     <table>
@@ -119,7 +154,7 @@
         <tbody>
             @foreach ($patients as $index => $patient)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ ($page - 1) * $perPage + $loop->iteration }}</td>
                     <td>{{ $patient->patient_code }}</td>
                     <td>{{ $patient->patient_name }}</td>
                     <td>{{ $patient->age }}</td>

@@ -183,41 +183,55 @@ class ReportController extends Controller
         return view('backend.report_management.patient.monthly_report');
     }
 
-    /* =======================
-       MONTHLY REPORT PDF
-       ======================= */
-
     public function monthly_report_pdf(Request $request)
     {
         $query = Patient::query();
 
-        // Year & Month filter using date_of_patient_added
+        // Year filter
         if ($request->filled('year')) {
             $query->whereYear('date_of_patient_added', $request->year);
         }
 
+        // Month filter
         if ($request->filled('month')) {
             $query->whereMonth('date_of_patient_added', $request->month);
         }
 
-        // Other filters
+        // Gender
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }
 
+        // Recommended
         if ($request->filled('is_recommend')) {
             $query->where('is_recommend', $request->is_recommend);
         }
 
-        $patients = $query->get();
+        $query->orderBy('id'); // VERY IMPORTANT
+
+        $perPage = 250;
+        $page = $request->get('page', 1);
+
+        $totalRecords = $query->count();
+        $totalPages = ceil($totalRecords / $perPage);
+
+        $patients = $query->forPage($page, $perPage)->get();
+
         $organization = Organization::first();
 
         $pdf = Pdf::loadView(
             'backend.report_management.patient.monthly_report_pdf',
-            compact('patients', 'organization')
+            compact(
+                'patients',
+                'organization',
+                'page',
+                'totalPages',
+                'perPage',
+                'totalRecords'
+            )
         )->setPaper('a4', 'landscape');
 
-        return $pdf->stream('monthly_patient_report.pdf'); // open in new tab
+        return $pdf->stream('monthly_patient_report_page_' . $page . '.pdf');
     }
 
     /* =======================
@@ -282,7 +296,12 @@ class ReportController extends Controller
             $query->where('is_recommend', $request->is_recommend);
         }
 
-        $patients = $query->get();
+        // Get current page from request
+        $page = $request->get('page', 1);
+
+        // Limit 250 per page
+        $patients = $query->forPage($page, 250)->get();
+
         $organization = Organization::first();
 
         $pdf = Pdf::loadView(
@@ -290,6 +309,6 @@ class ReportController extends Controller
             compact('patients', 'organization')
         )->setPaper('a4', 'landscape');
 
-        return $pdf->stream('yearly_patient_report.pdf');
+        return $pdf->stream('yearly_patient_report_page_' . $page . '.pdf');
     }
 }
