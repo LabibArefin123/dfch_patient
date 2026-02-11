@@ -35,6 +35,10 @@ class OrganizationController extends Controller
             'organization_location' => 'required|string',
             'organization_slogan' => 'required|string',
             'organization_picture' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'phone_1' => 'nullable|string|max:30',
+            'phone_2' => 'nullable|string|max:30',
+            'land_phone_1' => 'nullable|string|max:30',
+            'land_phone_2' => 'nullable|string|max:30',
         ]);
 
         $imageNameWithoutExt = null;
@@ -95,6 +99,10 @@ class OrganizationController extends Controller
             'organization_location' => 'required|string',
             'organization_slogan' => 'required|string',
             'organization_picture' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'phone_1' => 'nullable|string|max:30',
+            'phone_2' => 'nullable|string|max:30',
+            'land_phone_1' => 'nullable|string|max:30',
+            'land_phone_2' => 'nullable|string|max:30',
         ]);
 
         $imageNameWithoutExt = $organization->organization_picture;
@@ -134,6 +142,10 @@ class OrganizationController extends Controller
             'organization_logo_name' => $request->organization_logo_name,
             'organization_location'  => $request->organization_location,
             'organization_slogan'    => $request->organization_slogan,
+            'phone_1'                => $request->phone_1,
+            'phone_2'                => $request->phone_2,
+            'land_phone_1'           => $request->land_phone_1,
+            'land_phone_2'           => $request->land_phone_2,
             'organization_picture'   => $imageNameWithoutExt,
         ]);
 

@@ -12,5 +12,9 @@ class Organization extends Model
         'organization_picture',
         'organization_location',
         'organization_slogan',
+        'phone_1',
+        'phone_2',
+        'land_phone_1',
+        'land_phone_2',
     ];
 }

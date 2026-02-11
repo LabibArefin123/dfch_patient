@@ -76,8 +76,48 @@
                         <input type="text" name="organization_slogan" id="organization_slogan"
                             value="{{ old('organization_slogan', $organization->organization_slogan) }}"
                             class="form-control @error('organization_slogan') is-invalid @enderror">
-
                         @error('organization_slogan')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    {{-- Phone Numbers --}}
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="phone_1">Mobile Phone 1</label>
+                        <input type="text" name="phone_1" id="phone_1"
+                            value="{{ old('phone_1', $organization->phone_1) }}"
+                            class="form-control @error('phone_1') is-invalid @enderror" placeholder="e.g. 01XXXXXXXXX">
+                        @error('phone_1')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="phone_2">Mobile Phone 2</label>
+                        <input type="text" name="phone_2" id="phone_2"
+                            value="{{ old('phone_2', $organization->phone_2) }}"
+                            class="form-control @error('phone_2') is-invalid @enderror" placeholder="e.g. 01XXXXXXXXX">
+                        @error('phone_2')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="land_phone_1">Land Phone 1</label>
+                        <input type="text" name="land_phone_1" id="land_phone_1"
+                            value="{{ old('land_phone_1', $organization->land_phone_1) }}"
+                            class="form-control @error('land_phone_1') is-invalid @enderror" placeholder="e.g. 02XXXXXXXX">
+                        @error('land_phone_1')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
+                    </div>
+
+                    <div class="form-group col-md-6 mb-3">
+                        <label for="land_phone_2">Land Phone 2</label>
+                        <input type="text" name="land_phone_2" id="land_phone_2"
+                            value="{{ old('land_phone_2', $organization->land_phone_2) }}"
+                            class="form-control @error('land_phone_2') is-invalid @enderror" placeholder="e.g. 02XXXXXXXX">
+                        @error('land_phone_2')
                             <span class="invalid-feedback">{{ $message }}</span>
                         @enderror
                     </div>
@@ -85,7 +125,7 @@
                     {{-- Organization Logo / Picture --}}
                     <div class="form-group col-md-6 mb-4">
                         <label for="organization_picture">
-                            Organization Logo / Document <span class="text-danger">*</span>
+                            Organization Logo <span class="text-danger">*</span>
                         </label>
 
                         <input type="file" name="organization_picture" id="organization_picture"

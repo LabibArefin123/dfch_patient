@@ -21,6 +21,10 @@
                         <th class="text-center">Logo</th>
                         <th class="text-center">Logo Name</th>
                         <th>Name</th>
+                        <th>Phone 1</th>
+                        <th>Phone 2</th>
+                        <th>Land Phone 1</th>
+                        <th>Land Phone 2</th>
                         <th class="text-center">Location</th>
                         <th class="text-center">Slogun</th>
                         <th style="width: 200px;" class="text-center">Action</th>
@@ -77,6 +81,10 @@
                             </td>
                             <td class="text-center">{{ $organization->organization_logo_name }}</td>
                             <td>{{ $organization->name }}</td>
+                            <td>{{ $organization->phone_1 }}</td>
+                            <td>{{ $organization->phone_2 }}</td>
+                            <td>{{ $organization->land_phone_1 }}</td>
+                            <td>{{ $organization->land_phone_2 }}</td>
                             <td class="text-center">{{ $organization->organization_location }}</td>
                             <td class="text-center">{{ $organization->organization_slogan }}</td>
                             <td class="text-center">

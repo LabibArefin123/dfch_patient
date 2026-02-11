@@ -70,7 +70,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('patients', PatientController::class);
 
     Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');
-    Route::get('daily_report/pdf', [ReportController::class, ' daily_report_pdf'])->name('report.daily.pdf');
+    Route::get('daily_report/pdf', [ReportController::class, 'daily_report_pdf'])->name('report.daily.pdf');
     // Permissions & Roles
     // Route::get('/all-permissions', [Roles_And_Permissions::class, 'permissionsIndex'])->name('permissions.index');
     Route::resource('roles', RoleController::class);

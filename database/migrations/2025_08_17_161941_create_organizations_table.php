@@ -18,10 +18,14 @@ return new class extends Migration
             $table->string('organization_picture')->nullable();
             $table->string('organization_location')->nullable();
             $table->string('organization_slogan')->nullable();
+            $table->string('phone_1', 15)->nullable();
+            $table->string('phone_2', 15)->nullable();
+            $table->string('land_phone_1', 15)->nullable();
+            $table->string('land_phone_2', 15)->nullable();
             $table->timestamps();
         });
     }
-    
+
     /**
      * Reverse the migrations.
      */

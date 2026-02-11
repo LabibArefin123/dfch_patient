@@ -459,20 +459,12 @@ return [
                     'can' => 'report.daily',
                     'icon' => 'fas fa-calendar-day',
                 ],
-                [
-                    'text' => 'Daily Patient PDF',
-                    'route' => 'report.daily.pdf',
-                    'can' => 'report.daily',
-                    'icon' => 'fas fa-file-pdf',
-                ],
             ],
         ],
 
         [
             'text'    => 'Setting Management',
             'icon'    => 'fas fa-cogs',
-            // 'route'    => 'setting_menu',
-            // 'can'    => 'setting_menu',
             'submenu' => [
                 [
                     'text' => 'Role List',
