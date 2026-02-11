@@ -459,6 +459,18 @@ return [
                     'can' => 'report.daily',
                     'icon' => 'fas fa-calendar-day',
                 ],
+                [
+                    'text' => 'Monthly Patient Report',
+                    'route' => 'report.monthly',
+                    'can' => 'report.monthly',
+                    'icon' => 'fas fa-calendar-day',
+                ],
+                [
+                    'text' => 'Yearly Patient Report',
+                    'route' => 'report.yearly',
+                    'can' => 'report.yearly',
+                    'icon' => 'fas fa-calendar-day',
+                ],
             ],
         ],
 

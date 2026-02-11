@@ -1,0 +1,195 @@
+@extends('adminlte::page')
+
+@section('title', 'Monthly Patient Report')
+
+@section('content_header')
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>Monthly Patient Report</h1>
+
+        <div>
+            <button class="btn btn-info btn-sm mr-2" data-toggle="collapse" data-target="#filterSection">
+                <i class="fas fa-filter"></i> Filter
+            </button>
+
+            <a href="#" id="downloadPdfBtn" target="_blank" class="btn btn-danger btn-sm">
+                <i class="fas fa-file-pdf"></i> Download PDF
+            </a>
+        </div>
+    </div>
+@stop
+
+@section('content')
+    <div class="card shadow-sm">
+        <div class="card-body table-responsive">
+
+            {{-- FILTER --}}
+            <div class="collapse mb-3" id="filterSection">
+                <div class="card card-body">
+                    <form id="filterForm">
+                        <div class="row">
+
+                            <div class="col-md-3">
+                                <label>Year</label>
+                                <select name="year" class="form-control">
+                                    <option value="">All</option>
+                                    @for ($y = now()->year; $y >= 2015; $y--)
+                                        <option value="{{ $y }}">{{ $y }}</option>
+                                    @endfor
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Month</label>
+                                <select name="month" class="form-control">
+                                    <option value="">All</option>
+                                    @foreach (range(1, 12) as $m)
+                                        <option value="{{ $m }}">
+                                            {{ \Carbon\Carbon::create()->month($m)->format('F') }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Gender</label>
+                                <select name="gender" class="form-control">
+                                    <option value="">All</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>Recommended</label>
+                                <select name="is_recommend" class="form-control">
+                                    <option value="">All</option>
+                                    <option value="1">Yes</option>
+                                    <option value="0">No</option>
+                                </select>
+                            </div>
+
+                            <div class="col-md-12 mt-3">
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    Apply Filter
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            {{-- TABLE --}}
+            <table class="table table-striped table-hover w-100" id="monthlyPatientsTable">
+                <thead class="table-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Patient Code</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Phone</th>
+                        <th>Alt Phone</th>
+                        <th>Father</th>
+                        <th>Mother</th>
+                        <th>Location</th>
+                        <th>Recommended</th>
+                        <th>Date Added</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+            </table>
+
+        </div>
+    </div>
+    <div class="card mt-4">
+        <div class="card-body" style="height:50px;">
+            <!-- Intentionally left blank -->
+        </div>
+    </div>
+@stop
+
+@section('js')
+    <script>
+        $(function() {
+
+            let table = $('#monthlyPatientsTable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: {
+                    url: "{{ route('report.monthly') }}",
+                    data: function(d) {
+                        d.year = $('select[name=year]').val();
+                        d.month = $('select[name=month]').val();
+                        d.gender = $('select[name=gender]').val();
+                        d.is_recommend = $('select[name=is_recommend]').val();
+                    }
+                },
+                columns: [{
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'patient_code'
+                    },
+                    {
+                        data: 'patient_name'
+                    },
+                    {
+                        data: 'age'
+                    },
+                    {
+                        data: 'gender'
+                    },
+                    {
+                        data: 'phone_1'
+                    },
+                    {
+                        data: 'phone_2'
+                    },
+                    {
+                        data: 'phone_f_1'
+                    },
+                    {
+                        data: 'phone_m_1'
+                    },
+                    {
+                        data: 'location'
+                    },
+                    {
+                        data: 'is_recommend'
+                    },
+                    {
+                        data: 'date'
+                    },
+                    {
+                        data: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ]
+            });
+
+            $('#filterForm').on('submit', function(e) {
+                e.preventDefault();
+                table.ajax.reload();
+            });
+
+            $('#downloadPdfBtn').on('click', function(e) {
+                e.preventDefault();
+
+                let params = $.param({
+                    year: $('select[name=year]').val(),
+                    month: $('select[name=month]').val(),
+                    gender: $('select[name=gender]').val(),
+                    is_recommend: $('select[name=is_recommend]').val(),
+                });
+
+                window.open("{{ route('report.monthly.pdf') }}?" + params, '_blank');
+            });
+
+        });
+    </script>
+@endsection

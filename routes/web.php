@@ -71,6 +71,10 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');
     Route::get('daily_report/pdf', [ReportController::class, 'daily_report_pdf'])->name('report.daily.pdf');
+    Route::get('reports/monthly', [ReportController::class, 'monthly_report'])->name('report.monthly');
+    Route::get('reports/monthly/pdf', [ReportController::class, 'monthly_report_pdf'])->name('report.monthly.pdf');
+    Route::get('reports/yearly', [ReportController::class, 'yearly_report'])->name('report.yearly');
+    Route::get('reports/yearly/pdf', [ReportController::class, 'yearly_report_pdf'])->name('report.yearly.pdf');
     // Permissions & Roles
     // Route::get('/all-permissions', [Roles_And_Permissions::class, 'permissionsIndex'])->name('permissions.index');
     Route::resource('roles', RoleController::class);
