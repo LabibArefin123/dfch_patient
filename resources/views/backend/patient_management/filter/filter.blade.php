@@ -62,7 +62,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-3">
                     <label class="small text-muted">Filter by Recommendation</label>
                     <select name="is_recommend" class="form-control form-control-sm">
                         <option value="">Recommended?</option>
@@ -71,13 +71,7 @@
                     </select>
                 </div>
 
-
-            </div>
-
-            {{-- ROW 3 : Date Range --}}
-            <div class="row mb-3">
-
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label class="small text-muted">Date Range</label>
                     <select name="date_filter" id="dateFilter" class="form-control form-control-sm">
                         <option value="">All Time</option>
@@ -93,12 +87,12 @@
                 </div>
 
                 {{-- Custom Date Fields --}}
-                <div class="col-md-3 d-none" id="startDateDiv">
+                <div class="col-md-2 d-none" id="startDateDiv">
                     <label class="small text-muted">Start Date</label>
                     <input type="date" name="from_date" class="form-control form-control-sm">
                 </div>
 
-                <div class="col-md-3 d-none" id="endDateDiv">
+                <div class="col-md-2 d-none" id="endDateDiv">
                     <label class="small text-muted">End Date</label>
                     <input type="date" name="to_date" class="form-control form-control-sm">
                 </div>
@@ -108,6 +102,7 @@
                         Apply Filter
                     </button>
                 </div>
+
             </div>
         </form>
     </div>
