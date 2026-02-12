@@ -104,7 +104,6 @@
                                 </span>
                             </div>
                         </div>
-
                     </div>
 
                     <!-- Call Confirmation Modal -->

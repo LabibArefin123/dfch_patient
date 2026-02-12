@@ -77,12 +77,10 @@ class ReportController extends Controller
     /* =======================
        DAILY REPORT PDF
        ======================= */
-
     public function daily_report_pdf(Request $request)
     {
         $query = Patient::query();
 
-        // Same Filters
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }
@@ -92,25 +90,37 @@ class ReportController extends Controller
         }
 
         if ($request->filled('location_type') && $request->filled('location_value')) {
-            $query->where($request->location_type, 'like', '%' . $request->location_value . '%');
+            $query->where(
+                $request->location_type,
+                'like',
+                '%' . $request->location_value . '%'
+            );
         }
 
         if ($request->filled('from_date') && $request->filled('to_date')) {
             $query->whereBetween('created_at', [
                 $request->from_date . ' 00:00:00',
-                $request->to_date . ' 23:59:59'
+                $request->to_date . ' 23:59:59',
             ]);
         }
+
+        $patients = $query
+            ->orderBy('id')
+            ->limit(500)   // ✅ limit
+            ->get();
+
+        $totalRecords = $patients->count();
+
         $organization = Organization::first();
-        $patients = $query->get();
 
         $pdf = Pdf::loadView(
             'backend.report_management.patient.daily_report_pdf',
-            compact('patients', 'organization')
+            compact('patients', 'organization', 'totalRecords')
         )->setPaper('a4', 'landscape');
 
-        return $pdf->stream('daily_patient_report.pdf'); // open in new tab
+        return $pdf->stream('daily_patient_report.pdf');
     }
+
 
     /* =======================
        MONTHLY REPORT 
@@ -209,7 +219,7 @@ class ReportController extends Controller
 
         $query->orderBy('id'); // VERY IMPORTANT
 
-        $perPage = 250;
+        $perPage = 500;
         $page = $request->get('page', 1);
 
         $totalRecords = $query->count();
@@ -296,19 +306,20 @@ class ReportController extends Controller
             $query->where('is_recommend', $request->is_recommend);
         }
 
-        // Get current page from request
-        $page = $request->get('page', 1);
+        $patients = $query
+            ->orderBy('id')
+            ->limit(500)   // ✅ limit
+            ->get();
 
-        // Limit 250 per page
-        $patients = $query->forPage($page, 250)->get();
+        $totalRecords = $patients->count();
 
         $organization = Organization::first();
 
         $pdf = Pdf::loadView(
             'backend.report_management.patient.yearly_report_pdf',
-            compact('patients', 'organization')
+            compact('patients', 'organization', 'totalRecords')
         )->setPaper('a4', 'landscape');
 
-        return $pdf->stream('yearly_patient_report_page_' . $page . '.pdf');
+        return $pdf->stream('yearly_patient_report.pdf');
     }
 }

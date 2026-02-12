@@ -101,18 +101,13 @@
 
     <table width="100%" style="margin-top:10px;">
         <tr>
-            <td style="text-align:left;">
-                <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
-                <strong>Total Records:</strong> {{ $totalRecords }}
-            </td>
-
             {{-- Page Info Section --}}
             <table width="100%" class="header-table" style="margin-top:10px;">
                 <tr>
                     <td style="text-align:left; border:none;">
                         <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
                         <strong>Total Records:</strong> {{ $totalRecords }}
-                    </td>
+                    {{-- </td>
 
                     <td style="text-align:right; border:none;">
                         @if ($totalPages > 1)
@@ -130,7 +125,7 @@
                             @endif
 
                         @endif
-                    </td>
+                    </td> --}}
                 </tr>
             </table>
 
