@@ -35,7 +35,7 @@
 
             {{-- Total Patients --}}
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-primary shadow">
+                <div class="small-box bg-info shadow-sm">
                     <div class="inner">
                         <h3>{{ $totalPatients }}</h3>
                         <p>Total Registered Patients</p>
@@ -44,115 +44,117 @@
                         <i class="fas fa-users"></i>
                     </div>
                     <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        View Details <i class="fas fa-arrow-circle-right"></i>
+                        More Info <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
             {{-- Today --}}
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-success shadow">
+                <div class="small-box bg-light shadow-sm">
                     <div class="inner">
-                        <h3>{{ $todayPatients }}</h3>
+                        <h3 class="text-info">{{ $todayPatients }}</h3>
                         <p>Registered Today</p>
                     </div>
-                    <div class="icon">
+                    <div class="icon text-info">
                         <i class="fas fa-calendar-day"></i>
                     </div>
                     <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        View Details <i class="fas fa-arrow-circle-right"></i>
+                        More Info <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
             {{-- Weekly --}}
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-warning shadow">
+                <div class="small-box bg-light shadow-sm">
                     <div class="inner">
-                        <h3>{{ $weeklyPatients }}</h3>
+                        <h3 class="text-primary">{{ $weeklyPatients }}</h3>
                         <p>This Week Registrations</p>
                     </div>
-                    <div class="icon">
+                    <div class="icon text-primary">
                         <i class="fas fa-calendar-week"></i>
                     </div>
                     <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        View Details <i class="fas fa-arrow-circle-right"></i>
+                        More Info <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
             {{-- Monthly --}}
             <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-info shadow">
+                <div class="small-box bg-light shadow-sm">
                     <div class="inner">
-                        <h3>{{ $monthlyPatients }}</h3>
+                        <h3 class="text-secondary">{{ $monthlyPatients }}</h3>
                         <p>This Month Registrations</p>
                     </div>
-                    <div class="icon">
+                    <div class="icon text-secondary">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
                     <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        View Details <i class="fas fa-arrow-circle-right"></i>
+                        More Info <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
-            {{-- Recommended Section Divider --}}
+            {{-- Section Title --}}
             <div class="col-12 mb-2">
-                <h5 class="text-muted font-weight-bold">
+                <h5 class="text-info font-weight-bold">
                     ⭐ Recommended Patients Overview
                 </h5>
+                <hr>
             </div>
 
             {{-- Total Recommended --}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-purple shadow">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="small-box bg-light shadow-sm">
                     <div class="inner">
-                        <h3>{{ $totalRecommendedPatients }}</h3>
+                        <h3 class="text-danger">{{ $totalRecommendedPatients }}</h3>
                         <p>Total Recommended Patients</p>
                     </div>
-                    <div class="icon">
+                    <div class="icon text-danger">
                         <i class="fas fa-user-md"></i>
                     </div>
                     <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        View Details <i class="fas fa-arrow-circle-right"></i>
+                        More Info <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
             {{-- Today Recommended --}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-teal shadow">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="small-box bg-light shadow-sm">
                     <div class="inner">
-                        <h3>{{ $todayRecommendedPatients }}</h3>
+                        <h3 class="text-warning">{{ $todayRecommendedPatients }}</h3>
                         <p>Today's Recommended</p>
                     </div>
-                    <div class="icon">
+                    <div class="icon text-warning">
                         <i class="fas fa-stethoscope"></i>
                     </div>
                     <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        View Details <i class="fas fa-arrow-circle-right"></i>
+                        More Info <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
             {{-- Monthly Recommended --}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-dark shadow">
+            <div class="col-lg-4 col-md-6 col-sm-12">
+                <div class="small-box bg-light shadow-sm">
                     <div class="inner">
-                        <h3>{{ $monthlyRecommendedPatients }}</h3>
+                        <h3 class="text-success">{{ $monthlyRecommendedPatients }}</h3>
                         <p>Monthly Recommended</p>
                     </div>
-                    <div class="icon">
+                    <div class="icon text-success">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        View Details <i class="fas fa-arrow-circle-right"></i>
+                        More Info <i class="fas fa-arrow-right"></i>
                     </a>
                 </div>
             </div>
 
         </div>
+
 
     </div>
 @stop

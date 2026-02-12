@@ -12,88 +12,91 @@ class PatientController extends Controller
 
     public function index(Request $request)
     {
+        // Base Query with Filters
+        $baseQuery = Patient::query()
+
+            // Gender Filter
+            ->when($request->gender, function ($q) use ($request) {
+                $q->where('gender', $request->gender);
+            })
+
+            // Recommendation Filter
+            ->when($request->filled('is_recommend'), function ($q) use ($request) {
+                $q->where('is_recommend', $request->is_recommend);
+            })
+
+            // Location Filter
+            ->when($request->location_type, function ($q) use ($request) {
+
+                $q->where('location_type', $request->location_type);
+
+                if ($request->filled('location_value')) {
+
+                    if ($request->location_type == 1) {
+                        $q->where('location_simple', 'like', "%{$request->location_value}%");
+                    }
+
+                    if ($request->location_type == 2) {
+                        $q->where(function ($sub) use ($request) {
+                            $sub->where('city', 'like', "%{$request->location_value}%")
+                                ->orWhere('district', 'like', "%{$request->location_value}%");
+                        });
+                    }
+
+                    if ($request->location_type == 3) {
+                        $q->where('country', 'like', "%{$request->location_value}%");
+                    }
+                }
+            })
+
+            // Date Filters
+            ->when($request->date_filter === 'last_week', function ($q) {
+                $q->whereDate('date_of_patient_added', '>=', now()->subWeek());
+            })
+
+            ->when($request->date_filter === 'last_month', function ($q) {
+                $q->whereDate('date_of_patient_added', '>=', now()->subMonth());
+            })
+
+            ->when($request->date_filter === 'last_2_months', function ($q) {
+                $q->whereDate('date_of_patient_added', '>=', now()->subMonths(2));
+            })
+
+            ->when(
+                $request->date_filter === 'custom' &&
+                    $request->filled(['from_date', 'to_date']),
+                function ($q) use ($request) {
+                    $q->whereBetween('date_of_patient_added', [
+                        $request->from_date,
+                        $request->to_date
+                    ]);
+                }
+            );
+
+        // If AJAX → return DataTable + counts
         if ($request->ajax()) {
 
-            $patients = Patient::query()
+            // Clone query for counts
+            $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
+            $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 60])->count();
+            $seniorPatients = (clone $baseQuery)->where('age', '>', 60)->count();
 
-                // Gender
-                ->when(
-                    $request->gender,
-                    fn($q) =>
-                    $q->where('gender', $request->gender)
-                )
-
-                // Recommendation
-                ->when(
-                    $request->filled('is_recommend'),
-                    fn($q) =>
-                    $q->where('is_recommend', $request->is_recommend)
-                )
-
-                // Location filtering
-                ->when($request->location_type, function ($q) use ($request) {
-
-                    $q->where('location_type', $request->location_type);
-
-                    if ($request->filled('location_value')) {
-
-                        if ($request->location_type == 1) {
-                            $q->where('location_simple', 'like', "%{$request->location_value}%");
-                        }
-
-                        if ($request->location_type == 2) {
-                            $q->where(function ($sub) use ($request) {
-                                $sub->where('city', 'like', "%{$request->location_value}%")
-                                    ->orWhere('district', 'like', "%{$request->location_value}%");
-                            });
-                        }
-
-                        if ($request->location_type == 3) {
-                            $q->where('country', 'like', "%{$request->location_value}%");
-                        }
-                    }
-                })
-
-                // Date filters
-                ->when(
-                    $request->date_filter === 'last_week',
-                    fn($q) =>
-                    $q->whereDate('date_of_patient_added', '>=', now()->subWeek())
-                )
-                ->when(
-                    $request->date_filter === 'last_month',
-                    fn($q) =>
-                    $q->whereDate('date_of_patient_added', '>=', now()->subMonth())
-                )
-                ->when(
-                    $request->date_filter === 'last_2_months',
-                    fn($q) =>
-                    $q->whereDate('date_of_patient_added', '>=', now()->subMonths(2))
-                )
-                ->when(
-                    $request->filled(['from_date', 'to_date']),
-                    fn($q) =>
-                    $q->whereBetween('date_of_patient_added', [$request->from_date, $request->to_date])
-                );
-
-            return DataTables::of($patients)
+            return DataTables::of($baseQuery)
                 ->addIndexColumn()
 
-                ->editColumn(
-                    'name',
-                    fn($p) =>
-                    '<strong>' . $p->patient_name . '</strong><br>
-                 <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
-                 <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small>'
-                )
+                ->addColumn('name', function ($p) {
+                    return '<strong>' . $p->patient_name . '</strong><br>
+                        <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
+                        <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small>';
+                })
 
                 ->editColumn('gender', fn($p) => ucfirst($p->gender))
 
-                ->editColumn('phone', function ($p) {
+                ->addColumn('phone', function ($p) {
                     return ($p->phone_1 ?? 'N/A') .
-                        '<br><small>Alt Phone: ' . ($p->phone_2 ?? 'N/A') . '</small>' .
-                        '<br><small>Father\'s Phone: ' . ($p->phone_f_1 ?? 'N/A') . '</small>' .
-                        '<br><small>Mother\'s Phone: ' . ($p->phone_m_1 ?? 'N/A') . '</small>';
+                        '<br><small>Alt: ' . ($p->phone_2 ?? 'N/A') . '</small>' .
+                        '<br><small>Father: ' . ($p->phone_f_1 ?? 'N/A') . '</small>' .
+                        '<br><small>Mother: ' . ($p->phone_m_1 ?? 'N/A') . '</small>';
                 })
 
                 ->addColumn('location', function ($p) {
@@ -102,47 +105,43 @@ class PatientController extends Controller
                     return $p->country;
                 })
 
-                ->editColumn(
-                    'is_recommend',
-                    fn($p) =>
-                    $p->is_recommend
+                ->editColumn('is_recommend', function ($p) {
+                    return $p->is_recommend
                         ? '<span class="badge badge-success">Yes</span>'
-                        : '<span class="badge badge-secondary">No</span>'
-                )
+                        : '<span class="badge badge-secondary">No</span>';
+                })
 
-                ->editColumn(
-                    'date',
-                    fn($p) =>
-                    optional($p->date_of_patient_added)->format('d M Y')
-                )
+                ->addColumn('date', function ($p) {
+                    return \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y');
+                })
 
                 ->addColumn('action', function ($p) {
                     return '
-                    <a href="' . route('patients.show', $p->id) . '" class="btn btn-info btn-sm me-1">
-                        View
-                    </a>
-
-                    <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm me-1">
-                        Edit
-                    </a>
-
-                    <form action="' . route('patients.destroy', $p->id) . '" method="POST"
-                        style="display:inline-block;"
-                        onsubmit="return confirm(\'Are you sure you want to delete this patient?\')">
-                        ' . csrf_field() . '
-                        ' . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-danger btn-sm">
-                            Delete
-                        </button>
-                    </form>
+                    <a href="' . route('patients.show', $p->id) . '" class="btn btn-info btn-sm">View</a>
+                    <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>
                 ';
                 })
 
                 ->rawColumns(['name', 'phone', 'location', 'is_recommend', 'action'])
+
+                ->with([
+                    'childPatients'  => $childPatients,
+                    'adultPatients'  => $adultPatients,
+                    'seniorPatients' => $seniorPatients,
+                ])
+
                 ->make(true);
         }
 
-        return view('backend.patient_management.index');
+        // Initial Load (no filters)
+        $childPatients  = Patient::where('age', '<', 18)->count();
+        $adultPatients  = Patient::whereBetween('age', [18, 60])->count();
+        $seniorPatients = Patient::where('age', '>', 60)->count();
+
+        return view(
+            'backend.patient_management.index',
+            compact('childPatients', 'adultPatients', 'seniorPatients')
+        );
     }
 
 

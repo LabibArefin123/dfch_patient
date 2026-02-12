@@ -42,10 +42,12 @@
         </div>
     </div>
 @stop
+
 @section('js')
     <script>
         $(function() {
-            $('#patientsTable').DataTable({
+
+            var table = $('#patientsTable').DataTable({
                 processing: true,
                 serverSide: true,
                 responsive: true,
@@ -59,6 +61,15 @@
                         d.date_filter = $('select[name=date_filter]').val();
                         d.from_date = $('input[name=from_date]').val();
                         d.to_date = $('input[name=to_date]').val();
+                    },
+                    dataSrc: function(json) {
+
+                        // ✅ Update counts dynamically
+                        $('#childCount').text(json.childPatients);
+                        $('#adultCount').text(json.adultPatients);
+                        $('#seniorCount').text(json.seniorPatients);
+
+                        return json.data;
                     }
                 },
                 columns: [{
@@ -89,7 +100,9 @@
                     },
                     {
                         data: 'location',
-                        name: 'location'
+                        name: 'location',
+                        orderable: false,
+                        searchable: false
                     },
                     {
                         data: 'is_recommend',
@@ -107,11 +120,12 @@
                 ]
             });
 
-            // Reload table when filter form changes
+            // Prevent normal form submit & reload table
             $('form').on('submit', function(e) {
                 e.preventDefault();
-                $('#patientsTable').DataTable().ajax.reload();
+                table.ajax.reload();
             });
+
         });
     </script>
 @endsection

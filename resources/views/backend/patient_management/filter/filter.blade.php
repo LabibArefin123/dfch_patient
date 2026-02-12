@@ -2,7 +2,33 @@
     <div class="card-body">
         <form method="GET" action="{{ route('patients.index') }}">
 
-            <h4 class="mb-4">Filter Patients</h4>
+            <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
+
+                {{-- Left: Title --}}
+                <h4 class="mb-2 mb-md-0">
+                    🔎 Filter Patients
+                </h4>
+
+                {{-- Right: Age Statistics --}}
+                <div class="text-md-right text-muted small">
+                    👶 Child Patients:
+                    <strong id="childCount" class="text-secondary">
+                        {{ $childPatients }}
+                    </strong>
+
+                    🧑 Adult Patients:
+                    <strong id="adultCount" class="text-secondary">
+                        {{ $adultPatients }}
+                    </strong>
+
+                    👴 Senior Patients:
+                    <strong id="seniorCount" class="text-secondary">
+                        {{ $seniorPatients }}
+                    </strong>
+
+                </div>
+
+            </div>
 
             {{-- ROW 2 : Patient Type --}}
             <div class="row mb-3">
