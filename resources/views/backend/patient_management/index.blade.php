@@ -47,6 +47,31 @@
     <script>
         $(function() {
 
+            // ✅ Read URL query params
+            const urlParams = new URLSearchParams(window.location.search);
+
+            const presetFilters = {
+                gender: urlParams.get('gender'),
+                is_recommend: urlParams.get('is_recommend'),
+                location_type: urlParams.get('location_type'),
+                location_value: urlParams.get('location_value'),
+                date_filter: urlParams.get('date_filter'),
+                from_date: urlParams.get('from_date'),
+                to_date: urlParams.get('to_date'),
+            };
+
+            // ✅ Auto-fill filter form from URL
+            Object.keys(presetFilters).forEach(key => {
+                if (presetFilters[key] !== null) {
+                    $(`[name="${key}"]`).val(presetFilters[key]);
+                }
+            });
+
+            // Show custom date fields if needed
+            if (presetFilters.date_filter === 'custom') {
+                $('#startDateDiv, #endDateDiv').removeClass('d-none');
+            }
+
             var table = $('#patientsTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -63,19 +88,14 @@
                         d.to_date = $('input[name=to_date]').val();
                     },
                     dataSrc: function(json) {
-
-                        // ✅ Update counts dynamically
                         $('#childCount').text(json.childPatients);
                         $('#adultCount').text(json.adultPatients);
                         $('#seniorCount').text(json.seniorPatients);
-
                         return json.data;
                     }
-
                 },
                 columns: [{
                         data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
                         orderable: false,
                         searchable: false
                     },
@@ -101,7 +121,6 @@
                     },
                     {
                         data: 'location',
-                        name: 'location',
                         orderable: false,
                         searchable: false
                     },
@@ -121,21 +140,17 @@
                 ]
             });
 
+            // Date filter UI toggle
             $('#dateFilter').on('change', function() {
-
                 if ($(this).val() === 'custom') {
-                    $('#startDateDiv').removeClass('d-none');
-                    $('#endDateDiv').removeClass('d-none');
+                    $('#startDateDiv, #endDateDiv').removeClass('d-none');
                 } else {
-                    $('#startDateDiv').addClass('d-none');
-                    $('#endDateDiv').addClass('d-none');
-                    $('input[name=from_date]').val('');
-                    $('input[name=to_date]').val('');
+                    $('#startDateDiv, #endDateDiv').addClass('d-none');
+                    $('input[name=from_date], input[name=to_date]').val('');
                 }
-
             });
 
-            // Prevent normal form submit & reload table
+            // Filter submit
             $('form').on('submit', function(e) {
                 e.preventDefault();
                 table.ajax.reload();
@@ -143,4 +158,5 @@
 
         });
     </script>
+
 @endsection

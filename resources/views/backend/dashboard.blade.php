@@ -59,9 +59,10 @@
                     <div class="icon text-info">
                         <i class="fas fa-calendar-day"></i>
                     </div>
-                    <a href="{{ route('patients.index') }}" class="small-box-footer">
+                    <a href="{{ route('patients.index', ['date_filter' => 'today']) }}" class="small-box-footer">
                         More Info <i class="fas fa-arrow-right"></i>
                     </a>
+
                 </div>
             </div>
 
@@ -75,9 +76,10 @@
                     <div class="icon text-primary">
                         <i class="fas fa-calendar-week"></i>
                     </div>
-                    <a href="{{ route('patients.index') }}" class="small-box-footer">
+                    <a href="{{ route('patients.index', ['date_filter' => 'last_7_days']) }}" class="small-box-footer">
                         More Info <i class="fas fa-arrow-right"></i>
                     </a>
+
                 </div>
             </div>
 
@@ -91,9 +93,10 @@
                     <div class="icon text-secondary">
                         <i class="fas fa-calendar-alt"></i>
                     </div>
-                    <a href="{{ route('patients.index') }}" class="small-box-footer">
+                    <a href="{{ route('patients.index', ['date_filter' => 'this_month']) }}" class="small-box-footer">
                         More Info <i class="fas fa-arrow-right"></i>
                     </a>
+
                 </div>
             </div>
 
@@ -115,9 +118,10 @@
                     <div class="icon text-danger">
                         <i class="fas fa-user-md"></i>
                     </div>
-                    <a href="{{ route('patients.index') }}" class="small-box-footer">
+                    <a href="{{ route('patients.index', ['is_recommend' => 1]) }}" class="small-box-footer">
                         More Info <i class="fas fa-arrow-right"></i>
                     </a>
+
                 </div>
             </div>
 
@@ -131,9 +135,14 @@
                     <div class="icon text-warning">
                         <i class="fas fa-stethoscope"></i>
                     </div>
-                    <a href="{{ route('patients.index') }}" class="small-box-footer">
+                    <a href="{{ route('patients.index', [
+                        'is_recommend' => 1,
+                        'date_filter' => 'today',
+                    ]) }}"
+                        class="small-box-footer">
                         More Info <i class="fas fa-arrow-right"></i>
                     </a>
+
                 </div>
             </div>
 
@@ -147,9 +156,14 @@
                     <div class="icon text-success">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <a href="{{ route('patients.index') }}" class="small-box-footer">
+                    <a href="{{ route('patients.index', [
+                        'is_recommend' => 1,
+                        'date_filter' => 'this_month',
+                    ]) }}"
+                        class="small-box-footer">
                         More Info <i class="fas fa-arrow-right"></i>
                     </a>
+
                 </div>
             </div>
 

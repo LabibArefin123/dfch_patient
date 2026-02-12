@@ -21,7 +21,7 @@ class PatientController extends Controller
 
             // Recommendation Filter
             ->when($request->filled('is_recommend'), function ($q) use ($request) {
-                $q->where('is_recommend', $request->is_recommend);
+                $q->where('is_recommend', (int) $request->is_recommend);
             })
 
             // Location Filter
