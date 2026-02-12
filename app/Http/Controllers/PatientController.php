@@ -9,7 +9,6 @@ use Yajra\DataTables\Facades\DataTables;
 
 class PatientController extends Controller
 {
-
     public function index(Request $request)
     {
         // Base Query with Filters
@@ -50,16 +49,38 @@ class PatientController extends Controller
             })
 
             // Date Filters
-            ->when($request->date_filter === 'last_week', function ($q) {
-                $q->whereDate('date_of_patient_added', '>=', now()->subWeek());
+            ->when($request->date_filter === 'today', function ($q) {
+                $q->whereDate('date_of_patient_added', now());
+            })
+
+            ->when($request->date_filter === 'yesterday', function ($q) {
+                $q->whereDate('date_of_patient_added', now()->subDay());
+            })
+
+            ->when($request->date_filter === 'last_7_days', function ($q) {
+                $q->whereDate('date_of_patient_added', '>=', now()->subDays(7));
+            })
+
+            ->when($request->date_filter === 'last_30_days', function ($q) {
+                $q->whereDate('date_of_patient_added', '>=', now()->subDays(30));
+            })
+
+            ->when($request->date_filter === 'this_month', function ($q) {
+                $q->whereBetween('date_of_patient_added', [
+                    now()->startOfMonth(),
+                    now()->endOfMonth()
+                ]);
             })
 
             ->when($request->date_filter === 'last_month', function ($q) {
-                $q->whereDate('date_of_patient_added', '>=', now()->subMonth());
+                $q->whereBetween('date_of_patient_added', [
+                    now()->subMonth()->startOfMonth(),
+                    now()->subMonth()->endOfMonth()
+                ]);
             })
 
-            ->when($request->date_filter === 'last_2_months', function ($q) {
-                $q->whereDate('date_of_patient_added', '>=', now()->subMonths(2));
+            ->when($request->date_filter === 'this_year', function ($q) {
+                $q->whereYear('date_of_patient_added', now()->year);
             })
 
             ->when(
@@ -143,7 +164,6 @@ class PatientController extends Controller
             compact('childPatients', 'adultPatients', 'seniorPatients')
         );
     }
-
 
     public function create()
     {

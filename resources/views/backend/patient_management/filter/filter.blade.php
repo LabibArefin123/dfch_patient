@@ -76,46 +76,39 @@
 
             {{-- ROW 3 : Date Range --}}
             <div class="row mb-3">
+
                 <div class="col-md-3">
                     <label class="small text-muted">Date Range</label>
-                    <select name="date_filter" class="form-control form-control-sm">
+                    <select name="date_filter" id="dateFilter" class="form-control form-control-sm">
                         <option value="">All Time</option>
-                        <option value="last_week" {{ request('date_filter') == 'last_week' ? 'selected' : '' }}>
-                            Last Week
-                        </option>
-                        <option value="last_month" {{ request('date_filter') == 'last_month' ? 'selected' : '' }}>
-                            Last Month
-                        </option>
-                        <option value="last_2_months"
-                            {{ request('date_filter') == 'last_2_months' ? 'selected' : '' }}>
-                            Last 2 Months
-                        </option>
-                        <option value="custom" {{ request('date_filter') == 'custom' ? 'selected' : '' }}>
-                            Custom Date Range
-                        </option>
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="last_7_days">Last 7 Days</option>
+                        <option value="last_30_days">Last 30 Days</option>
+                        <option value="this_month">This Month</option>
+                        <option value="last_month">Last Month</option>
+                        <option value="this_year">This Year</option>
+                        <option value="custom">Custom Range</option>
                     </select>
-
                 </div>
 
-                <div class="col-md-3">
+                {{-- Custom Date Fields --}}
+                <div class="col-md-3 d-none" id="startDateDiv">
                     <label class="small text-muted">Start Date</label>
-                    <input type="date" name="from_date" class="form-control form-control-sm"
-                        value="{{ request('from_date') }}">
+                    <input type="date" name="from_date" class="form-control form-control-sm">
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-3 d-none" id="endDateDiv">
                     <label class="small text-muted">End Date</label>
-                    <input type="date" name="to_date" class="form-control form-control-sm"
-                        value="{{ request('to_date') }}">
+                    <input type="date" name="to_date" class="form-control form-control-sm">
                 </div>
 
                 <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary w-10">
+                    <button type="submit" class="btn btn-primary">
                         Apply Filter
                     </button>
                 </div>
             </div>
-
         </form>
     </div>
 </div>

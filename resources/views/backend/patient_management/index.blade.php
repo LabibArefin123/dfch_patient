@@ -71,6 +71,7 @@
 
                         return json.data;
                     }
+
                 },
                 columns: [{
                         data: 'DT_RowIndex',
@@ -118,6 +119,20 @@
                         searchable: false
                     }
                 ]
+            });
+
+            $('#dateFilter').on('change', function() {
+
+                if ($(this).val() === 'custom') {
+                    $('#startDateDiv').removeClass('d-none');
+                    $('#endDateDiv').removeClass('d-none');
+                } else {
+                    $('#startDateDiv').addClass('d-none');
+                    $('#endDateDiv').addClass('d-none');
+                    $('input[name=from_date]').val('');
+                    $('input[name=to_date]').val('');
+                }
+
             });
 
             // Prevent normal form submit & reload table
