@@ -20,32 +20,55 @@ class ReportController extends Controller
     {
         if ($request->ajax()) {
 
+            // ❌ DO NOT load data without filters
+            if (
+                !$request->filled('gender') &&
+                !$request->filled('is_recommend') &&
+                !(
+                    $request->filled('location_type') &&
+                    $request->filled('location_value')
+                ) &&
+                !(
+                    $request->filled('from_date') &&
+                    $request->filled('to_date')
+                )
+            ) {
+                return DataTables::of(collect())->make(true);
+            }
+
             $query = Patient::query();
 
-            // Filters
+            // Gender
             if ($request->filled('gender')) {
                 $query->where('gender', $request->gender);
             }
 
+            // Recommended
             if ($request->filled('is_recommend')) {
                 $query->where('is_recommend', $request->is_recommend);
             }
 
+            // Location filter
             if ($request->filled('location_type') && $request->filled('location_value')) {
-                $query->where($request->location_type, 'like', '%' . $request->location_value . '%');
+                $query->where(
+                    $request->location_type,
+                    'like',
+                    '%' . $request->location_value . '%'
+                );
             }
 
+            // Date range
             if ($request->filled('from_date') && $request->filled('to_date')) {
                 $query->whereBetween('created_at', [
                     $request->from_date . ' 00:00:00',
-                    $request->to_date . ' 23:59:59'
+                    $request->to_date . ' 23:59:59',
                 ]);
             }
 
             return DataTables::of($query)
                 ->addIndexColumn()
-                ->addColumn('location', function ($row) {
 
+                ->addColumn('location', function ($row) {
                     if ($row->location_type == 1) {
                         return $row->location_simple;
                     } elseif ($row->location_type == 2) {
@@ -53,20 +76,20 @@ class ReportController extends Controller
                             $row->city . ', ' .
                             $row->district . ' - ' .
                             $row->post_code;
-                    } else {
-                        return $row->country .
-                            ' (Passport: ' . $row->passport_no . ')';
                     }
+                    return $row->country . ' (Passport: ' . $row->passport_no . ')';
                 })
-                ->editColumn('is_recommend', function ($row) {
-                    return $row->is_recommend ? 'Yes' : 'No';
-                })
-                ->addColumn('date', function ($row) {
-                    return $row->created_at->format('Y-m-d');
-                })
-                ->addColumn('action', function ($row) {
-                    return '<a href="' . route('patients.show', $row->id) . '" class="btn btn-sm btn-primary">View</a>';
-                })
+
+                ->editColumn('is_recommend', fn($r) => $r->is_recommend ? 'Yes' : 'No')
+
+                ->addColumn('date', fn($r) => $r->created_at->format('Y-m-d'))
+
+                ->addColumn(
+                    'action',
+                    fn($r) =>
+                    '<a href="' . route('patients.show', $r->id) . '" class="btn btn-sm btn-primary">View</a>'
+                )
+
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -74,11 +97,24 @@ class ReportController extends Controller
         return view('backend.report_management.patient.daily_report');
     }
 
+
     /* =======================
        DAILY REPORT PDF
        ======================= */
     public function daily_report_pdf(Request $request)
     {
+        // ❌ BLOCK PDF GENERATION WITHOUT FILTER
+        if (
+            !$request->filled('gender') &&
+            !$request->filled('is_recommend') &&
+            !$request->filled('location_type') &&
+            !$request->filled('from_date')
+        ) {
+            return redirect()
+                ->back()
+                ->with('warning', 'Please apply at least one filter before downloading the report.');
+        }
+
         $query = Patient::query();
 
         if ($request->filled('gender')) {
@@ -104,13 +140,22 @@ class ReportController extends Controller
             ]);
         }
 
+        $query->orderBy('id');
+
         $perPage = 300;
         $page = $request->get('page', 1);
-
         $totalRecords = $query->count();
         $totalPages = ceil($totalRecords / $perPage);
+        $patients = $query->forPage($page, $perPage)->get();
+
+        if ($totalRecords === 0) {
+            return redirect()
+                ->back()
+                ->with('warning', 'No data found for the selected filters.');
+        }
 
         $patients = $query->forPage($page, $perPage)->get();
+        $loadedRecords = $patients->count(); // ✅ for modal
 
         $organization = Organization::first();
 
@@ -138,14 +183,24 @@ class ReportController extends Controller
     {
         if ($request->ajax()) {
 
+            // ❌ DO NOT load data without filters
+            if (
+                !$request->filled('year') &&
+                !$request->filled('month') &&
+                !$request->filled('gender') &&
+                !$request->filled('is_recommend')
+            ) {
+                return DataTables::of(collect())->make(true);
+            }
+
             $query = Patient::query();
 
-            // ✅ YEAR FILTER (date_of_patient_added)
+            // YEAR FILTER
             if ($request->filled('year')) {
                 $query->whereYear('date_of_patient_added', $request->year);
             }
 
-            // ✅ MONTH FILTER (date_of_patient_added)
+            // MONTH FILTER
             if ($request->filled('month')) {
                 $query->whereMonth('date_of_patient_added', $request->month);
             }
@@ -163,7 +218,6 @@ class ReportController extends Controller
             return DataTables::of($query)
                 ->addIndexColumn()
 
-                // ✅ LOCATION LOGIC (UNCHANGED)
                 ->addColumn('location', function ($row) {
                     if ($row->location_type == 1) {
                         return $row->location_simple;
@@ -176,12 +230,10 @@ class ReportController extends Controller
                     return $row->country . ' (Passport: ' . $row->passport_no . ')';
                 })
 
-                // Recommended Text
                 ->editColumn('is_recommend', function ($row) {
                     return $row->is_recommend ? 'Yes' : 'No';
                 })
 
-                // ✅ DATE COLUMN (USING date_of_patient_added)
                 ->addColumn('date', function ($row) {
                     return \Carbon\Carbon::parse($row->date_of_patient_added)->format('d-m-Y')
                         . ' (' .
@@ -189,7 +241,6 @@ class ReportController extends Controller
                         . ')';
                 })
 
-                // Action
                 ->addColumn('action', function ($row) {
                     return '<a href="' . route('patients.show', $row->id) . '" class="btn btn-sm btn-primary">View</a>';
                 })
@@ -203,6 +254,18 @@ class ReportController extends Controller
 
     public function monthly_report_pdf(Request $request)
     {
+        // ❌ BLOCK PDF GENERATION WITHOUT FILTER
+        if (
+            !$request->filled('year') &&
+            !$request->filled('month') &&
+            !$request->filled('gender') &&
+            !$request->filled('is_recommend')
+        ) {
+            return redirect()
+                ->back()
+                ->with('warning', 'Please apply at least one filter before downloading the report.');
+        }
+
         $query = Patient::query();
 
         // Year filter
@@ -229,11 +292,20 @@ class ReportController extends Controller
 
         $perPage = 300;
         $page = $request->get('page', 1);
-
         $totalRecords = $query->count();
         $totalPages = ceil($totalRecords / $perPage);
+        $patients = $query->forPage($page, $perPage)->get();
+
+        // Safety: no data found
+        if ($totalRecords === 0) {
+            return redirect()
+                ->back()
+                ->with('warning', 'No data found for the selected filters.');
+        }
 
         $patients = $query->forPage($page, $perPage)->get();
+
+        $loadedRecords = $patients->count(); // for modal logic
 
         $organization = Organization::first();
 
@@ -252,6 +324,7 @@ class ReportController extends Controller
         return $pdf->stream('monthly_patient_report_page_' . $page . '.pdf');
     }
 
+
     /* =======================
        YEARLY REPORT 
        ======================= */
@@ -259,35 +332,65 @@ class ReportController extends Controller
     public function yearly_report(Request $request)
     {
         if ($request->ajax()) {
+
+            // ❌ DO NOT load data without filters
+            if (
+                !$request->filled('year') &&
+                !$request->filled('gender') &&
+                !$request->filled('is_recommend')
+            ) {
+                return DataTables::of(collect())->make(true);
+            }
+
             $query = Patient::query();
 
-            // Filter by year
+            // Year filter
             if ($request->filled('year')) {
                 $query->whereYear('date_of_patient_added', $request->year);
             }
 
-            // Gender filter
+            // Gender
             if ($request->filled('gender')) {
                 $query->where('gender', $request->gender);
             }
 
-            // Recommended filter
+            // Recommended
             if ($request->filled('is_recommend')) {
                 $query->where('is_recommend', $request->is_recommend);
             }
 
             return DataTables::of($query)
                 ->addIndexColumn()
+
                 ->addColumn('location', function ($row) {
-                    if ($row->location_type == 1) return $row->location_simple;
-                    if ($row->location_type == 2) {
-                        return $row->house_address . ', ' . $row->city . ', ' . $row->district . ' - ' . $row->post_code;
+                    if ($row->location_type == 1) {
+                        return $row->location_simple;
+                    } elseif ($row->location_type == 2) {
+                        return $row->house_address . ', ' .
+                            $row->city . ', ' .
+                            $row->district . ' - ' .
+                            $row->post_code;
                     }
                     return $row->country . ' (Passport: ' . $row->passport_no . ')';
                 })
+
                 ->editColumn('is_recommend', fn($r) => $r->is_recommend ? 'Yes' : 'No')
-                ->addColumn('date', fn($r) => \Carbon\Carbon::parse($r->date_of_patient_added)->format('d-m-Y') . ' (' . \Carbon\Carbon::parse($r->date_of_patient_added)->format('d F Y') . ')')
-                ->addColumn('action', fn($r) => '<a href="' . route('patients.show', $r->id) . '" class="btn btn-sm btn-primary">View</a>')
+
+                ->addColumn(
+                    'date',
+                    fn($r) =>
+                    \Carbon\Carbon::parse($r->date_of_patient_added)->format('d-m-Y') .
+                        ' (' .
+                        \Carbon\Carbon::parse($r->date_of_patient_added)->format('d F Y') .
+                        ')'
+                )
+
+                ->addColumn(
+                    'action',
+                    fn($r) =>
+                    '<a href="' . route('patients.show', $r->id) . '" class="btn btn-sm btn-primary">View</a>'
+                )
+
                 ->rawColumns(['action'])
                 ->make(true);
         }
@@ -295,37 +398,60 @@ class ReportController extends Controller
         return view('backend.report_management.patient.yearly_report');
     }
 
+
     /* =======================
        YEARLY REPORT PDF
        ======================= */
     public function yearly_report_pdf(Request $request)
     {
+        // ❌ Block PDF if no filter
+        if (
+            !$request->filled('year') &&
+            !$request->filled('gender') &&
+            !$request->filled('is_recommend')
+        ) {
+            return redirect()->back()
+                ->with('warning', 'Please apply at least one filter before downloading the report.');
+        }
+
         $query = Patient::query();
 
+        // Filters
         if ($request->filled('year')) {
             $query->whereYear('date_of_patient_added', $request->year);
         }
-
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }
-
         if ($request->filled('is_recommend')) {
             $query->where('is_recommend', $request->is_recommend);
         }
 
-        $query->orderBy('id'); // VERY IMPORTANT
-
-        $perPage = 300;
+        $query->orderBy('id');
         $page = $request->get('page', 1);
-
+        $perPage = 300;
         $totalRecords = $query->count();
         $totalPages = ceil($totalRecords / $perPage);
 
-        $patients = $query->forPage($page, $perPage)->get();
+        if ($totalRecords === 0) {
+            return redirect()->back()
+                ->with('warning', 'No data found for the selected filters.');
+        }
 
-        $totalRecords = $patients->count();
+        // ❌ Show toast if > 300 and user has not confirmed
+        if ($totalRecords > $perPage && !$request->filled('confirm')) {
+            return redirect()->back()->with([
+                'confirm_pdf' => true,
+                'totalRecords' => $totalRecords,
+                'perPage' => $perPage,
+                'year' => $request->year ?? '',
+                'gender' => $request->gender ?? '',
+                'is_recommend' => $request->is_recommend ?? '',
+            ]);
+        }
 
+        // ✅ User confirmed or <= 300 → generate PDF
+        $patients = $query->limit($perPage)->get();
         $organization = Organization::first();
 
         $pdf = Pdf::loadView(
@@ -334,8 +460,8 @@ class ReportController extends Controller
                 'patients',
                 'organization',
                 'page',
-                'totalPages',
                 'perPage',
+                'totalPages',
                 'totalRecords'
             )
         )->setPaper('a4', 'landscape');

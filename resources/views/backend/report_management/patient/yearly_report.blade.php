@@ -158,6 +158,7 @@
                 table.ajax.reload();
             });
 
+            // Handle Download PDF button
             $('#downloadPdfBtn').on('click', function(e) {
                 e.preventDefault();
                 let params = $.param({
@@ -165,8 +166,77 @@
                     gender: $('select[name=gender]').val(),
                     is_recommend: $('select[name=is_recommend]').val(),
                 });
+
+                // Open PDF in new tab
                 window.open("{{ route('report.yearly.pdf') }}?" + params, '_blank');
             });
         });
+
+        // ================== TOAST CONFIRM PDF ==================
+        @if (session('confirm_pdf'))
+            document.addEventListener("DOMContentLoaded", function() {
+                let toastDuration = 30000; // 30 seconds
+                let confirmed = false;
+
+                // Create toast
+                let toast = document.createElement('div');
+                toast.style.position = 'fixed';
+                toast.style.top = '20px';
+                toast.style.right = '20px';
+                toast.style.backgroundColor = '#ffc107';
+                toast.style.color = '#000';
+                toast.style.padding = '20px';
+                toast.style.borderRadius = '8px';
+                toast.style.boxShadow = '0 0 10px rgba(0,0,0,0.2)';
+                toast.style.zIndex = '9999';
+                toast.innerHTML = `
+                    <div style="font-size:24px; font-weight:bold; animation: pulse 1s infinite;">&#33;</div>
+                    <p>Maximum 300 records reached ({{ session('totalRecords') }}).</p>
+                    <p>Do you want to generate PDF with first 300 records?</p>
+                    <button id="pdf-yes" class="btn btn-sm btn-success">Yes</button>
+                    <button id="pdf-no" class="btn btn-sm btn-danger">No</button>
+                `;
+                document.body.appendChild(toast);
+
+                // Pulse animation
+                let style = document.createElement('style');
+                style.innerHTML = `
+        @keyframes pulse {
+            0% { transform: scale(1); color: red; }
+            50% { transform: scale(1.3); color: darkred; }
+            100% { transform: scale(1); color: red; }
+        }
+    `;
+                document.head.appendChild(style);
+
+                // YES click → stream first 300 PDF
+                document.getElementById('pdf-yes').addEventListener('click', function() {
+                    confirmed = true;
+
+                    // Build URL with filters + confirm=1
+                    let params = new URLSearchParams({
+                        year: "{{ session('year') }}",
+                        gender: "{{ session('gender') }}",
+                        is_recommend: "{{ session('is_recommend') }}",
+                        confirm: 1
+                    });
+
+                    window.open("{{ route('report.yearly.pdf') }}?" + params.toString(), '_blank');
+                    toast.remove();
+                });
+
+                // NO click → stay, toast says try again
+                document.getElementById('pdf-no').addEventListener('click', function() {
+                    confirmed = false;
+                    toast.innerHTML = '<p>Try to filter again or adjust filters.</p>';
+                    setTimeout(() => toast.remove(), toastDuration);
+                });
+
+                // Auto remove after 30s if not confirmed
+                setTimeout(() => {
+                    if (!confirmed) toast.remove();
+                }, toastDuration);
+            });
+        @endif
     </script>
 @endsection
