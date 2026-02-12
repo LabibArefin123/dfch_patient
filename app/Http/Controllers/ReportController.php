@@ -104,18 +104,26 @@ class ReportController extends Controller
             ]);
         }
 
-        $patients = $query
-            ->orderBy('id')
-            ->limit(500)   // ✅ limit
-            ->get();
+        $perPage = 300;
+        $page = $request->get('page', 1);
 
-        $totalRecords = $patients->count();
+        $totalRecords = $query->count();
+        $totalPages = ceil($totalRecords / $perPage);
+
+        $patients = $query->forPage($page, $perPage)->get();
 
         $organization = Organization::first();
 
         $pdf = Pdf::loadView(
             'backend.report_management.patient.daily_report_pdf',
-            compact('patients', 'organization', 'totalRecords')
+            compact(
+                'patients',
+                'organization',
+                'page',
+                'totalPages',
+                'perPage',
+                'totalRecords'
+            )
         )->setPaper('a4', 'landscape');
 
         return $pdf->stream('daily_patient_report.pdf');
@@ -219,7 +227,7 @@ class ReportController extends Controller
 
         $query->orderBy('id'); // VERY IMPORTANT
 
-        $perPage = 500;
+        $perPage = 300;
         $page = $request->get('page', 1);
 
         $totalRecords = $query->count();
@@ -306,10 +314,15 @@ class ReportController extends Controller
             $query->where('is_recommend', $request->is_recommend);
         }
 
-        $patients = $query
-            ->orderBy('id')
-            ->limit(500)   // ✅ limit
-            ->get();
+        $query->orderBy('id'); // VERY IMPORTANT
+
+        $perPage = 300;
+        $page = $request->get('page', 1);
+
+        $totalRecords = $query->count();
+        $totalPages = ceil($totalRecords / $perPage);
+
+        $patients = $query->forPage($page, $perPage)->get();
 
         $totalRecords = $patients->count();
 
@@ -317,7 +330,14 @@ class ReportController extends Controller
 
         $pdf = Pdf::loadView(
             'backend.report_management.patient.yearly_report_pdf',
-            compact('patients', 'organization', 'totalRecords')
+            compact(
+                'patients',
+                'organization',
+                'page',
+                'totalPages',
+                'perPage',
+                'totalRecords'
+            )
         )->setPaper('a4', 'landscape');
 
         return $pdf->stream('yearly_patient_report.pdf');
