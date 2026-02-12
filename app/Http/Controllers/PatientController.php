@@ -105,52 +105,60 @@ class PatientController extends Controller
             return DataTables::of($baseQuery)
                 ->addIndexColumn()
 
-                ->addColumn('name', function ($p) {
-                    return '<strong>' . $p->patient_name . '</strong><br>
-                        <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
-                        <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small>';
+                ->addColumn('patient_code', function ($p) {
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
                 })
 
-                ->editColumn('gender', fn($p) => ucfirst($p->gender))
+                ->addColumn('name', function ($p) {
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box"><strong>' . $p->patient_name . '</strong><br>
+            <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
+            <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small></a>';
+                })
+
+                ->addColumn('age', function ($p) {
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->age . '</a>';
+                })
+
+                ->addColumn('gender', function ($p) {
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . ucfirst($p->gender) . '</a>';
+                })
 
                 ->addColumn('phone', function ($p) {
-                    return ($p->phone_1 ?? 'N/A') .
-                        '<br><small>Alt: ' . ($p->phone_2 ?? 'N/A') . '</small>' .
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' .
+                        ($p->phone_1 ?? 'N/A') . '<br><small>Alt: ' . ($p->phone_2 ?? 'N/A') . '</small>' .
                         '<br><small>Father: ' . ($p->phone_f_1 ?? 'N/A') . '</small>' .
-                        '<br><small>Mother: ' . ($p->phone_m_1 ?? 'N/A') . '</small>';
+                        '<br><small>Mother: ' . ($p->phone_m_1 ?? 'N/A') . '</small>' .
+                        '</a>';
                 })
 
                 ->addColumn('location', function ($p) {
-                    if ($p->location_type == 1) return $p->location_simple;
-                    if ($p->location_type == 2) return $p->city . '<br>' . $p->district;
-                    return $p->country;
+                    $loc = $p->location_type == 1 ? $p->location_simple : ($p->location_type == 2 ? $p->city . '<br>' . $p->district : $p->country);
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $loc . '</a>';
                 })
 
-                ->editColumn('is_recommend', function ($p) {
-                    return $p->is_recommend
-                        ? '<span class="badge badge-success">Yes</span>'
-                        : '<span class="badge badge-secondary">No</span>';
+                ->addColumn('is_recommend', function ($p) {
+                    $status = $p->is_recommend ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-secondary">No</span>';
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $status . '</a>';
                 })
 
                 ->addColumn('date', function ($p) {
-                    return \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y');
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' .
+                        \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y') .
+                        '</a>';
                 })
 
                 ->addColumn('action', function ($p) {
                     return '
-                    <a href="' . route('patients.show', $p->id) . '" class="btn btn-info btn-sm">View</a>
-                    <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>
-                ';
+            <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>
+        ';
                 })
 
-                ->rawColumns(['name', 'phone', 'location', 'is_recommend', 'action'])
-
+                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,
                     'seniorPatients' => $seniorPatients,
                 ])
-
                 ->make(true);
         }
 

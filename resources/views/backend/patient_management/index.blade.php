@@ -138,6 +138,7 @@
                         searchable: false
                     }
                 ]
+
             });
 
             // Date filter UI toggle
