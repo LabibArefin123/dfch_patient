@@ -36,11 +36,26 @@ class DashboardController extends Controller
             ->whereYear('date_of_patient_added', $today->year)
             ->count();
 
+        //Recommended Patients Count
+        $totalRecommendedPatients = Patient::where('is_recommend', 1)->count();
+
+        $todayRecommendedPatients = Patient::where('is_recommend', 1)
+            ->whereDate('date_of_patient_added', $today)
+            ->count();
+
+        $monthlyRecommendedPatients = Patient::where('is_recommend', 1)
+            ->whereMonth('date_of_patient_added', $today->month)
+            ->whereYear('date_of_patient_added', $today->year)
+            ->count();
+
         return view('backend.dashboard', compact(
             'totalPatients',
             'todayPatients',
             'weeklyPatients',
-            'monthlyPatients'
+            'monthlyPatients',
+            'totalRecommendedPatients',
+            'todayRecommendedPatients',
+            'monthlyRecommendedPatients'
         ));
     }
 

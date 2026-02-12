@@ -98,7 +98,7 @@
             for {{ \Carbon\Carbon::create()->month((int) request()->month)->format('F') }}, {{ request()->year }}
         @endif
     </h3>
-    
+
     <table width="100%" style="margin-top:10px;">
         <tr>
             <td style="text-align:left;">
@@ -106,33 +106,37 @@
                 <strong>Total Records:</strong> {{ $totalRecords }}
             </td>
 
-            <td style="text-align:right;">
-                @if ($totalPages > 1)
+            {{-- Page Info Section --}}
+            <table width="100%" class="header-table" style="margin-top:10px;">
+                <tr>
+                    <td style="text-align:left; border:none;">
+                        <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
+                        <strong>Total Records:</strong> {{ $totalRecords }}
+                    </td>
 
-                    @if ($page > 1)
-                        <a href="{{ request()->fullUrlWithQuery(['page' => $page - 1]) }}">
-                            ◀ Previous
-                        </a>
-                    @endif
+                    <td style="text-align:right; border:none;">
+                        @if ($totalPages > 1)
 
-                    @if ($page < $totalPages)
-                        @if ($page > 1)
-                            &nbsp; | &nbsp;
+                            @if ($page > 1)
+                                <span style="padding:4px 8px;">
+                                    &#x276E; Previous
+                                </span>
+                            @endif
+
+                            @if ($page < $totalPages)
+                                <span style="padding:4px 8px;">
+                                    Next &#x276F;
+                                </span>
+                            @endif
+
                         @endif
-                        <a href="{{ request()->fullUrlWithQuery(['page' => $page + 1]) }}">
-                            Next ▶
-                        </a>
-                    @endif
+                    </td>
+                </tr>
+            </table>
 
-                @endif
-            </td>
         </tr>
     </table>
-
-
     </p>
-
-
     {{-- Table --}}
     <table>
         <thead>
