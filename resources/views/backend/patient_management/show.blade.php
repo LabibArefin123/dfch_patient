@@ -66,22 +66,75 @@
                     {{-- CONTACT --}}
                     <h6 class="text-muted mt-3">Contact Information</h6>
                     <div class="row">
-                        <div class="col-md-3">
-                            <input type="text" class="form-control mb-2" disabled value="Personal: {{ $patient->phone_1 }}">
+
+                        <div class="col-md-3 mb-2">
+                            <div class="form-control bg-light">
+                                Personal:
+                                <span class="dev-link text-primary font-weight-bold" data-phone="{{ $patient->phone_1 }}">
+                                    {{ $patient->phone_1 }}
+                                </span>
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control mb-2" disabled
-                                value="Alt: {{ $patient->phone_2 ?? 'N/A' }}">
+
+                        <div class="col-md-3 mb-2">
+                            <div class="form-control bg-light">
+                                Alt:
+                                <span class="dev-link text-primary font-weight-bold" data-phone="{{ $patient->phone_2 }}">
+                                    {{ $patient->phone_2 ?? 'N/A' }}
+                                </span>
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control mb-2" disabled
-                                value="Father: {{ $patient->phone_f_1 ?? 'N/A' }}">
+
+                        <div class="col-md-3 mb-2">
+                            <div class="form-control bg-light">
+                                Father:
+                                <span class="dev-link text-primary font-weight-bold"
+                                    data-phone="{{ $patient->phone_f_1 }}">
+                                    {{ $patient->phone_f_1 ?? 'N/A' }}
+                                </span>
+                            </div>
                         </div>
-                        <div class="col-md-3">
-                            <input type="text" class="form-control mb-2" disabled
-                                value="Mother: {{ $patient->phone_m_1 ?? 'N/A' }}">
+
+                        <div class="col-md-3 mb-2">
+                            <div class="form-control bg-light">
+                                Mother:
+                                <span class="dev-link text-primary font-weight-bold"
+                                    data-phone="{{ $patient->phone_m_1 }}">
+                                    {{ $patient->phone_m_1 ?? 'N/A' }}
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- Call Confirmation Modal -->
+                    <div class="modal fade" id="callConfirmModal" tabindex="-1" role="dialog" aria-hidden="true"
+                        data-backdrop="true" data-keyboard="true">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content shadow">
+
+                                <div class="modal-header bg-info text-white">
+                                    <h5 class="modal-title">📞 Confirm Call</h5>
+                                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body text-center">
+                                    <p class="mb-1">Do you want to call this number?</p>
+                                    <h5 class="text-primary" id="selectedPhone"></h5>
+                                </div>
+
+                                <div class="modal-footer justify-content-center">
+                                    <button type="button" class="btn btn-secondary" id="cancelCall">No</button>
+                                    <a href="#" target="_blank" id="confirmWhatsapp" class="btn btn-success">Yes
+                                        (WhatsApp)</a>
+                                </div>
+
+                            </div>
                         </div>
                     </div>
+
 
                     {{-- LOCATION --}}
                     <h6 class="text-muted mt-3">Location</h6>
@@ -94,9 +147,8 @@
                             {{ $patient->city }},
                             {{ $patient->district }} - {{ $patient->post_code }}
                         @else
-                            {{ $patient->country }}
+                            {{ $patient->country }}, Passport Number = {{ $patient->passport_no }}
                             <br>
-                            <strong>Passport:</strong> {{ $patient->passport_no }}
                         @endif
                     </p>
 
@@ -138,4 +190,32 @@
 
         </div>
     </div>
+    <div class="card mt-4">
+        <div class="card-body" style="height:50px;">
+            <!-- Intentionally left blank -->
+        </div>
+    </div>
 @stop
+
+@section('js')
+    <script>
+        $(document).on('click', '.dev-link', function() {
+
+            let phone = $(this).data('phone');
+
+            if (!phone || phone === 'N/A') {
+                return;
+            }
+
+            phone = phone.toString().replace(/[^0-9]/g, '');
+
+            $('#selectedPhone').text(phone);
+            $('#confirmWhatsapp').attr('href', 'https://wa.me/' + phone);
+
+            $('#callConfirmModal').modal('show');
+            $('#cancelCall').on('click', function() {
+                $('#callConfirmModal').modal('hide');
+            });
+        });
+    </script>
+@endsection
