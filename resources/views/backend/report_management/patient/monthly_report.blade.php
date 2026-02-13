@@ -107,6 +107,40 @@
             <!-- Intentionally left blank -->
         </div>
     </div>
+    {{-- Warning Modal --}}
+    <div class="modal fade" id="warningMessage" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header bg-warning">
+                    <h5 class="modal-title">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        PDF Record Limit Warning
+                    </h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body text-center">
+                    <h5 class="text-danger">
+                        Maximum 300 records reached ({{ session('totalRecords') }})
+                    </h5>
+                    <p>Do you want to generate PDF with first 300 records?</p>
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                    <button type="button" id="confirmPdfBtn" class="btn btn-success">
+                        Yes, Generate
+                    </button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">
+                        Cancel
+                    </button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @stop
 
 @section('js')
@@ -177,6 +211,7 @@
                 table.ajax.reload();
             });
 
+            // Download PDF
             $('#downloadPdfBtn').on('click', function(e) {
                 e.preventDefault();
 
@@ -191,5 +226,28 @@
             });
 
         });
+
+        // ✅ MODAL CONFIRM PDF
+        @if (session('confirm_pdf'))
+            $(document).ready(function() {
+
+                $('#warningMessage').modal('show');
+
+                $('#confirmPdfBtn').on('click', function() {
+
+                    let params = new URLSearchParams({
+                        year: "{{ session('year') }}",
+                        month: "{{ session('month') }}",
+                        gender: "{{ session('gender') }}",
+                        is_recommend: "{{ session('is_recommend') }}",
+                        confirm: 1
+                    });
+
+                    window.open("{{ route('report.monthly.pdf') }}?" + params.toString(), '_blank');
+
+                    $('#warningMessage').modal('hide');
+                });
+            });
+        @endif
     </script>
 @endsection

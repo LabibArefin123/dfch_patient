@@ -96,7 +96,7 @@
                 <tr>
                     <td style="text-align:left; border:none;">
                         <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
-                        <strong>Total Records:</strong> {{ $totalRecords }}
+                        <strong>Total Records:</strong> {{ $totalRecords }} (Current Total Record: {{ $perPage }})
                         {{-- </td>
 
                     <td style="text-align:right; border:none;">

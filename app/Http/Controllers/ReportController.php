@@ -103,15 +103,14 @@ class ReportController extends Controller
        ======================= */
     public function daily_report_pdf(Request $request)
     {
-        // ❌ BLOCK PDF GENERATION WITHOUT FILTER
+        // ❌ BLOCK PDF WITHOUT FILTER
         if (
             !$request->filled('gender') &&
             !$request->filled('is_recommend') &&
             !$request->filled('location_type') &&
             !$request->filled('from_date')
         ) {
-            return redirect()
-                ->back()
+            return redirect()->back()
                 ->with('warning', 'Please apply at least one filter before downloading the report.');
         }
 
@@ -146,17 +145,29 @@ class ReportController extends Controller
         $page = $request->get('page', 1);
         $totalRecords = $query->count();
         $totalPages = ceil($totalRecords / $perPage);
-        $patients = $query->forPage($page, $perPage)->get();
 
         if ($totalRecords === 0) {
-            return redirect()
-                ->back()
+            return redirect()->back()
                 ->with('warning', 'No data found for the selected filters.');
         }
 
-        $patients = $query->forPage($page, $perPage)->get();
-        $loadedRecords = $patients->count(); // ✅ for modal
+        // ❌ Show modal if > 300 and not confirmed
+        if ($totalRecords > $perPage && !$request->filled('confirm')) {
+            return redirect()->back()->with([
+                'confirm_pdf'   => true,
+                'totalRecords'  => $totalRecords,
+                'perPage'       => $perPage,
+                'gender'        => $request->gender ?? '',
+                'is_recommend'  => $request->is_recommend ?? '',
+                'location_type' => $request->location_type ?? '',
+                'location_value' => $request->location_value ?? '',
+                'from_date'     => $request->from_date ?? '',
+                'to_date'       => $request->to_date ?? '',
+            ]);
+        }
 
+        // ✅ Generate PDF
+        $patients = $query->limit($perPage)->get();
         $organization = Organization::first();
 
         $pdf = Pdf::loadView(
@@ -165,8 +176,8 @@ class ReportController extends Controller
                 'patients',
                 'organization',
                 'page',
-                'totalPages',
                 'perPage',
+                'totalPages',
                 'totalRecords'
             )
         )->setPaper('a4', 'landscape');
@@ -254,59 +265,63 @@ class ReportController extends Controller
 
     public function monthly_report_pdf(Request $request)
     {
-        // ❌ BLOCK PDF GENERATION WITHOUT FILTER
+        // ❌ BLOCK PDF WITHOUT FILTER
         if (
             !$request->filled('year') &&
             !$request->filled('month') &&
             !$request->filled('gender') &&
             !$request->filled('is_recommend')
         ) {
-            return redirect()
-                ->back()
+            return redirect()->back()
                 ->with('warning', 'Please apply at least one filter before downloading the report.');
         }
 
         $query = Patient::query();
 
-        // Year filter
+        // Filters
         if ($request->filled('year')) {
             $query->whereYear('date_of_patient_added', $request->year);
         }
 
-        // Month filter
         if ($request->filled('month')) {
             $query->whereMonth('date_of_patient_added', $request->month);
         }
 
-        // Gender
         if ($request->filled('gender')) {
             $query->where('gender', $request->gender);
         }
 
-        // Recommended
         if ($request->filled('is_recommend')) {
             $query->where('is_recommend', $request->is_recommend);
         }
 
-        $query->orderBy('id'); // VERY IMPORTANT
+        $query->orderBy('id');
 
         $perPage = 300;
         $page = $request->get('page', 1);
         $totalRecords = $query->count();
         $totalPages = ceil($totalRecords / $perPage);
-        $patients = $query->forPage($page, $perPage)->get();
 
-        // Safety: no data found
         if ($totalRecords === 0) {
-            return redirect()
-                ->back()
+            return redirect()->back()
                 ->with('warning', 'No data found for the selected filters.');
         }
 
-        $patients = $query->forPage($page, $perPage)->get();
+        // ❌ Show modal if > 300 and not confirmed
+        if ($totalRecords > $perPage && !$request->filled('confirm')) {
+            return redirect()->back()->with([
+                'confirm_pdf'   => true,
+                'totalRecords'  => $totalRecords,
+                'perPage'       => $perPage,
+                'year'          => $request->year ?? '',
+                'month'         => $request->month ?? '',
+                'gender'        => $request->gender ?? '',
+                'is_recommend'  => $request->is_recommend ?? '',
+            ]);
+        }
 
-        $loadedRecords = $patients->count(); // for modal logic
-
+        // ✅ Generate PDF
+        $patients = $query->limit($perPage)->get();
         $organization = Organization::first();
 
         $pdf = Pdf::loadView(
@@ -315,14 +330,15 @@ class ReportController extends Controller
                 'patients',
                 'organization',
                 'page',
-                'totalPages',
                 'perPage',
+                'totalPages',
                 'totalRecords'
             )
         )->setPaper('a4', 'landscape');
 
-        return $pdf->stream('monthly_patient_report_page_' . $page . '.pdf');
+        return $pdf->stream('monthly_patient_report.pdf');
     }
+
 
 
     /* =======================
