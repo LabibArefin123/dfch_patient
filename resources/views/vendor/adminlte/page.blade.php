@@ -152,7 +152,7 @@
         <!-- end of delete animation model -->
 
         <!-- Start Limit Warning Modal -->
-        <div class="modal fade" id="limitWarningModal" tabindex="-1" aria-hidden="true">
+        {{-- <div class="modal fade" id="limitWarningModal" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content text-center p-4">
 
@@ -174,7 +174,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <!-- End of Limit Warning Modal -->
 
         {{-- Preloader --}}

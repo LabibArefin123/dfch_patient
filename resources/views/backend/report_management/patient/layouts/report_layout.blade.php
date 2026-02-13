@@ -28,9 +28,7 @@
                     <form id="filterForm">
                         @yield('filters')
                         <div class="mt-3">
-                            <button type="submit" class="btn btn-primary btn-sm">
-                                Apply Filter
-                            </button>
+                            <button type="submit" class="btn btn-primary btn-sm">Apply Filter</button>
                         </div>
                     </form>
                 </div>
@@ -46,10 +44,9 @@
         </div>
     </div>
     <div class="card mt-4">
-        <div class="card-body" style="height:50px;">
-            <!-- Intentionally left blank -->
-        </div>
+        <div class="card-body" style="height:50px;"></div>
     </div>
+
     {{-- Reusable Confirm Modal --}}
     @include('backend.report_management.patient.partials.confirm_pdf_modal')
 @stop
@@ -57,7 +54,6 @@
 @section('js')
     <script>
         $(function() {
-
             let table = $('#reportTable').DataTable({
                 processing: true,
                 serverSide: true,
@@ -83,18 +79,34 @@
                 let params = $('#filterForm').serialize();
                 window.open("{{ $pdfRoute }}?" + params, '_blank');
             });
-
         });
     </script>
 
-    {{-- Modal Auto Trigger --}}
-    @if (session('confirm_pdf'))
+    {{-- PDF Confirmation Modal Trigger --}}
+    @if (session()->has('confirm_pdf') && session()->get('confirm_pdf') === true)
+        @php
+            // Only keep relevant keys for PDF params
+            $pdfParams = session()->only([
+                'totalRecords',
+                'perPage',
+                'gender',
+                'is_recommend',
+                'year',
+                'month',
+                'from_date',
+                'to_date',
+            ]);
+            // Clear session after use
+            session()->forget('confirm_pdf');
+        @endphp
         <script>
             $(document).ready(function() {
+                const pdfParams = @json($pdfParams);
+
                 $('#warningMessage').modal('show');
 
                 $('#confirmPdfBtn').on('click', function() {
-                    let params = new URLSearchParams(@json(session()->all()));
+                    let params = new URLSearchParams(pdfParams);
                     params.set('confirm', 1);
                     window.open("{{ $pdfRoute }}?" + params.toString(), '_blank');
                     $('#warningMessage').modal('hide');

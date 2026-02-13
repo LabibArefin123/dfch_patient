@@ -220,7 +220,7 @@ class ReportController extends Controller
             ]);
         }
     }
-    
+
     private function applyWeeklyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);
