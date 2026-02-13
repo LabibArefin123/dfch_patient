@@ -50,6 +50,43 @@ class ReportController extends Controller
         );
     }
 
+    /* =========================================================
+   ===================== WEEKLY REPORT =====================
+   ========================================================= */
+
+    public function weekly_report(Request $request)
+    {
+        if ($request->ajax()) {
+
+            if (!$this->hasWeeklyFilters($request)) {
+                return DataTables::of(collect())->make(true);
+            }
+
+            $query = Patient::query();
+            $this->applyWeeklyFilters($query, $request);
+
+            return $this->dataTableResponse($query, 'date_of_patient_added');
+        }
+
+        return view('backend.report_management.patient.weekly_report');
+    }
+
+    public function weekly_report_pdf(Request $request)
+    {
+        if (!$this->hasWeeklyFilters($request)) {
+            return back()->with('warning', 'Please apply at least one filter.');
+        }
+
+        $query = Patient::query();
+        $this->applyWeeklyFilters($query, $request);
+
+        return $this->generatePdf(
+            $query,
+            $request,
+            'backend.report_management.patient.weekly_report_pdf',
+            'weekly_patient_report.pdf'
+        );
+    }
 
     /* =========================================================
        ===================== MONTHLY REPORT ====================
@@ -141,6 +178,13 @@ class ReportController extends Controller
             || ($request->filled('from_date') && $request->filled('to_date'));
     }
 
+    private function hasWeeklyFilters(Request $request)
+    {
+        return $request->filled('from_date') && $request->filled('to_date')
+            || $request->filled('gender')
+            || $request->filled('is_recommend');
+    }
+
     private function hasMonthlyFilters(Request $request)
     {
         return $request->filled('year')
@@ -173,6 +217,24 @@ class ReportController extends Controller
             $query->whereBetween('created_at', [
                 $request->from_date . ' 00:00:00',
                 $request->to_date . ' 23:59:59',
+            ]);
+        }
+    }
+    
+    private function applyWeeklyFilters($query, Request $request)
+    {
+        $this->applyCommonFilters($query, $request);
+
+        if ($request->filled('from_date') && $request->filled('to_date')) {
+            $query->whereBetween('date_of_patient_added', [
+                $request->from_date . ' 00:00:00',
+                $request->to_date . ' 23:59:59',
+            ]);
+        } else {
+            // Default: current week (Monday → Sunday)
+            $query->whereBetween('date_of_patient_added', [
+                now()->startOfWeek()->format('Y-m-d 00:00:00'),
+                now()->endOfWeek()->format('Y-m-d 23:59:59'),
             ]);
         }
     }

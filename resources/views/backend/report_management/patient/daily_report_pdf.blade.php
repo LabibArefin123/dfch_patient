@@ -99,9 +99,9 @@
                     <td style="text-align:left; border:none;">
                         <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
                         <strong>Total Records:</strong> {{ $totalRecords }} (Current Total Record: {{ $perPage }})
-                        {{-- </td>
+                      </td>
 
-                    <td style="text-align:right; border:none;">
+                    {{--   <td style="text-align:right; border:none;">
                         @if ($totalPages > 1)
 
                             @if ($page > 1)

@@ -460,6 +460,12 @@ return [
                     'icon' => 'fas fa-calendar-day',
                 ],
                 [
+                    'text' => 'Weekly Patient Report',
+                    'route' => 'report.weekly',
+                    'can' => 'report.weekly',
+                    'icon' => 'fas fa-calendar-day',
+                ],
+                [
                     'text' => 'Monthly Patient Report',
                     'route' => 'report.monthly',
                     'can' => 'report.monthly',
