@@ -329,46 +329,46 @@ return [
             'topnav_right' => true,
         ],
 
-        [
-            'text' => '',
-            'icon' => 'fas fa-bell position-relative',
-            'topnav_right' => true,
-            'id' => 'notificationBell',
-            'submenu' => [
-                [
-                    'text' => 'Tender List (0)',
-                    'icon' => 'fas fa-list',             // Left icon
-                    'right_icon' => 'fas fa-file-alt',   // Right icon
-                    'label_color' => 'info',
-                ],
-                [
-                    'text' => 'Tender Participated Offer Validity List (0)',
-                    'icon' => 'fas fa-clock',
-                    'right_icon' => 'fas fa-hourglass-half',
-                    'label_color' => 'warning',
-                ],
-                [
-                    'text' => 'Bid Guarantee (BG) List (0)',
-                    'icon' => 'fas fa-shield-alt',
-                    'right_icon' => 'fas fa-exclamation-circle text-warning',
-                    'label_color' => 'primary',
-                ],
-                [
-                    'text' => 'Tender Awarded Delivery Date List (0)',
-                    'icon' => 'fas fa-trophy',
-                    'right_icon' => 'fas fa-calendar-day',
-                    'label_color' => 'primary',
-                ],
-                [
-                    'text' => 'Performance Guarantee (PG) List (0)',
-                    'icon' => 'fas fa-certificate',
-                    'right_icon' => 'fas fa-shield-alt',
-                    'label_color' => 'success',
-                ],
-            ],
-            'label' => null,
-            'label_color' => 'danger',
-        ],
+        // [
+        //     'text' => '',
+        //     'icon' => 'fas fa-bell position-relative',
+        //     'topnav_right' => true,
+        //     'id' => 'notificationBell',
+        //     'submenu' => [
+        //         [
+        //             'text' => 'Tender List (0)',
+        //             'icon' => 'fas fa-list',             // Left icon
+        //             'right_icon' => 'fas fa-file-alt',   // Right icon
+        //             'label_color' => 'info',
+        //         ],
+        //         [
+        //             'text' => 'Tender Participated Offer Validity List (0)',
+        //             'icon' => 'fas fa-clock',
+        //             'right_icon' => 'fas fa-hourglass-half',
+        //             'label_color' => 'warning',
+        //         ],
+        //         [
+        //             'text' => 'Bid Guarantee (BG) List (0)',
+        //             'icon' => 'fas fa-shield-alt',
+        //             'right_icon' => 'fas fa-exclamation-circle text-warning',
+        //             'label_color' => 'primary',
+        //         ],
+        //         [
+        //             'text' => 'Tender Awarded Delivery Date List (0)',
+        //             'icon' => 'fas fa-trophy',
+        //             'right_icon' => 'fas fa-calendar-day',
+        //             'label_color' => 'primary',
+        //         ],
+        //         [
+        //             'text' => 'Performance Guarantee (PG) List (0)',
+        //             'icon' => 'fas fa-certificate',
+        //             'right_icon' => 'fas fa-shield-alt',
+        //             'label_color' => 'success',
+        //         ],
+        //     ],
+        //     'label' => null,
+        //     'label_color' => 'danger',
+        // ],
 
         [
             'type' => 'navbar-item',

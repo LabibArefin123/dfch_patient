@@ -484,4 +484,37 @@ class ReportController extends Controller
 
         return $pdf->stream('yearly_patient_report.pdf');
     }
+
+    private function applyCommonFilters($query, Request $request)
+    {
+        if ($request->filled('gender')) {
+            $query->where('gender', $request->gender);
+        }
+
+        if ($request->filled('is_recommend')) {
+            $query->where('is_recommend', $request->is_recommend);
+        }
+
+        return $query;
+    }
+
+    private function handlePdfLimit($query, Request $request)
+    {
+        $perPage = 300;
+        $totalRecords = $query->count();
+
+        if ($totalRecords === 0) {
+            return redirect()->back()->with('warning', 'No data found.');
+        }
+
+        if ($totalRecords > $perPage && !$request->filled('confirm')) {
+            return redirect()->back()->with([
+                'confirm_pdf' => true,
+                'totalRecords' => $totalRecords,
+                'perPage' => $perPage,
+            ]);
+        }
+
+        return null;
+    }
 }
