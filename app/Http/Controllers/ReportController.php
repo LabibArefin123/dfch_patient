@@ -398,7 +398,7 @@ class ReportController extends Controller
     {
         $query->orderBy('id');
 
-        $perPage = 300;
+        $perPage = 500;
         $page = $request->get('page', 1);
         $totalRecords = $query->count();
         $totalPages = ceil($totalRecords / $perPage);

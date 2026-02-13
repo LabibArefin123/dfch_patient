@@ -165,7 +165,7 @@
                     </h4>
 
                     <p class="text-muted mb-3">
-                        This report is limited to <strong>300 records</strong>.<br>
+                        This report is limited to <strong>500 records</strong>.<br>
                         Please contact the developer for larger data export.
                     </p>
 
@@ -755,7 +755,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const totalRecords = {{ $totalRecords ?? 0 }};
-            const limit = 300;
+            const limit = 500;
             
             if (totalRecords >= limit) {
                 setTimeout(() => {

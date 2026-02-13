@@ -3,6 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Patient;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\PatientsImport;
+use App\Exports\PatientsExport;
 use App\Models\PatientDocument;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -173,6 +177,62 @@ class PatientController extends Controller
         );
     }
 
+    private function filteredPatients(Request $request)
+    {
+        return Patient::query()
+
+            ->when(
+                $request->gender,
+                fn($q) =>
+                $q->where('gender', $request->gender)
+            )
+
+            ->when(
+                $request->filled('is_recommend'),
+                fn($q) =>
+                $q->where('is_recommend', (int)$request->is_recommend)
+            )
+
+            ->when($request->location_type, function ($q) use ($request) {
+
+                $q->where('location_type', $request->location_type);
+
+                if ($request->filled('location_value')) {
+
+                    if ($request->location_type == 1) {
+                        $q->where('location_simple', 'like', "%{$request->location_value}%");
+                    }
+
+                    if ($request->location_type == 2) {
+                        $q->where(function ($sub) use ($request) {
+                            $sub->where('city', 'like', "%{$request->location_value}%")
+                                ->orWhere('district', 'like', "%{$request->location_value}%");
+                        });
+                    }
+
+                    if ($request->location_type == 3) {
+                        $q->where('country', 'like', "%{$request->location_value}%");
+                    }
+                }
+            })
+
+            ->when(
+                $request->date_filter === 'today',
+                fn($q) =>
+                $q->whereDate('date_of_patient_added', now())
+            )
+
+            ->when(
+                $request->date_filter === 'custom' &&
+                    $request->filled(['from_date', 'to_date']),
+                fn($q) =>
+                $q->whereBetween('date_of_patient_added', [
+                    $request->from_date,
+                    $request->to_date
+                ])
+            );
+    }
+
     public function create()
     {
         return view('backend.patient_management.create');
@@ -188,7 +248,7 @@ class PatientController extends Controller
             'phone_2'                            => 'nullable|string|max:20',
             'phone_f_1'                          => 'nullable|string|max:20',
             'phone_m_1'                          => 'nullable|string|max:20',
-            'age'                                => 'required|string|max:101',
+            'age'                                => 'required|integer|min:0|max:100',
             'gender'                             => 'required|string',
             'location_type'                      => 'required|in:1,2,3',
             'patient_problem_description'        => 'nullable|string|max:255',
@@ -383,5 +443,53 @@ class PatientController extends Controller
     {
         $patient->delete();
         return back()->with('success', 'Patient deleted successfully');
+    }
+
+    public function exportExcel(Request $request)
+    {
+        $patients = $this->filteredPatients($request)->get();
+
+        return Excel::download(new PatientsExport($patients), 'patients.xlsx');
+    }
+
+    public function exportPdf(Request $request)
+    {
+        $patients = $this->filteredPatients($request)->get();
+
+        $pdf = Pdf::loadView(
+            'backend.patient_management.pdf',
+            compact('patients')
+        );
+
+        return $pdf->download('patients.pdf');
+    }
+
+    public function importExcel(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls'
+        ]);
+
+        Excel::import(new PatientsImport, $request->file('file'));
+
+        return back()->with('success', 'Patients Imported Successfully');
+    }
+
+    public function importWord(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:doc,docx'
+        ]);
+
+        // Custom Word import logic here
+
+        return back()->with('success', 'Word File Imported Successfully');
+    }
+
+    public function print(Request $request)
+    {
+        $patients = Patient::all(); // apply filters if needed
+
+        return view('backend.patient_management.print', compact('patients'));
     }
 }

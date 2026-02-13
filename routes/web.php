@@ -68,6 +68,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
     Route::resource('patients', PatientController::class);
+    Route::get('patients/export-excel', [PatientController::class, 'exportExcel'])->name('patients.export.excel');
+    Route::get('patients/export-pdf', [PatientController::class, 'exportPdf'])->name('patients.export.pdf');
+    Route::post('patients/import-excel', [PatientController::class, 'importExcel'])->name('patients.import.excel');
+    Route::post('patients/import-word', [PatientController::class, 'importWord'])->name('patients.import.word');
+    Route::get('patients/print', [PatientController::class, 'print'])->name('patients.print');
 
     //Report Module
     Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');
