@@ -87,11 +87,13 @@
             </table>
         </div>
     </div>
+
     <div class="card mt-4">
         <div class="card-body" style="height:50px;">
             <!-- Intentionally left blank -->
         </div>
     </div>
+    
     {{-- Warning Modal --}}
     <div class="modal fade" id="warningMessage" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
