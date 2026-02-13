@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
+use App\Exports\PatientReportExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Carbon\Carbon;
 
@@ -50,6 +52,25 @@ class ReportController extends Controller
         );
     }
 
+    public function daily_report_excel(Request $request)
+    {
+        if (!$this->hasDailyFilters($request)) {
+            return back()->with('warning', 'Please apply at least one filter.');
+        }
+
+        $query = Patient::query();
+        $this->applyDailyFilters($query, $request);
+
+        return Excel::download(
+            new PatientReportExport(
+                $query->get(),
+                $request,
+                'Daily Patient Report'
+            ),
+            'daily_patient_report.xlsx'
+        );
+    }
+
     /* =========================================================
    ===================== WEEKLY REPORT =====================
    ========================================================= */
@@ -85,6 +106,25 @@ class ReportController extends Controller
             $request,
             'backend.report_management.patient.weekly_report_pdf',
             'weekly_patient_report.pdf'
+        );
+    }
+
+    public function weekly_report_excel(Request $request)
+    {
+        if (!$this->hasWeeklyFilters($request)) {
+            return back()->with('warning', 'Please apply at least one filter.');
+        }
+
+        $query = Patient::query();
+        $this->applyWeeklyFilters($query, $request);
+
+        return Excel::download(
+            new PatientReportExport(
+                $query->get(),
+                $request,
+                'Weekly Patient Report'
+            ),
+            'weekly_patient_report.xlsx'
         );
     }
 
@@ -126,6 +166,24 @@ class ReportController extends Controller
         );
     }
 
+    public function monthly_report_excel(Request $request)
+    {
+        if (!$this->hasMonthlyFilters($request)) {
+            return back()->with('warning', 'Please apply at least one filter.');
+        }
+
+        $query = Patient::query();
+        $this->applyMonthlyFilters($query, $request);
+
+        return Excel::download(
+            new PatientReportExport(
+                $query->get(),
+                $request,
+                'Monthly Patient Report'
+            ),
+            'monthly_patient_report.xlsx'
+        );
+    }
 
     /* =========================================================
        ===================== YEARLY REPORT =====================
@@ -165,6 +223,24 @@ class ReportController extends Controller
         );
     }
 
+    public function yearly_report_excel(Request $request)
+    {
+        if (!$this->hasYearlyFilters($request)) {
+            return back()->with('warning', 'Please apply at least one filter.');
+        }
+
+        $query = Patient::query();
+        $this->applyYearlyFilters($query, $request);
+
+        return Excel::download(
+            new PatientReportExport(
+                $query->get(),
+                $request,
+                'Yearly Patient Report'
+            ),
+            'yearly_patient_report.xlsx'
+        );
+    }
 
     /* =========================================================
        ===================== FILTER LOGIC ======================

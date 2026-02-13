@@ -4,7 +4,7 @@
     $title = 'Daily Patient Report';
     $ajaxRoute = route('report.daily');
     $pdfRoute = route('report.daily.pdf');
-
+    $excelRoute = route('report.daily.excel'); 
     $columns = json_encode([
         ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
         ['data' => 'patient_code'],

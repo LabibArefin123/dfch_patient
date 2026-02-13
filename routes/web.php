@@ -78,6 +78,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('reports/monthly/pdf', [ReportController::class, 'monthly_report_pdf'])->name('report.monthly.pdf');
     Route::get('reports/yearly', [ReportController::class, 'yearly_report'])->name('report.yearly');
     Route::get('reports/yearly/pdf', [ReportController::class, 'yearly_report_pdf'])->name('report.yearly.pdf');
+    Route::get('daily_report/excel', [ReportController::class, 'daily_report_excel'])->name('report.daily.excel');
+    Route::get('reports/weekly/excel', [ReportController::class, 'weekly_report_excel'])->name('report.weekly.excel');
+    Route::get('reports/monthly/excel', [ReportController::class, 'monthly_report_excel'])->name('report.monthly.excel');
+    Route::get('reports/yearly/excel', [ReportController::class, 'yearly_report_excel'])->name('report.yearly.excel');
 
     //Setting Management
     Route::resource('roles', RoleController::class);

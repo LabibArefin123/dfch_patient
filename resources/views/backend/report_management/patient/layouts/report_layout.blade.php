@@ -11,10 +11,15 @@
                 <i class="fas fa-filter"></i> Filter
             </button>
 
-            <a href="#" id="downloadPdfBtn" target="_blank" class="btn btn-danger btn-sm">
+            <a href="#" id="downloadPdfBtn" target="_blank" class="btn btn-danger btn-sm mr-1">
                 <i class="fas fa-file-pdf"></i> Download PDF
             </a>
+
+            <a href="#" id="downloadExcelBtn" class="btn btn-success btn-sm">
+                <i class="fas fa-file-excel"></i> Download Excel
+            </a>
         </div>
+
     </div>
 @stop
 
@@ -78,6 +83,12 @@
                 e.preventDefault();
                 let params = $('#filterForm').serialize();
                 window.open("{{ $pdfRoute }}?" + params, '_blank');
+            });
+
+            $('#downloadExcelBtn').on('click', function(e) {
+                e.preventDefault();
+                let params = $('#filterForm').serialize();
+                window.location.href = "{{ $excelRoute }}?" + params;
             });
         });
     </script>

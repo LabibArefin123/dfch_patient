@@ -4,7 +4,7 @@
     $title = 'Weekly Patient Report';
     $ajaxRoute = route('report.weekly');
     $pdfRoute = route('report.weekly.pdf');
-
+    $excelRoute = route('report.weekly.excel');
     $columns = json_encode([
         ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
         ['data' => 'patient_code'],
@@ -26,7 +26,7 @@
     <div class="row">
 
         <div class="col-md-3">
-            <label>From Date</label>
+           <label>Week Start (any day)</label>
             <input type="date" name="from_date" class="form-control">
         </div>
 
