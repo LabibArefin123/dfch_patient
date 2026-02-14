@@ -49,7 +49,8 @@ class ReportController extends Controller
             $query,
             $request,
             'backend.report_management.patient.daily_report_pdf',
-            'daily_patient_report.pdf'
+            'daily_patient_report.pdf',
+            'backend.report_management.patient.daily_report_pdfLarge',
         );
     }
 
@@ -106,7 +107,8 @@ class ReportController extends Controller
             $query,
             $request,
             'backend.report_management.patient.weekly_report_pdf',
-            'weekly_patient_report.pdf'
+            'weekly_patient_report.pdf',
+            'backend.report_management.patient.weekly_report_pdfLarge',
         );
     }
 
@@ -163,7 +165,8 @@ class ReportController extends Controller
             $query,
             $request,
             'backend.report_management.patient.monthly_report_pdf',
-            'monthly_patient_report.pdf'
+            'monthly_patient_report.pdf',
+            'backend.report_management.patient.monthly_report_pdfLarge',
         );
     }
 

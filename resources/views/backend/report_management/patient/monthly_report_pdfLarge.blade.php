@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Yearly Patient Report</title>
+
+    <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
+    <title>Monthly Patient Report</title>
     <style>
         body {
             font-family: sans-serif;
@@ -27,17 +29,21 @@
             background-color: #eee;
         }
 
+        /* No borders for header table */
         .header-table td {
             border: none;
             vertical-align: top;
         }
     </style>
+
 </head>
 
 <body>
 
+    {{-- Organization Header --}}
     <table width="100%" class="header-table">
         <tr>
+            {{-- Logo --}}
             <td width="25%">
                 @php
                     $imagePath = null;
@@ -56,12 +62,15 @@
                         }
                     }
                 @endphp
+
                 @if ($imagePath)
                     <img src="{{ $imagePath }}" style="width:300px; height:60px;">
                 @else
                     <span>No Logo</span>
                 @endif
             </td>
+
+            {{-- Organization Info --}}
             <td width="75%" style="text-align:right;">
                 <h2 style="margin:0;">{{ $organization->name ?? 'Organization Name' }}</h2>
                 <p style="margin:2px 0;">{{ $organization->organization_location ?? '' }}</p>
@@ -81,15 +90,15 @@
         </tr>
     </table>
 
+    {{-- Report Title --}}
     <h3>
-        Yearly Patient Report
-        @if (request()->filled('year'))
-            for {{ request()->year }}
-        @else
-            (All Years)
+        Monthly Patient Report
+
+        @if (request()->filled('month') && request()->filled('year'))
+            for {{ \Carbon\Carbon::create()->month((int) request()->month)->format('F') }}, {{ request()->year }}
         @endif
     </h3>
-    
+
     <table width="100%" style="margin-top:10px;">
         <tr>
             {{-- Page Info Section --}}
@@ -102,7 +111,8 @@
             </table>
         </tr>
     </table>
-
+    </p>
+    {{-- Table --}}
     <table>
         <thead>
             <tr>
@@ -121,9 +131,9 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($patients as $patient)
+            @foreach ($patients as $index => $patient)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ ($page - 1) * $perPage + $loop->iteration }}</td>
                     <td>{{ $patient->patient_code }}</td>
                     <td>{{ $patient->patient_name }}</td>
                     <td>{{ $patient->age }}</td>
@@ -139,7 +149,8 @@
                             {{ $patient->house_address }}, {{ $patient->city }}, {{ $patient->district }} -
                             {{ $patient->post_code }}
                         @else
-                            {{ $patient->country }} <br> <strong>Passport:</strong> {{ $patient->passport_no }}
+                            {{ $patient->country }} <br>
+                            <strong>Passport:</strong> {{ $patient->passport_no }}
                         @endif
                     </td>
                     <td>{{ $patient->is_recommend ? 'Yes' : 'No' }}</td>
@@ -151,6 +162,7 @@
             @endforeach
         </tbody>
     </table>
+
 </body>
 
 </html>
