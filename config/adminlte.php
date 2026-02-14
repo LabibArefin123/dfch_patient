@@ -435,9 +435,9 @@ return [
 
                 [
                     'text'  => 'Recommended Patients',
-                    // 'route' => 'patients.recommended',
-                    // 'can'   => 'patients.recommended',
-                    'icon'  => 'fas fa-user-md',
+                    'route' => 'patients.recommend',
+                    'can'   => 'patients.recommend',
+                    'icon'  => 'fas fa-list',
                 ],
 
                 [

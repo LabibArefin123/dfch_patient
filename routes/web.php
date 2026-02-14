@@ -67,6 +67,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user_password_edit', [ProfileController::class, 'editPassword'])->name('user_password_edit');
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
+    Route::get('/patients/recommend', [PatientController::class, 'patient_recommend'])->name('patients.recommend');
     Route::resource('patients', PatientController::class);
     Route::get('patients/export-excel', [PatientController::class, 'exportExcel'])->name('patients.export.excel');
     Route::get('patients/export-pdf', [PatientController::class, 'exportPdf'])->name('patients.export.pdf');
