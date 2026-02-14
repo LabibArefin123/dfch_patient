@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Patient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Validators\ValidationException;
 use App\Imports\PatientsImport;
 use App\Exports\PatientsExport;
 use App\Models\PatientDocument;
@@ -470,10 +471,41 @@ class PatientController extends Controller
             'file' => 'required|mimes:xlsx,xls'
         ]);
 
-        Excel::import(new PatientsImport, $request->file('file'));
+        try {
 
-        return back()->with('success', 'Patients Imported Successfully');
+            $import = new PatientsImport;
+            Excel::import($import, $request->file('file'));
+
+            // If there are row validation failures
+            if ($import->failures()->isNotEmpty()) {
+
+                $errors = [];
+
+                foreach ($import->failures() as $failure) {
+                    $errors[] = "Row {$failure->row()} - " .
+                        implode(', ', $failure->errors());
+                }
+
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Some rows failed validation.',
+                    'errors' => $errors
+                ], 422);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patients Imported Successfully'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Import failed. ' . $e->getMessage()
+            ], 500);
+        }
     }
+
 
     public function importWord(Request $request)
     {

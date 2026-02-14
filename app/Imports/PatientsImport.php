@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 
+
 class PatientsImport implements
     ToModel,
     WithHeadingRow,
@@ -24,7 +25,14 @@ class PatientsImport implements
     public function model(array $row)
     {
         return new Patient([
-            'patient_code' => $row['patient_code'] ?? null,
+
+            'patient_code' => 'DFCH-' . now()->format('Y') . '-' . str_pad(
+                Patient::max('id') + 1,
+                9,
+                '0',
+                STR_PAD_LEFT
+            ),
+
             'patient_name' => $row['patient_name'],
             'patient_f_name' => $row['patient_f_name'] ?? null,
             'patient_m_name' => $row['patient_m_name'] ?? null,
@@ -40,11 +48,13 @@ class PatientsImport implements
             'district' => $row['district'] ?? null,
             'country' => $row['country'] ?? null,
             'is_recommend' => isset($row['is_recommend']) ? (int)$row['is_recommend'] : 0,
+
             'date_of_patient_added' => isset($row['date_of_patient_added'])
                 ? Carbon::parse($row['date_of_patient_added'])
                 : now(),
         ]);
     }
+
 
     /**
      * Validation Rules
