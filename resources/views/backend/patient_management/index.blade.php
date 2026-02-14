@@ -156,6 +156,38 @@
         </div>
     </div>
 
+    <!-- Start of No Filter Warning Modal -->
+    <div class="modal fade" id="noFilterModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+
+                <div class="modal-header bg-danger text-white">
+                    <h5 class="modal-title">
+                        <i class="fa fa-exclamation-triangle"></i>
+                        Filter Required
+                    </h5>
+                    <button type="button" class="close text-white" onclick="$('#noFilterModal').modal('hide')">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <div class="modal-body text-center">
+                    <p class="mb-0">
+                        Please choose at least one filter before exporting Excel or PDF.
+                    </p>
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-danger" onclick="$('#noFilterModal').modal('hide')">
+                        OK
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End of No Filter Warning Modal -->
 
     <!-- Progress Modal -->
     <div class="modal fade" id="fileProcessModal" tabindex="-1" role="dialog" data-backdrop="static"
@@ -376,9 +408,41 @@
             // ===============================
             // Export / Import Handlers
             // ===============================
+            function hasFilterApplied() {
+
+                let gender = $('select[name="gender"]').val();
+                let locationType = $('select[name="location_type"]').val();
+                let locationValue = $('input[name="location_value"]').val();
+                let dateFilter = $('select[name="date_filter"]').val();
+                let fromDate = $('input[name="from_date"]').val();
+                let toDate = $('input[name="to_date"]').val();
+
+                if (
+                    gender ||
+                    locationType ||
+                    locationValue ||
+                    dateFilter ||
+                    fromDate ||
+                    toDate
+                ) {
+                    return true;
+                }
+
+                return false;
+            }
+
+
             function handleExport(selector, title, text, color) {
+
                 $(document).on('click', selector, function(e) {
+
                     e.preventDefault();
+
+                    if (!hasFilterApplied()) {
+                        $('#noFilterModal').modal('show');
+                        return;
+                    }
+
                     let url = $(this).attr('href');
 
                     showProcessModal(title, text, color);
@@ -392,6 +456,7 @@
                     }, 2500);
                 });
             }
+
 
             handleExport('.export-excel', 'Exporting Excel', 'Preparing Excel file...', '#28a745');
             handleExport('.export-pdf', 'Exporting PDF', 'Preparing PDF file...', '#dc3545');
@@ -457,6 +522,26 @@
                     }
 
                 });
+            });
+
+            // ===============================
+            // Fix No Filter Modal Buttons
+            // ===============================
+
+            // Close button (X)
+            $(document).on('click', '#noFilterModal .close', function() {
+                $('#noFilterModal').modal('hide');
+            });
+
+            // OK button
+            $(document).on('click', '#noFilterModal .btn-danger', function() {
+                $('#noFilterModal').modal('hide');
+            });
+
+            // Remove stuck backdrop if any
+            $('#noFilterModal').on('hidden.bs.modal', function() {
+                $('body').removeClass('modal-open');
+                $('.modal-backdrop').remove();
             });
 
             // ===============================
