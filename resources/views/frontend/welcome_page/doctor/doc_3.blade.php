@@ -58,7 +58,7 @@
 
                     <p>
                         She is currently serving at Dr. Fazlul Haque Colorectal Hospital Limited
-                        and also works as a Junior Consultant at Bangladesh Medical College Hospital,
+                        and also works as a Assistant Professor at Bangladesh Medical College Hospital,
                         Dhanmondi.
                     </p>
 

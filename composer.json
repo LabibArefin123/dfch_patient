@@ -8,6 +8,7 @@
     "require": {
         "php": "^8.2",
         "barryvdh/laravel-dompdf": "^3.0",
+        "barryvdh/laravel-snappy": "^1.0",
         "endroid/qr-code": "^6.0",
         "intervention/image": "^3.11",
         "jenssegers/agent": "^2.6",

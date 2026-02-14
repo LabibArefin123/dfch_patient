@@ -95,9 +95,7 @@
             <table width="100%" class="header-table" style="margin-top:10px;">
                 <tr>
                     <td style="text-align:left; border:none;">
-                        <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
-                        <strong>Total Records:</strong> {{ $totalRecords }} (Current Total Record:
-                        {{ $perPage }})
+                        <strong>Total Records In this Page:</strong>
                     </td>
 
                    

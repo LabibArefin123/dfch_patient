@@ -7,6 +7,7 @@ use Yajra\DataTables\Facades\DataTables;
 use App\Exports\PatientReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Barryvdh\Snappy\Facades\SnappyPdf as SPDF;
 use Carbon\Carbon;
 
 use App\Models\Patient;
@@ -219,7 +220,8 @@ class ReportController extends Controller
             $query,
             $request,
             'backend.report_management.patient.yearly_report_pdf',
-            'yearly_patient_report.pdf'
+            'yearly_patient_report.pdf',
+            'backend.report_management.patient.yearly_report_pdfLarge'
         );
     }
 
@@ -394,8 +396,17 @@ class ReportController extends Controller
        ===================== PDF GENERATOR =====================
        ========================================================= */
 
-    private function generatePdf($query, Request $request, $view, $filename)
-    {
+    /* =========================================================
+   ===================== PDF GENERATOR =====================
+   ========================================================= */
+
+    private function generatePdf(
+        $query,
+        Request $request,
+        $smallView,
+        $filename,
+        $largeView = null // 👈 make optional
+    ) {
         $query->orderBy('id');
 
         $perPage = 500;
@@ -418,6 +429,43 @@ class ReportController extends Controller
             ));
         }
 
+        // If largeView not provided, use smallView for both
+        $largeView = $largeView ?? $smallView;
+
+        // SMALL PDF
+        if ($totalRecords <= 500) {
+            return $this->generateSmallPdf(
+                $query,
+                $smallView,
+                $filename,
+                $page,
+                $perPage,
+                $totalPages,
+                $totalRecords
+            );
+        }
+
+        // LARGE PDF
+        return $this->generateLargePdf(
+            $query,
+            $largeView,
+            $filename,
+            $page,
+            $perPage,
+            $totalPages,
+            $totalRecords
+        );
+    }
+
+    private function generateSmallPdf(
+        $query,
+        $view,
+        $filename,
+        $page,
+        $perPage,
+        $totalPages,
+        $totalRecords
+    ) {
         $patients = $query->limit($perPage)->get();
         $organization = Organization::first();
 
@@ -425,6 +473,32 @@ class ReportController extends Controller
             $view,
             compact('patients', 'organization', 'page', 'perPage', 'totalPages', 'totalRecords')
         )->setPaper('a4', 'landscape');
+
+        return $pdf->stream($filename);
+    }
+
+    private function generateLargePdf(
+        $query,
+        $view,
+        $filename,
+        $page,
+        $perPage,
+        $totalPages,
+        $totalRecords
+    ) {
+        ini_set('memory_limit', '1024M');
+        set_time_limit(300);
+
+        $patients = $query->get();
+        $organization = Organization::first();
+
+        $pdf = SPDF::loadView(
+            $view,
+            compact('patients', 'organization', 'page', 'perPage', 'totalPages', 'totalRecords')
+        )
+            ->setPaper('a4')
+            ->setOrientation('landscape')
+            ->setOption('enable-local-file-access', true);
 
         return $pdf->stream($filename);
     }
