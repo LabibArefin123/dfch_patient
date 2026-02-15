@@ -177,14 +177,17 @@ class SettingController extends Controller
 
     public function logs(Request $request)
     {
-        $logFile = storage_path('logs/laravel-2026-02-15.log');
+        // Determine log file: use 'file' query param or default to today's log
+        $fileDate = $request->file ?? now()->format('Y-m-d'); // e.g., '2026-02-15'
+        $logFile = storage_path("logs/laravel-{$fileDate}.log");
+
         $logs = [];
 
         if (file_exists($logFile)) {
 
             $allLines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
 
-            // Determine date range
+            // Date range filter for display
             $range = $request->range ?? 'today';
             $start = null;
             $end   = null;
@@ -224,14 +227,14 @@ class SettingController extends Controller
                     $end   = now()->endOfDay();
             }
 
-            $filtered = [];
+            $filtered   = [];
             $lineBuffer = '';
             $lineDate   = null;
             $lineLevel  = null;
             $serial     = 1;
 
             foreach ($allLines as $line) {
-                // Laravel daily log format: [2026-02-15 12:09:35] local.INFO: Message...
+                // Laravel daily log line: [2026-02-15 12:09:35] local.INFO: Message...
                 if (preg_match('/^\[(.*?)\]\s(\w+)\.([A-Z]+):\s(.*)$/', $line, $match)) {
 
                     // Save previous buffered log
@@ -244,7 +247,7 @@ class SettingController extends Controller
                         ];
                     }
 
-                    // Start new log
+                    // Start new log line
                     try {
                         $lineDate = Carbon::parse($match[1]);
                     } catch (\Exception $e) {
@@ -254,7 +257,7 @@ class SettingController extends Controller
                     $lineLevel  = $match[3] ?? 'INFO';
                     $lineBuffer = $match[4] ?? '';
                 } else {
-                    // Append multi-line stacktrace
+                    // Append multiline / stacktrace
                     $lineBuffer .= "\n" . trim($line);
                 }
             }
@@ -269,7 +272,7 @@ class SettingController extends Controller
                 ];
             }
 
-            // Filter by range
+            // Filter by range (optional, keeps everything if timestamp is null)
             $logs = array_filter($filtered, function ($log) use ($start, $end) {
                 if (!$log['timestamp']) return true;
                 return $log['timestamp']->between($start, $end);
@@ -279,20 +282,25 @@ class SettingController extends Controller
             $logs = array_reverse($logs);
         }
 
-        return view('backend.setting_management.setting_menu.log_setting.log', compact('logs', 'range'));
+        return view('backend.setting_management.setting_menu.log_setting.log', compact('logs', 'range', 'fileDate'));
     }
 
-    public function clearLogs()
+
+    public function clearLogs(Request $request)
     {
-        $logFile = storage_path('logs/laravel.log');
+        // Determine which log file to clear
+        $fileDate = $request->file ?? now()->format('Y-m-d'); // default: today
+        $logFile = storage_path("logs/laravel-{$fileDate}.log");
 
         try {
             if (file_exists($logFile)) {
                 file_put_contents($logFile, ''); // Clear the log file
+                return redirect()->route('settings.logs')
+                    ->with('success', "Log file '{$fileDate}' cleared successfully!");
             }
 
             return redirect()->route('settings.logs')
-                ->with('success', 'Logs cleared successfully!');
+                ->with('warning', "Log file '{$fileDate}' does not exist.");
         } catch (\Exception $e) {
             return redirect()->route('settings.logs')
                 ->with('error', 'Failed to clear logs: ' . $e->getMessage());
