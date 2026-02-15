@@ -48,11 +48,11 @@
                     </select>
                 </div>
 
-                <div class="col-md-4">
+                {{-- <div class="col-md-4">
                     <label class="small text-muted">Location Keyword</label>
                     <input type="text" name="location_value" class="form-control form-control-sm"
                         placeholder="e.g. Dhaka, Chittagong, USA" value="{{ request('location_value') }}">
-                </div>
+                </div> --}}
                 <div class="col-md-4">
                     <label class="small text-muted">Filter by Gender</label>
                     <select name="gender" class="form-control form-control-sm">
@@ -62,7 +62,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <label class="small text-muted">Filter by Recommendation</label>
                     <select name="is_recommend" class="form-control form-control-sm">
                         <option value="">Recommended?</option>

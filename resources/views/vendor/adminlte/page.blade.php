@@ -118,22 +118,22 @@
 
         <!-- Start of Global Error Modal -->
         <div class="modal fade" id="errorModal" tabindex="-1">
-            <div class="modal-dialog modal-md">
+            <div class="modal-dialog modal-dialog-centered modal-md">
                 <div class="modal-content">
 
                     <div class="modal-header bg-danger">
                         <h5 class="modal-title text-white">System Error</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal">
-                            <span>&times;</span>
+                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
 
                     <div class="modal-body">
-                        <p id="errorMessageText" class="mb-0 text-danger"></p>
+                        <pre id="errorMessageText" class="mb-0 text-danger" style="white-space: pre-wrap;"></pre>
                     </div>
 
-                    <div class="modal-footer">
-                        <button class="btn btn-secondary" data-dismiss="modal">
+                    <div class="modal-footer justify-content-center">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
                             Close
                         </button>
                     </div>
@@ -144,8 +144,8 @@
         <!-- End of Global Error Modal -->
 
         <!-- start of delete animation model -->
-        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
+            aria-labelledby="deleteConfirmLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content text-center p-4">
 
@@ -739,6 +739,18 @@
 
             console.log("Global Error Logger Loaded ✅");
 
+            // Helper to convert error object to readable string
+            function formatError(err) {
+                if (!err) return '';
+                if (typeof err === 'string') return err;
+                if (err instanceof Error) return err.message + "\n" + err.stack;
+                try {
+                    return JSON.stringify(err, Object.getOwnPropertyNames(err), 2);
+                } catch {
+                    return String(err);
+                }
+            }
+
             /*
             |--------------------------------------------------------------------------
             | 1️⃣ Catch Normal JavaScript Errors
@@ -752,7 +764,7 @@
                 console.error("Line:", lineno, "Column:", colno);
                 console.error("Error Object:", error);
 
-                showErrorModal(message);
+                showErrorModal(formatError(error || message));
 
                 return false;
             };
@@ -763,21 +775,18 @@
             |--------------------------------------------------------------------------
             */
             window.addEventListener("unhandledrejection", function(event) {
-
                 console.error("🚨 Unhandled Promise Rejection:");
                 console.error("Reason:", event.reason);
 
-                showErrorModal(event.reason);
-
+                showErrorModal(formatError(event.reason));
             });
 
             /*
             |--------------------------------------------------------------------------
-            | 3️⃣ Optional Modal Display
+            | 3️⃣ Show Modal
             |--------------------------------------------------------------------------
             */
             function showErrorModal(message) {
-
                 const modal = document.getElementById("errorModal");
                 const errorText = document.getElementById("errorMessageText");
 
@@ -788,15 +797,15 @@
 
                 errorText.innerText = message;
 
-                if (typeof $ !== "undefined" && typeof $('#errorModal').modal === "function") {
-                    $('#errorModal').modal('show');
+                // Bootstrap 4 modal
+                if (typeof $ !== "undefined" && typeof $(modal).modal === "function") {
+                    $(modal).modal('show');
                 }
             }
 
         });
     </script>
     {{-- end of global page error logger --}}
-
 
     {{-- Start of password eye --}}
     <script>

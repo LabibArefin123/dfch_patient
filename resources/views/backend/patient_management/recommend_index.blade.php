@@ -15,18 +15,18 @@
 
         <div class="d-flex gap-2">
 
+            {{-- Back to All Patients --}}
+            <a href="{{ route('patients.index') }}" class="btn btn-outline-secondary btn-sm">
+                <i class="fas fa-arrow-left"></i> All Patients
+            </a>
             {{-- Add Patient --}}
             <a href="{{ route('patients.create') }}" class="btn btn-success btn-sm">
                 <i class="fas fa-plus"></i> Add Patient
             </a>
 
-            {{-- Back to All Patients --}}
-            <a href="{{ route('patients.index') }}" class="btn btn-outline-secondary btn-sm">
-                <i class="fas fa-arrow-left"></i> All Patients
-            </a>
 
             {{-- More Actions --}}
-            <div class="dropdown">
+            {{-- <div class="dropdown">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <i class="fas fa-ellipsis-v"></i>
                 </button>
@@ -52,7 +52,7 @@
                     </a>
 
                 </div>
-            </div>
+            </div> --}}
 
         </div>
     </div>
@@ -89,6 +89,7 @@
             </table>
         </div>
     </div>
+
     <div class="card mt-4">
         <div class="card-body" style="height:50px;">
             <!-- Intentionally left blank -->
@@ -96,7 +97,6 @@
     </div>
 
     <iframe id="downloadFrame" style="display:none;"></iframe>
-
 @stop
 
 

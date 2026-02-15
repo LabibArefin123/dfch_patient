@@ -177,14 +177,14 @@ class SettingController extends Controller
 
     public function logs(Request $request)
     {
-        $logFile = storage_path('logs/laravel.log');
+        $logFile = storage_path('logs/laravel-2026-02-15.log');
         $logs = [];
 
         if (file_exists($logFile)) {
-            $allLines = file($logFile);
-            $filtered = [];
 
-            // Determine range
+            $allLines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+
+            // Determine date range
             $range = $request->range ?? 'today';
             $start = null;
             $end   = null;
@@ -224,26 +224,27 @@ class SettingController extends Controller
                     $end   = now()->endOfDay();
             }
 
+            $filtered = [];
             $lineBuffer = '';
             $lineDate   = null;
             $lineLevel  = null;
-            $serial = 1;
+            $serial     = 1;
 
             foreach ($allLines as $line) {
-                preg_match('/\[(.*?)\]\s(\w+)\.([A-Z]+):\s(.*)/', $line, $match);
+                // Laravel daily log format: [2026-02-15 12:09:35] local.INFO: Message...
+                if (preg_match('/^\[(.*?)\]\s(\w+)\.([A-Z]+):\s(.*)$/', $line, $match)) {
 
-                if (isset($match[1])) {
-                    // Save previous buffered line
+                    // Save previous buffered log
                     if ($lineBuffer) {
                         $filtered[] = [
-                            'serial' => $serial++,
+                            'serial'    => $serial++,
                             'timestamp' => $lineDate,
-                            'level' => $lineLevel,
-                            'message' => $lineBuffer
+                            'level'     => $lineLevel,
+                            'message'   => $lineBuffer
                         ];
                     }
 
-                    // New line
+                    // Start new log
                     try {
                         $lineDate = Carbon::parse($match[1]);
                     } catch (\Exception $e) {
@@ -253,23 +254,22 @@ class SettingController extends Controller
                     $lineLevel  = $match[3] ?? 'INFO';
                     $lineBuffer = $match[4] ?? '';
                 } else {
-                    // Stacktrace or multiline continuation
+                    // Append multi-line stacktrace
                     $lineBuffer .= "\n" . trim($line);
                 }
-
-                // Add last line
             }
 
+            // Add last buffered line
             if ($lineBuffer) {
                 $filtered[] = [
-                    'serial' => $serial++,
+                    'serial'    => $serial++,
                     'timestamp' => $lineDate,
-                    'level' => $lineLevel,
-                    'message' => $lineBuffer
+                    'level'     => $lineLevel,
+                    'message'   => $lineBuffer
                 ];
             }
 
-            // Filter by date range
+            // Filter by range
             $logs = array_filter($filtered, function ($log) use ($start, $end) {
                 if (!$log['timestamp']) return true;
                 return $log['timestamp']->between($start, $end);

@@ -118,7 +118,7 @@
                     <div class="icon text-danger">
                         <i class="fas fa-user-md"></i>
                     </div>
-                    <a href="{{ route('patients.index', ['is_recommend' => 1]) }}" class="small-box-footer">
+                    <a href="{{ route('patients.recommend', ['is_recommend' => 1]) }}" class="small-box-footer">
                         More Info <i class="fas fa-arrow-right"></i>
                     </a>
 
@@ -135,7 +135,7 @@
                     <div class="icon text-warning">
                         <i class="fas fa-stethoscope"></i>
                     </div>
-                    <a href="{{ route('patients.index', [
+                    <a href="{{ route('patients.recommend', [
                         'is_recommend' => 1,
                         'date_filter' => 'today',
                     ]) }}"
@@ -156,7 +156,7 @@
                     <div class="icon text-success">
                         <i class="fas fa-chart-line"></i>
                     </div>
-                    <a href="{{ route('patients.index', [
+                    <a href="{{ route('patients.recommend', [
                         'is_recommend' => 1,
                         'date_filter' => 'this_month',
                     ]) }}"
@@ -166,9 +166,6 @@
 
                 </div>
             </div>
-
         </div>
-
-
     </div>
 @stop

@@ -180,84 +180,55 @@ class PatientController extends Controller
 
     public function patient_recommend(Request $request)
     {
-        // Base Query → ONLY Recommended Patients
+        // Clean "null" string values
+        foreach ($request->all() as $key => $value) {
+            if ($value === 'null' || $value === '') {
+                $request->merge([$key => null]);
+            }
+        }
+
+        // Base Query
         $baseQuery = Patient::query()
-            ->where('is_recommend', 1)
-
-            // Gender Filter
-            ->when($request->gender, function ($q) use ($request) {
-                $q->where('gender', $request->gender);
-            })
-
-            // Location Filter
-            ->when($request->location_type, function ($q) use ($request) {
+            ->when($request->filled('is_recommend'), fn($q) => $q->where('is_recommend', (int)$request->is_recommend), fn($q) => $q->where('is_recommend', 1))
+            ->when($request->filled('gender'), fn($q) => $q->where('gender', $request->gender))
+            ->when($request->filled('location_type'), function ($q) use ($request) {
 
                 $q->where('location_type', $request->location_type);
 
                 if ($request->filled('location_value')) {
-
                     if ($request->location_type == 1) {
                         $q->where('location_simple', 'like', "%{$request->location_value}%");
-                    }
-
-                    if ($request->location_type == 2) {
+                    } elseif ($request->location_type == 2) {
                         $q->where(function ($sub) use ($request) {
                             $sub->where('city', 'like', "%{$request->location_value}%")
                                 ->orWhere('district', 'like', "%{$request->location_value}%");
                         });
-                    }
-
-                    if ($request->location_type == 3) {
+                    } elseif ($request->location_type == 3) {
                         $q->where('country', 'like', "%{$request->location_value}%");
                     }
                 }
             })
-
-            // Date Filters
-            ->when($request->date_filter === 'today', function ($q) {
-                $q->whereDate('date_of_patient_added', now());
-            })
-
-            ->when($request->date_filter === 'yesterday', function ($q) {
-                $q->whereDate('date_of_patient_added', now()->subDay());
-            })
-
-            ->when($request->date_filter === 'last_7_days', function ($q) {
-                $q->whereDate('date_of_patient_added', '>=', now()->subDays(7));
-            })
-
-            ->when($request->date_filter === 'last_30_days', function ($q) {
-                $q->whereDate('date_of_patient_added', '>=', now()->subDays(30));
-            })
-
-            ->when($request->date_filter === 'this_month', function ($q) {
-                $q->whereBetween('date_of_patient_added', [
-                    now()->startOfMonth(),
-                    now()->endOfMonth()
-                ]);
-            })
-
-            ->when($request->date_filter === 'last_month', function ($q) {
-                $q->whereBetween('date_of_patient_added', [
-                    now()->subMonth()->startOfMonth(),
-                    now()->subMonth()->endOfMonth()
-                ]);
-            })
-
-            ->when($request->date_filter === 'this_year', function ($q) {
-                $q->whereYear('date_of_patient_added', now()->year);
-            })
-
-            ->when(
-                $request->date_filter === 'custom' &&
-                    $request->filled(['from_date', 'to_date']),
-                function ($q) use ($request) {
-                    $q->whereBetween('date_of_patient_added', [
-                        $request->from_date,
-                        $request->to_date
-                    ]);
+            ->when($request->filled('date_filter'), function ($q) use ($request) {
+                switch ($request->date_filter) {
+                    case 'today':
+                        $q->whereDate('date_of_patient_added', today());
+                        break;
+                    case 'this_month':
+                        $q->whereBetween('date_of_patient_added', [now()->startOfMonth(), now()->endOfMonth()]);
+                        break;
+                    case 'last_month':
+                        $q->whereBetween('date_of_patient_added', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()]);
+                        break;
+                    case 'this_year':
+                        $q->whereYear('date_of_patient_added', now()->year);
+                        break;
+                    case 'custom':
+                        if ($request->filled(['from_date', 'to_date'])) {
+                            $q->whereBetween('date_of_patient_added', [$request->from_date, $request->to_date]);
+                        }
+                        break;
                 }
-            );
+            });
 
         // AJAX Request
         if ($request->ajax()) {
@@ -268,65 +239,19 @@ class PatientController extends Controller
 
             return DataTables::of($baseQuery)
                 ->addIndexColumn()
-
-                ->addColumn('patient_code', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
-                })
-
-                ->addColumn('name', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">
-                        <strong>' . $p->patient_name . '</strong><br>
-                        <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
-                        <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small>
-                        </a>';
-                })
-
-                ->addColumn(
-                    'age',
-                    fn($p) =>
-                    '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->age . '</a>'
-                )
-
-                ->addColumn(
-                    'gender',
-                    fn($p) =>
-                    '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . ucfirst($p->gender) . '</a>'
-                )
-
-                ->addColumn('phone', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' .
-                        ($p->phone_1 ?? 'N/A') . '<br>
-                    <small>Alt: ' . ($p->phone_2 ?? 'N/A') . '</small><br>
-                    <small>Father: ' . ($p->phone_f_1 ?? 'N/A') . '</small><br>
-                    <small>Mother: ' . ($p->phone_m_1 ?? 'N/A') . '</small>
-                    </a>';
-                })
-
+                ->addColumn('patient_code', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>')
+                ->addColumn('name', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box"><strong>' . $p->patient_name . '</strong><br><small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br><small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small></a>')
+                ->addColumn('age', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->age . '</a>')
+                ->addColumn('gender', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . ucfirst($p->gender) . '</a>')
+                ->addColumn('phone', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . ($p->phone_1 ?? 'N/A') . '</a>')
                 ->addColumn('location', function ($p) {
-                    $loc = $p->location_type == 1
-                        ? $p->location_simple
-                        : ($p->location_type == 2
-                            ? $p->city . '<br>' . $p->district
-                            : $p->country);
-
+                    $loc = $p->location_type == 1 ? $p->location_simple : ($p->location_type == 2 ? $p->city . '<br>' . $p->district : $p->country);
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $loc . '</a>';
                 })
-
-                ->addColumn('is_recommend', function ($p) {
-                    return '<span class="badge badge-success">Recommended</span>';
-                })
-
-                ->addColumn('date', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' .
-                        \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y') .
-                        '</a>';
-                })
-
-                ->addColumn('action', function ($p) {
-                    return '<a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>';
-                })
-
-                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'action'])
+                ->addColumn('is_recommend', fn() => '<span class="badge badge-success">Recommended</span>')
+                ->addColumn('date', fn($p) => \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y'))
+                ->addColumn('action', fn($p) => '<a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>')
+                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,
@@ -335,16 +260,15 @@ class PatientController extends Controller
                 ->make(true);
         }
 
-        // First Load Counts (Only Recommended)
-        $childPatients  = Patient::where('is_recommend', 1)->where('age', '<', 18)->count();
-        $adultPatients  = Patient::where('is_recommend', 1)->whereBetween('age', [18, 60])->count();
-        $seniorPatients = Patient::where('is_recommend', 1)->where('age', '>', 60)->count();
+        // First Page Load
+        $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
+        $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 60])->count();
+        $seniorPatients = (clone $baseQuery)->where('age', '>', 60)->count();
 
-        return view(
-            'backend.patient_management.recommend_index',
-            compact('childPatients', 'adultPatients', 'seniorPatients')
-        );
+        return view('backend.patient_management.recommend_index', compact('childPatients', 'adultPatients', 'seniorPatients'));
     }
+
+
 
     private function filteredPatients(Request $request)
     {
