@@ -96,7 +96,6 @@
     {{-- PDF Confirmation Modal Trigger --}}
     @if (session()->has('confirm_pdf') && session()->get('confirm_pdf') === true)
         @php
-            // Only keep relevant keys for PDF params
             $pdfParams = session()->only([
                 'totalRecords',
                 'perPage',
@@ -107,21 +106,52 @@
                 'from_date',
                 'to_date',
             ]);
-            // Clear session after use
             session()->forget('confirm_pdf');
         @endphp
+
         <script>
             $(document).ready(function() {
+
                 const pdfParams = @json($pdfParams);
+
+                console.log("Raw PDF Params:", pdfParams);
 
                 $('#warningMessage').modal('show');
 
                 $('#confirmPdfBtn').on('click', function() {
-                    let params = new URLSearchParams(pdfParams);
-                    params.set('confirm', 1);
-                    window.open("{{ $pdfRoute }}?" + params.toString(), '_blank');
-                    $('#warningMessage').modal('hide');
+
+                    try {
+
+                        let cleanParams = {};
+
+                        Object.keys(pdfParams).forEach(key => {
+                            if (
+                                pdfParams[key] !== null &&
+                                pdfParams[key] !== "null" &&
+                                pdfParams[key] !== "" &&
+                                key !== "totalRecords" &&
+                                key !== "perPage"
+                            ) {
+                                cleanParams[key] = pdfParams[key];
+                            }
+                        });
+
+                        let params = new URLSearchParams(cleanParams);
+                        params.set('confirm', 1);
+
+                        const finalUrl = "{{ $pdfRoute }}?" + params.toString();
+
+                        console.log("Cleaned URL:", finalUrl);
+
+                        window.open(finalUrl, '_blank');
+                        $('#warningMessage').modal('hide');
+
+                    } catch (error) {
+                        console.error("Confirm PDF Error:", error);
+                    }
+
                 });
+
             });
         </script>
     @endif

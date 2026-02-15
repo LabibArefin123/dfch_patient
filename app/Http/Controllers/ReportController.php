@@ -8,8 +8,8 @@ use App\Exports\PatientReportExport;
 use Maatwebsite\Excel\Facades\Excel;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Barryvdh\Snappy\Facades\SnappyPdf as SPDF;
+use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-
 use App\Models\Patient;
 use App\Models\Organization;
 
@@ -247,10 +247,7 @@ class ReportController extends Controller
         );
     }
 
-    /* =========================================================
-       ===================== FILTER LOGIC ======================
-       ========================================================= */
-
+    /* Start of Filter Logic  */
     private function hasDailyFilters(Request $request)
     {
         return $request->filled('gender')
@@ -352,12 +349,9 @@ class ReportController extends Controller
             $query->where('is_recommend', $request->is_recommend);
         }
     }
+    /* End of Filter Logic  */
 
-
-    /* =========================================================
-       ===================== DATATABLE ==========================
-       ========================================================= */
-
+    /* Start of DataTable  */
     private function dataTableResponse($query, $dateColumn)
     {
         return DataTables::of($query)
@@ -393,71 +387,105 @@ class ReportController extends Controller
             ->rawColumns(['action'])
             ->make(true);
     }
+    /* End of DataTable  */
 
-
-    /* =========================================================
-       ===================== PDF GENERATOR =====================
-       ========================================================= */
-
-    /* =========================================================
-   ===================== PDF GENERATOR =====================
-   ========================================================= */
-
+    /* Start of PDF GENERATOR  */
     private function generatePdf(
         $query,
         Request $request,
         $smallView,
         $filename,
-        $largeView = null // 👈 make optional
+        $largeView = null
     ) {
-        $query->orderBy('id');
 
-        $perPage = 500;
-        $page = $request->get('page', 1);
-        $totalRecords = $query->count();
-        $totalPages = ceil($totalRecords / $perPage);
+        try {
 
-        if ($totalRecords === 0) {
-            return back()->with('warning', 'No data found.');
-        }
+            Log::info('PDF Generation Started', [
+                'filename' => $filename,
+                'request_params' => $request->all()
+            ]);
 
-        if ($totalRecords > $perPage && !$request->filled('confirm')) {
-            return back()->with(array_merge(
-                [
-                    'confirm_pdf'  => true,
-                    'totalRecords' => $totalRecords,
-                    'perPage'      => $perPage,
-                ],
-                $request->all()
-            ));
-        }
+            $query->orderBy('id');
 
-        // If largeView not provided, use smallView for both
-        $largeView = $largeView ?? $smallView;
+            $perPage = 500;
+            $page = $request->get('page', 1);
+            $totalRecords = $query->count();
+            $totalPages = ceil($totalRecords / $perPage);
 
-        // SMALL PDF
-        if ($totalRecords <= 500) {
-            return $this->generateSmallPdf(
+            Log::info('PDF Record Count', [
+                'totalRecords' => $totalRecords,
+                'perPage' => $perPage,
+                'totalPages' => $totalPages,
+                'currentPage' => $page
+            ]);
+
+            if ($totalRecords === 0) {
+                Log::warning('PDF Generation Aborted: No data found.');
+                return back()->with('warning', 'No data found.');
+            }
+
+            if ($totalRecords > $perPage && !$request->filled('confirm')) {
+
+                Log::info('PDF Confirmation Required', [
+                    'totalRecords' => $totalRecords
+                ]);
+
+                return back()->with(array_merge(
+                    [
+                        'confirm_pdf'  => true,
+                        'totalRecords' => $totalRecords,
+                        'perPage'      => $perPage,
+                    ],
+                    $request->all()
+                ));
+            }
+
+            // If largeView not provided, use smallView
+            $largeView = $largeView ?? $smallView;
+
+            // SMALL PDF
+            if ($totalRecords <= 500) {
+
+                Log::info('Generating SMALL PDF', [
+                    'view' => $smallView
+                ]);
+
+                return $this->generateSmallPdf(
+                    $query,
+                    $smallView,
+                    $filename,
+                    $page,
+                    $perPage,
+                    $totalPages,
+                    $totalRecords
+                );
+            }
+
+            // LARGE PDF
+            Log::info('Generating LARGE PDF', [
+                'view' => $largeView
+            ]);
+
+            return $this->generateLargePdf(
                 $query,
-                $smallView,
+                $largeView,
                 $filename,
                 $page,
                 $perPage,
                 $totalPages,
                 $totalRecords
             );
-        }
+        } catch (\Exception $e) {
 
-        // LARGE PDF
-        return $this->generateLargePdf(
-            $query,
-            $largeView,
-            $filename,
-            $page,
-            $perPage,
-            $totalPages,
-            $totalRecords
-        );
+            Log::error('PDF Generation Failed', [
+                'message' => $e->getMessage(),
+                'file' => $e->getFile(),
+                'line' => $e->getLine(),
+                'trace' => $e->getTraceAsString()
+            ]);
+
+            return back()->with('error', 'PDF generation failed. Check logs.');
+        }
     }
 
     private function generateSmallPdf(
@@ -505,4 +533,6 @@ class ReportController extends Controller
 
         return $pdf->stream($filename);
     }
+
+    /* End of PDF GENERATOR  */
 }

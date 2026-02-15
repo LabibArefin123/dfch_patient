@@ -116,6 +116,33 @@
             </div>
         </div>
 
+        <!-- Start of Global Error Modal -->
+        <div class="modal fade" id="errorModal" tabindex="-1">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content">
+
+                    <div class="modal-header bg-danger">
+                        <h5 class="modal-title text-white">System Error</h5>
+                        <button type="button" class="close text-white" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+                        <p id="errorMessageText" class="mb-0 text-danger"></p>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">
+                            Close
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <!-- End of Global Error Modal -->
+
         <!-- start of delete animation model -->
         <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmLabel"
             aria-hidden="true">
@@ -218,7 +245,7 @@
     @stack('js')
     @yield('js')
     <!-- start of time top right  -->
-    <script>
+    {{-- <script>
         function updateNavbarTime() {
             const now = new Date();
 
@@ -244,7 +271,7 @@
 
         updateNavbarTime();
         setInterval(updateNavbarTime, 1000);
-    </script>
+    </script> --}}
     <!-- end of time top right  -->
 
     <!-- Start of Login / Logout -->
@@ -706,6 +733,71 @@
     </script>
     {{-- end of validation --}}
 
+    {{-- start of global page error logger --}}
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            console.log("Global Error Logger Loaded ✅");
+
+            /*
+            |--------------------------------------------------------------------------
+            | 1️⃣ Catch Normal JavaScript Errors
+            |--------------------------------------------------------------------------
+            */
+            window.onerror = function(message, source, lineno, colno, error) {
+
+                console.error("🚨 JavaScript Error Detected:");
+                console.error("Message:", message);
+                console.error("File:", source);
+                console.error("Line:", lineno, "Column:", colno);
+                console.error("Error Object:", error);
+
+                showErrorModal(message);
+
+                return false;
+            };
+
+            /*
+            |--------------------------------------------------------------------------
+            | 2️⃣ Catch Unhandled Promise Errors (Fetch / AJAX)
+            |--------------------------------------------------------------------------
+            */
+            window.addEventListener("unhandledrejection", function(event) {
+
+                console.error("🚨 Unhandled Promise Rejection:");
+                console.error("Reason:", event.reason);
+
+                showErrorModal(event.reason);
+
+            });
+
+            /*
+            |--------------------------------------------------------------------------
+            | 3️⃣ Optional Modal Display
+            |--------------------------------------------------------------------------
+            */
+            function showErrorModal(message) {
+
+                const modal = document.getElementById("errorModal");
+                const errorText = document.getElementById("errorMessageText");
+
+                if (!modal || !errorText) {
+                    console.warn("Error modal not found in DOM.");
+                    return;
+                }
+
+                errorText.innerText = message;
+
+                if (typeof $ !== "undefined" && typeof $('#errorModal').modal === "function") {
+                    $('#errorModal').modal('show');
+                }
+            }
+
+        });
+    </script>
+    {{-- end of global page error logger --}}
+
+
     {{-- Start of password eye --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -750,13 +842,13 @@
         });
     </script>
     {{-- end of date --}}
-    
+
     {{-- start of warning limit --}}
     <script>
         document.addEventListener("DOMContentLoaded", function() {
             const totalRecords = {{ $totalRecords ?? 0 }};
             const limit = 500;
-            
+
             if (totalRecords >= limit) {
                 setTimeout(() => {
                     const modal = new bootstrap.Modal(
@@ -766,8 +858,8 @@
                 }, 600); // small delay for smooth UX
             }
         });
-        </script>
-        {{-- end of warning limit --}}
+    </script>
+    {{-- end of warning limit --}}
 
 @section('plugins.Datatables', true)
 @stop
