@@ -32,9 +32,14 @@
                 <div class="card card-body">
                     <form id="filterForm">
                         @yield('filters')
-                        <div class="mt-3">
-                            <button type="submit" class="btn btn-primary btn-sm">Apply Filter</button>
+                        <div class="mt-3 d-flex align-items-center">
+                            <button type="submit" class="btn btn-primary btn-sm mr-3">
+                                Apply Filter
+                            </button>
+
+                            <span id="dateStatus" class="small font-weight-bold"></span>
                         </div>
+
                     </form>
                 </div>
             </div>
@@ -90,6 +95,64 @@
                 let params = $('#filterForm').serialize();
                 window.location.href = "{{ $excelRoute }}?" + params;
             });
+
+            function calculateDaysBehind() {
+
+                let status = $('#dateStatus');
+
+                // Check if fields exist first
+                if ($('input[name="to_date"]').length === 0) {
+                    return;
+                }
+
+                let toDate = $('input[name="to_date"]').val();
+
+                // If dateFilter exists use it, otherwise ignore it
+                let dateFilter = $('#dateFilter').length ? $('#dateFilter').val() : 'custom';
+
+                if (dateFilter !== 'custom' || !toDate) {
+                    status.html('');
+                    return;
+                }
+
+                let today = new Date();
+                let selectedDate = new Date(toDate);
+
+                if (isNaN(selectedDate)) {
+                    status.html('');
+                    return;
+                }
+
+                let diffTime = today - selectedDate;
+                let diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+                if (diffDays > 0) {
+                    status
+                        .removeClass()
+                        .addClass('small font-weight-bold text-danger')
+                        .html('⚠ You are ' + diffDays + ' days behind.');
+                } else if (diffDays === 0) {
+                    status
+                        .removeClass()
+                        .addClass('small font-weight-bold text-success')
+                        .html('✔ Viewing today\'s data.');
+                } else {
+
+                    let daysAhead = Math.abs(diffDays);
+
+                    status
+                        .removeClass()
+                        .addClass('')
+                        .html('You are ' + daysAhead + ' days ahead.');
+                }
+            }
+
+
+            $(document).on('change', '#dateFilter, input[name="from_date"], input[name="to_date"]', function() {
+
+                calculateDaysBehind();
+            });
+
         });
     </script>
 
