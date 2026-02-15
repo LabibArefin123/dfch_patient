@@ -4,7 +4,7 @@
     $title = 'Daily Patient Report';
     $ajaxRoute = route('report.daily');
     $pdfRoute = route('report.daily.pdf');
-    $excelRoute = route('report.daily.excel'); 
+    $excelRoute = route('report.daily.excel');
     $columns = json_encode([
         ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
         ['data' => 'patient_code'],
@@ -26,6 +26,16 @@
     <div class="row">
 
         <div class="col-md-3">
+            <label>From Date</label>
+            <input type="date" name="from_date" class="form-control">
+        </div>
+
+        <div class="col-md-3">
+            <label>To Date</label>
+            <input type="date" name="to_date" class="form-control">
+        </div>
+
+        <div class="col-md-3">
             <label>Gender</label>
             <select name="gender" class="form-control">
                 <option value="">All</option>
@@ -41,16 +51,6 @@
                 <option value="1">Yes</option>
                 <option value="0">No</option>
             </select>
-        </div>
-
-        <div class="col-md-3">
-            <label>From Date</label>
-            <input type="date" name="from_date" class="form-control">
-        </div>
-
-        <div class="col-md-3">
-            <label>To Date</label>
-            <input type="date" name="to_date" class="form-control">
         </div>
 
     </div>

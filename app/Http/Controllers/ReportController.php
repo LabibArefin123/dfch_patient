@@ -498,7 +498,7 @@ class ReportController extends Controller
         $totalRecords
     ) {
         $patients = $query->limit($perPage)->get();
-        $organization = Organization::first();
+            
 
         $pdf = Pdf::loadView(
             $view,

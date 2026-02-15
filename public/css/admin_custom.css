@@ -139,29 +139,29 @@
     }
 }
 
-  .limit-icon {
-        width: 80px;
-        height: 80px;
-        border-radius: 50%;
-        background: #dc3545;
-        color: #fff;
-        font-size: 48px;
-        font-weight: bold;
-        line-height: 80px;
-        margin: auto;
-        animation: pulseWarning 1.2s infinite;
-    }
+.limit-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: #dc3545;
+    color: #fff;
+    font-size: 48px;
+    font-weight: bold;
+    line-height: 80px;
+    margin: auto;
+    animation: pulseWarning 1.2s infinite;
+}
 
-    @keyframes pulseWarning {
-        0% {
-            transform: scale(1);
-            box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
-        }
-        70% {
-            transform: scale(1.1);
-            box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
-        }
-        100% {
-            transform: scale(1);
-        }
+@keyframes pulseWarning {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.7);
     }
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 15px rgba(220, 53, 69, 0);
+    }
+    100% {
+        transform: scale(1);
+    }
+}

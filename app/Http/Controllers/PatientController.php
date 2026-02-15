@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Organization;
 use App\Models\Patient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
@@ -151,12 +152,32 @@ class PatientController extends Controller
                         \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y') .
                         '</a>';
                 })
-
                 ->addColumn('action', function ($p) {
+
+                    $editUrl   = route('patients.edit', $p->id);
+                    $printUrl  = route('patients.print_card', $p->id);
+                    $deleteUrl = route('patients.destroy', $p->id);
+
                     return '
-            <a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>
-        ';
+                    <a href="' . $editUrl . '" class="btn btn-warning btn-sm mr-1">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+                    <a href="' . $printUrl . '" target="_blank" class="btn btn-info btn-sm mr-1">
+                        <i class="fas fa-print"></i>
+                    </a>
+
+                    <form action="' . $deleteUrl . '" method="POST" style="display:inline-block;" 
+                        onsubmit="return confirm(\'Are you sure you want to delete this patient?\')">
+                        ' . csrf_field() . '
+                        ' . method_field('DELETE') . '
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                ';
                 })
+
 
                 ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'action'])
                 ->with([
@@ -615,5 +636,18 @@ class PatientController extends Controller
         $patients = Patient::all(); // apply filters if needed
 
         return view('backend.patient_management.print', compact('patients'));
+    }
+
+    public function printCard($id)
+    {
+        $patient = Patient::findOrFail($id);
+        $organization = Organization::first();
+
+        $pdf = Pdf::loadView(
+            'backend.patient_management.print_card',
+            compact('patient', 'organization')
+        )->setPaper('a4', 'portrait');
+
+        return $pdf->stream('patient_card_' . $patient->patient_code . '.pdf');
     }
 }
