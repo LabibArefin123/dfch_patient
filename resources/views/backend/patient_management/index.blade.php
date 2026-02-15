@@ -136,7 +136,7 @@
                                     </div>
                                 </div>
 
-                                <p id="importProgressText" class="mt-3 text-muted">
+                                <p id="importProgressText" class="mt-3 text-muted fw-bold">
                                     Waiting for upload...
                                 </p>
 
@@ -494,49 +494,94 @@
 
             // --- Import form submit with modal progress ---
             $('#importFileForm').on('submit', function(e) {
+
                 e.preventDefault();
+
                 let formData = new FormData(this);
                 let url = $(this).attr('action');
 
                 let percent = 0;
+                let circle = $('#importProgressCircle');
+                let text = $('#importProgressText');
+                let percentText = $('#importProgressPercent');
+
                 $('#importFileModal input, #importFileForm button').prop('disabled', true);
 
-                let interval = setInterval(function() {
-                    percent += 5;
-                    if (percent > 100) percent = 100;
-                    $('#importProgressPercent').text(percent + '%');
-                    $('#importProgressCircle').css('stroke-dashoffset', 327 - (327 * percent /
-                        100));
-                }, 100);
+                function updateProgress(p, message) {
+                    percentText.text(p + '%');
+                    circle.css('stroke-dashoffset', 327 - (327 * p / 100));
+                    text.text(message);
+                }
 
-                $.ajax({
-                    url: url,
-                    method: 'POST',
-                    data: formData,
-                    processData: false,
-                    contentType: false,
-                    success: function(res) {
-                        clearInterval(interval);
-                        $('#importProgressPercent').text('100%');
-                        setTimeout(() => {
-                            $('#importFileModal').modal('hide');
-                            location.reload();
-                        }, 500);
-                    },
-                    error: function(err) {
-                        clearInterval(interval);
+                // ===============================
+                // STAGE 1 - Processing
+                // ===============================
+                updateProgress(10, "Stage 1/4: File is Processing...");
 
-                        if (err.responseJSON && err.responseJSON.errors) {
-                            alert(err.responseJSON.errors.join("\n"));
-                        } else {
-                            alert('Upload failed. Please try again.');
-                        }
+                setTimeout(function() {
 
-                        $('#importFileModal input, #importFileForm button').prop('disabled',
-                            false);
-                    }
+                    // ===============================
+                    // STAGE 2 - Validating
+                    // ===============================
+                    updateProgress(30, "Stage 2/4: File is Validating...");
 
-                });
+                    setTimeout(function() {
+
+                        // ===============================
+                        // STAGE 3 - Uploading (Real AJAX)
+                        // ===============================
+                        updateProgress(60, "Stage 3/4: File is Uploading...");
+
+                        $.ajax({
+                            url: url,
+                            method: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+
+                            success: function(res) {
+
+                                // ===============================
+                                // STAGE 4 - Done
+                                // ===============================
+                                updateProgress(100,
+                                    "Stage 4/4: File Uploaded Successfully ✅"
+                                    );
+
+                                setTimeout(function() {
+
+                                    text.text(
+                                        "✔ Patients Imported Successfully into Database"
+                                        );
+
+                                    setTimeout(function() {
+                                        $('#importFileModal')
+                                            .modal('hide');
+                                        location.reload();
+                                    }, 1200);
+
+                                }, 600);
+                            },
+
+                            error: function(err) {
+
+                                if (err.responseJSON && err.responseJSON
+                                    .errors) {
+                                    alert(err.responseJSON.errors.join("\n"));
+                                } else {
+                                    alert('Upload failed. Please try again.');
+                                }
+
+                                $('#importFileModal input, #importFileForm button')
+                                    .prop('disabled', false);
+                                updateProgress(0, "Upload failed ❌");
+                            }
+                        });
+
+                    }, 700);
+
+                }, 700);
+
             });
 
             // ===============================
