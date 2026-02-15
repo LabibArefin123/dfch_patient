@@ -38,15 +38,16 @@
                                 $ranges = [
                                     'today' => 'Today',
                                     'yesterday' => 'Yesterday',
-                                    '7days' => 'Last 7 Days',
-                                    '1month' => '1 Month',
-                                    '2months' => '2 Months',
-                                    '3months' => '3 Months',
-                                    '6months' => '6 Months',
-                                    '1year' => '1 Year',
+                                    '7days' => 'Past 7 Days',
+                                    '1month' => 'Past 1 Month',
+                                    '2months' => 'Past 2 Months',
+                                    '3months' => 'Past 3 Months',
+                                    '6months' => 'Past 6 Months',
+                                    '1year' => 'Past 1 Year',
                                     'all' => 'All Logs',
                                 ];
                             @endphp
+
                             @foreach ($ranges as $key => $label)
                                 <option value="{{ $key }}" {{ ($range ?? 'today') == $key ? 'selected' : '' }}>
                                     {{ $label }}</option>
