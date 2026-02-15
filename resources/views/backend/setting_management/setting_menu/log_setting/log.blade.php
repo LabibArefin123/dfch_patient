@@ -17,14 +17,14 @@
         <div class="card shadow-sm">
 
             {{-- Header --}}
-            <div class="card-header d-flex justify-content-between align-items-center">
+            <div class="card-header d-flex justify-content-between align-items-center flex-wrap">
                 <h5 class="mb-0">Application Error Logs</h5>
 
                 <form action="{{ route('settings.clearLogs') }}" method="POST"
-                    onsubmit="return confirm('Are you sure you want to clear all logs?');">
+                    onsubmit="return confirm('Are you sure you want to clear all logs?');" class="ml-auto mb-0 d-flex">
                     @csrf
-                    <button class="btn btn-danger btn-sm">
-                        <i class="fas fa-trash-alt"></i> Clear Logs
+                    <button type="submit" class="btn btn-danger btn-sm d-flex align-items-center">
+                        <i class="fas fa-trash-alt mr-1"></i> Clear Logs
                     </button>
                 </form>
             </div>
