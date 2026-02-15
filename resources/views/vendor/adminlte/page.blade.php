@@ -742,14 +742,30 @@
             // Helper to convert error object to readable string
             function formatError(err) {
                 if (!err) return '';
+
+                // Ignore jQuery / DataTables event objects
+                if (err instanceof Event || (err.type && err.namespace === 'dt')) {
+                    return null;
+                }
+
                 if (typeof err === 'string') return err;
-                if (err instanceof Error) return err.message + "\n" + err.stack;
+
+                if (err instanceof Error) {
+                    return err.message;
+                }
+
+                // Laravel AJAX validation error (422)
+                if (err.responseJSON && err.responseJSON.message) {
+                    return err.responseJSON.message;
+                }
+
                 try {
-                    return JSON.stringify(err, Object.getOwnPropertyNames(err), 2);
+                    return JSON.stringify(err, null, 2);
                 } catch {
-                    return String(err);
+                    return 'Unexpected system error occurred.';
                 }
             }
+
 
             /*
             |--------------------------------------------------------------------------
@@ -787,21 +803,20 @@
             |--------------------------------------------------------------------------
             */
             function showErrorModal(message) {
+                if (!message || message.length < 3) return;
+
                 const modal = document.getElementById("errorModal");
                 const errorText = document.getElementById("errorMessageText");
 
-                if (!modal || !errorText) {
-                    console.warn("Error modal not found in DOM.");
-                    return;
-                }
+                if (!modal || !errorText) return;
 
                 errorText.innerText = message;
 
-                // Bootstrap 4 modal
                 if (typeof $ !== "undefined" && typeof $(modal).modal === "function") {
                     $(modal).modal('show');
                 }
             }
+
 
         });
     </script>
@@ -869,6 +884,5 @@
         });
     </script>
     {{-- end of warning limit --}}
-
 @section('plugins.Datatables', true)
 @stop
