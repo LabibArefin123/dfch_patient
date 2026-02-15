@@ -72,7 +72,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('patients/export-pdf', [PatientController::class, 'exportPdf'])->name('patients.export.pdf');
     Route::post('patients/import-excel', [PatientController::class, 'importExcel'])->name('patients.import.excel');
     Route::post('patients/import-word', [PatientController::class, 'importWord'])->name('patients.import.word');
-    Route::get('patients/print', [PatientController::class, 'print'])->name('patients.print');
     Route::get('/patients/{id}/print-card', [PatientController::class, 'printCard'])->name('patients.print_card');
     Route::resource('patients', PatientController::class);
 

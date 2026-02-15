@@ -37,11 +37,6 @@
                     <a class="dropdown-item import-word" href="{{ route('patients.import.word') }}">
                         <i class="fas fa-upload"></i> Import Word
                     </a>
-
-                    <a class="dropdown-item" href="{{ route('patients.print') }}">
-                        <i class="fas fa-print"></i> Print
-                    </a>
-
                 </div>
             </div>
         </div>

@@ -631,13 +631,6 @@ class PatientController extends Controller
         return back()->with('success', 'Word File Imported Successfully');
     }
 
-    public function print(Request $request)
-    {
-        $patients = Patient::all(); // apply filters if needed
-
-        return view('backend.patient_management.print', compact('patients'));
-    }
-
     public function printCard($id)
     {
         $patient = Patient::findOrFail($id);
