@@ -493,63 +493,64 @@
             });
 
             // --- Import form submit with modal progress ---
+            // --- Import form submit with modal progress ---
             $('#importFileForm').on('submit', function(e) {
 
                 e.preventDefault();
 
+                let form = $(this);
                 let formData = new FormData(this);
-                let url = $(this).attr('action');
+                let url = form.attr('action');
 
-                let percent = 0;
-                let circle = $('#importProgressCircle');
+                let circle = $('#importProgressCircle')[0];
                 let text = $('#importProgressText');
                 let percentText = $('#importProgressPercent');
 
-                $('#importFileModal input, #importFileForm button').prop('disabled', true);
+                let radius = 52; // match your SVG circle radius
+                let circumference = 2 * Math.PI * radius;
+
+                circle.style.strokeDasharray = circumference;
+                circle.style.strokeDashoffset = circumference;
+
+                $('#importFileModal input, #importFileModal button').prop('disabled', true);
 
                 function updateProgress(p, message) {
+                    let offset = circumference - (p / 100 * circumference);
+                    circle.style.strokeDashoffset = offset;
                     percentText.text(p + '%');
-                    circle.css('stroke-dashoffset', 327 - (327 * p / 100));
                     text.text(message);
                 }
 
-                // ===============================
-                // STAGE 1 - Processing
-                // ===============================
+                // STAGE 1
                 updateProgress(10, "Stage 1/4: File is Processing...");
 
                 setTimeout(function() {
 
-                    // ===============================
-                    // STAGE 2 - Validating
-                    // ===============================
+                    // STAGE 2
                     updateProgress(30, "Stage 2/4: File is Validating...");
 
                     setTimeout(function() {
 
-                        // ===============================
-                        // STAGE 3 - Uploading (Real AJAX)
-                        // ===============================
-                        updateProgress(60, "Stage 3/4: File is Uploading...");
+                        // STAGE 3
+                        updateProgress(60, "Stage 3/4: Uploading to Server...");
 
                         $.ajax({
                             url: url,
-                            method: 'POST',
+                            type: 'POST',
                             data: formData,
                             processData: false,
                             contentType: false,
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr(
+                                    'content')
+                            },
 
                             success: function(res) {
 
-                                // ===============================
-                                // STAGE 4 - Done
-                                // ===============================
                                 updateProgress(100,
-                                    "Stage 4/4: File Uploaded Successfully ✅"
-                                    );
+                                    "Stage 4/4: Import Completed ✅");
 
                                 setTimeout(function() {
-
                                     text.text(
                                         "✔ Patients Imported Successfully into Database"
                                         );
@@ -565,24 +566,40 @@
 
                             error: function(err) {
 
-                                if (err.responseJSON && err.responseJSON
-                                    .errors) {
-                                    alert(err.responseJSON.errors.join("\n"));
-                                } else {
-                                    alert('Upload failed. Please try again.');
+                                let message = "Upload failed ❌";
+
+                                if (err.responseJSON) {
+
+                                    if (err.responseJSON.errors) {
+
+                                        let errors = [];
+                                        Object.values(err.responseJSON.errors)
+                                            .forEach(function(arr) {
+                                                errors = errors.concat(arr);
+                                            });
+
+                                        message = errors.join("\n");
+
+                                    } else if (err.responseJSON.message) {
+                                        message = err.responseJSON.message;
+                                    }
                                 }
 
-                                $('#importFileModal input, #importFileForm button')
+                                alert(message);
+
+                                $('#importFileModal input, #importFileModal button')
                                     .prop('disabled', false);
+
                                 updateProgress(0, "Upload failed ❌");
                             }
                         });
 
-                    }, 700);
+                    }, 600);
 
-                }, 700);
+                }, 600);
 
             });
+
 
             // ===============================
             // Fix No Filter Modal Buttons

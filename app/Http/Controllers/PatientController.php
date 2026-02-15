@@ -7,6 +7,8 @@ use App\Models\Patient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
+use Illuminate\Support\Carbon;
+use PhpOffice\PhpWord\IOFactory;
 use App\Imports\PatientsImport;
 use App\Exports\PatientsExport;
 use App\Models\PatientDocument;
@@ -626,9 +628,82 @@ class PatientController extends Controller
             'file' => 'required|mimes:doc,docx'
         ]);
 
-        // Custom Word import logic here
+        try {
 
-        return back()->with('success', 'Word File Imported Successfully');
+            $file = $request->file('file');
+            $phpWord = IOFactory::load($file->getPathname());
+
+            $rows = [];
+
+            foreach ($phpWord->getSections() as $section) {
+                foreach ($section->getElements() as $element) {
+
+                    if (method_exists($element, 'getRows')) {
+
+                        foreach ($element->getRows() as $index => $row) {
+
+                            $cells = $row->getCells();
+                            $rowData = [];
+
+                            foreach ($cells as $cell) {
+                                $text = '';
+                                foreach ($cell->getElements() as $cellElement) {
+                                    if (method_exists($cellElement, 'getText')) {
+                                        $text .= $cellElement->getText();
+                                    }
+                                }
+                                $rowData[] = trim($text);
+                            }
+
+                            $rows[] = $rowData;
+                        }
+                    }
+                }
+            }
+
+            if (count($rows) <= 1) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'No data found in Word file.'
+                ], 422);
+            }
+
+            // Remove heading row
+            $headings = array_shift($rows);
+
+            foreach ($rows as $row) {
+
+                Patient::create([
+                    'patient_name' => $row[0] ?? null,
+                    'patient_f_name' => $row[1] ?? null,
+                    'patient_m_name' => $row[2] ?? null,
+                    'age' => $row[3] ?? null,
+                    'gender' => $row[4] ?? null,
+                    'phone_1' => $row[5] ?? null,
+                    'phone_2' => $row[6] ?? null,
+                    'phone_f_1' => $row[7] ?? null,
+                    'phone_m_1' => $row[8] ?? null,
+                    'location_type' => $row[9] ?? null,
+                    'location_simple' => $row[10] ?? null,
+                    'city' => $row[11] ?? null,
+                    'district' => $row[12] ?? null,
+                    'country' => $row[13] ?? null,
+                    'is_recommend' => $row[14] ?? 0,
+                    'date_of_patient_added' => $row[15] ?? Carbon::now()->toDateString(),
+                ]);
+            }
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Patients Imported Successfully from Word'
+            ]);
+        } catch (\Exception $e) {
+
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Word import failed. ' . $e->getMessage()
+            ], 500);
+        }
     }
 
     public function printCard($id)
