@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Yajra\DataTables\Facades\DataTables;
 
 class SettingController extends Controller
 {
@@ -179,53 +180,54 @@ class SettingController extends Controller
     {
         // Determine log file: use 'file' query param or default to today's log
         $fileDate = $request->file ?? now()->format('Y-m-d'); // e.g., '2026-02-15'
-        $logFile = storage_path("logs/laravel-{$fileDate}.log");
+        $logFile  = storage_path("logs/laravel-{$fileDate}.log");
 
+        // Default response data
         $logs = [];
 
+        // Determine date range for filtering
+        $range = $request->range ?? 'today';
+        $start = null;
+        $end   = null;
+
+        switch ($range) {
+            case 'yesterday':
+                $start = Carbon::yesterday()->startOfDay();
+                $end   = Carbon::yesterday()->endOfDay();
+                break;
+            case '7days':
+                $start = now()->subDays(7);
+                $end   = now();
+                break;
+            case '1month':
+                $start = now()->subMonth();
+                $end   = now();
+                break;
+            case '2months':
+                $start = now()->subMonths(2);
+                $end   = now();
+                break;
+            case '3months':
+                $start = now()->subMonths(3);
+                $end   = now();
+                break;
+            case '6months':
+                $start = now()->subMonths(6);
+                $end   = now();
+                break;
+            case '1year':
+                $start = now()->subYear();
+                $end   = now();
+                break;
+            case 'today':
+            default:
+                $start = now()->startOfDay();
+                $end   = now()->endOfDay();
+        }
+
+        // Read log file
         if (file_exists($logFile)) {
-
             $allLines = file($logFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-
-            // Date range filter for display
-            $range = $request->range ?? 'today';
-            $start = null;
-            $end   = null;
-
-            switch ($range) {
-                case 'yesterday':
-                    $start = Carbon::yesterday()->startOfDay();
-                    $end   = Carbon::yesterday()->endOfDay();
-                    break;
-                case '7days':
-                    $start = now()->subDays(7);
-                    $end   = now();
-                    break;
-                case '1month':
-                    $start = now()->subMonth();
-                    $end   = now();
-                    break;
-                case '2months':
-                    $start = now()->subMonths(2);
-                    $end   = now();
-                    break;
-                case '3months':
-                    $start = now()->subMonths(3);
-                    $end   = now();
-                    break;
-                case '6months':
-                    $start = now()->subMonths(6);
-                    $end   = now();
-                    break;
-                case '1year':
-                    $start = now()->subYear();
-                    $end   = now();
-                    break;
-                case 'today':
-                default:
-                    $start = now()->startOfDay();
-                    $end   = now()->endOfDay();
-            }
 
             $filtered   = [];
             $lineBuffer = '';
@@ -234,9 +236,7 @@ class SettingController extends Controller
             $serial     = 1;
 
             foreach ($allLines as $line) {
-                // Laravel daily log line: [2026-02-15 12:09:35] local.INFO: Message...
                 if (preg_match('/^\[(.*?)\]\s(\w+)\.([A-Z]+):\s(.*)$/', $line, $match)) {
-
                     // Save previous buffered log
                     if ($lineBuffer) {
                         $filtered[] = [
@@ -262,7 +262,7 @@ class SettingController extends Controller
                 }
             }
 
-            // Add last buffered line
+            // Add last buffered log
             if ($lineBuffer) {
                 $filtered[] = [
                     'serial'    => $serial++,
@@ -272,7 +272,7 @@ class SettingController extends Controller
                 ];
             }
 
-            // Filter by range (optional, keeps everything if timestamp is null)
+            // Filter by date range
             $logs = array_filter($filtered, function ($log) use ($start, $end) {
                 if (!$log['timestamp']) return true;
                 return $log['timestamp']->between($start, $end);
@@ -282,9 +282,58 @@ class SettingController extends Controller
             $logs = array_reverse($logs);
         }
 
+        // If AJAX request, return in Yajra DataTables format
+        if ($request->ajax()) {
+
+            return DataTables::of($logs)
+
+                ->addColumn('message_display', function ($log) {
+                    return e(explode("\n", $log['message'])[0]);
+                })
+
+                ->addColumn('details', function ($log) {
+
+                    if (str_contains($log['message'], "\n")) {
+                        return '
+                    <button class="btn btn-sm btn-info" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#trace' . $log['serial'] . '"
+                        aria-expanded="false">
+                        View
+                    </button>
+
+                    <div class="collapse mt-1" id="trace' . $log['serial'] . '">
+                        <pre class="mb-0" style="font-size:12px;">'
+                            . e($log['message']) .
+                            '</pre>
+                    </div>
+                ';
+                    }
+
+                    return '-';
+                })
+
+                ->editColumn('timestamp', function ($log) {
+                    return $log['timestamp']
+                        ? $log['timestamp']->format('Y-m-d H:i:s')
+                        : '-';
+                })
+
+                ->editColumn('level', function ($log) {
+                    $class = $log['level'] === 'ERROR'
+                        ? 'badge bg-danger'
+                        : 'badge bg-secondary';
+
+                    return '<span class="' . $class . '">' . $log['level'] . '</span>';
+                })
+
+                ->rawColumns(['details', 'level'])
+                ->make(true);
+        }
+
+        // Normal page load
         return view('backend.setting_management.setting_menu.log_setting.log', compact('logs', 'range', 'fileDate'));
     }
-
 
     public function clearLogs(Request $request)
     {
