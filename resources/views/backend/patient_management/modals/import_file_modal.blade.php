@@ -14,10 +14,10 @@
                             style="border-style: dashed; transition: 0.3s;">
 
                             <div class="mb-3">
-                                <i class="fas fa-file-excel fa-4x text-success"></i>
+                                <i class="fas fa-file-excel fa-3x text-success"></i> / <i class="fas fa-file-word fa-3x text-info"></i>
                             </div>
 
-                            <h5 class="fw-bold mb-2">Upload Excel File</h5>
+                            <h5 class="fw-bold mb-2">Upload Excel File/Upload Word File</h5>
                             <p class="text-muted small mb-0">
                                 Click here to select file
                             </p>

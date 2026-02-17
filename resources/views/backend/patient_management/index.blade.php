@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Patients')
+@section('title', 'Patients List')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center flex-wrap">
