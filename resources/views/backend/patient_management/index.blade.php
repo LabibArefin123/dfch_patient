@@ -12,6 +12,10 @@
                 <i class="fas fa-plus"></i> Add Patient
             </a>
 
+            <button id="delete-selected" class="btn btn-danger btn-sm">
+                <i class="fas fa-trash"></i> Delete Selected
+            </button>
+
             {{-- More Actions Dropdown --}}
             <div class="dropdown">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -53,6 +57,9 @@
             <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
                 <thead class="table-dark">
                     <tr>
+                        <th width="30">
+                            <input type="checkbox" id="select-all">
+                        </th>
                         <th>#</th>
                         <th>Patient Code</th>
                         <th>Name</th>
@@ -72,6 +79,7 @@
     @include('backend.patient_management.modals.import_file_modal')
     @include('backend.patient_management.modals.no_filter_modal')
     @include('backend.patient_management.modals.progress_modal')
+    @include('backend.patient_management.modals.select_modal')
 
     <iframe id="downloadFrame" style="display:none;"></iframe>
 
@@ -93,4 +101,5 @@
     <script src="{{ asset('js/patient_management/importFile.js') }}"></script>
     <script src="{{ asset('js/patient_management/exportFile.js') }}"></script>
     <script src="{{ asset('js/patient_management/ajaxFile.js') }}"></script>
+    <script src="{{ asset('js/patient_management/selectFile.js') }}"></script>
 @endsection

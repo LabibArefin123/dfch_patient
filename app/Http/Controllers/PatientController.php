@@ -154,6 +154,10 @@ class PatientController extends Controller
                         \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y') .
                         '</a>';
                 })
+                ->addColumn('checkbox', function ($row) {
+                    return '<input type="checkbox" class="row-checkbox" value="' . $row->id . '">';
+                })
+
                 ->addColumn('action', function ($p) {
 
                     $editUrl   = route('patients.edit', $p->id);
@@ -180,7 +184,7 @@ class PatientController extends Controller
                 ';
                 })
 
-                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'action'])
+                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'checkbox', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,
@@ -592,11 +596,29 @@ class PatientController extends Controller
             ->with('success', 'Patient updated successfully');
     }
 
-
     public function destroy(Patient $patient)
     {
         $patient->delete();
         return back()->with('success', 'Patient deleted successfully');
+    }
+
+    public function deleteSelected(Request $request)
+    {
+        $ids = $request->ids;
+
+        if (!$ids || count($ids) === 0) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No patients selected.'
+            ]);
+        }
+
+        Patient::whereIn('id', $ids)->delete();
+
+        return response()->json([
+            'status' => true,
+            'message' => 'Selected patients deleted successfully.'
+        ]);
     }
 
     public function exportExcel(Request $request)
