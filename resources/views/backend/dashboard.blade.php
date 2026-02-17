@@ -130,7 +130,7 @@
                 <div class="small-box bg-light shadow-sm">
                     <div class="inner">
                         <h3 class="text-warning">{{ $todayRecommendedPatients }}</h3>
-                        <p>Today's Recommended</p>
+                        <p>Today's Recommended Patients</p>
                     </div>
                     <div class="icon text-warning">
                         <i class="fas fa-stethoscope"></i>
@@ -151,7 +151,7 @@
                 <div class="small-box bg-light shadow-sm">
                     <div class="inner">
                         <h3 class="text-success">{{ $monthlyRecommendedPatients }}</h3>
-                        <p>Monthly Recommended</p>
+                        <p>Monthly Recommended Patients</p>
                     </div>
                     <div class="icon text-success">
                         <i class="fas fa-chart-line"></i>
