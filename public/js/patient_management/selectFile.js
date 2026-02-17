@@ -1,14 +1,13 @@
 $(document).ready(function () {
     let lastChecked = null;
 
+    // =========================
     // SHIFT SELECT
+    // =========================
     $(document).on("click", ".row-checkbox", function (e) {
         if (!lastChecked) {
             lastChecked = this;
-            return;
-        }
-
-        if (e.shiftKey) {
+        } else if (e.shiftKey) {
             let checkboxes = $(".row-checkbox");
             let start = checkboxes.index(this);
             let end = checkboxes.index(lastChecked);
@@ -19,12 +18,19 @@ $(document).ready(function () {
         }
 
         lastChecked = this;
+
         updateSelectAll();
+        toggleDeleteButton();
     });
 
+    // =========================
     // SELECT ALL
+    // =========================
     $(document).on("click", "#select-all", function () {
-        $(".row-checkbox").prop("checked", $(this).prop("checked"));
+        const checked = $(this).prop("checked");
+        $(".row-checkbox").prop("checked", checked);
+
+        toggleDeleteButton();
     });
 
     function updateSelectAll() {
@@ -33,23 +39,41 @@ $(document).ready(function () {
         $("#select-all").prop("checked", total === checked);
     }
 
+    // =========================
+    // SHOW / HIDE DELETE BUTTON
+    // =========================
+    function toggleDeleteButton() {
+        const checkedCount = $(".row-checkbox:checked").length;
+
+        if (checkedCount > 0) {
+            $("#delete-selected").removeClass("d-none");
+        } else {
+            $("#delete-selected").addClass("d-none");
+        }
+    }
+
+    // Also handle DataTable redraw
+    $("#patientsTable").on("draw.dt", function () {
+        toggleDeleteButton();
+    });
+
+    // =========================
     // OPEN MODAL
+    // =========================
     $("#delete-selected").on("click", function () {
         const ids = getSelectedIds();
 
-        if (ids.length === 0) {
-            $("#noFilterModal").modal("show");
-            return;
-        }
+        if (ids.length === 0) return;
 
         $("#selectedCount").text(ids.length);
         $("#selectPatientsModal").modal("show");
     });
 
+    // =========================
     // CONFIRM DELETE
+    // =========================
     $("#confirmDeleteSelected").on("click", function () {
         const ids = getSelectedIds();
-
         if (ids.length === 0) return;
 
         $("#selectPatientsModal").modal("hide");
@@ -59,7 +83,8 @@ $(document).ready(function () {
         $("#processText").text(
             "Please wait while we delete selected patients.",
         );
-        updateProgress(30);
+
+        animateProgress();
 
         $.ajax({
             url: "/patients/delete-selected",
@@ -68,9 +93,7 @@ $(document).ready(function () {
                 _token: $('meta[name="csrf-token"]').attr("content"),
                 ids: ids,
             },
-            success: function (response) {
-                updateProgress(100);
-
+            success: function () {
                 setTimeout(function () {
                     $("#fileProcessModal").modal("hide");
                     $("#patientsTable").DataTable().ajax.reload(null, false);
@@ -91,14 +114,25 @@ $(document).ready(function () {
             .get();
     }
 
-    function updateProgress(percent) {
+    // =========================
+    // SMOOTH PROGRESS ANIMATION
+    // =========================
+    function animateProgress() {
         const circle = document.getElementById("progressCircle");
         const percentText = document.getElementById("progressPercent");
         const radius = 65;
         const circumference = 2 * Math.PI * radius;
 
-        const offset = circumference - (percent / 100) * circumference;
-        circle.style.strokeDashoffset = offset;
-        percentText.innerText = percent + "%";
+        let percent = 0;
+
+        let interval = setInterval(function () {
+            percent += 5;
+
+            const offset = circumference - (percent / 100) * circumference;
+            circle.style.strokeDashoffset = offset;
+            percentText.innerText = percent + "%";
+
+            if (percent >= 100) clearInterval(interval);
+        }, 40);
     }
 });

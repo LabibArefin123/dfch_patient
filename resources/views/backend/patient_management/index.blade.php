@@ -7,16 +7,14 @@
         <h1 class="mb-0">Patients</h1>
 
         <div class="d-flex gap-2">
-            {{-- Add Patient (Primary Action) --}}
             <a href="{{ route('patients.create') }}" class="btn btn-success btn-sm">
                 <i class="fas fa-plus"></i> Add Patient
             </a>
 
-            <button id="delete-selected" class="btn btn-danger btn-sm">
+            <button id="delete-selected" class="btn btn-danger btn-sm d-none">
                 <i class="fas fa-trash"></i> Delete Selected
             </button>
 
-            {{-- More Actions Dropdown --}}
             <div class="dropdown">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <i class="fas fa-ellipsis-v"></i>
