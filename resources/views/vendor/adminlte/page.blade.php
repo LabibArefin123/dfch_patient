@@ -116,15 +116,17 @@
             </div>
         </div>
 
-        <!-- Start of Global Error Modal -->
-        <div class="modal fade" id="errorModal" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered modal-md">
+        <!-- Global Error Modal -->
+        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
                 <div class="modal-content">
 
                     <div class="modal-header bg-danger">
                         <h5 class="modal-title text-white">System Error</h5>
-                        <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+
+                        <!-- BOOTSTRAP 4 CLOSE BUTTON -->
+                        <button type="button" class="close text-white" data-dismiss="modal">
+                            <span>&times;</span>
                         </button>
                     </div>
 
@@ -141,7 +143,8 @@
                 </div>
             </div>
         </div>
-        <!-- End of Global Error Modal -->
+        <!-- End Global Error Modal -->
+
 
         <!-- start of delete animation model -->
         <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
@@ -732,29 +735,22 @@
         });
     </script>
     {{-- end of validation --}}
-
+    
     {{-- start of global page error logger --}}
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
+        document.addEventListener("DOMContentLoaded", function() {
 
             console.log("Global Error Logger Loaded ✅");
 
-            // Helper to convert error object to readable string
             function formatError(err) {
-                if (!err) return '';
+                if (!err) return null;
 
-                // Ignore jQuery / DataTables event objects
-                if (err instanceof Event || (err.type && err.namespace === 'dt')) {
-                    return null;
-                }
+                if (err instanceof Event) return null;
 
                 if (typeof err === 'string') return err;
 
-                if (err instanceof Error) {
-                    return err.message;
-                }
+                if (err instanceof Error) return err.message;
 
-                // Laravel AJAX validation error (422)
                 if (err.responseJSON && err.responseJSON.message) {
                     return err.responseJSON.message;
                 }
@@ -766,60 +762,36 @@
                 }
             }
 
-
-            /*
-            |--------------------------------------------------------------------------
-            | 1️⃣ Catch Normal JavaScript Errors
-            |--------------------------------------------------------------------------
-            */
             window.onerror = function(message, source, lineno, colno, error) {
-
-                console.error("🚨 JavaScript Error Detected:");
-                console.error("Message:", message);
-                console.error("File:", source);
-                console.error("Line:", lineno, "Column:", colno);
-                console.error("Error Object:", error);
-
                 showErrorModal(formatError(error || message));
-
                 return false;
             };
 
-            /*
-            |--------------------------------------------------------------------------
-            | 2️⃣ Catch Unhandled Promise Errors (Fetch / AJAX)
-            |--------------------------------------------------------------------------
-            */
             window.addEventListener("unhandledrejection", function(event) {
-                console.error("🚨 Unhandled Promise Rejection:");
-                console.error("Reason:", event.reason);
-
                 showErrorModal(formatError(event.reason));
             });
 
-            /*
-            |--------------------------------------------------------------------------
-            | 3️⃣ Show Modal
-            |--------------------------------------------------------------------------
-            */
             function showErrorModal(message) {
                 if (!message || message.length < 3) return;
 
-                const modal = document.getElementById("errorModal");
-                const errorText = document.getElementById("errorMessageText");
+                const $modal = $('#errorModal');
+                $('#errorMessageText').text(message);
 
-                if (!modal || !errorText) return;
+                // 🔥 IMPORTANT: reset modal before show
+                $modal.modal('hide');
 
-                errorText.innerText = message;
-
-                if (typeof $ !== "undefined" && typeof $(modal).modal === "function") {
-                    $(modal).modal('show');
-                }
+                setTimeout(() => {
+                    $modal.modal({
+                        backdrop: true,
+                        keyboard: true,
+                        show: true
+                    });
+                }, 150);
             }
-
 
         });
     </script>
+
     {{-- end of global page error logger --}}
 
     {{-- Start of password eye --}}

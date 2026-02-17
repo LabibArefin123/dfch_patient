@@ -136,7 +136,7 @@ class SettingController extends Controller
     {
         try {
             // DB Credentials
-            $db   = env('DB_DATABASE', 'tot_pos');
+            $db   = env('DB_DATABASE', 'dfch_patient');
             $user = env('DB_USERNAME', 'root');
             $pass = env('DB_PASSWORD', '');
             $host = env('DB_HOST', '127.0.0.1');
@@ -170,7 +170,7 @@ class SettingController extends Controller
             }
 
             // Download SQL file
-            return response()->download($backupPath, $fileName)->deleteFileAfterSend(true);
+            return response()->download($backupPath, $fileName);
         } catch (\Exception $e) {
             return back()->with('error', 'Error: ' . $e->getMessage());
         }

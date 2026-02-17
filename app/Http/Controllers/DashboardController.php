@@ -183,7 +183,6 @@ class DashboardController extends Controller
         );
     }
 
-
     public function system_index()
     {
         // -----------------------------
@@ -242,12 +241,12 @@ class DashboardController extends Controller
         // -----------------------------
         // Last Backup Time
         // -----------------------------
-        $backupPath = storage_path('app');
+        $backupDir = storage_path('app/backups');
         $lastBackupTime = 'No backup found';
 
-        if (File::exists($backupPath)) {
-            $files = collect(File::files($backupPath))
-                ->filter(fn($file) => $file->getExtension() === 'sql');
+        if (File::exists($backupDir)) {
+            $files = collect(File::files($backupDir))
+                ->filter(fn($file) => strtolower($file->getExtension()) === 'sql');
 
             if ($files->isNotEmpty()) {
                 $latestFile = $files->sortByDesc(fn($f) => $f->getMTime())->first();
