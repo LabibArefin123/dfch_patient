@@ -186,9 +186,13 @@
                 'year',
                 'month',
                 'weekly_filter',
+                'day_filter',
+                'location_type',
+                'location_value',
                 'from_date',
                 'to_date',
             ]);
+
             session()->forget('confirm_pdf');
         @endphp
 

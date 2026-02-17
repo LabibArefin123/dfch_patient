@@ -30,7 +30,7 @@ class ReportController extends Controller
             $query = Patient::query();
             $this->applyDailyFilters($query, $request);
 
-            return $this->dataTableResponse($query, 'created_at');
+            return $this->dataTableResponse($query, 'date_of_patient_added');
         }
 
         return view('backend.report_management.patient.daily_report');
@@ -250,7 +250,7 @@ class ReportController extends Controller
     /* Start of Filter Logic  */
     private function hasDailyFilters(Request $request)
     {
-        return $request->filled('day_filter')
+        return $request->has('day_filter')
             || $request->filled('gender')
             || $request->filled('is_recommend')
             || ($request->filled('location_type') && $request->filled('location_value'))
@@ -563,8 +563,7 @@ class ReportController extends Controller
         $totalRecords
     ) {
         $patients = $query->limit($perPage)->get();
-
-
+        $organization = Organization::first();
         $pdf = Pdf::loadView(
             $view,
             compact('patients', 'organization', 'page', 'perPage', 'totalPages', 'totalRecords')
