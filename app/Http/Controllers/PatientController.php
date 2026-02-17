@@ -292,6 +292,10 @@ class PatientController extends Controller
                 })
                 ->addColumn('is_recommend', fn() => '<span class="badge badge-success">Recommended</span>')
                 ->addColumn('date', fn($p) => \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y'))
+                ->addColumn('checkbox', function ($row) {
+                    return '<input type="checkbox" class="row-checkbox" value="' . $row->id . '">';
+                })
+
                 ->addColumn('action', function ($p) {
 
                     $editUrl   = route('patients.edit', $p->id);
@@ -318,7 +322,7 @@ class PatientController extends Controller
                 ';
                 })
 
-                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'action'])
+                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'checkbox', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,

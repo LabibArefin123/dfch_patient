@@ -24,7 +24,9 @@
                 <i class="fas fa-plus"></i> Add Patient
             </a>
 
-
+            <button id="delete-selected" class="btn btn-danger btn-sm d-none">
+                <i class="fas fa-trash"></i> Delete Selected
+            </button>
             {{-- More Actions --}}
             {{-- <div class="dropdown">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
@@ -74,6 +76,9 @@
             <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
                 <thead class="table-dark">
                     <tr>
+                        <th width="30">
+                            <input type="checkbox" id="select-all">
+                        </th>
                         <th>#</th>
                         <th>Patient Code</th>
                         <th>Name</th>
@@ -97,98 +102,15 @@
     </div>
 
     <iframe id="downloadFrame" style="display:none;"></iframe>
+    @include('backend.patient_management.modals.select_modal')
 @stop
 
 @section('js')
     <script>
-        $(function() {
-
-            // ✅ Read date_filter from URL
-            const urlParams = new URLSearchParams(window.location.search);
-            const urlDateFilter = urlParams.get('date_filter');
-
-            // ✅ If URL has date_filter, set dropdown
-            if (urlDateFilter) {
-                $('select[name="date_filter"]').val(urlDateFilter);
-            }
-
-            var table = $('#patientsTable').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                ajax: {
-                    url: "{{ route('patients.recommend') }}",
-                    data: function(d) {
-
-                        // ✅ Always respect dropdown OR URL
-                        d.gender = $('select[name=gender]').val();
-                        d.location_type = $('select[name=location_type]').val();
-                        d.location_value = $('input[name=location_value]').val();
-                        d.from_date = $('input[name=from_date]').val();
-                        d.to_date = $('input[name=to_date]').val();
-
-                        // 🔥 CRITICAL FIX
-                        d.date_filter = $('select[name=date_filter]').val() || urlDateFilter;
-                    },
-                    dataSrc: function(json) {
-                        $('#childCount').text(json.childPatients ?? 0);
-                        $('#adultCount').text(json.adultPatients ?? 0);
-                        $('#seniorCount').text(json.seniorPatients ?? 0);
-                        return json.data;
-                    }
-                },
-                columns: [{
-                        data: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'patient_code',
-                        name: 'patient_code'
-                    },
-                    {
-                        data: 'name',
-                        name: 'patient_name'
-                    },
-                    {
-                        data: 'age',
-                        name: 'age'
-                    },
-                    {
-                        data: 'gender',
-                        name: 'gender'
-                    },
-                    {
-                        data: 'phone',
-                        name: 'phone_1'
-                    },
-                    {
-                        data: 'location',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'is_recommend',
-                        name: 'is_recommend'
-                    },
-                    {
-                        data: 'date',
-                        name: 'date_of_patient_added'
-                    },
-                    {
-                        data: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
-            });
-
-            // Filter submit
-            $('form').on('submit', function(e) {
-                e.preventDefault();
-                table.ajax.reload();
-            });
-
-        });
+        window.recommendRoutes = {
+            recommend: "{{ route('patients.recommend') }}"
+        };
     </script>
+    <script src="{{ asset('js/patient_management/recommendAjax.js') }}"></script>
+    <script src="{{ asset('js/patient_management/selectFile.js') }}"></script>
 @stop
