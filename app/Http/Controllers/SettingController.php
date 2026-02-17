@@ -144,7 +144,7 @@ class SettingController extends Controller
 
             // File name
             $fileName = $db . '_backup_' . now()->format('Y-m-d_H-i-s') . '.sql';
-            $backupPath = storage_path('app/' . $fileName);
+            $backupPath = storage_path('app/backups/' . $fileName);
 
             // Laragon mysqldump full path
             $mysqldump = 'E:\laragon\bin\mysql\mysql-8.0.30-winx64\bin\mysqldump.exe';

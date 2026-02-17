@@ -212,8 +212,12 @@ class PatientController extends Controller
 
         // Base Query
         $baseQuery = Patient::query()
-            ->when($request->filled('is_recommend'), fn($q) => $q->where('is_recommend', (int)$request->is_recommend), fn($q) => $q->where('is_recommend', 1))
-            ->when($request->filled('gender'), fn($q) => $q->where('gender', $request->gender))
+            ->where('is_recommend', 1) // 🔥 ALWAYS recommended patients
+
+            ->when($request->filled('gender'), function ($q) use ($request) {
+                $q->where('gender', $request->gender);
+            })
+
             ->when($request->filled('location_type'), function ($q) use ($request) {
 
                 $q->where('location_type', $request->location_type);
@@ -231,28 +235,40 @@ class PatientController extends Controller
                     }
                 }
             })
+
             ->when($request->filled('date_filter'), function ($q) use ($request) {
                 switch ($request->date_filter) {
+
                     case 'today':
-                        $q->whereDate('date_of_patient_added', today());
+                        $q->whereDate('date_of_patient_added', now()->toDateString());
                         break;
+
                     case 'this_month':
-                        $q->whereBetween('date_of_patient_added', [now()->startOfMonth(), now()->endOfMonth()]);
+                        $q->whereBetween('date_of_patient_added', [
+                            now()->startOfMonth()->toDateString(),
+                            now()->endOfMonth()->toDateString()
+                        ]);
                         break;
+
                     case 'last_month':
-                        $q->whereBetween('date_of_patient_added', [now()->subMonth()->startOfMonth(), now()->subMonth()->endOfMonth()]);
+                        $q->whereMonth('date_of_patient_added', now()->subMonth()->month)
+                            ->whereYear('date_of_patient_added', now()->subMonth()->year);
                         break;
+
                     case 'this_year':
                         $q->whereYear('date_of_patient_added', now()->year);
                         break;
+
                     case 'custom':
                         if ($request->filled(['from_date', 'to_date'])) {
-                            $q->whereBetween('date_of_patient_added', [$request->from_date, $request->to_date]);
+                            $q->whereBetween('date_of_patient_added', [
+                                $request->from_date,
+                                $request->to_date
+                            ]);
                         }
                         break;
                 }
             });
-
         // AJAX Request
         if ($request->ajax()) {
 
@@ -290,8 +306,6 @@ class PatientController extends Controller
 
         return view('backend.patient_management.recommend_index', compact('childPatients', 'adultPatients', 'seniorPatients'));
     }
-
-
 
     private function filteredPatients(Request $request)
     {

@@ -99,10 +99,18 @@
     <iframe id="downloadFrame" style="display:none;"></iframe>
 @stop
 
-
 @section('js')
     <script>
         $(function() {
+
+            // ✅ Read date_filter from URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlDateFilter = urlParams.get('date_filter');
+
+            // ✅ If URL has date_filter, set dropdown
+            if (urlDateFilter) {
+                $('select[name="date_filter"]').val(urlDateFilter);
+            }
 
             var table = $('#patientsTable').DataTable({
                 processing: true,
@@ -111,12 +119,16 @@
                 ajax: {
                     url: "{{ route('patients.recommend') }}",
                     data: function(d) {
+
+                        // ✅ Always respect dropdown OR URL
                         d.gender = $('select[name=gender]').val();
                         d.location_type = $('select[name=location_type]').val();
                         d.location_value = $('input[name=location_value]').val();
-                        d.date_filter = $('select[name=date_filter]').val();
                         d.from_date = $('input[name=from_date]').val();
                         d.to_date = $('input[name=to_date]').val();
+
+                        // 🔥 CRITICAL FIX
+                        d.date_filter = $('select[name=date_filter]').val() || urlDateFilter;
                     },
                     dataSrc: function(json) {
                         $('#childCount').text(json.childPatients ?? 0);
