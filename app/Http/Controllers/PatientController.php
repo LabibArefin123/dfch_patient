@@ -180,7 +180,6 @@ class PatientController extends Controller
                 ';
                 })
 
-
                 ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
@@ -289,7 +288,32 @@ class PatientController extends Controller
                 })
                 ->addColumn('is_recommend', fn() => '<span class="badge badge-success">Recommended</span>')
                 ->addColumn('date', fn($p) => \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y'))
-                ->addColumn('action', fn($p) => '<a href="' . route('patients.edit', $p->id) . '" class="btn btn-warning btn-sm">Edit</a>')
+                ->addColumn('action', function ($p) {
+
+                    $editUrl   = route('patients.edit', $p->id);
+                    $printUrl  = route('patients.print_card', $p->id);
+                    $deleteUrl = route('patients.destroy', $p->id);
+
+                    return '
+                    <a href="' . $editUrl . '" class="btn btn-warning btn-sm mr-1">
+                        <i class="fas fa-edit"></i>
+                    </a>
+
+                    <a href="' . $printUrl . '" target="_blank" class="btn btn-info btn-sm mr-1">
+                        <i class="fas fa-print"></i>
+                    </a>
+
+                    <form action="' . $deleteUrl . '" method="POST" style="display:inline-block;" 
+                        onsubmit="return confirm(\'Are you sure you want to delete this patient?\')">
+                        ' . csrf_field() . '
+                        ' . method_field('DELETE') . '
+                        <button type="submit" class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </form>
+                ';
+                })
+
                 ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
