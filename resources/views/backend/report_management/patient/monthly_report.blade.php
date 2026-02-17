@@ -5,6 +5,7 @@
     $ajaxRoute = route('report.monthly');
     $pdfRoute = route('report.monthly.pdf');
     $excelRoute = route('report.monthly.excel');
+    $reportType = 'monthly';
     $columns = json_encode([
         ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
         ['data' => 'patient_code'],

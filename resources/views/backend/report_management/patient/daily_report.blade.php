@@ -5,6 +5,7 @@
     $ajaxRoute = route('report.daily');
     $pdfRoute = route('report.daily.pdf');
     $excelRoute = route('report.daily.excel');
+    $reportType = 'daily';
     $columns = json_encode([
         ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
         ['data' => 'patient_code'],
@@ -25,14 +26,30 @@
 @section('filters')
     <div class="row">
 
+        {{-- Day Filter --}}
         <div class="col-md-3">
-            <label>From Date</label>
-            <input type="date" name="from_date" class="form-control">
+            <label>Day Filter</label>
+            <select name="day_filter" id="day_filter" class="form-control">
+                <option value="today">Current Day</option>
+                <option value="past_1_day">Past 1 Day</option>
+                <option value="past_2_days">Past 2 Days</option>
+                <option value="past_3_days">Past 3 Days</option>
+                <option value="custom">Custom Date</option>
+            </select>
         </div>
 
-        <div class="col-md-3">
-            <label>To Date</label>
-            <input type="date" name="to_date" class="form-control">
+        {{-- Custom Date Range (Hidden Initially) --}}
+        <div id="daily_custom_range" class="col-md-6 d-none">
+            <div class="row">
+                <div class="col-md-6">
+                    <label>From Date</label>
+                    <input type="date" name="from_date" id="daily_from_date" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label>To Date</label>
+                    <input type="date" name="to_date" id="daily_to_date" class="form-control">
+                </div>
+            </div>
         </div>
 
         <div class="col-md-3">
@@ -44,7 +61,7 @@
             </select>
         </div>
 
-        <div class="col-md-3">
+        <div class="col-md-3 mt-3">
             <label>Recommended</label>
             <select name="is_recommend" class="form-control">
                 <option value="">All</option>
@@ -74,3 +91,29 @@
         <th>Actions</th>
     </tr>
 @endsection
+
+@push('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const dayFilter = document.getElementById('day_filter');
+            const customRange = document.getElementById('daily_custom_range');
+            const fromDate = document.getElementById('daily_from_date');
+            const toDate = document.getElementById('daily_to_date');
+
+            function toggleDailyDates() {
+                if (dayFilter.value === 'custom') {
+                    customRange.classList.remove('d-none');
+                } else {
+                    customRange.classList.add('d-none');
+                    fromDate.value = '';
+                    toDate.value = '';
+                }
+            }
+
+            dayFilter.addEventListener('change', toggleDailyDates);
+
+            toggleDailyDates();
+        });
+    </script>
+@endpush

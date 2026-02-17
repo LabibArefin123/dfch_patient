@@ -33,13 +33,33 @@
                     <form id="filterForm">
                         @yield('filters')
                         <div class="mt-3 d-flex align-items-center">
-                            <button type="submit" class="btn btn-primary btn-sm mr-3">
-                                Apply Filter
-                            </button>
 
+                            @if (isset($reportType) && $reportType === 'daily')
+                                <button type="submit" class="btn btn-success btn-sm mr-3">
+                                    Apply Daily Filter
+                                </button>
+                            @elseif(isset($reportType) && $reportType === 'weekly')
+                                <button type="submit" class="btn btn-primary btn-sm mr-3">
+                                    Apply Weekly Filter
+                                </button>
+                            @elseif(isset($reportType) && $reportType === 'monthly')
+                                <button type="submit" class="btn btn-warning btn-sm mr-3">
+                                    Apply Monthly Filter
+                                </button>
+                            @elseif(isset($reportType) && $reportType === 'yearly')
+                                <button type="submit" class="btn btn-danger btn-sm mr-3">
+                                    Apply Yearly Filter
+                                </button>
+                            @else
+                                <button type="submit" class="btn btn-secondary btn-sm mr-3">
+                                    Apply Filter
+                                </button>
+                            @endif
+
+                            {{-- IMPORTANT STATUS --}}
                             <span id="dateStatus" class="small font-weight-bold"></span>
-                        </div>
 
+                        </div>
                     </form>
                 </div>
             </div>
@@ -108,7 +128,7 @@
                 let toDate = $('input[name="to_date"]').val();
 
                 // If dateFilter exists use it, otherwise ignore it
-                let dateFilter = $('#dateFilter').length ? $('#dateFilter').val() : 'custom';
+                let dateFilter = $('#week_filter').length ? $('#week_filter').val() : 'custom';
 
                 if (dateFilter !== 'custom' || !toDate) {
                     status.html('');
@@ -148,8 +168,7 @@
             }
 
 
-            $(document).on('change', '#dateFilter, input[name="from_date"], input[name="to_date"]', function() {
-
+            $(document).on('change', '#week_filter, input[name="from_date"], input[name="to_date"]', function() {
                 calculateDaysBehind();
             });
 
@@ -166,6 +185,7 @@
                 'is_recommend',
                 'year',
                 'month',
+                'weekly_filter',
                 'from_date',
                 'to_date',
             ]);

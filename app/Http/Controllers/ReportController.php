@@ -250,7 +250,8 @@ class ReportController extends Controller
     /* Start of Filter Logic  */
     private function hasDailyFilters(Request $request)
     {
-        return $request->filled('gender')
+        return $request->filled('day_filter')
+            || $request->filled('gender')
             || $request->filled('is_recommend')
             || ($request->filled('location_type') && $request->filled('location_value'))
             || ($request->filled('from_date') && $request->filled('to_date'));
@@ -291,30 +292,94 @@ class ReportController extends Controller
             );
         }
 
-        if ($request->filled('from_date') && $request->filled('to_date')) {
-            $query->whereBetween('created_at', [
-                $request->from_date . ' 00:00:00',
-                $request->to_date . ' 23:59:59',
-            ]);
+        $dayFilter = $request->day_filter ?? 'today';
+
+        switch ($dayFilter) {
+
+            case 'past_1_day':
+                $start = Carbon::now()->subDay()->startOfDay();
+                $end   = Carbon::now()->subDay()->endOfDay();
+                break;
+
+            case 'past_2_days':
+                $start = Carbon::now()->subDays(2)->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
+
+            case 'past_3_days':
+                $start = Carbon::now()->subDays(3)->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
+
+            case 'custom':
+                if ($request->filled('from_date') && $request->filled('to_date')) {
+                    $start = Carbon::parse($request->from_date)->startOfDay();
+                    $end   = Carbon::parse($request->to_date)->endOfDay();
+                } else {
+                    $start = Carbon::now()->startOfDay();
+                    $end   = Carbon::now()->endOfDay();
+                }
+                break;
+
+            case 'today':
+            default:
+                $start = Carbon::now()->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
         }
+
+        $query->whereBetween('date_of_patient_added', [$start, $end]);
     }
 
     private function applyWeeklyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);
 
-        if ($request->filled('from_date') && $request->filled('to_date')) {
-            $query->whereBetween('date_of_patient_added', [
-                $request->from_date . ' 00:00:00',
-                $request->to_date . ' 23:59:59',
-            ]);
-        } else {
-            // Default: current week (Monday → Sunday)
-            $query->whereBetween('date_of_patient_added', [
-                now()->startOfWeek()->format('Y-m-d 00:00:00'),
-                now()->endOfWeek()->format('Y-m-d 23:59:59'),
-            ]);
+        $weekFilter = $request->week_filter ?? 'current_week';
+
+        switch ($weekFilter) {
+
+            case 'past_week':
+                // 7–14 days ago
+                $start = Carbon::now()->subDays(14)->startOfDay();
+                $end   = Carbon::now()->subDays(7)->endOfDay();
+                break;
+
+            case 'past_2_weeks':
+                // Last 14 days including today
+                $start = Carbon::now()->subDays(14)->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
+
+            case 'past_3_weeks':
+                $start = Carbon::now()->subDays(21)->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
+
+            case 'past_4_weeks':
+                $start = Carbon::now()->subDays(28)->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
+
+            case 'custom':
+                if ($request->filled('from_date') && $request->filled('to_date')) {
+                    $start = Carbon::parse($request->from_date)->startOfDay();
+                    $end   = Carbon::parse($request->to_date)->endOfDay();
+                } else {
+                    $start = Carbon::now()->subDays(7)->startOfDay();
+                    $end   = Carbon::now()->endOfDay();
+                }
+                break;
+
+            case 'current_week':
+            default:
+                // Last 7 days including today
+                $start = Carbon::now()->subDays(7)->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
         }
+
+        $query->whereBetween('date_of_patient_added', [$start, $end]);
     }
 
     private function applyMonthlyFilters($query, Request $request)
@@ -498,7 +563,7 @@ class ReportController extends Controller
         $totalRecords
     ) {
         $patients = $query->limit($perPage)->get();
-            
+
 
         $pdf = Pdf::loadView(
             $view,
