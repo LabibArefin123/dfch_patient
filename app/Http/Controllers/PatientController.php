@@ -6,7 +6,7 @@ use App\Models\Organization;
 use App\Models\Patient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Facades\Log;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Validators\ValidationException;
 use Illuminate\Support\Carbon;
 use PhpOffice\PhpWord\IOFactory;
@@ -648,11 +648,11 @@ class PatientController extends Controller
             if ($request->filled('ids')) {
                 $patientsQuery->whereIn('id', $request->ids);
             }
-
+            $organization = Organization::first();
             $patients = $patientsQuery->get();
 
-            return Pdf::loadView('backend.patient_management.pdf', compact('patients'))
-                ->download('patients.pdf');
+            return Pdf::loadView('backend.patient_management.pdf', compact('patients','organization'))
+                ->stream('patients.pdf');
         } catch (\Throwable $e) {
             Log::error("PDF export error: " . $e->getMessage());
             return response()->json([
