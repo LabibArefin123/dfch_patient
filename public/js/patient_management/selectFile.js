@@ -20,7 +20,7 @@ $(document).ready(function () {
         lastChecked = this;
 
         updateSelectAll();
-        toggleDeleteButton();
+        toggleActionButtons();
     });
 
     // =========================
@@ -30,7 +30,7 @@ $(document).ready(function () {
         const checked = $(this).prop("checked");
         $(".row-checkbox").prop("checked", checked);
 
-        toggleDeleteButton();
+        toggleActionButtons();
     });
 
     function updateSelectAll() {
@@ -42,19 +42,23 @@ $(document).ready(function () {
     // =========================
     // SHOW / HIDE DELETE BUTTON
     // =========================
-    function toggleDeleteButton() {
+    function toggleActionButtons() {
         const checkedCount = $(".row-checkbox:checked").length;
 
         if (checkedCount > 0) {
             $("#delete-selected").removeClass("d-none");
+            $(".export-excel").removeClass("d-none");
+            $(".export-pdf").removeClass("d-none");
         } else {
             $("#delete-selected").addClass("d-none");
+            $(".export-excel").addClass("d-none");
+            $(".export-pdf").addClass("d-none");
         }
     }
 
     // Also handle DataTable redraw
     $("#patientsTable").on("draw.dt", function () {
-        toggleDeleteButton();
+        toggleActionButtons();
     });
 
     // =========================

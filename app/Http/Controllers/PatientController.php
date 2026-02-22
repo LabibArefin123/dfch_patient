@@ -6,6 +6,7 @@ use App\Models\Organization;
 use App\Models\Patient;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Facades\Log;
 use Maatwebsite\Excel\Validators\ValidationException;
 use Illuminate\Support\Carbon;
 use PhpOffice\PhpWord\IOFactory;
@@ -627,21 +628,38 @@ class PatientController extends Controller
 
     public function exportExcel(Request $request)
     {
-        $patients = $this->filteredPatients($request)->get();
+        $patientsQuery = $this->filteredPatients($request);
+
+        // If IDs sent → filter by selected
+        if ($request->filled('ids')) {
+            $patientsQuery->whereIn('id', $request->ids);
+        }
+
+        $patients = $patientsQuery->get();
 
         return Excel::download(new PatientsExport($patients), 'patients.xlsx');
     }
 
     public function exportPdf(Request $request)
     {
-        $patients = $this->filteredPatients($request)->get();
+        try {
+            $patientsQuery = $this->filteredPatients($request);
 
-        $pdf = Pdf::loadView(
-            'backend.patient_management.pdf',
-            compact('patients')
-        );
+            if ($request->filled('ids')) {
+                $patientsQuery->whereIn('id', $request->ids);
+            }
 
-        return $pdf->download('patients.pdf');
+            $patients = $patientsQuery->get();
+
+            return Pdf::loadView('backend.patient_management.pdf', compact('patients'))
+                ->download('patients.pdf');
+        } catch (\Throwable $e) {
+            Log::error("PDF export error: " . $e->getMessage());
+            return response()->json([
+                'error' => 'PDF export failed',
+                'message' => $e->getMessage()
+            ], 500);
+        }
     }
 
     public function importExcel(Request $request)

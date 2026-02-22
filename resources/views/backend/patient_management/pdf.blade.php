@@ -1,41 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    <title>Yearly Patient Report</title>
+    <meta charset="UTF-8">
+    <title>Patients List</title>
     <style>
         body {
-            font-family: sans-serif;
+            font-family: DejaVu Sans, sans-serif;
             font-size: 12px;
+            color: #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         th,
         td {
-            border: 1px solid #000;
-            padding: 5px;
+            border: 1px solid #555;
+            padding: 6px 8px;
             text-align: left;
         }
 
         th {
-            background-color: #eee;
+            background-color: #f2f2f2;
         }
 
-        .header-table td {
-            border: none;
-            vertical-align: top;
+        .badge {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 10px;
+            color: #fff;
+            display: inline-block;
+        }
+
+        .badge-success {
+            background-color: #28a745;
+        }
+
+        .badge-secondary {
+            background-color: #6c757d;
+        }
+
+        .small-text {
+            font-size: 10px;
+            color: #555;
         }
     </style>
 </head>
 
 <body>
-    <table width="100%" class="header-table">
+ <table width="100%" class="header-table">
         <tr>
             <td width="25%">
                 @php
@@ -80,27 +102,7 @@
         </tr>
     </table>
 
-    <h3>
-        Yearly Patient Report
-        @if (request()->filled('year'))
-            for {{ request()->year }}
-        @else
-            (All Years)
-        @endif
-    </h3>
-    
-    <table width="100%" style="margin-top:10px;">
-        <tr>
-            {{-- Page Info Section --}}
-            <table width="100%" class="header-table" style="margin-top:10px;">
-                <tr>
-                    <td style="text-align:left; border:none;">
-                        <strong>Total Records In this Page: {{ $totalRecords }}</strong>
-                    </td>
-                </tr>
-            </table>
-        </tr>
-    </table>
+    <h1>Patients List</h1>
 
     <table>
         <thead>
@@ -111,45 +113,52 @@
                 <th>Age</th>
                 <th>Gender</th>
                 <th>Phone</th>
-                <th>Alt Phone</th>
-                <th>Father</th>
-                <th>Mother</th>
                 <th>Location</th>
                 <th>Recommended</th>
                 <th>Date Added</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($patients as $patient)
+            @foreach ($patients as $index => $patient)
                 <tr>
-                    <td>{{ $loop->iteration }}</td>
+                    <td>{{ $index + 1 }}</td>
                     <td>{{ $patient->patient_code }}</td>
-                    <td>{{ $patient->patient_name }}</td>
+                    <td>
+                        <strong>{{ $patient->patient_name }}</strong><br>
+                        <span class="small-text">Father: {{ $patient->patient_f_name ?? 'N/A' }}</span><br>
+                        <span class="small-text">Mother: {{ $patient->patient_m_name ?? 'N/A' }}</span>
+                    </td>
                     <td>{{ $patient->age }}</td>
-                    <td>{{ $patient->gender }}</td>
-                    <td>{{ $patient->phone_1 }}</td>
-                    <td>{{ $patient->phone_2 }}</td>
-                    <td>{{ $patient->phone_f_1 }}</td>
-                    <td>{{ $patient->phone_m_1 }}</td>
+                    <td>{{ ucfirst($patient->gender) }}</td>
+                    <td>
+                        {{ $patient->phone_1 ?? 'N/A' }}<br>
+                        <span class="small-text">Alt: {{ $patient->phone_2 ?? 'N/A' }}</span><br>
+                        <span class="small-text">Father: {{ $patient->phone_f_1 ?? 'N/A' }}</span><br>
+                        <span class="small-text">Mother: {{ $patient->phone_m_1 ?? 'N/A' }}</span>
+                    </td>
                     <td>
                         @if ($patient->location_type == 1)
                             {{ $patient->location_simple }}
-                        @elseif($patient->location_type == 2)
-                            {{ $patient->house_address }}, {{ $patient->city }}, {{ $patient->district }} -
-                            {{ $patient->post_code }}
+                        @elseif ($patient->location_type == 2)
+                            {{ $patient->city }}, {{ $patient->district }}
                         @else
-                            {{ $patient->country }} <br> <strong>Passport:</strong> {{ $patient->passport_no }}
+                            {{ $patient->country }}
                         @endif
                     </td>
-                    <td>{{ $patient->is_recommend ? 'Yes' : 'No' }}</td>
                     <td>
-                        {{ \Carbon\Carbon::parse($patient->date_of_patient_added)->format('d-m-Y') }}
-                        ({{ \Carbon\Carbon::parse($patient->date_of_patient_added)->format('d F Y') }})
+                        @if ($patient->is_recommend)
+                            <span class="badge badge-success">Yes</span>
+                        @else
+                            <span class="badge badge-secondary">No</span>
+                        @endif
                     </td>
+                    <td>{{ \Carbon\Carbon::parse($patient->date_of_patient_added)->format('d M Y') }}</td>
                 </tr>
             @endforeach
         </tbody>
     </table>
+
+    <p>Total Patients: {{ $patients->count() }}</p>
 </body>
 
 </html>

@@ -15,23 +15,20 @@
                 <i class="fas fa-trash"></i> Delete Selected
             </button>
 
+            <button class="export-excel d-none" href="{{ route('patients.export.excel') }}">
+                <i class="fas fa-file-excel text-success"></i> Export Excel
+            </button>
+
+            <button class="export-pdf d-none" href="{{ route('patients.export.pdf') }}">
+                <i class="fas fa-file-pdf text-danger"></i> Export PDF
+            </button>
+
             <div class="dropdown">
                 <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
                     <i class="fas fa-ellipsis-v"></i>
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right">
-
-                    <a class="dropdown-item export-excel" href="{{ route('patients.export.excel') }}">
-                        <i class="fas fa-file-excel text-success"></i> Export Excel
-                    </a>
-
-                    <a class="dropdown-item export-pdf" href="{{ route('patients.export.pdf') }}">
-                        <i class="fas fa-file-pdf text-danger"></i> Export PDF
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
                     <a class="dropdown-item import-excel" href="{{ route('patients.import.excel') }}">
                         <i class="fas fa-upload"></i> Import Excel
                     </a>
@@ -97,7 +94,8 @@
 
     <script src="{{ asset('js/patient_management/patients.js') }}"></script>
     <script src="{{ asset('js/patient_management/importFile.js') }}"></script>
-    <script src="{{ asset('js/patient_management/exportFile.js') }}"></script>
+    <script src="{{ asset('js/patient_management/exportExcelFile.js') }}"></script>
+    <script src="{{ asset('js/patient_management/exportPDFFile.js') }}"></script>
     <script src="{{ asset('js/patient_management/ajaxFile.js') }}"></script>
     <script src="{{ asset('js/patient_management/selectFile.js') }}"></script>
 @endsection

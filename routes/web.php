@@ -68,8 +68,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
     Route::get('/patients/recommend', [PatientController::class, 'patient_recommend'])->name('patients.recommend');
-    Route::get('patients/export-excel', [PatientController::class, 'exportExcel'])->name('patients.export.excel');
-    Route::get('patients/export-pdf', [PatientController::class, 'exportPdf'])->name('patients.export.pdf');
+    Route::post('patients/export-excel', [PatientController::class, 'exportExcel'])->name('patients.export.excel');
+    Route::post('patients/export-pdf', [PatientController::class, 'exportPdf'])->name('patients.export.pdf');
     Route::post('patients/import-excel', [PatientController::class, 'importExcel'])->name('patients.import.excel');
     Route::post('patients/import-word', [PatientController::class, 'importWord'])->name('patients.import.word');
     Route::get('/patients/{id}/print-card', [PatientController::class, 'printCard'])->name('patients.print_card');
