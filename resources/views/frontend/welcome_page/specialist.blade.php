@@ -38,7 +38,7 @@
                             'name' => 'Dr. Fatema Sharmin (Anny)',
                             'degree' => 'MBBS, DA, FCPS (Final)',
                             'details' => 'Consultant (Anesthesiology), DFCH<br>
-                                 Junior Consultant, Bangladesh Medical College Hospital',
+                                 Assistant Professor, Bangladesh Medical College Hospital',
                             'route' => route('doc_3'),
                         ],
                         [
