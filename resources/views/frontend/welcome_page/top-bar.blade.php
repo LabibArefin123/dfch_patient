@@ -33,7 +33,11 @@
                 01755697176
             </a>
             <span>|</span>
-            <a href="#" class="phone-link header-link">0241023155</a>
+              <a href="#" class="header-link open-land-phone-modal">
+                <i class="fas fa-phone-alt"></i>
+                0241023155
+            </a>
+         
 
         </div>
         <!-- Hidden Google Translate Widget -->
@@ -80,47 +84,6 @@
         </div>
     </div>
 </div>
-
-<!------start of translate english/bangla link js--->
-<!-- Google Translate Init -->
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'en',
-            includedLanguages: 'en,bn',
-            autoDisplay: false
-        }, 'google_translate_element');
-    }
-
-    function setGoogleLanguage(lang) {
-        const interval = setInterval(() => {
-            const select = document.querySelector('.goog-te-combo');
-            if (select) {
-                select.value = lang;
-                select.dispatchEvent(new Event('change'));
-                clearInterval(interval);
-            }
-        }, 200);
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        const btn = document.getElementById("langToggle");
-
-        // Restore saved language
-        const savedLang = localStorage.getItem("site_lang") || "en";
-        btn.innerText = savedLang.toUpperCase();
-        if (savedLang === "bn") setGoogleLanguage("bn");
-
-        btn.addEventListener("click", function() {
-            const currentLang = btn.innerText.toLowerCase();
-            const newLang = currentLang === "en" ? "bn" : "en";
-
-            setGoogleLanguage(newLang);
-            btn.innerText = newLang.toUpperCase();
-            localStorage.setItem("site_lang", newLang);
-        });
-    });
-</script>
 
 <!-- Google Translate Library -->
 <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>

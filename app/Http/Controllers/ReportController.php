@@ -339,26 +339,34 @@ class ReportController extends Controller
 
         switch ($weekFilter) {
 
+            case 'current_week':
+                // Last 7 days including today
+                $start = Carbon::now()->subDays(7)->startOfDay();
+                $end   = Carbon::now()->endOfDay();
+                break;
+
             case 'past_week':
-                // 7–14 days ago
+                // 8–14 days ago
                 $start = Carbon::now()->subDays(14)->startOfDay();
                 $end   = Carbon::now()->subDays(7)->endOfDay();
                 break;
 
             case 'past_2_weeks':
-                // Last 14 days including today
-                $start = Carbon::now()->subDays(14)->startOfDay();
-                $end   = Carbon::now()->endOfDay();
+                // 15–21 days ago
+                $start = Carbon::now()->subDays(21)->startOfDay();
+                $end   = Carbon::now()->subDays(14)->endOfDay();
                 break;
 
             case 'past_3_weeks':
-                $start = Carbon::now()->subDays(21)->startOfDay();
-                $end   = Carbon::now()->endOfDay();
+                // 22–28 days ago
+                $start = Carbon::now()->subDays(28)->startOfDay();
+                $end   = Carbon::now()->subDays(21)->endOfDay();
                 break;
 
             case 'past_4_weeks':
-                $start = Carbon::now()->subDays(28)->startOfDay();
-                $end   = Carbon::now()->endOfDay();
+                // 29–35 days ago
+                $start = Carbon::now()->subDays(35)->startOfDay();
+                $end   = Carbon::now()->subDays(28)->endOfDay();
                 break;
 
             case 'custom':
@@ -371,9 +379,7 @@ class ReportController extends Controller
                 }
                 break;
 
-            case 'current_week':
             default:
-                // Last 7 days including today
                 $start = Carbon::now()->subDays(7)->startOfDay();
                 $end   = Carbon::now()->endOfDay();
                 break;
@@ -381,7 +387,7 @@ class ReportController extends Controller
 
         $query->whereBetween('date_of_patient_added', [$start, $end]);
     }
-
+    
     private function applyMonthlyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);

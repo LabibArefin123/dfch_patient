@@ -22,11 +22,12 @@
     <!-- AOS CSS -->
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/frontend/frontend.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_contact_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_land_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
 
@@ -58,6 +59,7 @@
     </script>
 
     @include('frontend.modal.custom_phone')
+    @include('frontend.modal.custom_land_phone')
     @include('frontend.modal.footer.phone')
     @include('frontend.modal.footer.land_phone')
     @include('frontend.modal.footer.email')
@@ -77,6 +79,7 @@
     {{-- End of SweetAlert2 notifications --}}
     <script src="{{ asset('js/custom_frontend/sweet_alert.js') }}"></script> {{-- Sweet Alert Notification JS --}}
     <script src="{{ asset('js/custom_frontend/phone.js') }}"></script> {{-- Phone Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/land_phone.js') }}"></script> {{-- Land Phone Modal JS --}}
     <script src="{{ asset('js/custom_frontend/custom_top_map.js') }}"></script> {{-- Location Modal JS --}}
     <script src="{{ asset('js/custom_frontend/custom_banner.js') }}"></script> {{-- Location Modal JS --}}
     <script src="{{ asset('js/custom_frontend/language.js') }}"></script> {{-- Language Modal JS --}}
