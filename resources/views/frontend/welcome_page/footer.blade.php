@@ -17,39 +17,43 @@
 
             <!-- Middle: Contact Info -->
             <div class="col-md-3">
-                <h6 class="text-warning fw-bold mb-3">Contact Us</h6>
+                <h6 class="text-warning fw-bold mb-3">Get in Touch</h6>
 
+                <!-- Address -->
                 <p class="small mb-2">
-                    <i class="fas fa-map-marker-alt me-2 mt-1"></i>
-
-                    <span class="footer-action text-white custom-footer-link" data-action="location">
+                    <i class="fas fa-map-marker-alt me-2 text-danger"></i>
+                    <span class="footer-action text-white" data-action="location"
+                        style="cursor:pointer;">
                         86 (New), 726/A (Old), Satmasjid Road,
-                  
-                    </span>
-                    <span class="footer-action text-white custom-footer-link" data-action="location">
-                   
                         Dhanmondi, Dhaka-1209
                     </span>
                 </p>
 
-                <p class="mb-1">
-                    <i class="fas fa-envelope me-2"></i>
-                    <a href="mailto:info@fazlulhaquehospital.com" class="text-white text-decoration-none custom-footer-link">
+                <!-- Email -->
+                <p class="mb-2">
+                    <i class="fas fa-envelope me-2 text-warning"></i>
+                    <span class="footer-action text-white custom-footer-link" data-action="email"
+                        style="cursor:pointer;">
                         info@fazlulhaquehospital.com
-                    </a>
+                    </span>
                 </p>
 
+                <!-- Mobile -->
                 <p class="small mb-2">
-                    <i class="fas fa-phone me-2"></i>
-                    <span class="footer-action text-white custom-footer-link" data-action="phone">
+                    <i class="fas fa-phone me-2 text-success"></i>
+                    <span class="footer-action text-white custom-footer-link" data-action="phone"
+                        style="cursor:pointer;">
                         01755-697173 / 01755-697176
                     </span>
                 </p>
 
-
-                <p class="mb-1">
-                    <i class="fas fa-fax me-2"></i>
-                    0241023155 / 09646710720
+                <!-- Landline -->
+                <p class="small mb-2">
+                    <i class="fas fa-phone me-2 text-success"></i>
+                    <span class="footer-action text-white custom-footer-link" data-action="landphone"
+                        style="cursor:pointer;">
+                        0241023155 / 09646710720
+                    </span>
                 </p>
             </div>
 
@@ -74,17 +78,18 @@
                             <li><a href="#" class="text-white text-decoration-none">Terms & Privacy</a></li>
                             <li><a href="#" class="text-white text-decoration-none">FAQs</a></li>
                             <li><a href="#" class="text-white text-decoration-none">Site Map</a></li>
-                           
+
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <!-- Bottom copyright -->
         <div class="text-center small mt-4 pt-3 border-top border-white">
             &copy;
-            <a href="https://fazlulhaquehospital.com/" target="_blank" class="custom-footer-link fw-bold text-decoration-none">
+            <a href="https://fazlulhaquehospital.com/" target="_blank"
+                class="custom-footer-link fw-bold text-decoration-none">
                 <strong> {{ $orgLogo }}.</strong>
             </a> All rights reserved |
             Design & Developed by

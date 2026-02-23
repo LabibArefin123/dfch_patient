@@ -7,6 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
             if (action === "location") modalId = "locationModalFooter";
             if (action === "phone") modalId = "phoneModalFooter";
             if (action === "email") modalId = "emailModalFooter";
+            if (action === "landphone") modalId = "landphoneModalFooter"; 
 
             if (modalId) {
                 const modalElement = document.getElementById(modalId);
