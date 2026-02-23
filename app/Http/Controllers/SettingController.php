@@ -418,15 +418,16 @@ class SettingController extends Controller
     {
         return view('backend.setting_management.setting_menu.ui_setting.theme');
     }
-
     public function updateTheme(Request $request)
     {
         $request->validate([
-            'theme_mode' => 'required|in:light,dark',
+            'theme_mode'    => 'required|in:dark', // Only dark mode allowed
+            'primary_color' => 'required|string|regex:/^#[0-9A-Fa-f]{6}$/', // Validate hex color
         ]);
 
-        // Store dark/light preference in session
+        // Store preferences in session
         Session::put('theme_mode', $request->theme_mode);
+        Session::put('primary_color', $request->primary_color);
 
         return back()->with('success', 'Theme updated successfully!');
     }

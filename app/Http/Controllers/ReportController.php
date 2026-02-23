@@ -588,21 +588,38 @@ class ReportController extends Controller
         $totalRecords
     ) {
         ini_set('memory_limit', '1024M');
-        set_time_limit(300);
+        set_time_limit(600);
 
-        $patients = $query->get();
         $organization = Organization::first();
 
-        $pdf = SPDF::loadView(
+        $html = '';
+
+        // Chunk data (VERY IMPORTANT)
+        $query->chunk(500, function ($patients) use (
+            &$html,
             $view,
-            compact('patients', 'organization', 'page', 'perPage', 'totalPages', 'totalRecords')
-        )
+            $organization,
+            $page,
+            $perPage,
+            $totalPages,
+            $totalRecords
+        ) {
+            $html .= view($view, compact(
+                'patients',
+                'organization',
+                'page',
+                'perPage',
+                'totalPages',
+                'totalRecords'
+            ))->render();
+        });
+
+        $pdf = SPDF::loadHTML($html)
             ->setPaper('a4')
             ->setOrientation('landscape')
             ->setOption('enable-local-file-access', true);
 
         return $pdf->stream($filename);
     }
-
     /* End of PDF GENERATOR  */
 }
