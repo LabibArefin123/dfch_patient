@@ -73,8 +73,26 @@
         </div>
     </div>
 @endsection
+<!-- Filter Validation Modal -->
+<div class="modal fade" id="filterWarningModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg rounded-4">
 
+            <div class="modal-header bg-warning text-dark">
+                <h5 class="modal-title">⚠ Filter Required</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
+            <div class="modal-body text-center py-4">
+                <p class="mb-0">
+                    If you select a <strong>Week Filter</strong>,
+                    you must also choose <strong>Gender</strong> or <strong>Recommended</strong>.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</div>
 @section('table_header')
     <tr>
         <th>#</th>
@@ -101,6 +119,8 @@
             const customDateRange = document.getElementById('custom_date_range');
             const fromDate = document.getElementById('from_date');
             const toDate = document.getElementById('to_date');
+            const genderSelect = document.querySelector('select[name="gender"]');
+            const recommendSelect = document.querySelector('select[name="is_recommend"]');
 
             function toggleDateFields() {
                 if (weekFilter.value === 'custom') {
@@ -112,9 +132,32 @@
                 }
             }
 
-            weekFilter.addEventListener('change', toggleDateFields);
+            weekFilter.addEventListener('change', function() {
 
-            toggleDateFields(); // ensure correct state on page load
+                toggleDateFields();
+
+                const weekValue = weekFilter.value;
+                const gender = genderSelect.value;
+                const recommend = recommendSelect.value;
+
+                // If week selected but no gender and no recommended
+                if (
+                    weekValue !== '' &&
+                    weekValue !== 'custom' &&
+                    gender === '' &&
+                    recommend === ''
+                ) {
+                    const modal = new bootstrap.Modal(
+                        document.getElementById('filterWarningModal')
+                    );
+                    modal.show();
+
+                    // Reset week filter so query does not break
+                    weekFilter.value = '';
+                }
+            });
+
+            toggleDateFields();
         });
     </script>
 @endpush

@@ -387,7 +387,7 @@ class ReportController extends Controller
 
         $query->whereBetween('date_of_patient_added', [$start, $end]);
     }
-    
+
     private function applyMonthlyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);
