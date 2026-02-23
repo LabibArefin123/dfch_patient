@@ -1,0 +1,66 @@
+/* ===============================
+   Phone Modal – Professional Style
+================================= */
+
+#phoneModal .modal-content {
+    border-radius: 18px;
+    border: none;
+    padding: 10px 5px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.18);
+}
+
+#phoneModal .modal-header {
+    border-bottom: none;
+    text-align: center;
+    justify-content: center;
+    position: relative;
+}
+
+#phoneModal .modal-title {
+    font-weight: 600;
+    color: #003366;
+    font-size: 22px;
+}
+
+#phoneModal .modal-header .close,
+#phoneModal .modal-header .btn-close {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: #f2f5f9;
+    border-radius: 50%;
+    padding: 6px 10px;
+    font-size: 18px;
+}
+
+#phoneModal .modal-body p {
+    color: #555;
+    font-size: 14px;
+}
+
+#phoneModal .btn-primary {
+    background: linear-gradient(135deg, #008080, #003366);
+    border: none;
+    border-radius: 30px;
+    padding: 12px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+#phoneModal .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 128, 128, 0.3);
+}
+
+#phoneModal .btn-outline-primary {
+    border-radius: 30px;
+    padding: 12px;
+    font-weight: 600;
+    border: 1px solid #008080;
+    transition: all 0.3s ease;
+}
+
+#phoneModal .btn-outline-primary:hover {
+    background: #008080;
+    color: #fff;
+}

@@ -6,10 +6,10 @@
     <title>Patients List</title>
     <style>
         body {
-            font-family: DejaVu Sans, sans-serif;
+            font-family: sans-serif;
             font-size: 12px;
-            color: #333;
         }
+
 
         h1 {
             text-align: center;
@@ -53,11 +53,16 @@
             font-size: 10px;
             color: #555;
         }
+
+        .header-table td {
+            border: none;
+            vertical-align: top;
+        }
     </style>
 </head>
 
 <body>
- <table width="100%" class="header-table">
+    <table width="100%" class="header-table">
         <tr>
             <td width="25%">
                 @php

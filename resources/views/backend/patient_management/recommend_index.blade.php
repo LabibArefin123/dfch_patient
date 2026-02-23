@@ -111,6 +111,6 @@
             recommend: "{{ route('patients.recommend') }}"
         };
     </script>
-    <script src="{{ asset('js/patient_management/recommendAjax.js') }}"></script>
-    <script src="{{ asset('js/patient_management/selectFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/recommendAjax.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/selectFile.js') }}"></script>
 @stop

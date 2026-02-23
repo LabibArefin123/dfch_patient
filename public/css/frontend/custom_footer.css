@@ -22,6 +22,7 @@ footer li {
     width: 18px;
     text-align: center;
 }
+
 .custom-map-link {
     position: relative;
     display: block;
@@ -51,6 +52,40 @@ footer li {
 
 .custom-map-link:hover::after {
     width: 115%;
+}
+
+
+.custom-footer-link {
+    position: relative;
+    color: #2b2b2b;
+    text-decoration: none;
+    padding: 2px 6px;
+    z-index: 1;
+    transition: color 0.25s ease;
+    overflow: hidden;
+}
+
+/* Parallelogram background */
+.custom-footer-link::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0%;
+    width: 0;
+    height: 100%;
+    background-color: #ff6b6b; /* sky red */
+    transform: skewX(-20deg);
+    transform-origin: left;
+    transition: width 0.3s ease;
+    z-index: -1;
+}
+
+.custom-footer-link:hover {
+    color: #fff; /* readable on red */
+}
+
+.custom-footer-link:hover::after {
+    width: 100%;
 }
 
 .problem-modal {

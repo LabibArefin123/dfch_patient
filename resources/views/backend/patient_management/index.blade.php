@@ -92,10 +92,10 @@
         };
     </script>
 
-    <script src="{{ asset('js/patient_management/patients.js') }}"></script>
-    <script src="{{ asset('js/patient_management/importFile.js') }}"></script>
-    <script src="{{ asset('js/patient_management/exportExcelFile.js') }}"></script>
-    <script src="{{ asset('js/patient_management/exportPDFFile.js') }}"></script>
-    <script src="{{ asset('js/patient_management/ajaxFile.js') }}"></script>
-    <script src="{{ asset('js/patient_management/selectFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patients.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/importFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/exportExcelFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/exportPDFFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/ajaxFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/selectFile.js') }}"></script>
 @endsection

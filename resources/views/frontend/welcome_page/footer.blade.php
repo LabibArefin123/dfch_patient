@@ -19,32 +19,33 @@
             <div class="col-md-3">
                 <h6 class="text-warning fw-bold mb-3">Contact Us</h6>
 
-                <div class="d-flex align-items-start mb-2">
+                <p class="small mb-2">
                     <i class="fas fa-map-marker-alt me-2 mt-1"></i>
 
-                    <a class="custom-map-link text-white text-decoration-none d-block" id="openMapModal">
-                        86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
-                    </a>
-                </div>
+                    <span class="footer-action text-white custom-footer-link" data-action="location">
+                        86 (New), 726/A (Old), Satmasjid Road,
+                  
+                    </span>
+                    <span class="footer-action text-white custom-footer-link" data-action="location">
+                   
+                        Dhanmondi, Dhaka-1209
+                    </span>
+                </p>
 
                 <p class="mb-1">
                     <i class="fas fa-envelope me-2"></i>
-                    <a href="mailto:info@fazlulhaquehospital.com" class="text-white text-decoration-none dev-link">
+                    <a href="mailto:info@fazlulhaquehospital.com" class="text-white text-decoration-none custom-footer-link">
                         info@fazlulhaquehospital.com
                     </a>
                 </p>
 
-                <p class="mb-1">
+                <p class="small mb-2">
                     <i class="fas fa-phone me-2"></i>
-                    <a href="https://wa.me/8801755697176" target="_blank"
-                        class="dev-link text-white text-decoration-none">
-                        01755697176
-                    </a> /
-                    <a href="https://wa.me/01755697173" target="_blank"
-                        class="dev-link text-white text-decoration-none">
-                        01755697173
-                    </a>
+                    <span class="footer-action text-white custom-footer-link" data-action="phone">
+                        01755-697173 / 01755-697176
+                    </span>
                 </p>
+
 
                 <p class="mb-1">
                     <i class="fas fa-fax me-2"></i>
@@ -73,76 +74,21 @@
                             <li><a href="#" class="text-white text-decoration-none">Terms & Privacy</a></li>
                             <li><a href="#" class="text-white text-decoration-none">FAQs</a></li>
                             <li><a href="#" class="text-white text-decoration-none">Site Map</a></li>
-                            {{-- <h6 class="text-warning fw-bold mb-3">Support</h6>
-                            <li>
-                                <a href="javascript:void(0);" onclick="openProblemModal()"
-                                    class="text-white text-decoration-none">
-                                    Facing a System Issue? Report Here</a>
-                            </li> --}}
+                           
                         </ul>
                     </div>
                 </div>
             </div>
         </div>
-        {{-- SYSTEM PROBLEM MODAL --}}
-        <div id="problemModal" class="problem-modal" style="display:none;">
-            <div class="problem-modal-content">
-                <div class="modal-header">
-                    <h5 class="fw-bold mb-0">Report a System Problem</h5>
-                    <button type="button" class="close-btn" onclick="closeProblemModal()">×</button>
-                </div>
-
-                <form method="POST" action="{{ route('system_problem.store') }}" enctype="multipart/form-data">
-                    @csrf
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Problem ID</label>
-                        <input type="text" class="form-control" value="Auto Generated" readonly>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Problem Title</label>
-                        <input type="text" name="problem_title" class="form-control"
-                            placeholder="Example: Login not working">
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Describe the Problem</label>
-                        <textarea name="problem_description" class="form-control" rows="4" placeholder="Please explain what happened..."></textarea>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Priority Level</label>
-                        <select name="status" class="form-control">
-                            <option value="low">Low</option>
-                            <option value="medium">Medium</option>
-                            <option value="high">High</option>
-                            <option value="critical">Critical</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">Attachment (Optional)</label>
-                        <input type="file" name="problem_file" class="form-control"
-                            accept="image/*,.pdf,.doc,.docx">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100 rounded-pill"
-                        onclick="this.disabled=true; this.innerText='Submitting...'; this.form.submit();">
-                        Submit Problem
-                    </button>
-                </form>
-            </div>
-        </div>
-
+        
         <!-- Bottom copyright -->
         <div class="text-center small mt-4 pt-3 border-top border-white">
             &copy;
-            <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
+            <a href="https://fazlulhaquehospital.com/" target="_blank" class="custom-footer-link fw-bold text-decoration-none">
                 <strong> {{ $orgLogo }}.</strong>
             </a> All rights reserved |
             Design & Developed by
-            <a href="https://www.labib.work" target="_blank" class="dev-link fw-bold text-decoration-none">
+            <a href="https://www.labib.work" target="_blank" class="custom-footer-link fw-bold text-decoration-none">
                 Labib Arefin
             </a>
         </div>

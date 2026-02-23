@@ -26,6 +26,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ asset('css/frontend/frontend.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_contact_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -33,6 +36,10 @@
 
 <body>
     <div id="app">
+        <!-- Scroll Progress Bar -->
+        <div id="scrollProgress"
+            style="position: fixed; top: 0; left: 0; width: 0%; height: 4px; background-color: #ff6b6b; z-index: 9999; transition: width 0.25s ease;">
+        </div>
         <main class="">
             @yield('content')
         </main>
@@ -50,149 +57,28 @@
         });
     </script>
 
+    @include('frontend.modal.custom_phone')
+    @include('frontend.modal.footer.phone')
+    @include('frontend.modal.footer.email')
+    @include('frontend.modal.footer.location')
+
     <!-- Back to Top Button -->
     <button id="backToTop" class="back-to-top" aria-label="Back to Top">
         <i class="bi bi-arrow-up"></i>
     </button>
 
-    <script>
-        const backToTopBtn = document.getElementById('backToTop');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                backToTopBtn.classList.add('show');
-            } else {
-                backToTopBtn.classList.remove('show');
-            }
-        });
-
-        backToTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-    </script>
-
-    {{-- Start of SweetAlert2 notifications --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            // SUCCESS MESSAGE
-            @if (session('success'))
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Problem Submitted',
-                    text: "{{ session('success') }}",
-                    showConfirmButton: false,
-                    timer: 2500,
-                    timerProgressBar: true,
-                    position: 'center',
-                    didOpen: (toast) => {
-                        toast.addEventListener('mouseenter', Swal.stopTimer)
-                        toast.addEventListener('mouseleave', Swal.resumeTimer)
-                    }
-                }).then(() => {
-                    if (typeof closeProblemModal === "function") {
-                        closeProblemModal(); // Close modal after success
-                    }
-                });
-            @endif
-
-            // VALIDATION ERRORS
-            @if ($errors->any())
-                let errorMessages = `
-        @foreach ($errors->all() as $error)
-            • {{ $error }}\n
-        @endforeach
-        `;
-
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Submission Failed',
-                    text: errorMessages,
-                    confirmButtonColor: '#dc3545',
-                    position: 'center'
-                });
-
-                // Keep modal open if error
-                if (typeof openProblemModal === "function") {
-                    openProblemModal();
-                }
-            @endif
-        });
-    </script>
-    {{-- End of SweetAlert2 notifications --}}
-
-    {{-- Start of image modal --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // create modal container
-            const modal = document.createElement('div');
-            modal.classList.add('image-modal');
-
-            // create modal box inside modal
-            modal.innerHTML = `
-        <div class="modal-box">
-            <span class="close-btn">&times;</span>
-            <img src="" alt="Magnified Image">
-        </div>
-    `;
-            document.body.appendChild(modal);
-
-            const modalImg = modal.querySelector('img');
-            const closeBtn = modal.querySelector('.close-btn');
-
-            // open modal on click
-            document.querySelectorAll('.magnify-img').forEach(img => {
-                img.addEventListener('click', () => {
-                    modal.style.display = 'flex';
-                    modalImg.src = img.src;
-                });
-            });
-
-            // close modal on close button click
-            closeBtn.addEventListener('click', () => {
-                modal.style.display = 'none';
-            });
-
-            // close modal when clicking outside the modal-box
-            modal.addEventListener('click', (e) => {
-                if (!e.target.closest('.modal-box')) {
-                    modal.style.display = 'none';
-                }
-            });
-        });
-    </script>
-    {{-- end of image modal --}}
-
-    {{-- start of land phone js  --}}
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const phoneLink = document.querySelector('.phone-link');
-            if (phoneLink) {
-                // Get the number text
-                let number = phoneLink.textContent.trim();
-
-                // Remove any non-digit characters
-                number = number.replace(/\D/g, '');
-
-                // Add Bangladesh country code (assuming it's Dhaka landline, 02)
-                // For mobile you could use 880 instead
-                // Here 02 -> 8802
-                if (number.length === 9 && number.startsWith('2')) { // Dhaka landline 9-digit
-                    number = '880' + number;
-                }
-
-                // Set href for click-to-call
-                phoneLink.href = 'tel:+' + number;
-
-                // Optional: Add title
-                phoneLink.title = 'Call this number';
-            }
-        });
-    </script>
-    {{-- end of land phone js  --}}
+    <script src="{{ asset('js/custom_frontend/sweet_alert.js') }}"></script> {{-- Sweet Alert Notification JS --}}
+    <script src="{{ asset('js/custom_frontend/contact_success.js') }}"></script> {{-- Contact Success Notification JS --}}
+    <script src="{{ asset('js/custom_frontend/appointment-modal.js') }}"></script> {{-- Appointment Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/phone.js') }}"></script> {{-- Phone Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/email.js') }}"></script> {{-- Email Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/custom_top_map.js') }}"></script> {{-- Location Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/land_phone.js') }}"></script> {{-- Land Phone Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/language.js') }}"></script> {{-- Language Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/magnified_image_modal.js') }}"></script> {{-- Magnified Image Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/scroll_progress.js') }}"></script> {{-- Scroll Progress JS --}}
+    <script src="{{ asset('js/custom_frontend/custom_back_top_button.js') }}"></script> {{-- Back to Top JS --}}
+    <script src="{{ asset('js/custom_frontend/custom_footer_modal.js') }}"></script> {{-- Footer Modal JS --}}
 
 </body>
 
