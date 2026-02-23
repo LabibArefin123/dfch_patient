@@ -26,7 +26,8 @@
     <div class="card">
         <div class="card-body">
 
-            <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data" data-confirm="edit">
+            <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data"
+                data-confirm="edit">
                 @csrf
                 @method('PUT')
 
@@ -132,7 +133,8 @@
                         <div class="row">
                             <div class="form-group col-md-6">
                                 <label>Country</label>
-                                <input type="text" name="country" class="form-control" value="{{ $patient->country }}">
+                                <input type="text" name="country" class="form-control"
+                                    value="{{ $patient->country }}">
                             </div>
                             <div class="form-group col-md-6">
                                 <label>Passport No</label>
@@ -182,12 +184,12 @@
 
                     <div class="form-group col-md-6">
                         <label>Patient's Problem</label>
-                        <textarea name="patient_problem_description" class="form-control">{{ $patient->patient_problem_description }}</textarea>
+                        <textarea name="patient_problem_description" id="edit_patient_problem_description" class="form-control">{!! $patient->patient_problem_description !!}</textarea>
                     </div>
 
                     <div class="form-group col-md-12">
                         <label>Patient's Drug Description</label>
-                        <textarea name="patient_drug_description" class="form-control">{{ $patient->patient_drug_description }}</textarea>
+                        <textarea name="patient_drug_description" id="edit_patient_drug_description" class="form-control">{!! $patient->patient_drug_description !!}</textarea>
                     </div>
 
                 </div>
@@ -205,6 +207,39 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            if (document.querySelector('#edit_patient_problem_description')) {
+                ClassicEditor.create(
+                    document.querySelector('#edit_patient_problem_description'), {
+                        toolbar: [
+                            'heading', '|',
+                            'bold', 'italic', '|',
+                            'bulletedList', 'numberedList', '|',
+                            'undo', 'redo'
+                        ]
+                    }
+                );
+            }
+
+            if (document.querySelector('#edit_patient_drug_description')) {
+                ClassicEditor.create(
+                    document.querySelector('#edit_patient_drug_description'), {
+                        toolbar: [
+                            'heading', '|',
+                            'bold', 'italic', '|',
+                            'bulletedList', 'numberedList', '|',
+                            'undo', 'redo'
+                        ]
+                    }
+                );
+            }
+
+        });
+    </script>
     <script>
         function toggleLocation() {
             $('.location').hide();

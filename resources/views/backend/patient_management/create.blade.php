@@ -187,16 +187,15 @@
 
                     <div class="w-100"></div>
 
-                     <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                         <label>Patient's Problem <span class="text-danger">*</span></label>
-                         <textarea name="patient_problem_description" class="form-control"></textarea>
+                        <textarea name="patient_problem_description" id="patient_problem_description" class="form-control"></textarea>
                     </div>
 
-                     <div class="form-group col-md-6">
+                    <div class="form-group col-md-6">
                         <label>Patient's Drug Description <span class="text-danger">*</span></label>
-                        <textarea name="patient_drug_description" class="form-control"></textarea>
+                        <textarea name="patient_drug_description" id="patient_drug_description" class="form-control"></textarea>
                     </div>
-
                     {{-- Remarks --}}
                     <div class="form-group col-md-12">
                         <label>Remarks</label>
@@ -217,6 +216,25 @@
 @stop
 
 @section('js')
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            ClassicEditor
+                .create(document.querySelector('#patient_problem_description'))
+                .catch(error => {
+                    console.error(error);
+                });
+
+            ClassicEditor
+                .create(document.querySelector('#patient_drug_description'))
+                .catch(error => {
+                    console.error(error);
+                });
+
+        });
+    </script>
     <script>
         $('#location_type').on('change', function() {
             $('.location').addClass('d-none');
