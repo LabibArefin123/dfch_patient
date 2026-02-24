@@ -2,7 +2,7 @@
 
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
 @inject('preloaderHelper', 'JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper')
-
+{{-- 
 @php
     // Get theme from session, default to 'light'
     $themeMode = session('theme_mode', 'light'); // 'light' or 'dark'
@@ -11,17 +11,18 @@
     $bodyClass = $themeMode === 'dark' ? 'dark-mode' : '';
     $sidebarClass = $themeMode === 'dark' ? 'sidebar-dark-primary' : 'sidebar-light-primary';
     $navbarClass = $themeMode === 'dark' ? 'navbar-dark navbar-primary' : 'navbar-light navbar-white';
-@endphp
+@endphp --}}
 
 <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
 <link rel="stylesheet" href="{{ asset('css/custom_backend.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> --}}
 
+@section('classes_body', $layoutHelper->makeBodyClasses()) @section('body_data', $layoutHelper->makeBodyData())
 @section('classes_body', $bodyClass)
-@section('classes_sidebar', $sidebarClass)
+{{-- @section('classes_sidebar', $sidebarClass)
 @section('classes_topnav', $navbarClass)
-@section('body_data', $layoutHelper->makeBodyData())
+@section('body_data', $layoutHelper->makeBodyData()) --}}
 
 @section('body')
     <div class="wrapper">
