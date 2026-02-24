@@ -25,14 +25,13 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/frontend/frontend.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_contact_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_land_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
-
-    <!-- Scripts -->
-    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
 <body>
