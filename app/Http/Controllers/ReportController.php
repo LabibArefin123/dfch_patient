@@ -141,7 +141,7 @@ class ReportController extends Controller
             || $request->filled('is_recommend');
     }
 
-    private function hasYearlyFilters(Request $request)
+    public function hasYearlyFilters(Request $request)
     {
         return $request->filled('year')
             || $request->filled('gender')
@@ -270,7 +270,7 @@ class ReportController extends Controller
         }
     }
 
-    private function applyYearlyFilters($query, Request $request)
+    public function applyYearlyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);
 
