@@ -5,8 +5,8 @@ namespace App\Services\Reports;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Barryvdh\DomPDF\Facade\Pdf;
-use App\Models\Organization;
 use Barryvdh\Snappy\Facades\SnappyPdf as SPDF;
+use App\Models\Organization;
 
 class PdfService
 {
@@ -17,12 +17,11 @@ class PdfService
         $filename,
         $largeView = null
     ) {
-
         try {
 
             Log::info('PDF Generation Started', [
                 'filename' => $filename,
-                'request_params' => $request->all()
+                'params' => $request->all()
             ]);
 
             $query->orderBy('id');
@@ -35,40 +34,34 @@ class PdfService
             Log::info('PDF Record Count', [
                 'totalRecords' => $totalRecords,
                 'perPage' => $perPage,
-                'totalPages' => $totalPages,
-                'currentPage' => $page
+                'totalPages' => $totalPages
             ]);
 
             if ($totalRecords === 0) {
-                Log::warning('PDF Generation Aborted: No data found.');
-                return back()->with('warning', 'No data found.');
+                Log::warning('PDF aborted: No records');
+                return redirect()->back()->with('warning', 'No data found.');
             }
 
+            // Confirmation for large export
             if ($totalRecords > $perPage && !$request->filled('confirm')) {
 
-                Log::info('PDF Confirmation Required', [
-                    'totalRecords' => $totalRecords
-                ]);
-
-                return back()->with(array_merge(
+                return redirect()->back()->with(array_merge(
                     [
-                        'confirm_pdf'  => true,
+                        'confirm_pdf' => true,
                         'totalRecords' => $totalRecords,
-                        'perPage'      => $perPage,
+                        'perPage' => $perPage
                     ],
                     $request->all()
                 ));
             }
 
-            // If largeView not provided, use smallView
+            // fallback
             $largeView = $largeView ?? $smallView;
 
             // SMALL PDF
-            if ($totalRecords <= 500) {
+            if ($totalRecords <= $perPage) {
 
-                Log::info('Generating SMALL PDF', [
-                    'view' => $smallView
-                ]);
+                Log::info('Generating SMALL PDF');
 
                 return $this->generateSmallPdf(
                     $query,
@@ -82,9 +75,7 @@ class PdfService
             }
 
             // LARGE PDF
-            Log::info('Generating LARGE PDF', [
-                'view' => $largeView
-            ]);
+            Log::info('Generating LARGE PDF');
 
             return $this->generateLargePdf(
                 $query,
@@ -95,19 +86,21 @@ class PdfService
                 $totalPages,
                 $totalRecords
             );
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
 
-            Log::error('PDF Generation Failed', [
+            Log::error('PDF generation failed', [
                 'message' => $e->getMessage(),
                 'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
+                'line' => $e->getLine()
             ]);
 
-            return back()->with('error', 'PDF generation failed. Check logs.');
+            return redirect()->back()->with('error', 'PDF generation failed. Check logs.');
         }
     }
 
+    /**
+     * SMALL PDF (<=500 rows)
+     */
     private function generateSmallPdf(
         $query,
         $view,
@@ -117,16 +110,28 @@ class PdfService
         $totalPages,
         $totalRecords
     ) {
+
         $patients = $query->limit($perPage)->get();
         $organization = Organization::first();
+
         $pdf = Pdf::loadView(
             $view,
-            compact('patients', 'organization', 'page', 'perPage', 'totalPages', 'totalRecords')
+            compact(
+                'patients',
+                'organization',
+                'page',
+                'perPage',
+                'totalPages',
+                'totalRecords'
+            )
         )->setPaper('a4', 'landscape');
 
         return $pdf->stream($filename);
     }
 
+    /**
+     * LARGE PDF (>500 rows)
+     */
     private function generateLargePdf(
         $query,
         $view,
@@ -136,15 +141,15 @@ class PdfService
         $totalPages,
         $totalRecords
     ) {
+
         ini_set('memory_limit', '1024M');
         set_time_limit(600);
 
         $organization = Organization::first();
-
         $html = '';
 
-        // Chunk data (VERY IMPORTANT)
-        $query->chunk(500, function ($patients) use (
+        // IMPORTANT: ensure order before chunk
+        $query->orderBy('id')->chunk(500, function ($patients) use (
             &$html,
             $view,
             $organization,
@@ -153,6 +158,7 @@ class PdfService
             $totalPages,
             $totalRecords
         ) {
+
             $html .= view($view, compact(
                 'patients',
                 'organization',
@@ -170,5 +176,4 @@ class PdfService
 
         return $pdf->stream($filename);
     }
-    /* End of PDF GENERATOR  */
 }

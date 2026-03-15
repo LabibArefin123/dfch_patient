@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Models\Patient;
 use App\Models\Organization;
+
 use App\Services\Reports\DataTableService;
 use App\Services\Reports\PdfService;
 
@@ -32,6 +33,12 @@ use App\Http\Controllers\ReportController\MonthlyController;
 use App\Http\Controllers\ReportController\ExcelController\Monthly as MonthlyExcel;
 use App\Http\Controllers\ReportController\PdfController\Monthly as MonthlyPdf;
 //End of Month Part
+
+//Start of Year Part
+use App\Http\Controllers\ReportController\YearlyController;
+use App\Http\Controllers\ReportController\ExcelController\Yearly as YearlyExcel;
+use App\Http\Controllers\ReportController\PdfController\Yearly as YearlyPdf;
+//End of Year Part
 
 class ReportController extends Controller
 {
@@ -76,12 +83,13 @@ class ReportController extends Controller
        ========================================================= */
     public function monthly_report(Request $request)
     {
-        return (new MonthlyController)->monthly_report($this, $request);
+        return app(MonthlyController::class)->monthly_report($this, $request);
     }
 
     public function monthly_report_pdf(Request $request)
     {
-        return (new MonthlyPdf)->monthly_report_pdf($this, $request);
+        return app(\App\Http\Controllers\ReportController\PdfController\Monthly::class)
+            ->monthly_report_pdf($this, $request);
     }
 
     public function monthly_report_excel(Request $request)
@@ -92,6 +100,21 @@ class ReportController extends Controller
     /* =========================================================
        ===================== YEARLY REPORT =====================
        ========================================================= */
+
+    public function yearly_report(Request $request)
+    {
+        return (new YearlyController)->yearly_report($this, $request);
+    }
+
+    public function yearly_report_pdf(Request $request)
+    {
+        return (new YearlyPdf)->yearly_report_pdf($this, $request);
+    }
+
+    public function yearly_report_excel(Request $request)
+    {
+        return (new YearlyExcel)->yearly_report_excel($this, $request);
+    }
 
     /* Start of Filter Logic  */
     public function hasDailyFilters(Request $request)
@@ -267,7 +290,7 @@ class ReportController extends Controller
         }
     }
     /* End of Filter Logic  */
-    
+
     protected $dataTableService;
     protected $pdfService;
 
@@ -278,6 +301,4 @@ class ReportController extends Controller
         $this->dataTableService = $dataTableService;
         $this->pdfService = $pdfService;
     }
-
-    
 }

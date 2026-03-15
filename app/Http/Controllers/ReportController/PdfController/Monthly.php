@@ -5,9 +5,18 @@ namespace App\Http\Controllers\ReportController\PdfController;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use App\Services\Reports\PdfService;
+
 
 class Monthly extends Controller
 {
+    protected $pdfService;
+
+    public function __construct(PdfService $pdfService)
+    {
+        $this->pdfService = $pdfService;
+    }
+
     public function monthly_report_pdf($parent, Request $request)
     {
         if (!$parent->hasMonthlyFilters($request)) {
@@ -17,7 +26,7 @@ class Monthly extends Controller
         $query = Patient::query();
         $parent->applyMonthlyFilters($query, $request);
 
-        return $parent->generatePdf(
+        return  $this->pdfService->generatePdf(
             $query,
             $request,
             'backend.report_management.patient.monthly_report_pdf',

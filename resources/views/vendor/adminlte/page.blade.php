@@ -116,36 +116,6 @@
             </div>
         </div>
 
-        <!-- Global Error Modal -->
-        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
-                <div class="modal-content">
-
-                    <div class="modal-header bg-danger">
-                        <h5 class="modal-title text-white">System Error</h5>
-
-                        <!-- BOOTSTRAP 4 CLOSE BUTTON -->
-                        <button type="button" class="close text-white" data-dismiss="modal">
-                            <span>&times;</span>
-                        </button>
-                    </div>
-
-                    <div class="modal-body">
-                        <pre id="errorMessageText" class="mb-0 text-danger" style="white-space: pre-wrap;"></pre>
-                    </div>
-
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                            Close
-                        </button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- End Global Error Modal -->
-
-
         <!-- start of delete animation model -->
         <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
             aria-labelledby="deleteConfirmLabel" aria-hidden="true">
@@ -179,34 +149,6 @@
                 </div>
             </div>
         </div>
-        <!-- end of delete animation model -->
-
-        <!-- Start Limit Warning Modal -->
-        {{-- <div class="modal fade" id="limitWarningModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content text-center p-4">
-
-                    <div class="mb-3">
-                        <div class="limit-icon">!</div>
-                    </div>
-
-                    <h4 class="text-danger fw-bold">
-                        Maximum Limit Reached
-                    </h4>
-
-                    <p class="text-muted mb-3">
-                        This report is limited to <strong>500 records</strong>.<br>
-                        Please contact the developer for larger data export.
-                    </p>
-
-                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                </div>
-            </div>
-        </div> --}}
-        <!-- End of Limit Warning Modal -->
-
         {{-- Preloader --}}
         @if ($preloaderHelper->isPreloaderEnabled())
             @include('adminlte::partials.common.preloader')
@@ -247,37 +189,6 @@
 @section('adminlte_js')
     @stack('js')
     @yield('js')
-    <!-- start of time top right  -->
-    {{-- <script>
-        function updateNavbarTime() {
-            const now = new Date();
-
-            const dayName = now.toLocaleString('default', {
-                weekday: 'long'
-            }); // Sunday, Monday
-            const day = now.getDate();
-            const month = now.toLocaleString('default', {
-                month: 'long'
-            }); // August
-            const year = now.getFullYear();
-
-            let hours = now.getHours();
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            const seconds = now.getSeconds().toString().padStart(2, '0');
-            const ampm = hours >= 12 ? 'PM' : 'AM';
-            hours = hours % 12;
-            hours = hours ? hours : 12;
-
-            document.getElementById('navbar-time').innerText =
-                `${dayName}, ${day} ${month} ${year} | ${hours}:${minutes}:${seconds} ${ampm}`;
-        }
-
-        updateNavbarTime();
-        setInterval(updateNavbarTime, 1000);
-    </script> --}}
-    <!-- end of time top right  -->
-
-    <!-- Start of Login / Logout -->
     <script>
         document.addEventListener("DOMContentLoaded", function() {
 
@@ -344,74 +255,6 @@
             @endif
         });
     </script>
-
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const globalSearchUrl = "{{ route('global.search') }}";
-
-            const navbarForms = document.querySelectorAll('.navbar-search-block form');
-
-            navbarForms.forEach(form => {
-                const input = form.querySelector('input[name="term"]');
-                if (!input) return;
-
-                const resultBox = document.createElement('ul');
-                resultBox.className = 'list-group global-search-results';
-                form.appendChild(resultBox);
-
-                // Prevent full-page reload
-                form.addEventListener('submit', e => e.preventDefault());
-
-                let timeout;
-
-                input.addEventListener('input', function() {
-                    clearTimeout(timeout);
-                    const query = this.value.trim();
-
-                    if (query.length < 2) {
-                        resultBox.innerHTML = '';
-                        return;
-                    }
-
-                    timeout = setTimeout(() => {
-                        fetch(`${globalSearchUrl}?term=${encodeURIComponent(query)}`)
-                            .then(res => res.json())
-                            .then(data => {
-                                resultBox.innerHTML = '';
-
-                                if (!data.length) {
-                                    resultBox.innerHTML =
-                                        `<li class="list-group-item text-muted">No results found</li>`;
-                                    return;
-                                }
-
-                                data.forEach(item => {
-                                    const li = document.createElement('li');
-                                    li.className =
-                                        'list-group-item list-group-item-action';
-                                    li.innerHTML = item
-                                        .label; // <-- Use innerHTML here
-                                    li.onclick = () => window.location.href =
-                                        item.url;
-                                    resultBox.appendChild(li);
-                                });
-                            })
-                            .catch(() => {
-                                resultBox.innerHTML =
-                                    `<li class="list-group-item text-danger">Error loading results</li>`;
-                            });
-                    }, 300);
-                });
-
-                // Hide on outside click
-                document.addEventListener('click', function(e) {
-                    if (!form.contains(e.target)) {
-                        resultBox.innerHTML = '';
-                    }
-                });
-            });
-        });
-    </script> --}}
 
     {{-- start of manual search --}}
     <script>
@@ -735,64 +578,6 @@
         });
     </script>
     {{-- end of validation --}}
-
-    {{-- start of global page error logger --}}
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-            console.log("Global Error Logger Loaded ✅");
-
-            function formatError(err) {
-                if (!err) return null;
-
-                if (err instanceof Event) return null;
-
-                if (typeof err === 'string') return err;
-
-                if (err instanceof Error) return err.message;
-
-                if (err.responseJSON && err.responseJSON.message) {
-                    return err.responseJSON.message;
-                }
-
-                try {
-                    return JSON.stringify(err, null, 2);
-                } catch {
-                    return 'Unexpected system error occurred.';
-                }
-            }
-
-            window.onerror = function(message, source, lineno, colno, error) {
-                showErrorModal(formatError(error || message));
-                return false;
-            };
-
-            window.addEventListener("unhandledrejection", function(event) {
-                showErrorModal(formatError(event.reason));
-            });
-
-            function showErrorModal(message) {
-                if (!message || message.length < 3) return;
-
-                const $modal = $('#errorModal');
-                $('#errorMessageText').text(message);
-
-                // 🔥 IMPORTANT: reset modal before show
-                $modal.modal('hide');
-
-                setTimeout(() => {
-                    $modal.modal({
-                        backdrop: true,
-                        keyboard: true,
-                        show: true
-                    });
-                }, 150);
-            }
-
-        });
-    </script>
-
-    {{-- end of global page error logger --}}
 
     {{-- Start of password eye --}}
     <script>

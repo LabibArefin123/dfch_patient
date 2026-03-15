@@ -6,9 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use App\Models\Patient;
+use App\Services\Reports\DataTableService;
 
 class MonthlyController extends Controller
 {
+    public function __construct(DataTableService $dataTableService)
+    {
+        $this->dataTableService = $dataTableService;
+    }
+
     public function monthly_report($parent, Request $request)
     {
         if ($request->ajax()) {
@@ -20,10 +26,9 @@ class MonthlyController extends Controller
             $query = Patient::query();
             $parent->applyMonthlyFilters($query, $request);
 
-            return $parent->dataTableResponse($query, 'date_of_patient_added');
+            return $this->dataTableService->response($query, 'date_of_patient_added');
         }
 
         return view('backend.report_management.patient.monthly_report');
     }
-
 }
