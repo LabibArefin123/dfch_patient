@@ -14,21 +14,19 @@
 }
 
 .preview-wrap {
-    width: 500px;
-    height: 500px;
+    width: 100%;
+    max-width: 420px;
+    height: 420px;
     position: relative;
     overflow: hidden;
-    border-radius: 8px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    border-radius: 10px;
 }
 
 .preview-wrap img {
     width: 100%;
     height: 100%;
-    object-fit: contain; /* fit entire image */
-    object-position: center; /* center the image */
+    object-fit: contain; /* fill container consistently */
+    object-position: center;
     display: block;
 }
 

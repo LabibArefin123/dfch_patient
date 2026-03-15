@@ -63,13 +63,10 @@
                                 <strong>IP Whitelist</strong> (optional)<br>
                                 Allow specific IPs to access admin panel
                             </li>
-
                         </ul>
-
                     </div>
                 </div>
             </div>
-
 
             {{-- Notification Settings --}}
             <div class="card" id="notifications">
