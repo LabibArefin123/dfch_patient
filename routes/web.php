@@ -10,10 +10,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ReportController;
 
-
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SystemUserController;
 use App\Http\Controllers\BanUserController;
+use App\Http\Controllers\BannedDeviceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SystemProblemController;
@@ -97,6 +97,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/permissions/delete-selected', [PermissionController::class, 'deleteSelected'])->name('permissions.deleteSelected');
     Route::resource('system_users', SystemUserController::class);
     Route::resource('ban_users', BanUserController::class);
+    Route::resource('banned_devices', BannedDeviceController::class);
     Route::resource('system_problems', SystemProblemController::class);
     Route::post('/system-users/{user}/change-password', [SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
     //Setting 

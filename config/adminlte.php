@@ -512,6 +512,15 @@ return [
                     'active' => ['ban_users*'],
                     'icon' => 'fas fa-user-slash',
                 ],
+
+                [
+                    'text' => 'Banned Devices',
+                    'route' => 'banned_devices.index',
+                    'can' => 'banned_devices.index',
+                    'active' => ['banned_devices*'],
+                    'icon' => 'fas fa-ban'
+                ],
+
                 [
                     'text' => 'System Problems',
                     'route' => 'system_problems.index',
@@ -526,7 +535,7 @@ return [
             'route' => 'activity.logs.index',
             'can' => 'activity.logs.index',
             'icon' => 'fas fa-history',
-          
+
         ],
     ],
 
