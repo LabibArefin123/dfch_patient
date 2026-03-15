@@ -10,6 +10,8 @@ use App\Services\Reports\DataTableService;
 
 class DailyController extends Controller
 {
+    protected $dataTableService;
+    
     public function __construct(DataTableService $dataTableService)
     {
         $this->dataTableService = $dataTableService;

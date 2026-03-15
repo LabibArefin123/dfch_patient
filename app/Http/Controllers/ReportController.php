@@ -65,12 +65,12 @@ class ReportController extends Controller
    ========================================================= */
     public function weekly_report(Request $request)
     {
-        return (new WeeklyController)->weekly_report($this, $request);
+        return app(WeeklyController::class)->weekly_report($this, $request);
     }
 
     public function weekly_report_pdf(Request $request)
     {
-        return (new WeeklyPdf)->weekly_report_pdf($this, $request);
+        return app(\App\Http\Controllers\ReportController\PdfController\Weekly::class)->weekly_report_pdf($this, $request);
     }
 
     public function weekly_report_excel(Request $request)

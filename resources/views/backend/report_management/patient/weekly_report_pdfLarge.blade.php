@@ -90,7 +90,6 @@
         Weekly Patient Report
     </h3>
 
-
     <table width="100%" style="margin-top:10px;">
         <tr>
             {{-- Page Info Section --}}
