@@ -7,6 +7,7 @@
     $excelRoute = route('report.monthly.excel');
     $reportType = 'monthly';
     $columns = json_encode([
+        ['data' => 'select', 'orderable' => false, 'searchable' => false],
         ['data' => 'DT_RowIndex', 'orderable' => false, 'searchable' => false],
         ['data' => 'patient_code'],
         ['data' => 'patient_name'],
@@ -71,6 +72,9 @@
 
 @section('table_header')
     <tr>
+        <th>
+            <input type="checkbox" id="selectAll">
+        </th>
         <th>#</th>
         <th>Patient Code</th>
         <th>Name</th>
@@ -86,3 +90,105 @@
         <th>Action</th>
     </tr>
 @endsection
+
+@push('js')
+    <script>
+        let selectedRows = [];
+        let lastChecked = null;
+
+        function updateSelectedArray() {
+            selectedRows = [];
+
+            $('.row-checkbox:checked').each(function() {
+                selectedRows.push($(this).val());
+            });
+
+            toggleSelectedButtons();
+        }
+
+        $(document).on('click', '.row-checkbox', function(e) {
+
+            let checkboxes = $('.row-checkbox');
+            let currentIndex = checkboxes.index(this);
+
+            if (!lastChecked) {
+                lastChecked = this;
+            }
+
+            if (e.shiftKey) {
+
+                let lastIndex = checkboxes.index(lastChecked);
+                let start = Math.min(lastIndex, currentIndex);
+                let end = Math.max(lastIndex, currentIndex);
+
+                checkboxes.slice(start, end + 1).prop('checked', lastChecked.checked);
+
+            }
+
+            lastChecked = this;
+
+            updateSelectedArray();
+        });
+
+        $('#selectAll').on('change', function() {
+
+            $('.row-checkbox').prop('checked', this.checked);
+
+            updateSelectedArray();
+
+        });
+
+        function toggleSelectedButtons() {
+
+            if (selectedRows.length > 0) {
+
+                $('#downloadSelectedPdf').removeClass('d-none');
+                $('#downloadSelectedExcel').removeClass('d-none');
+
+            } else {
+
+                $('#downloadSelectedPdf').addClass('d-none');
+                $('#downloadSelectedExcel').addClass('d-none');
+
+            }
+        }
+
+        $('#downloadSelectedPdf').on('click', function(e) {
+
+            e.preventDefault();
+
+            if (selectedRows.length === 0) {
+                alert('Please select rows');
+                return;
+            }
+
+            let params = new URLSearchParams($('#filterForm').serialize());
+
+            selectedRows.forEach(id => {
+                params.append('ids[]', id);
+            });
+
+            window.open("{{ $pdfRoute }}?" + params.toString(), '_blank');
+
+        });
+
+        $('#downloadSelectedExcel').on('click', function(e) {
+
+            e.preventDefault();
+
+            if (selectedRows.length === 0) {
+                alert('Please select rows');
+                return;
+            }
+
+            let params = new URLSearchParams($('#filterForm').serialize());
+
+            selectedRows.forEach(id => {
+                params.append('ids[]', id);
+            });
+
+            window.location.href = "{{ $excelRoute }}?" + params.toString();
+
+        });
+    </script>
+@endpush

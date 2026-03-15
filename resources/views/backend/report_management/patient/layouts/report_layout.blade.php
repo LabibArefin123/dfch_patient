@@ -18,6 +18,14 @@
             <a href="#" id="downloadExcelBtn" class="btn btn-success btn-sm">
                 <i class="fas fa-file-excel"></i> Download Excel
             </a>
+
+            <a href="#" id="downloadSelectedPdf" class="btn btn-warning btn-sm mr-1 d-none">
+                <i class="fas fa-file-pdf"></i> Selected PDF
+            </a>
+
+            <a href="#" id="downloadSelectedExcel" class="btn btn-primary btn-sm d-none">
+                <i class="fas fa-file-excel"></i> Selected Excel
+            </a>
         </div>
 
     </div>

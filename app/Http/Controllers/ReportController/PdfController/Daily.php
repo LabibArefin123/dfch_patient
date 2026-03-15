@@ -21,8 +21,13 @@ class Daily extends Controller
         if (!$parent->hasDailyFilters($request)) {
             return back()->with('warning', 'Please apply at least one filter.');
         }
-
+     
         $query = Patient::query();
+
+        if ($request->filled('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
         $parent->applyDailyFilters($query, $request);
 
         return $this->pdfService->generatePdf(

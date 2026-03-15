@@ -25,6 +25,10 @@ class Weekly extends Controller
 
         $query = Patient::query();
         $parent->applyWeeklyFilters($query, $request);
+        
+        if ($request->filled('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
 
         return $this->pdfService->generatePdf(
             $query,

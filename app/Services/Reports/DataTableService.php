@@ -38,7 +38,11 @@ class DataTableService
                 return '<a href="' . route('patients.show', $r->id) . '" class="btn btn-sm btn-primary">View</a>';
             })
 
-            ->rawColumns(['action'])
+            ->addColumn('select', function ($row) {
+                return '<input type="checkbox" class="row-checkbox" value="' . $row->id . '">';
+            })
+
+            ->rawColumns(['select', 'action'])
             ->make(true);
     }
 }

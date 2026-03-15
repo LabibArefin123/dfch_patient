@@ -24,6 +24,11 @@ class Monthly extends Controller
 
         $query = Patient::query();
         $parent->applyMonthlyFilters($query, $request);
+        
+        if ($request->filled('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
 
         return $this->pdfService->generatePdf(
             $query,
