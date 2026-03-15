@@ -4,11 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Patient extends Model
 {
-    use HasFactory;
-
+    use HasFactory, LogsActivity;
+    
     protected $fillable = [
         'patient_code',
         'patient_name',
@@ -50,5 +52,14 @@ class Patient extends Model
     public function documents()
     {
         return $this->hasMany(PatientDocument::class);
+    }
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->useLogName('patient')
+            ->setDescriptionForEvent(fn(string $eventName) => "Patient {$eventName}");
     }
 }

@@ -156,7 +156,7 @@ return [
     'layout_topnav' => null,
     'layout_boxed' => null,
     'layout_fixed_sidebar' => true,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
@@ -203,7 +203,7 @@ return [
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
-    'classes_topnav_container' => 'container',
+    'classes_topnav_container' => 'container-fluid',
 
 
     /*
@@ -520,6 +520,13 @@ return [
                     'icon' => 'fas fa-bug',
                 ],
             ],
+        ],
+        [
+            'text' => 'Activity Logs',
+            'route' => 'activity.logs.index',
+            'can' => 'activity.logs.index',
+            'icon' => 'fas fa-history',
+          
         ],
     ],
 

@@ -4,6 +4,7 @@ use App\Http\Controllers\WelcomePageController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\PatientController;
@@ -119,6 +120,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/settings/datetime/update', [SettingController::class, 'updateDateTime'])->name('settings.datetime.update');
     Route::get('/settings/theme', [SettingController::class, 'theme'])->name('settings.theme');
     Route::post('/settings/theme/update', [SettingController::class, 'updateTheme'])->name('settings.theme.update');
+
+    Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity.logs.index');
 });
 
 Auth::routes([

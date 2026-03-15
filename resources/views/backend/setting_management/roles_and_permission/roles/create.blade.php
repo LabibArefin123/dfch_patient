@@ -1,22 +1,20 @@
 @extends('adminlte::page')
 
-@section('title', 'Add New Role')
+@section('title', 'Add Role')
 
 @section('content_header')
-    <div class="d-flex justify-content-between">
-        <h1>Add New Role</h1>
-        <a href="{{ route('roles.index') }}" class="btn btn-sm btn-secondary d-flex align-items-center gap-2 back-btn">
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" stroke="currentColor"
-                stroke-width="2" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            Back
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="mb-0">Create Role</h1>
+
+        <a href="{{ route('roles.index') }}" class="btn btn-sm btn-secondary">
+            <i class="fas fa-arrow-left"></i> Back
         </a>
     </div>
 @stop
 
+
 @section('content')
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -27,80 +25,203 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('roles.store') }}" data-confirm="create">
+
+    <form method="POST" action="{{ route('roles.store') }}">
         @csrf
-        <div class="form-group">
-            <label for="name">Role Name</label>
-            <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                value="{{ old('name') }}">
-            @error('name')
-                <small class="text-danger">{{ $message }}</small>
-            @enderror
+
+
+        {{-- ROLE INFORMATION --}}
+        <div class="card">
+
+            <div class="card-header">
+                <h3 class="card-title">Role Information</h3>
+            </div>
+
+            <div class="card-body">
+
+                <div class="form-group">
+                    <label>Role Name</label>
+
+                    <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+
+                </div>
+
+            </div>
+
         </div>
 
-        @foreach ($groupedRoutes as $group => $groupRoutes)
-            <div class="d-flex justify-content-between align-items-center mt-4">
-                <h5 class="text-primary mb-0 text-uppercase">{{ ucfirst($group) }}</h5>
+
+
+        {{-- PERMISSIONS --}}
+        <div class="card">
+
+            <div class="card-header d-flex justify-content-between align-items-center">
+
+                <h3 class="card-title">Permission Management</h3>
+
                 <div>
-                    <button type="button" class="btn btn-sm btn-outline-primary select-all-btn"
-                        data-group="{{ $group }}">
+
+                    <button type="button" class="btn btn-sm btn-success" id="selectAllPermissions">
                         Select All
                     </button>
-                    <button type="button" class="btn btn-sm btn-outline-danger unselect-all-btn"
-                        data-group="{{ $group }}">
+
+                    <button type="button" class="btn btn-sm btn-danger" id="unselectAllPermissions">
                         Unselect All
                     </button>
+
                 </div>
+
             </div>
 
-            <div class="card shadow-lg mt-2">
-                <div class="card-body">
-                    <div class="row">
-                        @foreach ($groupRoutes as $route)
-                            <div class="col-md-4 mb-2">
-                                <div class="form-check">
-                                    <input type="checkbox" name="permissions[]" value="{{ $route->getName() }}"
-                                        class="form-check-input perm-{{ $group }}"
-                                        id="route_{{ md5($route->getName()) }}">
 
-                                    <label class="form-check-label" for="route_{{ md5($route->getName()) }}">
-                                        {{ $route->getName() }}
-                                    </label>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
+            <div class="card-body p-0">
+
+                <div style="max-height:400px; overflow-y:auto;">
+
+                    <table class="table table-hover table-bordered mb-0">
+
+                        <thead>
+
+                            <tr>
+                                <th width="60">#</th>
+                                <th width="200">Group</th>
+                                <th>Permission</th>
+                                <th width="80">Allow</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @php $index = 1; @endphp
+
+                            @foreach ($groupedPermissions as $group => $permissions)
+                                {{-- GROUP HEADER --}}
+                                <tr class="bg-light">
+
+                                    <td colspan="4">
+
+                                        <div class="d-flex justify-content-between align-items-center">
+
+                                            <strong>{{ ucfirst($group) }}</strong>
+
+                                            <div>
+
+                                                <button type="button" class="btn btn-xs btn-light select-all-btn"
+                                                    data-group="{{ $group }}">
+                                                    Select
+                                                </button>
+
+                                                <button type="button" class="btn btn-xs btn-light unselect-all-btn"
+                                                    data-group="{{ $group }}">
+                                                    Unselect
+                                                </button>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+
+                                {{-- PERMISSIONS --}}
+                                @foreach ($permissions as $permission)
+                                    <tr>
+
+                                        <td>{{ $index++ }}</td>
+
+                                        <td>{{ $group }}</td>
+
+                                        <td class="text-muted">
+                                            {{ $permission->name }}
+                                        </td>
+
+                                        <td class="text-center">
+
+                                            <input type="checkbox" name="permissions[]" value="{{ $permission->name }}"
+                                                class="perm-all perm-{{ $group }}">
+
+                                        </td>
+
+                                    </tr>
+                                @endforeach
+                            @endforeach
+
+                        </tbody>
+
+                    </table>
+
                 </div>
-            </div>
-        @endforeach
 
-        <div class="d-flex justify-content-center mt-4">
-            {{ $routes->links('pagination::bootstrap-5') }}
+            </div>
+
         </div>
 
-        <div class="text-end mt-3">
-            <button type="submit" class="btn btn-success">Save</button>
+
+
+        {{-- SUBMIT --}}
+        <div class="mt-3 text-right">
+
+            <button type="submit" class="btn btn-success">
+                <i class="fas fa-save"></i> Save Role
+            </button>
+
         </div>
 
     </form>
+    <div class="card mt-4">
+        <div class="card-body" style="height:50px;">
+            <!-- Intentionally left blank -->
+        </div>
+    </div>
 @stop
 
 @section('js')
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.select-all-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const group = this.getAttribute('data-group');
-                    document.querySelectorAll(`.perm-${group}`).forEach(cb => cb.checked = true);
-                });
+
+            // GLOBAL SELECT
+            document.getElementById('selectAllPermissions').addEventListener('click', function() {
+                document.querySelectorAll('.perm-all').forEach(cb => cb.checked = true);
             });
 
-            document.querySelectorAll('.unselect-all-btn').forEach(btn => {
-                btn.addEventListener('click', function() {
-                    const group = this.getAttribute('data-group');
-                    document.querySelectorAll(`.perm-${group}`).forEach(cb => cb.checked = false);
-                });
+            // GLOBAL UNSELECT
+            document.getElementById('unselectAllPermissions').addEventListener('click', function() {
+                document.querySelectorAll('.perm-all').forEach(cb => cb.checked = false);
             });
+
+            // GROUP SELECT
+            document.querySelectorAll('.select-all-btn').forEach(btn => {
+
+                btn.addEventListener('click', function() {
+
+                    const group = this.dataset.group;
+
+                    document.querySelectorAll('.perm-' + group)
+                        .forEach(cb => cb.checked = true);
+
+                });
+
+            });
+
+            // GROUP UNSELECT
+            document.querySelectorAll('.unselect-all-btn').forEach(btn => {
+
+                btn.addEventListener('click', function() {
+
+                    const group = this.dataset.group;
+
+                    document.querySelectorAll('.perm-' + group)
+                        .forEach(cb => cb.checked = false);
+
+                });
+
+            });
+
         });
     </script>
+
 @stop

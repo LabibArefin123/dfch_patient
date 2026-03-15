@@ -22,7 +22,8 @@ class DatabaseSeeder extends Seeder
             // PermissionSeeder::class,
             // PatientSeeder::class,
             // PatientExcelSeeder::class,
-            PatientWordSeeder::class,
+            // PatientWordSeeder::class,
+            AboutDoctorsSeeder::class,
             // UserSeeder::class,
         ]);
     }
