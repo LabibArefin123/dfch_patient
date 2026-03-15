@@ -12,6 +12,26 @@ use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
 use App\Models\Patient;
 use App\Models\Organization;
+use App\Services\Reports\DataTableService;
+use App\Services\Reports\PdfService;
+
+//Start of Daily Part
+use App\Http\Controllers\ReportController\DailyController;
+use App\Http\Controllers\ReportController\ExcelController\Daily as DailyExcel;
+use App\Http\Controllers\ReportController\PdfController\Daily as DailyPdf;
+//End of Daily Part
+
+//Start of Weekly Part
+use App\Http\Controllers\ReportController\WeeklyController;
+use App\Http\Controllers\ReportController\ExcelController\Weekly as WeeklyExcel;
+use App\Http\Controllers\ReportController\PdfController\Weekly as WeeklyPdf;
+//End of Weekly Part
+
+//Start of Month Part
+use App\Http\Controllers\ReportController\MonthlyController;
+use App\Http\Controllers\ReportController\ExcelController\Monthly as MonthlyExcel;
+use App\Http\Controllers\ReportController\PdfController\Monthly as MonthlyPdf;
+//End of Month Part
 
 class ReportController extends Controller
 {
@@ -21,234 +41,60 @@ class ReportController extends Controller
 
     public function daily_report(Request $request)
     {
-        if ($request->ajax()) {
-
-            if (!$this->hasDailyFilters($request)) {
-                return DataTables::of(collect())->make(true);
-            }
-
-            $query = Patient::query();
-            $this->applyDailyFilters($query, $request);
-
-            return $this->dataTableResponse($query, 'date_of_patient_added');
-        }
-
-        return view('backend.report_management.patient.daily_report');
+        return (new DailyController)->daily_report($this, $request);
     }
 
     public function daily_report_pdf(Request $request)
     {
-        if (!$this->hasDailyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyDailyFilters($query, $request);
-
-        return $this->generatePdf(
-            $query,
-            $request,
-            'backend.report_management.patient.daily_report_pdf',
-            'daily_patient_report.pdf',
-            'backend.report_management.patient.daily_report_pdfLarge',
-        );
+        return (new DailyPdf)->daily_report_pdf($this, $request);
     }
 
     public function daily_report_excel(Request $request)
     {
-        if (!$this->hasDailyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyDailyFilters($query, $request);
-
-        return Excel::download(
-            new PatientReportExport(
-                $query->get(),
-                $request,
-                'Daily Patient Report'
-            ),
-            'daily_patient_report.xlsx'
-        );
+        return (new DailyExcel)->daily_report_excel($this, $request);
     }
-
     /* =========================================================
    ===================== WEEKLY REPORT =====================
    ========================================================= */
-
     public function weekly_report(Request $request)
     {
-        if ($request->ajax()) {
-
-            if (!$this->hasWeeklyFilters($request)) {
-                return DataTables::of(collect())->make(true);
-            }
-
-            $query = Patient::query();
-            $this->applyWeeklyFilters($query, $request);
-
-            return $this->dataTableResponse($query, 'date_of_patient_added');
-        }
-
-        return view('backend.report_management.patient.weekly_report');
+        return (new WeeklyController)->weekly_report($this, $request);
     }
 
     public function weekly_report_pdf(Request $request)
     {
-        if (!$this->hasWeeklyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyWeeklyFilters($query, $request);
-
-        return $this->generatePdf(
-            $query,
-            $request,
-            'backend.report_management.patient.weekly_report_pdf',
-            'weekly_patient_report.pdf',
-            'backend.report_management.patient.weekly_report_pdfLarge',
-        );
+        return (new WeeklyPdf)->weekly_report_pdf($this, $request);
     }
 
     public function weekly_report_excel(Request $request)
     {
-        if (!$this->hasWeeklyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyWeeklyFilters($query, $request);
-
-        return Excel::download(
-            new PatientReportExport(
-                $query->get(),
-                $request,
-                'Weekly Patient Report'
-            ),
-            'weekly_patient_report.xlsx'
-        );
+        return (new WeeklyExcel)->weekly_report_excel($this, $request);
     }
 
     /* =========================================================
        ===================== MONTHLY REPORT ====================
        ========================================================= */
-
     public function monthly_report(Request $request)
     {
-        if ($request->ajax()) {
-
-            if (!$this->hasMonthlyFilters($request)) {
-                return DataTables::of(collect())->make(true);
-            }
-
-            $query = Patient::query();
-            $this->applyMonthlyFilters($query, $request);
-
-            return $this->dataTableResponse($query, 'date_of_patient_added');
-        }
-
-        return view('backend.report_management.patient.monthly_report');
+        return (new MonthlyController)->monthly_report($this, $request);
     }
 
     public function monthly_report_pdf(Request $request)
     {
-        if (!$this->hasMonthlyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyMonthlyFilters($query, $request);
-
-        return $this->generatePdf(
-            $query,
-            $request,
-            'backend.report_management.patient.monthly_report_pdf',
-            'monthly_patient_report.pdf',
-            'backend.report_management.patient.monthly_report_pdfLarge',
-        );
+        return (new MonthlyPdf)->monthly_report_pdf($this, $request);
     }
 
     public function monthly_report_excel(Request $request)
     {
-        if (!$this->hasMonthlyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyMonthlyFilters($query, $request);
-
-        return Excel::download(
-            new PatientReportExport(
-                $query->get(),
-                $request,
-                'Monthly Patient Report'
-            ),
-            'monthly_patient_report.xlsx'
-        );
+        return (new MonthlyExcel)->monthly_report_excel($this, $request);
     }
 
     /* =========================================================
        ===================== YEARLY REPORT =====================
        ========================================================= */
 
-    public function yearly_report(Request $request)
-    {
-        if ($request->ajax()) {
-
-            if (!$this->hasYearlyFilters($request)) {
-                return DataTables::of(collect())->make(true);
-            }
-
-            $query = Patient::query();
-            $this->applyYearlyFilters($query, $request);
-
-            return $this->dataTableResponse($query, 'date_of_patient_added');
-        }
-
-        return view('backend.report_management.patient.yearly_report');
-    }
-
-    public function yearly_report_pdf(Request $request)
-    {
-        if (!$this->hasYearlyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyYearlyFilters($query, $request);
-
-        return $this->generatePdf(
-            $query,
-            $request,
-            'backend.report_management.patient.yearly_report_pdf',
-            'yearly_patient_report.pdf',
-            'backend.report_management.patient.yearly_report_pdfLarge'
-        );
-    }
-
-    public function yearly_report_excel(Request $request)
-    {
-        if (!$this->hasYearlyFilters($request)) {
-            return back()->with('warning', 'Please apply at least one filter.');
-        }
-
-        $query = Patient::query();
-        $this->applyYearlyFilters($query, $request);
-
-        return Excel::download(
-            new PatientReportExport(
-                $query->get(),
-                $request,
-                'Yearly Patient Report'
-            ),
-            'yearly_patient_report.xlsx'
-        );
-    }
-
     /* Start of Filter Logic  */
-    private function hasDailyFilters(Request $request)
+    public function hasDailyFilters(Request $request)
     {
         return $request->has('day_filter')
             || $request->filled('gender')
@@ -257,14 +103,14 @@ class ReportController extends Controller
             || ($request->filled('from_date') && $request->filled('to_date'));
     }
 
-    private function hasWeeklyFilters(Request $request)
+    public function hasWeeklyFilters(Request $request)
     {
         return $request->filled('from_date') && $request->filled('to_date')
             || $request->filled('gender')
             || $request->filled('is_recommend');
     }
 
-    private function hasMonthlyFilters(Request $request)
+    public function hasMonthlyFilters(Request $request)
     {
         return $request->filled('year')
             || $request->filled('month')
@@ -280,7 +126,7 @@ class ReportController extends Controller
     }
 
 
-    private function applyDailyFilters($query, Request $request)
+    public function applyDailyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);
 
@@ -331,7 +177,7 @@ class ReportController extends Controller
         $query->whereBetween('date_of_patient_added', [$start, $end]);
     }
 
-    private function applyWeeklyFilters($query, Request $request)
+    public function applyWeeklyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);
 
@@ -388,7 +234,7 @@ class ReportController extends Controller
         $query->whereBetween('date_of_patient_added', [$start, $end]);
     }
 
-    private function applyMonthlyFilters($query, Request $request)
+    public function applyMonthlyFilters($query, Request $request)
     {
         $this->applyCommonFilters($query, $request);
 
@@ -421,205 +267,17 @@ class ReportController extends Controller
         }
     }
     /* End of Filter Logic  */
+    
+    protected $dataTableService;
+    protected $pdfService;
 
-    /* Start of DataTable  */
-    private function dataTableResponse($query, $dateColumn)
-    {
-        return DataTables::of($query)
-            ->addIndexColumn()
-
-            ->addColumn('location', function ($row) {
-                if ($row->location_type == 1) {
-                    return $row->location_simple;
-                } elseif ($row->location_type == 2) {
-                    return $row->house_address . ', ' .
-                        $row->city . ', ' .
-                        $row->district . ' - ' .
-                        $row->post_code;
-                }
-                return $row->country . ' (Passport: ' . $row->passport_no . ')';
-            })
-
-            ->editColumn('is_recommend', fn($r) => $r->is_recommend ? 'Yes' : 'No')
-
-            ->addColumn('date', function ($row) use ($dateColumn) {
-                return \Carbon\Carbon::parse($row->$dateColumn)
-                    ->format('d-m-Y') . ' (' .
-                    \Carbon\Carbon::parse($row->$dateColumn)
-                    ->format('d F Y') . ')';
-            })
-
-            ->addColumn(
-                'action',
-                fn($r) =>
-                '<a href="' . route('patients.show', $r->id) . '" class="btn btn-sm btn-primary">View</a>'
-            )
-
-            ->rawColumns(['action'])
-            ->make(true);
-    }
-    /* End of DataTable  */
-
-    /* Start of PDF GENERATOR  */
-    private function generatePdf(
-        $query,
-        Request $request,
-        $smallView,
-        $filename,
-        $largeView = null
+    public function __construct(
+        DataTableService $dataTableService,
+        PdfService $pdfService
     ) {
-
-        try {
-
-            Log::info('PDF Generation Started', [
-                'filename' => $filename,
-                'request_params' => $request->all()
-            ]);
-
-            $query->orderBy('id');
-
-            $perPage = 500;
-            $page = $request->get('page', 1);
-            $totalRecords = $query->count();
-            $totalPages = ceil($totalRecords / $perPage);
-
-            Log::info('PDF Record Count', [
-                'totalRecords' => $totalRecords,
-                'perPage' => $perPage,
-                'totalPages' => $totalPages,
-                'currentPage' => $page
-            ]);
-
-            if ($totalRecords === 0) {
-                Log::warning('PDF Generation Aborted: No data found.');
-                return back()->with('warning', 'No data found.');
-            }
-
-            if ($totalRecords > $perPage && !$request->filled('confirm')) {
-
-                Log::info('PDF Confirmation Required', [
-                    'totalRecords' => $totalRecords
-                ]);
-
-                return back()->with(array_merge(
-                    [
-                        'confirm_pdf'  => true,
-                        'totalRecords' => $totalRecords,
-                        'perPage'      => $perPage,
-                    ],
-                    $request->all()
-                ));
-            }
-
-            // If largeView not provided, use smallView
-            $largeView = $largeView ?? $smallView;
-
-            // SMALL PDF
-            if ($totalRecords <= 500) {
-
-                Log::info('Generating SMALL PDF', [
-                    'view' => $smallView
-                ]);
-
-                return $this->generateSmallPdf(
-                    $query,
-                    $smallView,
-                    $filename,
-                    $page,
-                    $perPage,
-                    $totalPages,
-                    $totalRecords
-                );
-            }
-
-            // LARGE PDF
-            Log::info('Generating LARGE PDF', [
-                'view' => $largeView
-            ]);
-
-            return $this->generateLargePdf(
-                $query,
-                $largeView,
-                $filename,
-                $page,
-                $perPage,
-                $totalPages,
-                $totalRecords
-            );
-        } catch (\Exception $e) {
-
-            Log::error('PDF Generation Failed', [
-                'message' => $e->getMessage(),
-                'file' => $e->getFile(),
-                'line' => $e->getLine(),
-                'trace' => $e->getTraceAsString()
-            ]);
-
-            return back()->with('error', 'PDF generation failed. Check logs.');
-        }
+        $this->dataTableService = $dataTableService;
+        $this->pdfService = $pdfService;
     }
 
-    private function generateSmallPdf(
-        $query,
-        $view,
-        $filename,
-        $page,
-        $perPage,
-        $totalPages,
-        $totalRecords
-    ) {
-        $patients = $query->limit($perPage)->get();
-        $organization = Organization::first();
-        $pdf = Pdf::loadView(
-            $view,
-            compact('patients', 'organization', 'page', 'perPage', 'totalPages', 'totalRecords')
-        )->setPaper('a4', 'landscape');
-
-        return $pdf->stream($filename);
-    }
-
-    private function generateLargePdf(
-        $query,
-        $view,
-        $filename,
-        $page,
-        $perPage,
-        $totalPages,
-        $totalRecords
-    ) {
-        ini_set('memory_limit', '1024M');
-        set_time_limit(600);
-
-        $organization = Organization::first();
-
-        $html = '';
-
-        // Chunk data (VERY IMPORTANT)
-        $query->chunk(500, function ($patients) use (
-            &$html,
-            $view,
-            $organization,
-            $page,
-            $perPage,
-            $totalPages,
-            $totalRecords
-        ) {
-            $html .= view($view, compact(
-                'patients',
-                'organization',
-                'page',
-                'perPage',
-                'totalPages',
-                'totalRecords'
-            ))->render();
-        });
-
-        $pdf = SPDF::loadHTML($html)
-            ->setPaper('a4')
-            ->setOrientation('landscape')
-            ->setOption('enable-local-file-access', true);
-
-        return $pdf->stream($filename);
-    }
-    /* End of PDF GENERATOR  */
+    
 }
