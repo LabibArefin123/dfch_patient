@@ -48,12 +48,12 @@ class ReportController extends Controller
 
     public function daily_report(Request $request)
     {
-        return (new DailyController)->daily_report($this, $request);
+        return app(DailyController::class)->daily_report($this, $request);
     }
 
     public function daily_report_pdf(Request $request)
     {
-        return (new DailyPdf)->daily_report_pdf($this, $request);
+        return app(\App\Http\Controllers\ReportController\PdfController\Daily::class)->daily_report_pdf($this, $request);
     }
 
     public function daily_report_excel(Request $request)
@@ -103,12 +103,12 @@ class ReportController extends Controller
 
     public function yearly_report(Request $request)
     {
-        return (new YearlyController)->yearly_report($this, $request);
+        return app(YearlyController::class)->yearly_report($this, $request);
     }
 
     public function yearly_report_pdf(Request $request)
     {
-        return (new YearlyPdf)->yearly_report_pdf($this, $request);
+        return app(\App\Http\Controllers\ReportController\PdfController\Yearly::class)->yearly_report_pdf($this, $request);
     }
 
     public function yearly_report_excel(Request $request)
