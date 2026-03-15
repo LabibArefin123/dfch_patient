@@ -128,11 +128,12 @@ class ReportController extends Controller
 
     public function hasWeeklyFilters(Request $request)
     {
-        return $request->filled('from_date') && $request->filled('to_date')
+        return $request->filled('week_filter')
+            || ($request->filled('from_date') && $request->filled('to_date'))
             || $request->filled('gender')
             || $request->filled('is_recommend');
     }
-
+    
     public function hasMonthlyFilters(Request $request)
     {
         return $request->filled('year')

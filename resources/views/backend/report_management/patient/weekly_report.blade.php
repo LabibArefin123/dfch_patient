@@ -30,7 +30,7 @@
         <div class="col-md-3">
             <label>Week Filter</label>
             <select name="week_filter" id="week_filter" class="form-control">
-                <option value="current_week">Current Week</option>
+                <option value="current_week" selected>Current Week</option>
                 <option value="past_week">Past Week</option>
                 <option value="past_2_weeks">Past 2 Weeks</option>
                 <option value="past_3_weeks">Past 3 Weeks</option>

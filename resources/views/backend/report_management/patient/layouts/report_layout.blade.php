@@ -185,7 +185,7 @@
                 'is_recommend',
                 'year',
                 'month',
-                'weekly_filter',
+                'week_filter',
                 'day_filter',
                 'location_type',
                 'location_value',

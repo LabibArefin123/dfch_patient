@@ -2,6 +2,9 @@
 <html>
 
 <head>
+    @php
+        use Carbon\Carbon;
+    @endphp
     <meta charset="utf-8">
     <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
     <title>Weekly Patient Report</title>
@@ -88,20 +91,22 @@
     {{-- Report Title --}}
     <h3>
         Weekly Patient Report
+        @if (request()->filled('from_date') && request()->filled('to_date'))
+            from {{ Carbon::parse(request()->from_date)->format('j F Y') }}
+            to {{ Carbon::parse(request()->to_date)->format('j F Y') }}
+        @endif
     </h3>
 
-    <table width="100%" style="margin-top:10px;">
+
+    {{-- Page Info Section --}}
+    <table width="100%" class="header-table" style="margin-top:10px;">
         <tr>
-            {{-- Page Info Section --}}
-            <table width="100%" class="header-table" style="margin-top:10px;">
-                <tr>
-                    <td style="text-align:left; border:none;">
-                        <strong>Total Records In this Page: {{ $totalRecords }}</strong>
-                    </td>
-                </tr>
-            </table>
+            <td style="text-align:left; border:none;">
+                <strong>Total Records In this Page: {{ $totalRecords }}</strong>
+            </td>
         </tr>
     </table>
+
 
     {{-- Table --}}
     <table>

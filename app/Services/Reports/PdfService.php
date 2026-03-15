@@ -17,6 +17,7 @@ class PdfService
         $filename,
         $largeView = null
     ) {
+
         try {
 
             Log::info('PDF Generation Started', [
@@ -24,11 +25,13 @@ class PdfService
                 'params' => $request->all()
             ]);
 
-            $query->orderBy('id');
-
             $perPage = 500;
             $page = $request->get('page', 1);
-            $totalRecords = $query->count();
+
+            // clone query before counting
+            $countQuery = clone $query;
+            $totalRecords = $countQuery->count();
+
             $totalPages = ceil($totalRecords / $perPage);
 
             Log::info('PDF Record Count', [
@@ -38,11 +41,13 @@ class PdfService
             ]);
 
             if ($totalRecords === 0) {
+
                 Log::warning('PDF aborted: No records');
+
                 return redirect()->back()->with('warning', 'No data found.');
             }
 
-            // Confirmation for large export
+            // Confirmation for large exports
             if ($totalRecords > $perPage && !$request->filled('confirm')) {
 
                 return redirect()->back()->with(array_merge(
@@ -55,13 +60,9 @@ class PdfService
                 ));
             }
 
-            // fallback
             $largeView = $largeView ?? $smallView;
 
-            // SMALL PDF
             if ($totalRecords <= $perPage) {
-
-                Log::info('Generating SMALL PDF');
 
                 return $this->generateSmallPdf(
                     $query,
@@ -74,14 +75,10 @@ class PdfService
                 );
             }
 
-            // LARGE PDF
-            Log::info('Generating LARGE PDF');
-
             return $this->generateLargePdf(
                 $query,
                 $largeView,
                 $filename,
-                $page,
                 $perPage,
                 $totalPages,
                 $totalRecords
@@ -98,9 +95,7 @@ class PdfService
         }
     }
 
-    /**
-     * SMALL PDF (<=500 rows)
-     */
+
     private function generateSmallPdf(
         $query,
         $view,
@@ -129,14 +124,11 @@ class PdfService
         return $pdf->stream($filename);
     }
 
-    /**
-     * LARGE PDF (>500 rows)
-     */
+
     private function generateLargePdf(
         $query,
         $view,
         $filename,
-        $page,
         $perPage,
         $totalPages,
         $totalRecords
@@ -146,18 +138,21 @@ class PdfService
         set_time_limit(600);
 
         $organization = Organization::first();
-        $html = '';
 
-        // IMPORTANT: ensure order before chunk
-        $query->orderBy('id')->chunk(500, function ($patients) use (
+        $html = '';
+        $currentPage = 1;
+
+        $query->chunkById(500, function ($patients) use (
             &$html,
             $view,
             $organization,
-            $page,
+            &$currentPage,
             $perPage,
             $totalPages,
             $totalRecords
         ) {
+
+            $page = $currentPage;
 
             $html .= view($view, compact(
                 'patients',
@@ -167,12 +162,18 @@ class PdfService
                 'totalPages',
                 'totalRecords'
             ))->render();
+
+            // page break
+            $html .= '<div style="page-break-after: always;"></div>';
+
+            $currentPage++;
         });
 
         $pdf = SPDF::loadHTML($html)
             ->setPaper('a4')
             ->setOrientation('landscape')
-            ->setOption('enable-local-file-access', true);
+            ->setOption('enable-local-file-access', true)
+            ->setOption('disable-smart-shrinking', true);
 
         return $pdf->stream($filename);
     }
