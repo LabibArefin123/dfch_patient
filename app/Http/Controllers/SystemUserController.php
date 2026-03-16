@@ -146,4 +146,6 @@ class SystemUserController extends Controller
 
         return redirect()->route('system_users.index')->with('success', 'User deleted successfully!');
     }
+
+    
 }

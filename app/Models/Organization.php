@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Spatie\Activitylog\Traits\LogsActivity;
+use Spatie\Activitylog\LogOptions;
 
 class Organization extends Model
 {
+    use LogsActivity;
     protected $fillable = [
         'name',
         'organization_logo_name',
@@ -17,4 +20,13 @@ class Organization extends Model
         'land_phone_1',
         'land_phone_2',
     ];
+
+    public function getActivitylogOptions(): LogOptions
+    {
+        return LogOptions::defaults()
+            ->logFillable()
+            ->logOnlyDirty()
+            ->useLogName('Organization')
+            ->setDescriptionForEvent(fn(string $eventName) => "Organization {$eventName}");
+    }
 }

@@ -68,7 +68,7 @@
 
         <div class="card-body table-responsive">
 
-            <table class="table table-striped table-hover">
+            <table class="table table-striped table-hover" id="dataTables">
 
                 <thead class="table-dark">
 
