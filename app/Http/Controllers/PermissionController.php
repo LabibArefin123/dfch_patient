@@ -43,6 +43,16 @@ class PermissionController extends Controller
         return redirect()->back()->with('success', 'Permissions updated for the role.');
     }
 
+    public function show($id)
+    {
+        $permission = Permission::findOrFail($id);
+
+        return view(
+            'backend.setting_management.roles_and_permission.permission.show',
+            compact('permission')
+        );
+    }
+
     public function edit($id)
     {
         $permission = Permission::findOrFail($id);

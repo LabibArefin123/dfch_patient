@@ -68,6 +68,9 @@
                             <td>{{ $permission->name }}</td>
                             <td class="text-center">{{ $permission->guard_name }}</td>
                             <td class="text-center">
+                                <a href="{{ route('permissions.show', $permission->id) }}" class="btn btn-info btn-sm">
+                                    View
+                                </a>
                                 <a href="{{ route('permissions.edit', $permission->id) }}"
                                     class="btn btn-warning btn-sm">Edit</a>
                                 <form action="{{ route('permissions.destroy', $permission->id) }}" method="POST"

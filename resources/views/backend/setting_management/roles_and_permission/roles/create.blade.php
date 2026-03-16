@@ -14,7 +14,6 @@
 
 
 @section('content')
-
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -24,7 +23,6 @@
             </ul>
         </div>
     @endif
-
 
     <form method="POST" action="{{ route('roles.store') }}">
         @csrf

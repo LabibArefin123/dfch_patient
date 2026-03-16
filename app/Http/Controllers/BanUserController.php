@@ -71,7 +71,7 @@ class BanUserController extends Controller
     public function show(BanUser $ban_user)
     {
         return view(
-            'backend.setting_management.user_management.system_user.ban_user.show',
+            'backend.setting_management.user_management.system_user.ban_users.show',
             compact('ban_user')
         );
     }
@@ -81,9 +81,10 @@ class BanUserController extends Controller
      */
     public function edit(BanUser $ban_user)
     {
+        $users = User::all();
         return view(
-            'backend.setting_management.user_management.system_user.ban_user.edit',
-            compact('ban_user')
+            'backend.setting_management.user_management.system_user.ban_users.edit',
+            compact('ban_user', 'users')
         );
     }
 
