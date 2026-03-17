@@ -7,9 +7,7 @@
 @stop
 
 @section('content')
-
-    <div class="card shadow-sm">
-
+    <div class="card">
         <div class="card-header">
             <button class="btn btn-primary btn-sm" data-toggle="collapse" data-target="#filterSection">
                 Filters
@@ -18,11 +16,8 @@
 
         <div class="collapse" id="filterSection">
             <div class="card-body">
-
                 <form method="GET">
-
                     <div class="row">
-
                         <div class="col-md-3">
                             <label>User ID</label>
                             <input type="text" name="user" class="form-control" value="{{ request('user') }}">
@@ -42,9 +37,7 @@
                             <label>To Date</label>
                             <input type="date" name="to_date" class="form-control" value="{{ request('to_date') }}">
                         </div>
-
                     </div>
-
                     <div class="row mt-3">
 
                         <div class="col-md-4">
@@ -52,26 +45,18 @@
                             <input type="text" name="description" class="form-control"
                                 value="{{ request('description') }}">
                         </div>
-
                     </div>
-
                     <div class="mt-3">
                         <button class="btn btn-success btn-sm">Apply Filter</button>
                         <a href="{{ route('activity.logs.index') }}" class="btn btn-secondary btn-sm">Reset</a>
                     </div>
-
                 </form>
-
             </div>
         </div>
 
-
         <div class="card-body table-responsive">
-
             <table class="table table-striped table-hover" id="dataTables">
-
                 <thead class="table-dark">
-
                     <tr>
                         <th>#</th>
                         <th>User</th>
@@ -79,13 +64,11 @@
                         <th>Description</th>
                         <th>Model</th>
                         <th>Model ID</th>
+                        <th>Details</th>
                         <th>Date</th>
                     </tr>
-
                 </thead>
-
                 <tbody>
-
                     @forelse($activities as $activity)
                         <tr>
 
@@ -112,15 +95,18 @@
                             <td>
                                 {{ $activity->subject_id }}
                             </td>
+                            <td>
+                                <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#propertyModal"
+                                    data-properties='@json($activity->properties)'>
+                                    View
+                                </button>
+                            </td>
 
                             <td>
                                 {{ $activity->created_at->format('d M Y H:i') }}
                             </td>
-
                         </tr>
-
                     @empty
-
                         <tr>
                             <td colspan="7" class="text-center">No Activity Found</td>
                         </tr>
@@ -129,13 +115,45 @@
                 </tbody>
 
             </table>
-
-            <div class="mt-3">
-                {{ $activities->links() }}
-            </div>
-
         </div>
+    </div>
+    <div class="card mt-4" style="height:50px;">
 
     </div>
+    <!-- Properties Modal -->
+    <div class="modal fade" id="propertyModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
 
+                <div class="modal-header bg-primary">
+                    <h5 class="modal-title text-white">Activity Details</h5>
+                    <button type="button" class="close text-white" data-dismiss="modal">
+                        &times;
+                    </button>
+                </div>
+
+                <div class="modal-body">
+                    <pre id="modalProperties" style="white-space: pre-wrap;"></pre>
+                </div>
+
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
 @stop
+
+@push('js')
+    <script>
+        $('#propertyModal').on('show.bs.modal', function(event) {
+            let button = $(event.relatedTarget);
+            let properties = button.data('properties');
+
+            let formatted = JSON.stringify(properties, null, 4);
+
+            $('#modalProperties').text(formatted);
+        });
+    </script>
+@endpush
