@@ -1,9 +1,9 @@
 @extends('adminlte::page')
 
 @section('title', 'DFCH | Patient Dashboard')
+@section('plugins.Chartjs', true)
 
 @section('content')
-
     <div class="container-fluid py-4">
 
         {{-- Header --}}
@@ -16,156 +16,336 @@
             </p>
         </div>
 
-        {{-- Intro Card --}}
-        <div class="card shadow-sm mb-4">
+        {{-- Toggle Switch --}}
+        {{-- Toggle Button --}}
+        <div class="mb-3 d-flex justify-content-end">
+            <button id="toggleViewBtn" class="btn btn-primary">
+                Extended View
+            </button>
+        </div>
+
+        {{-- Dashboard Tabs --}}
+        <div id="dashboardTabs" class="card shadow-sm mb-4">
+            <div class="card-header p-2">
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#normalView" data-toggle="tab">Normal View</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#statisticalView" data-toggle="tab">Statistical View</a>
+                    </li>
+                </ul>
+            </div>
+
             <div class="card-body">
-                <h5 class="font-weight-bold mb-2">
-                    👋 Welcome to DFCH Patient Management System
-                </h5>
-                <p class="mb-0 text-muted">
-                    This dashboard provides a quick overview of patient registrations.
-                    Daily records are stored automatically, allowing you to generate
-                    weekly and monthly reports for analysis and decision-making.
-                </p>
-            </div>
-        </div>
+                <div class="tab-content">
 
-        {{-- Statistics Row --}}
-        <div class="row">
+                    {{-- Normal View Tab --}}
+                    <div class="tab-pane active" id="normalView">
+                        <div class="row">
 
-            {{-- Total Patients --}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-info shadow-sm">
-                    <div class="inner">
-                        <h3>{{ $totalPatients }}</h3>
-                        <p>Total Registered Patients</p>
-                    </div>
-                    <div class="icon">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <a href="{{ route('patients.index') }}" class="small-box-footer">
-                        More Info <i class="fas fa-arrow-right"></i>
-                    </a>
-                </div>
-            </div>
+                            {{-- Patient Stats 4x4 layout --}}
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $totalPatients }}" text="Total Patients" theme="info"
+                                    icon="fas fa-users" url="{{ route('patients.index') }}" />
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $todayPatients }}" text="Registered Today" theme="light"
+                                    icon="fas fa-calendar-day"
+                                    url="{{ route('patients.index', ['date_filter' => 'today']) }}" />
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $weeklyPatients }}" text="This Week" theme="primary"
+                                    icon="fas fa-calendar-week"
+                                    url="{{ route('patients.index', ['date_filter' => 'last_7_days']) }}" />
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $monthlyPatients }}" text="This Month" theme="secondary"
+                                    icon="fas fa-calendar-alt"
+                                    url="{{ route('patients.index', ['date_filter' => 'this_month']) }}" />
+                            </div>
 
-            {{-- Today --}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-light shadow-sm">
-                    <div class="inner">
-                        <h3 class="text-info">{{ $todayPatients }}</h3>
-                        <p>Registered Today</p>
-                    </div>
-                    <div class="icon text-info">
-                        <i class="fas fa-calendar-day"></i>
-                    </div>
-                    <a href="{{ route('patients.index', ['date_filter' => 'today']) }}" class="small-box-footer">
-                        More Info <i class="fas fa-arrow-right"></i>
-                    </a>
+                            {{-- Recommended Patients --}}
+                            <div class="col-12 mt-3">
+                                <hr>
+                                <h5 class="text-info font-weight-bold">⭐ Recommended Patients Overview</h5>
+                            </div>
 
-                </div>
-            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $totalRecommendedPatients }}" text="Total Recommended"
+                                    theme="danger" icon="fas fa-user-md"
+                                    url="{{ route('patients.recommend', ['is_recommend' => 1]) }}" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $todayRecommendedPatients }}" text="Today's Recommended"
+                                    theme="warning" icon="fas fa-stethoscope"
+                                    url="{{ route('patients.recommend', ['is_recommend' => 1, 'date_filter' => 'today']) }}" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $monthlyRecommendedPatients }}" text="Monthly Recommended"
+                                    theme="success" icon="fas fa-chart-line"
+                                    url="{{ route('patients.recommend', ['is_recommend' => 1, 'date_filter' => 'this_month']) }}" />
+                            </div>
 
-            {{-- Weekly --}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-light shadow-sm">
-                    <div class="inner">
-                        <h3 class="text-primary">{{ $weeklyPatients }}</h3>
-                        <p>This Week Registrations</p>
+                        </div>
                     </div>
-                    <div class="icon text-primary">
-                        <i class="fas fa-calendar-week"></i>
-                    </div>
-                    <a href="{{ route('patients.index', ['date_filter' => 'last_7_days']) }}" class="small-box-footer">
-                        More Info <i class="fas fa-arrow-right"></i>
-                    </a>
 
-                </div>
-            </div>
+                    {{-- Statistical View Tab --}}
+                    <div class="tab-pane" id="statisticalView">
+                        <div class="row">
 
-            {{-- Monthly --}}
-            <div class="col-lg-3 col-md-6 col-sm-12">
-                <div class="small-box bg-light shadow-sm">
-                    <div class="inner">
-                        <h3 class="text-secondary">{{ $monthlyPatients }}</h3>
-                        <p>This Month Registrations</p>
-                    </div>
-                    <div class="icon text-secondary">
-                        <i class="fas fa-calendar-alt"></i>
-                    </div>
-                    <a href="{{ route('patients.index', ['date_filter' => 'this_month']) }}" class="small-box-footer">
-                        More Info <i class="fas fa-arrow-right"></i>
-                    </a>
+                            <div class="col-md-6 mb-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-header">
+                                        <h6>Patient Registrations Distribution</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="patientsPieChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
 
-                </div>
-            </div>
+                            <div class="col-md-6 mb-3">
+                                <div class="card shadow-sm">
+                                    <div class="card-header">
+                                        <h6>Recommended Patients Trend</h6>
+                                    </div>
+                                    <div class="card-body">
+                                        <canvas id="recommendedBarChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
 
-            {{-- Section Title --}}
-            <div class="col-12 mb-2">
-                <h5 class="text-info font-weight-bold">
-                    ⭐ Recommended Patients Overview
-                </h5>
-                <hr>
-            </div>
+                        </div>
 
-            {{-- Total Recommended --}}
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="small-box bg-light shadow-sm">
-                    <div class="inner">
-                        <h3 class="text-danger">{{ $totalRecommendedPatients }}</h3>
-                        <p>Total Recommended Patients</p>
-                    </div>
-                    <div class="icon text-danger">
-                        <i class="fas fa-user-md"></i>
-                    </div>
-                    <a href="{{ route('patients.recommend', ['is_recommend' => 1]) }}" class="small-box-footer">
-                        More Info <i class="fas fa-arrow-right"></i>
-                    </a>
+                        {{-- Detailed Stats --}}
+                        <div class="row mt-4">
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $totalPatients }}" text="Total Patients" theme="info"
+                                    icon="fas fa-users" />
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $todayPatients }}" text="Registered Today" theme="light"
+                                    icon="fas fa-calendar-day" />
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $weeklyPatients }}" text="This Week" theme="primary"
+                                    icon="fas fa-calendar-week" />
+                            </div>
+                            <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $monthlyPatients }}" text="This Month" theme="secondary"
+                                    icon="fas fa-calendar-alt" />
+                            </div>
 
-                </div>
-            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $totalRecommendedPatients }}" text="Total Recommended"
+                                    theme="danger" icon="fas fa-user-md" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $todayRecommendedPatients }}" text="Today's Recommended"
+                                    theme="warning" icon="fas fa-stethoscope" />
+                            </div>
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $monthlyRecommendedPatients }}"
+                                    text="Monthly Recommended" theme="success" icon="fas fa-chart-line" />
+                            </div>
+                        </div>
 
-            {{-- Today Recommended --}}
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="small-box bg-light shadow-sm">
-                    <div class="inner">
-                        <h3 class="text-warning">{{ $todayRecommendedPatients }}</h3>
-                        <p>Today's Recommended Patients</p>
                     </div>
-                    <div class="icon text-warning">
-                        <i class="fas fa-stethoscope"></i>
-                    </div>
-                    <a href="{{ route('patients.recommend', [
-                        'is_recommend' => 1,
-                        'date_filter' => 'today',
-                    ]) }}"
-                        class="small-box-footer">
-                        More Info <i class="fas fa-arrow-right"></i>
-                    </a>
-
-                </div>
-            </div>
-
-            {{-- Monthly Recommended --}}
-            <div class="col-lg-4 col-md-6 col-sm-12">
-                <div class="small-box bg-light shadow-sm">
-                    <div class="inner">
-                        <h3 class="text-success">{{ $monthlyRecommendedPatients }}</h3>
-                        <p>Monthly Recommended Patients</p>
-                    </div>
-                    <div class="icon text-success">
-                        <i class="fas fa-chart-line"></i>
-                    </div>
-                    <a href="{{ route('patients.recommend', [
-                        'is_recommend' => 1,
-                        'date_filter' => 'this_month',
-                    ]) }}"
-                        class="small-box-footer">
-                        More Info <i class="fas fa-arrow-right"></i>
-                    </a>
 
                 </div>
             </div>
         </div>
+
+        {{-- Extended View: Merge Normal + Statistical --}}
+        <div id="extendedView" style="display: none;">
+            <div class="row">
+                {{-- Normal Stats --}}
+                <div class="col-12">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                    <x-adminlte-small-box title="{{ $totalPatients }}" text="Total Patients"
+                                        theme="info" icon="fas fa-users" />
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                    <x-adminlte-small-box title="{{ $todayPatients }}" text="Registered Today"
+                                        theme="light" icon="fas fa-calendar-day" />
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                    <x-adminlte-small-box title="{{ $weeklyPatients }}" text="This Week" theme="primary"
+                                        icon="fas fa-calendar-week" />
+                                </div>
+                                <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
+                                    <x-adminlte-small-box title="{{ $monthlyPatients }}" text="This Month"
+                                        theme="secondary" icon="fas fa-calendar-alt" />
+                                </div>
+                            </div>
+
+                            <div class="row mt-3">
+                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                    <x-adminlte-small-box title="{{ $totalRecommendedPatients }}"
+                                        text="Total Recommended" theme="danger" icon="fas fa-user-md" />
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                    <x-adminlte-small-box title="{{ $todayRecommendedPatients }}"
+                                        text="Today's Recommended" theme="warning" icon="fas fa-stethoscope" />
+                                </div>
+                                <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                    <x-adminlte-small-box title="{{ $monthlyRecommendedPatients }}"
+                                        text="Monthly Recommended" theme="success" icon="fas fa-chart-line" />
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- Statistical Charts --}}
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h6>Patient Registrations Distribution</h6>
+                                </div>
+                                <div class="card-body"><canvas id="patientsPieChartExt"></canvas></div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <div class="card shadow-sm">
+                                <div class="card-header">
+                                    <h6>Recommended Patients Trend</h6>
+                                </div>
+                                <div class="card-body"><canvas id="recommendedBarChartExt"></canvas></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
     </div>
+@stop
+
+@section('js')
+    <script>
+        const toggleBtn = document.getElementById('toggleViewBtn');
+        const tabs = document.getElementById('dashboardTabs');
+        const extended = document.getElementById('extendedView');
+
+        // Set initial state
+        let isNormalView = true;
+        tabs.style.display = 'block';
+        extended.style.display = 'none';
+
+        toggleBtn.addEventListener('click', function() {
+            isNormalView = !isNormalView;
+
+            if (isNormalView) {
+                tabs.style.display = 'block';
+                extended.style.display = 'none';
+                toggleBtn.textContent = 'Extended View';
+                toggleBtn.classList.remove('btn-success');
+                toggleBtn.classList.add('btn-primary');
+            } else {
+                tabs.style.display = 'none';
+                extended.style.display = 'block';
+                toggleBtn.textContent = 'Normal View';
+                toggleBtn.classList.remove('btn-primary');
+                toggleBtn.classList.add('btn-success');
+            }
+        });
+
+        // Chart.js for tab view
+        new Chart(document.getElementById('patientsPieChart').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Today', 'This Week', 'This Month'],
+                datasets: [{
+                    data: [{{ $todayPatients }}, {{ $weeklyPatients }}, {{ $monthlyPatients }}],
+                    backgroundColor: ['#17a2b8', '#007bff', '#6c757d']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('recommendedBarChart').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Today', 'This Month'],
+                datasets: [{
+                    label: 'Recommended Patients',
+                    data: [{{ $todayRecommendedPatients }}, {{ $monthlyRecommendedPatients }}],
+                    backgroundColor: ['#ffc107', '#28a745']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+
+        // Chart.js for extended view
+        new Chart(document.getElementById('patientsPieChartExt').getContext('2d'), {
+            type: 'doughnut',
+            data: {
+                labels: ['Today', 'This Week', 'This Month'],
+                datasets: [{
+                    data: [{{ $todayPatients }}, {{ $weeklyPatients }}, {{ $monthlyPatients }}],
+                    backgroundColor: ['#17a2b8', '#007bff', '#6c757d']
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+
+        new Chart(document.getElementById('recommendedBarChartExt').getContext('2d'), {
+            type: 'bar',
+            data: {
+                labels: ['Today', 'This Month'],
+                datasets: [{
+                    label: 'Recommended Patients',
+                    data: [{{ $todayRecommendedPatients }}, {{ $monthlyRecommendedPatients }}],
+                    backgroundColor: ['#ffc107', '#28a745']
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    </script>
 @stop
