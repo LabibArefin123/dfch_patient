@@ -50,4 +50,12 @@ class ActivityLogController extends Controller
 
         return view('backend.activity_logs.index', compact('activities'));
     }
+
+    public function destroy($id)
+    {
+        $activity = Activity::findOrFail($id);
+        $activity->delete();
+
+        return redirect()->back()->with('success', 'Log deleted successfully');
+    }
 }

@@ -97,7 +97,7 @@
                             </td>
                             <td>
                                 <button class="btn btn-info btn-sm" data-toggle="modal" data-target="#propertyModal"
-                                    data-properties='@json($activity->properties)'>
+                                    data-properties='@json($activity->properties)' data-id="{{ $activity->id }}">
                                     View
                                 </button>
                             </td>
@@ -133,11 +133,32 @@
                 </div>
 
                 <div class="modal-body">
-                    <pre id="modalProperties" style="white-space: pre-wrap;"></pre>
+
+                    <!-- Highlight Section -->
+                    <div id="changeHighlight"></div>
+
+                    <hr>
+
+                    <!-- JSON View -->
+                    <h6>Full JSON</h6>
+                    <pre id="modalProperties" style="max-height:300px; overflow:auto; background:#000; color:#0f0; padding:10px;"></pre>
+
                 </div>
 
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+
+                    <!-- Copy Button -->
+                    <button class="btn btn-success btn-sm" onclick="copyJSON()">Copy JSON</button>
+
+                    <!-- Delete Button (optional) -->
+                    <form id="deleteForm" method="POST" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button class="btn btn-danger btn-sm" onclick="return confirm('Delete this log?')">Delete</button>
+                    </form>
+
+                    <button class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+
                 </div>
 
             </div>
@@ -147,13 +168,65 @@
 
 @push('js')
     <script>
+        let currentJSON = '';
+
         $('#propertyModal').on('show.bs.modal', function(event) {
+
             let button = $(event.relatedTarget);
             let properties = button.data('properties');
+            let id = button.data('id');
 
-            let formatted = JSON.stringify(properties, null, 4);
+            currentJSON = JSON.stringify(properties, null, 4);
 
-            $('#modalProperties').text(formatted);
+            // Show JSON
+            $('#modalProperties').text(currentJSON);
+
+            // 🔥 Highlight OLD vs NEW
+            let html = '';
+
+            if (properties.old || properties.attributes) {
+
+                html += '<div class="row">';
+
+                if (properties.old) {
+                    html += `
+                    <div class="col-md-6">
+                        <h6 class="text-danger">Old</h6>
+                        <pre style="background:#ffe6e6; padding:10px;">
+${JSON.stringify(properties.old, null, 2)}
+                        </pre>
+                    </div>
+                `;
+                }
+
+                if (properties.attributes) {
+                    html += `
+                    <div class="col-md-6">
+                        <h6 class="text-success">New</h6>
+                        <pre style="background:#e6ffe6; padding:10px;">
+${JSON.stringify(properties.attributes, null, 2)}
+                        </pre>
+                    </div>
+                `;
+                }
+
+                html += '</div>';
+            } else {
+                html = '<p class="text-muted">No change data available</p>';
+            }
+
+            $('#changeHighlight').html(html);
+
+            // 🔥 Set delete route dynamically
+            let url = "{{ route('activity.logs.destroy', ':id') }}";
+            url = url.replace(':id', id);
+            $('#deleteForm').attr('action', url);
         });
+
+        // ✅ Copy JSON
+        function copyJSON() {
+            navigator.clipboard.writeText(currentJSON);
+            alert('Copied to clipboard!');
+        }
     </script>
 @endpush

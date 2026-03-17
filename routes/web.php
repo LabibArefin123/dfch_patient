@@ -123,6 +123,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/settings/theme/update', [SettingController::class, 'updateTheme'])->name('settings.theme.update');
 
     Route::get('/activity-logs', [ActivityLogController::class, 'index'])->name('activity.logs.index');
+    Route::delete('/activity-logs/{id}', [ActivityLogController::class, 'destroy'])->name('activity.logs.destroy');
 });
 
 Auth::routes([
