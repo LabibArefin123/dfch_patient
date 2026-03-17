@@ -129,4 +129,3 @@ class BannedDeviceController extends Controller
             ->with('success', 'Device removed from banned list.');
     }
 }
-\

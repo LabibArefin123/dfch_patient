@@ -51,7 +51,7 @@ Route::get('/user_profile', function () {
 })->middleware(['auth', 'verified'])->name('profile');
 
 //Route::group(['middleware' => ['auth', 'permission']], function () {
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => ['auth', 'check_banned_device']], function () {
 
     // Profile Routes
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -104,7 +104,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/user_devices/{id}/unban', [UserDeviceController::class, 'unban'])->name('user_devices.unban');
     Route::resource('user_devices', UserDeviceController::class);
     Route::post('/system-users/{user}/change-password', [SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
-    
+
     //Setting 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::get('/settings/password_policy', [SettingController::class, 'password_policy'])->name('settings.password_policy');

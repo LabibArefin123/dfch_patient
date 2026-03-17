@@ -479,62 +479,81 @@ return [
                 ],
             ],
         ],
-
         [
-            'text'    => 'Setting Management',
-            'icon'    => 'fas fa-cogs',
+            'text' => 'Setting Management',
+            'icon' => 'fas fa-cogs',
             'submenu' => [
+                // User & Role Management
                 [
-                    'text' => 'Role List',
-                    'route' => 'roles.index',
-                    'can' => 'roles.index',
-                    'active' => ['roles*'],
-                    'icon' => 'fas fa-user-tag',  // user tag icon
-                ],
-                [
-                    'text' => 'Permission List',
-                    'route' => 'permissions.index',
-                    'can' => 'permissions.index',
-                    'active' => ['permissions*'],
-                    'icon' => 'fas fa-key',  // key icon
-                ],
-                [
-                    'text' => 'System User',
-                    'route' => 'system_users.index',
-                    'can' => 'system_users.index',
-                    'active' => ['system_users*'],
-                    'icon' => 'fas fa-users-cog',  // users with cog icon
-                ],
-                [
-                    'text' => 'Ban Users',
-                    'route' => 'ban_users.index',
-                    'can' => 'ban_users.index',
-                    'active' => ['ban_users*'],
-                    'icon' => 'fas fa-user-slash',
-                ],
-
-                [
-                    'text' => 'Banned Devices',
-                    'route' => 'banned_devices.index',
-                    'can' => 'banned_devices.index',
-                    'active' => ['banned_devices*'],
-                    'icon' => 'fas fa-ban'
+                    'text' => 'User & Roles',
+                    'icon' => 'fas fa-users',
+                    'submenu' => [
+                        [
+                            'text' => 'Role List',
+                            'route' => 'roles.index',
+                            'can' => 'roles.index',
+                            'active' => ['roles*'],
+                            'icon' => 'fas fa-user-tag',
+                        ],
+                        [
+                            'text' => 'Permission List',
+                            'route' => 'permissions.index',
+                            'can' => 'permissions.index',
+                            'active' => ['permissions*'],
+                            'icon' => 'fas fa-key',
+                        ],
+                        [
+                            'text' => 'System User',
+                            'route' => 'system_users.index',
+                            'can' => 'system_users.index',
+                            'active' => ['system_users*'],
+                            'icon' => 'fas fa-users-cog',
+                        ],
+                    ],
                 ],
 
+                // User Ban & Devices
                 [
-                    'text'   => 'User Devices',
-                    'route'  => 'user_devices.index',
-                    'can'    => 'user_devices.index',
-                    'active' => ['user-devices*'],
-                    'icon'   => 'fas fa-laptop',
+                    'text' => 'Ban & Devices',
+                    'icon' => 'fas fa-user-shield',
+                    'submenu' => [
+                        [
+                            'text' => 'Ban Users',
+                            'route' => 'ban_users.index',
+                            'can' => 'ban_users.index',
+                            'active' => ['ban_users*'],
+                            'icon' => 'fas fa-user-slash',
+                        ],
+                        [
+                            'text' => 'Banned Devices',
+                            'route' => 'banned_devices.index',
+                            'can' => 'banned_devices.index',
+                            'active' => ['banned_devices*'],
+                            'icon' => 'fas fa-ban',
+                        ],
+                        [
+                            'text' => 'User Devices',
+                            'route' => 'user_devices.index',
+                            'can' => 'user_devices.index',
+                            'active' => ['user-devices*'],
+                            'icon' => 'fas fa-laptop',
+                        ],
+                    ],
                 ],
 
+                // System Monitoring
                 [
-                    'text' => 'System Problems',
-                    'route' => 'system_problems.index',
-                    'can' => 'system_problems.index',
-                    'active' => ['system_problems*'],
-                    'icon' => 'fas fa-bug',
+                    'text' => 'System Monitoring',
+                    'icon' => 'fas fa-tools',
+                    'submenu' => [
+                        [
+                            'text' => 'System Problems',
+                            'route' => 'system_problems.index',
+                            'can' => 'system_problems.index',
+                            'active' => ['system_problems*'],
+                            'icon' => 'fas fa-bug',
+                        ],
+                    ],
                 ],
             ],
         ],
