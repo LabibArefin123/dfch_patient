@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\BannedDevice;
 use App\Models\User;
+use Jenssegers\Agent\Agent;
 
 class BannedDeviceController extends Controller
 {
@@ -19,13 +20,22 @@ class BannedDeviceController extends Controller
     }
 
     /**
-     * Show create form
+     * Show create form (AUTO DETECT DEVICE)
      */
-    public function create()
+    public function create(Request $request)
     {
+        $agent = new Agent();
+
+        $device = [
+            'ip_address'  => $request->ip(),
+            'device_name' => $agent->device() ?: 'Desktop',
+            'device_type' => $agent->platform() . ' - ' . $agent->browser(),
+            'user_agent'  => $request->userAgent(),
+        ];
+
         $users = User::pluck('name', 'id');
 
-        return view('backend.setting_management.banned_devices.create', compact('users'));
+        return view('backend.setting_management.banned_devices.create', compact('users', 'device'));
     }
 
     /**
@@ -38,15 +48,18 @@ class BannedDeviceController extends Controller
             'device_name' => 'nullable|string|max:255',
             'device_type' => 'nullable|string|max:255',
             'reason'      => 'nullable|string|max:500',
-            'user_id'     => 'nullable|exists:users,id'
+            'user_id'     => 'nullable|exists:users,id',
+            'is_active'   => 'required|boolean',
         ]);
 
         BannedDevice::create([
             'ip_address'  => $request->ip_address,
             'device_name' => $request->device_name,
             'device_type' => $request->device_type,
+            'user_agent'  => $request->user_agent ?? $request->userAgent(),
             'reason'      => $request->reason,
             'user_id'     => $request->user_id,
+            'is_active'   => $request->is_active,
         ]);
 
         return redirect()->route('banned_devices.index')
@@ -86,15 +99,18 @@ class BannedDeviceController extends Controller
             'device_name' => 'nullable|string|max:255',
             'device_type' => 'nullable|string|max:255',
             'reason'      => 'nullable|string|max:500',
-            'user_id'     => 'nullable|exists:users,id'
+            'user_id'     => 'nullable|exists:users,id',
+            'is_active'   => 'required|boolean',
         ]);
 
         $device->update([
             'ip_address'  => $request->ip_address,
             'device_name' => $request->device_name,
             'device_type' => $request->device_type,
+            'user_agent'  => $request->user_agent ?? $request->userAgent(),
             'reason'      => $request->reason,
             'user_id'     => $request->user_id,
+            'is_active'   => $request->is_active,
         ]);
 
         return redirect()->route('banned_devices.index')
@@ -107,10 +123,10 @@ class BannedDeviceController extends Controller
     public function destroy($id)
     {
         $device = BannedDevice::findOrFail($id);
-
         $device->delete();
 
         return redirect()->route('banned_devices.index')
             ->with('success', 'Device removed from banned list.');
     }
 }
+\

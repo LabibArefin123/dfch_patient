@@ -522,6 +522,14 @@ return [
                 ],
 
                 [
+                    'text'   => 'User Devices',
+                    'route'  => 'user_devices.index',
+                    'can'    => 'user_devices.index',
+                    'active' => ['user-devices*'],
+                    'icon'   => 'fas fa-laptop',
+                ],
+
+                [
                     'text' => 'System Problems',
                     'route' => 'system_problems.index',
                     'can' => 'system_problems.index',

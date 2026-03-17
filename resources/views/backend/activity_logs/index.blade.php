@@ -19,7 +19,7 @@
                 <form method="GET">
                     <div class="row">
                         <div class="col-md-3">
-                            <label>User ID</label>
+                            <label>User</label>
                             <input type="text" name="user" class="form-control" value="{{ request('user') }}">
                         </div>
 
@@ -102,18 +102,16 @@
                                 </button>
                             </td>
 
-                            <td>
-                                {{ $activity->created_at->format('d M Y H:i') }}
+                            <td title="{{ $activity->created_at->format('d M Y H:i') }}">
+                                {{ $activity->created_at->diffForHumans() }}
                             </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="7" class="text-center">No Activity Found</td>
+                            <td colspan="8" class="text-center">No Activity Found</td>
                         </tr>
                     @endforelse
-
                 </tbody>
-
             </table>
         </div>
     </div>

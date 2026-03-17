@@ -12,6 +12,9 @@ use App\Models\SystemProblem;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\BanUser;
+use Jenssegers\Agent\Agent;
+use App\Models\UserDevice;
+
 
 class LoginController extends Controller
 {
@@ -104,13 +107,44 @@ class LoginController extends Controller
         return redirect()->intended($this->redirectTo);
     }
 
-   
+
     /**
      * Handle actions after successful login
      */
     protected function authenticated(Request $request, $user)
     {
-        // SweetAlert / toast message
+        $agent = new Agent();
+
+        $ip = $request->ip();
+        $userAgent = $request->userAgent();
+
+        // 🔴 BLOCK banned device
+        $banned = UserDevice::where('user_id', $user->id)
+            ->where('ip_address', $ip)
+            ->where('user_agent', $userAgent)
+            ->where('is_banned', true)
+            ->first();
+
+        if ($banned) {
+            auth()->logout();
+            abort(403, 'Your device is banned. Contact admin.');
+        }
+
+        // ✅ Track / Update device
+        UserDevice::updateOrCreate(
+            [
+                'user_id'    => $user->id,
+                'ip_address' => $ip,
+                'user_agent' => $userAgent,
+            ],
+            [
+                'device_name'   => $agent->device() ?: 'Desktop',
+                'device_type'   => $agent->platform() . ' - ' . $agent->browser(),
+                'last_login_at' => now(),
+            ]
+        );
+
+        // ✅ Success message
         session()->flash('login_success', 'Welcome back, ' . $user->name . '!');
     }
 

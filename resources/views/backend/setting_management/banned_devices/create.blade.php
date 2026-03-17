@@ -21,22 +21,25 @@
 
                     <div class="col-md-6 form-group">
                         <label>IP Address</label>
-                        <input type="text" name="ip_address" class="form-control">
+                        <input type="text" name="ip_address" class="form-control" value="{{ $device['ip_address'] }}">
                     </div>
 
                     <div class="col-md-6 form-group">
                         <label>Device Name</label>
-                        <input type="text" name="device_name" class="form-control">
+                        <input type="text" name="device_name" class="form-control" value="{{ $device['device_name'] }}">
                     </div>
 
                     <div class="col-md-6 form-group">
-                        <label>Device Type</label>
-                        <input type="text" name="device_type" class="form-control">
+                        <label>Device Type (OS + Browser)</label>
+                        <input type="text" name="device_type" class="form-control" value="{{ $device['device_type'] }}">
                     </div>
+
+                    <!-- Hidden User Agent -->
+                    <input type="hidden" name="user_agent" value="{{ $device['user_agent'] }}">
 
                     <div class="col-md-6 form-group">
                         <label>User</label>
-                        <select name="user_id" class="form-control">
+                        <select name="user_id" class="form-control select2">
                             <option value="">None</option>
                             @foreach ($users as $id => $name)
                                 <option value="{{ $id }}">{{ $name }}</option>
@@ -70,3 +73,11 @@
     </div>
 
 @stop
+@push('js')
+    <script>
+        $('.select2').select2({
+            placeholder: "Select user",
+            allowClear: true
+        });
+    </script>
+@endpush

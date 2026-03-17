@@ -12,6 +12,7 @@ use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\SystemUserController;
+use App\Http\Controllers\UserDeviceController;
 use App\Http\Controllers\BanUserController;
 use App\Http\Controllers\BannedDeviceController;
 use App\Http\Controllers\SettingController;
@@ -99,7 +100,11 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resource('ban_users', BanUserController::class);
     Route::resource('banned_devices', BannedDeviceController::class);
     Route::resource('system_problems', SystemProblemController::class);
+    Route::post('/user_devices/{id}/ban', [UserDeviceController::class, 'ban'])->name('user_devices.ban');
+    Route::post('/user_devices/{id}/unban', [UserDeviceController::class, 'unban'])->name('user_devices.unban');
+    Route::resource('user_devices', UserDeviceController::class);
     Route::post('/system-users/{user}/change-password', [SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
+    
     //Setting 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');
     Route::get('/settings/password_policy', [SettingController::class, 'password_policy'])->name('settings.password_policy');
