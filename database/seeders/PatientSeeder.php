@@ -4,128 +4,46 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use App\Models\Patient;
-use Faker\Factory as Faker;
 use Carbon\Carbon;
 
 class PatientSeeder extends Seeder
 {
     public function run(): void
     {
-        // Faker (South Asia friendly)
-        $faker = Faker::create('en_IN');
-
-        /* ===============================
-           BANGLADESH REALISTIC DATA
-        =============================== */
-
-        $maleNames = [
-            'Abdul Karim',
-            'Md. Rahman',
-            'Md. Hasan',
-            'Md. Alamgir',
-            'Md. Saiful Islam',
-            'Md. Jahangir',
-            'Md. Kamal',
-            'Md. Faruk',
-            'Md. Mizanur Rahman'
-        ];
-
-        $femaleNames = [
-            'Ayesha Begum',
-            'Fatema Khatun',
-            'Shamima Begum'
-        ];
-
-        $fatherNames = [
-            'dsaFWFAGWG WADW',
-            'SGWBWDAWD FWFWArWR',
-            'SDADADSDA WFOIAJFOJOW',
-            'SFWAFDAWD DOAWJPJ',
-            'WRRWFAGGDA WDAS',
-            'SDSDDDDHW FPOAKFK',
-            'WGWHEHHHH DAWFAFGG',
-            'WDGWBBWAFD DADAFG',
-            'WAWGWGGGG OJOFIVOH',
-            'HHHHQEDQQ MGOICD',
-            'GWIJWDOJAOD DKPOAJPJA',
-            'WPPWOAFPJJ KDPAWPDWAJ',
-            'WJFOJAFOHF MMDPADPOKP'
-        ];
-
-        $motherNames = [
-            'WIFAOFHHOF DAWDBAB',
-            'WJFPWAJFFW JFPOJWJFA',
-            'SAFsFAFWFW FPOAWJFO',
-            'GGWNWRNTA WJFPADW',
-            'OJDOIHWDOAN AKFPDAW',
-            'WDYHIAUHDIU PWOJFAPJFJPOAF',
-            'JDOWJAODJ FAKFPJWAPJFPJD',
-            'JDPAJDJJJAO AKFKAGPFKAWWW',
-            'GIJIOWGONF APLDPWLAD',
-            'DWADADWWFFWA DWJDPWAJFPWJA'
-        ];
-
-        $districts = [
-            'Dhaka',
-            'Narayanganj',
-            'Gazipur',
-            'Cumilla',
-            'Chattogram',
-            'Noakhali',
-            'Barishal',
-            'Sylhet'
-        ];
-
-        // Common colorectal & hospital problems (BD context)
-        $patientProblems = [
-            'Chronic abdominal pain with constipation',
-            'Rectal bleeding during defecation',
-            'Hemorrhoids with pain and itching',
-            'Anal fissure with bleeding',
-            'Suspected colorectal carcinoma',
-            'Chronic diarrhea with weight loss',
-            'Inflammatory bowel disease symptoms',
-            'Post-operative follow-up visit',
-            'Lower abdominal pain with anemia',
-            'Piles with prolapse'
-        ];
-
-        // Realistic OPD / hospital drug prescriptions
-        $drugPrescriptions = [
-            'Tab Napa 500mg 1+1+1 after meal',
-            'Tab Seclo 20mg 1+0+1 before meal',
-            'Tab Domperidone 10mg 1+0+1',
-            'Syrup Lactulose 15ml at night',
-            'Tab Flagyl 400mg 1+1+1 for 7 days',
-            'Tab Cefixime 200mg 1+0+1 for 5 days',
-            'Suppository Proctosedyl at night',
-            'ORS after each loose motion',
-            'Tab Napa Extend 665mg 1+0+1',
-            'Injection Ceftriaxone 1gm IV BD'
-        ];
-
-        // Local doctor names
-        $doctorNames = [
-            'Dr. ABC',
-            'Dr. AAA',
-            'Dr. ACC',
-            'Dr. ABCD',
-            'Dr. AZZZZ',
-            'Dr. XYZ',
-            'Dr. ZZZ',
-            'Dr. AAAS',
-            'Dr. SDDDA',
-            'Dr. MBO'
-        ];
-
-        /* ===============================
-           DATE RANGE
-        =============================== */
-
-        $startDate = Carbon::now()->subMonths(6)->startOfDay();
-        $endDate   = Carbon::now()->startOfDay();
+        $startDate = Carbon::create(2026, 3, 1);
+        $endDate   = Carbon::create(2026, 3, 25);
 
         $baseId = Patient::max('id') ?? 0;
+
+        /* ===============================
+           LOAD CONFIG SAFELY
+        =============================== */
+
+        $maleFirst   = config('bd_names.male_first', []);
+        $femaleFirst = config('bd_names.female_first', []);
+        $lastNames   = config('bd_names.last', []);
+
+        if (empty($maleFirst) || empty($femaleFirst) || empty($lastNames)) {
+            throw new \Exception('bd_names config is missing or empty!');
+        }
+
+        $problems = [
+            'Abdominal pain',
+            'Rectal bleeding',
+            'Hemorrhoids',
+            'Anal fissure',
+            'Chronic diarrhea',
+            'IBD symptoms',
+            'Post-op follow-up',
+        ];
+
+        $drugs = [
+            'Tab Napa 500mg',
+            'Tab Seclo 20mg',
+            'Tab Flagyl 400mg',
+            'Syrup Lactulose',
+            'ORS',
+        ];
 
         /* ===============================
            MAIN LOOP
@@ -133,64 +51,67 @@ class PatientSeeder extends Seeder
 
         while ($startDate <= $endDate) {
 
-            $dailyCount = $startDate->isToday() ? 120 : rand(100, 150);
+            $dailyCount = rand(50, 150);
 
-            for ($i = 1; $i <= $dailyCount; $i++) {
+            for ($i = 0; $i < $dailyCount; $i++) {
 
                 $baseId++;
 
                 $gender = rand(0, 1) ? 'male' : 'female';
 
-                $patientName = $gender === 'male'
-                    ? $maleNames[array_rand($maleNames)]
-                    : $femaleNames[array_rand($femaleNames)];
+                // First & Last Name
+                $firstName = $gender === 'male'
+                    ? $maleFirst[array_rand($maleFirst)]
+                    : $femaleFirst[array_rand($femaleFirst)];
 
-                $locationType = rand(1, 3); // 1=Local, 2=Domestic, 3=Foreign
-                $isRecommend  = rand(1, 100) <= 15;
+                $lastName = $lastNames[array_rand($lastNames)];
+
+                // ✅ Add "Md." prefix randomly (very BD realistic)
+                $prefix = ($gender === 'male' && rand(1, 100) <= 70) ? 'Md. ' : '';
+
+                $patientName = $prefix . $firstName . ' ' . $lastName;
+
+                // Parents
+                $fatherName = 'Md. ' . $maleFirst[array_rand($maleFirst)] . ' ' . $lastName;
+                $motherName = $femaleFirst[array_rand($femaleFirst)] . ' ' . $lastName;
+
+                $locationType = rand(1, 3);
 
                 Patient::create([
-                    'patient_code' => 'DFCH-' . $startDate->year . '-' . str_pad($baseId, 9, '0', STR_PAD_LEFT),
+                    'patient_code' => 'DFCH-2026-' . str_pad($baseId, 8, '0', STR_PAD_LEFT),
 
                     'patient_name'   => $patientName,
-                    'patient_f_name' => $fatherNames[array_rand($fatherNames)],
-                    'patient_m_name' => $motherNames[array_rand($motherNames)],
+                    'patient_f_name' => $fatherName,
+                    'patient_m_name' => $motherName,
 
                     'age'    => rand(2, 85),
                     'gender' => $gender,
 
-                    'location_type'   => $locationType,
-                    'location_simple' => $locationType === 1 ? 'Local Area' : null,
+                    'location_type' => $locationType,
 
-                    // Domestic patient
-                    'house_address' => $locationType === 2 ? $faker->streetAddress : null,
-                    'city'          => $locationType === 2 ? 'Dhaka' : null,
-                    'district'      => $locationType === 2 ? $districts[array_rand($districts)] : null,
-                    'post_code'     => $locationType === 2 ? rand(1000, 9999) : null,
+                    // Domestic
+                    'house_address' => $locationType == 2 ? 'House-' . rand(1, 100) : null,
+                    'city'          => $locationType == 2 ? 'Dhaka' : null,
+                    'district'      => $locationType == 2 ? 'Dhaka' : null,
+                    'post_code'     => $locationType == 2 ? rand(1000, 9999) : null,
 
-                    // Foreign patient
-                    'country'     => $locationType === 3 ? 'India' : null,
-                    'passport_no' => $locationType === 3 ? strtoupper($faker->bothify('A######')) : null,
+                    // Foreign
+                    'country'     => $locationType == 3 ? 'India' : null,
+                    'passport_no' => $locationType == 3 ? strtoupper('A' . rand(100000, 999999)) : null,
 
-                    // Bangladesh mobile format
-                    'phone_1'   => '01' . rand(3, 9) . rand(10000000, 99999999),
-                    'phone_2'   => rand(0, 1) ? '01' . rand(3, 9) . rand(10000000, 99999999) : null,
-                    'phone_f_1' => rand(0, 1) ? '01' . rand(3, 9) . rand(10000000, 99999999) : null,
-                    'phone_m_1' => rand(0, 1) ? '01' . rand(3, 9) . rand(10000000, 99999999) : null,
+                    // BD Phone
+                    'phone_1' => '01' . rand(3, 9) . rand(10000000, 99999999),
 
-                    // Medical info
-                    'patient_problem_description' => $patientProblems[array_rand($patientProblems)],
-                    'patient_drug_description'    => $drugPrescriptions[array_rand($drugPrescriptions)],
+                    // Medical
+                    'patient_problem_description' => $problems[array_rand($problems)],
+                    'patient_drug_description'    => $drugs[array_rand($drugs)],
 
-                    // Recommendation
-                    'is_recommend'           => $isRecommend,
-                    'recommend_doctor_name' => $isRecommend ? $doctorNames[array_rand($doctorNames)] : null,
-                    'recommend_note'        => $isRecommend ? 'Advised further evaluation and follow-up.' : null,
+                    'is_recommend' => rand(1, 100) <= 15,
 
                     'date_of_patient_added' => $startDate->toDateString(),
-                    'remarks'               => rand(0, 1) ? 'Patient advised follow-up visit.' : null,
 
                     'created_at' => $startDate->copy()->addMinutes(rand(1, 600)),
-                    'updated_at' => $startDate->copy()->addMinutes(rand(1, 600)),
+                    'updated_at' => now(),
                 ]);
             }
 
