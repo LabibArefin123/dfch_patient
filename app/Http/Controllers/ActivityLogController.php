@@ -29,10 +29,12 @@ class ActivityLogController extends Controller
                 ->latest();
 
             /* =========================
-           FILTERS
+        🔥 FILTERS
         ========================== */
 
-            // 🔹 Filter by source: real vs faker/system
+            // FILTER BY REAL USER vs SYSTEM / FAKE
+            // 'real' = has causer_type = App\Models\User
+            // 'faker' = system/seeder actions (null or other)
             if ($request->filled('source')) {
                 if ($request->source === 'real') {
                     $query->where('causer_type', 'App\Models\User');
@@ -44,27 +46,27 @@ class ActivityLogController extends Controller
                 }
             }
 
-            // 🔹 Filter by user
+            // User filter (only real users)
             if ($request->filled('user')) {
                 $query->where('causer_id', $request->user);
             }
 
-            // 🔹 Filter by log name
+            // Log Name
             if ($request->filled('log_name')) {
                 $query->where('log_name', $request->log_name);
             }
 
-            // 🔹 Filter by model
+            // Model filter
             if ($request->filled('model')) {
                 $query->where('subject_type', 'like', '%' . $request->model . '%');
             }
 
-            // 🔹 Filter by description
+            // Description filter
             if ($request->filled('description')) {
                 $query->where('description', 'like', '%' . $request->description . '%');
             }
 
-            // 🔹 Filter by date range
+            // Date range
             if ($request->filled('from_date') && $request->filled('to_date')) {
                 $query->whereBetween('created_at', [
                     $request->from_date . ' 00:00:00',
@@ -80,13 +82,15 @@ class ActivityLogController extends Controller
                     if ($activity->causer) {
                         return $activity->causer->name;
                     }
+
                     if ($activity->causer_id) {
                         return '<span class="text-warning">ID: ' . $activity->causer_id . '</span>';
                     }
+
                     return '<span class="text-muted">System</span>';
                 })
 
-                // LOG TYPE (colored badges)
+                // LOG TYPE (colored)
                 ->addColumn('log', function ($activity) {
                     $color = match ($activity->log_name) {
                         'created' => 'success',
@@ -112,8 +116,9 @@ class ActivityLogController extends Controller
                 ->make(true);
         }
 
-        // 🔹 Filter dropdowns
+        // 🔥 FILTER OPTIONS
         $users = \App\Models\User::pluck('name', 'id');
+
         $sources = [
             'real'  => 'Original User Actions',
             'faker' => 'Seeder / System Logs'
@@ -121,6 +126,7 @@ class ActivityLogController extends Controller
 
         return view('backend.activity_logs.index', compact('users', 'sources'));
     }
+    
     public function destroy($id)
     {
         $activity = Activity::findOrFail($id);
