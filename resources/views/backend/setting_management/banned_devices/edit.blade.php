@@ -4,90 +4,118 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="mb-0">Edit Banned Device</h1>
+        <h4 class="mb-0">
+            <i class="fas fa-edit text-warning"></i> Edit Banned Device
+        </h4>
 
-        <a href="{{ route('banned_devices.index') }}" class="btn btn-sm btn-secondary">
+        <a href="{{ route('banned_devices.index') }}" class="btn btn-outline-secondary btn-sm">
             <i class="fas fa-arrow-left"></i> Back
         </a>
     </div>
 @stop
 
-
 @section('content')
-    <div class="card">
+
+    <div class="card shadow-sm">
         <div class="card-body">
+
             <form method="POST" action="{{ route('banned_devices.update', $device->id) }}">
                 @csrf
                 @method('PUT')
 
                 <div class="row">
 
-                    <div class="col-md-6 form-group">
-                        <label>IP Address</label>
-                        <input type="text" name="ip_address" class="form-control" value="{{ $device->ip_address }}">
+                    {{-- DEVICE INFO --}}
+                    <div class="col-md-6">
+                        <div class="card border-left-primary shadow-sm h-100">
+                            <div class="card-header bg-light">
+                                <strong><i class="fas fa-desktop"></i> Device Info</strong>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label>IP Address</label>
+                                    <input type="text" name="ip_address" class="form-control form-control-sm"
+                                        value="{{ $device->ip_address }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Device Name</label>
+                                    <input type="text" name="device_name" class="form-control form-control-sm"
+                                        value="{{ $device->device_name }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Device Type</label>
+                                    <input type="text" name="device_type" class="form-control form-control-sm"
+                                        value="{{ $device->device_type }}">
+                                </div>
+
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>Device Name</label>
-                        <input type="text" name="device_name" class="form-control" value="{{ $device->device_name }}">
-                    </div>
+                    {{-- SETTINGS --}}
+                    <div class="col-md-6">
+                        <div class="card border-left-danger shadow-sm h-100">
+                            <div class="card-header bg-light">
+                                <strong><i class="fas fa-cog"></i> Settings</strong>
+                            </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>Device Type</label>
-                        <input type="text" name="device_type" class="form-control" value="{{ $device->device_type }}">
-                    </div>
+                            <div class="card-body">
 
-                    <div class="col-md-6 form-group">
-                        <label>User</label>
-                        <select name="user_id" class="form-control">
+                                <div class="form-group">
+                                    <label>User</label>
+                                    <select name="user_id" class="form-control form-control-sm select2">
+                                        <option value="">None</option>
+                                        @foreach ($users as $id => $name)
+                                            <option value="{{ $id }}"
+                                                {{ $device->user_id == $id ? 'selected' : '' }}>
+                                                {{ $name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                            <option value="">None</option>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="is_active" class="form-control form-control-sm">
+                                        <option value="1" {{ $device->is_active ? 'selected' : '' }}>🔴 Banned</option>
+                                        <option value="0" {{ !$device->is_active ? 'selected' : '' }}>🟢 Allow</option>
+                                    </select>
+                                </div>
 
-                            @foreach ($users as $id => $name)
-                                <option value="{{ $id }}" {{ $device->user_id == $id ? 'selected' : '' }}>
-                                    {{ $name }}
-                                </option>
-                            @endforeach
+                                <div class="form-group">
+                                    <label>Reason</label>
+                                    <textarea name="reason" rows="2" class="form-control form-control-sm">{{ $device->reason }}</textarea>
+                                </div>
 
-                        </select>
-                    </div>
-
-
-                    <div class="col-md-6 form-group">
-                        <label>Status</label>
-
-                        <select name="is_active" class="form-control">
-
-                            <option value="1" {{ $device->is_active == 1 ? 'selected' : '' }}>
-                                Banned
-                            </option>
-
-                            <option value="0" {{ $device->is_active == 0 ? 'selected' : '' }}>
-                                Allow
-                            </option>
-
-                        </select>
-
-                    </div>
-
-
-                    <div class="col-md-6 form-group">
-                        <label>Reason</label>
-                        <input type="text" name="reason" value="{{ $device->reason }}" class="form-control">
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
-                <br>
-
-                <button class="btn btn-success">
-                    <i class="fas fa-save"></i> Update
-                </button>
+                <div class="text-right mt-3">
+                    <button class="btn btn-warning btn-sm">
+                        <i class="fas fa-save"></i> Update Device
+                    </button>
+                </div>
 
             </form>
 
         </div>
-
     </div>
 
 @stop
+
+@push('js')
+    <script>
+        $('.select2').select2({
+            placeholder: "Select user",
+            allowClear: true,
+            width: '100%'
+        });
+    </script>
+@endpush

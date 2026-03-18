@@ -4,80 +4,116 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="mb-0">Create Banned Device</h1>
+        <h4 class="mb-0">
+            <i class="fas fa-ban text-danger"></i> Create Banned Device
+        </h4>
 
-        <a href="{{ route('banned_devices.index') }}" class="back-btn btn btn-sm btn-secondary">
+        <a href="{{ route('banned_devices.index') }}" class="btn btn-outline-secondary btn-sm">
             <i class="fas fa-arrow-left"></i> Back
         </a>
     </div>
 @stop
 
 @section('content')
-    <div class="card">
+
+    <div class="card shadow-sm">
         <div class="card-body">
+
             <form method="POST" action="{{ route('banned_devices.store') }}">
                 @csrf
+
                 <div class="row">
 
-                    <div class="col-md-6 form-group">
-                        <label>IP Address</label>
-                        <input type="text" name="ip_address" class="form-control" value="{{ $device['ip_address'] }}">
+                    {{-- DEVICE INFO --}}
+                    <div class="col-md-6">
+                        <div class="card border-left-primary shadow-sm h-100">
+                            <div class="card-header bg-light">
+                                <strong><i class="fas fa-desktop"></i> Device Info</strong>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div class="form-group">
+                                    <label>IP Address</label>
+                                    <input type="text" name="ip_address" class="form-control form-control-sm"
+                                        value="{{ $device['ip_address'] }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Device Name</label>
+                                    <input type="text" name="device_name" class="form-control form-control-sm"
+                                        value="{{ $device['device_name'] }}">
+                                </div>
+
+                                <div class="form-group">
+                                    <label>Device Type</label>
+                                    <input type="text" name="device_type" class="form-control form-control-sm"
+                                        value="{{ $device['device_type'] }}">
+                                </div>
+
+                                <input type="hidden" name="user_agent" value="{{ $device['user_agent'] }}">
+
+                            </div>
+                        </div>
                     </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>Device Name</label>
-                        <input type="text" name="device_name" class="form-control" value="{{ $device['device_name'] }}">
-                    </div>
+                    {{-- SETTINGS --}}
+                    <div class="col-md-6">
+                        <div class="card border-left-danger shadow-sm h-100">
+                            <div class="card-header bg-light">
+                                <strong><i class="fas fa-cog"></i> Settings</strong>
+                            </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>Device Type (OS + Browser)</label>
-                        <input type="text" name="device_type" class="form-control" value="{{ $device['device_type'] }}">
-                    </div>
+                            <div class="card-body">
 
-                    <!-- Hidden User Agent -->
-                    <input type="hidden" name="user_agent" value="{{ $device['user_agent'] }}">
+                                <div class="form-group">
+                                    <label>User</label>
+                                    <select name="user_id" class="form-control form-control-sm select2">
+                                        <option value="">None</option>
+                                        @foreach ($users as $id => $name)
+                                            <option value="{{ $id }}">{{ $name }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>User</label>
-                        <select name="user_id" class="form-control select2">
-                            <option value="">None</option>
-                            @foreach ($users as $id => $name)
-                                <option value="{{ $id }}">{{ $name }}</option>
-                            @endforeach
-                        </select>
-                    </div>
+                                <div class="form-group">
+                                    <label>Status</label>
+                                    <select name="is_active" class="form-control form-control-sm">
+                                        <option value="1">🔴 Banned</option>
+                                        <option value="0">🟢 Allow</option>
+                                    </select>
+                                </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>Status</label>
-                        <select name="is_active" class="form-control">
-                            <option value="1">Banned</option>
-                            <option value="0">Allow</option>
-                        </select>
-                    </div>
+                                <div class="form-group">
+                                    <label>Reason</label>
+                                    <textarea name="reason" rows="2" class="form-control form-control-sm" placeholder="Optional reason..."></textarea>
+                                </div>
 
-                    <div class="col-md-6 form-group">
-                        <label>Reason</label>
-                        <input type="text" name="reason" class="form-control">
+                            </div>
+                        </div>
                     </div>
 
                 </div>
 
-                <br>
-
-                <button class="btn btn-success">Save</button>
+                <div class="text-right mt-3">
+                    <button class="btn btn-success btn-sm">
+                        <i class="fas fa-save"></i> Save Device
+                    </button>
+                </div>
 
             </form>
 
         </div>
-
     </div>
 
 @stop
+
 @push('js')
     <script>
         $('.select2').select2({
             placeholder: "Select user",
-            allowClear: true
+            allowClear: true,
+            width: '100%'
         });
     </script>
 @endpush
