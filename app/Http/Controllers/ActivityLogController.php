@@ -13,72 +13,113 @@ class ActivityLogController extends Controller
     {
         if ($request->ajax()) {
 
-            $query = Activity::with('causer')->latest();
+            $query = Activity::query()
+                ->with('causer:id,name') // optimize
+                ->select([
+                    'id',
+                    'log_name',
+                    'description',
+                    'subject_type',
+                    'subject_id',
+                    'causer_id',
+                    'causer_type',
+                    'properties',
+                    'created_at'
+                ])
+                ->latest();
 
             /* =========================
            FILTERS
         ========================== */
 
+            // 🔹 Filter by source: real vs faker/system
+            if ($request->filled('source')) {
+                if ($request->source === 'real') {
+                    $query->where('causer_type', 'App\Models\User');
+                } elseif ($request->source === 'faker') {
+                    $query->where(function ($q) {
+                        $q->whereNull('causer_type')
+                            ->orWhere('causer_type', '!=', 'App\Models\User');
+                    });
+                }
+            }
+
+            // 🔹 Filter by user
             if ($request->filled('user')) {
                 $query->where('causer_id', $request->user);
             }
 
+            // 🔹 Filter by log name
             if ($request->filled('log_name')) {
                 $query->where('log_name', $request->log_name);
             }
 
-            if ($request->filled('from_date')) {
-                $query->whereDate('created_at', '>=', $request->from_date);
+            // 🔹 Filter by model
+            if ($request->filled('model')) {
+                $query->where('subject_type', 'like', '%' . $request->model . '%');
             }
 
-            if ($request->filled('to_date')) {
-                $query->whereDate('created_at', '<=', $request->to_date);
-            }
-
+            // 🔹 Filter by description
             if ($request->filled('description')) {
                 $query->where('description', 'like', '%' . $request->description . '%');
             }
 
-            return DataTables::of($query)
+            // 🔹 Filter by date range
+            if ($request->filled('from_date') && $request->filled('to_date')) {
+                $query->whereBetween('created_at', [
+                    $request->from_date . ' 00:00:00',
+                    $request->to_date . ' 23:59:59'
+                ]);
+            }
 
+            return DataTables::of($query)
                 ->addIndexColumn()
 
+                // USER COLUMN → show name OR ID OR SYSTEM
                 ->addColumn('user', function ($activity) {
-                    return optional($activity->causer)->name ?? 'System';
+                    if ($activity->causer) {
+                        return $activity->causer->name;
+                    }
+                    if ($activity->causer_id) {
+                        return '<span class="text-warning">ID: ' . $activity->causer_id . '</span>';
+                    }
+                    return '<span class="text-muted">System</span>';
                 })
 
+                // LOG TYPE (colored badges)
                 ->addColumn('log', function ($activity) {
-                    return '<span class="badge badge-info">' . $activity->log_name . '</span>';
+                    $color = match ($activity->log_name) {
+                        'created' => 'success',
+                        'updated' => 'warning',
+                        'deleted' => 'danger',
+                        default => 'info'
+                    };
+                    return '<span class="badge badge-' . $color . '">' . ucfirst($activity->log_name) . '</span>';
                 })
 
-                ->addColumn('model', function ($activity) {
-                    return class_basename($activity->subject_type);
-                })
+                ->editColumn('description', fn($a) => ucfirst($a->description))
+
+                ->addColumn('model', fn($a) => '<span class="badge badge-secondary">' . class_basename($a->subject_type) . '</span>')
 
                 ->addColumn('details', function ($activity) {
-                    return '
-                    <button class="btn btn-info btn-sm"
-                        data-toggle="modal"
-                        data-target="#propertyModal"
-                        data-properties=\'' . json_encode($activity->properties) . '\'
-                        data-id="' . $activity->id . '">
-                        View
-                    </button>
-                ';
+                    $properties = htmlspecialchars(json_encode($activity->properties), ENT_QUOTES, 'UTF-8');
+                    return '<button class="btn btn-info btn-sm" data-toggle="modal" data-target="#propertyModal" data-properties="' . $properties . '" data-id="' . $activity->id . '"><i class="fas fa-eye"></i></button>';
                 })
 
-                ->addColumn('date', function ($activity) {
-                    return '<span title="' . $activity->created_at->format('d M Y H:i') . '">' .
-                        $activity->created_at->diffForHumans() .
-                        '</span>';
-                })
+                ->addColumn('date', fn($a) => '<span title="' . $a->created_at->format('d M Y H:i:s') . '">' . $a->created_at->diffForHumans() . '</span>')
 
-                ->rawColumns(['log', 'details', 'date']) // allow HTML
-
+                ->rawColumns(['user', 'log', 'model', 'details', 'date'])
                 ->make(true);
         }
 
-        return view('backend.activity_logs.index');
+        // 🔹 Filter dropdowns
+        $users = \App\Models\User::pluck('name', 'id');
+        $sources = [
+            'real'  => 'Original User Actions',
+            'faker' => 'Seeder / System Logs'
+        ];
+
+        return view('backend.activity_logs.index', compact('users', 'sources'));
     }
     public function destroy($id)
     {

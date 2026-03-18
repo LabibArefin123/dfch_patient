@@ -15,10 +15,8 @@
 @stop
 
 @section('content')
-
     <div class="card shadow-sm">
         <div class="card-body">
-
             <form method="POST" action="{{ route('banned_devices.update', $device->id) }}">
                 @csrf
                 @method('PUT')
@@ -51,7 +49,6 @@
                                     <input type="text" name="device_type" class="form-control form-control-sm"
                                         value="{{ $device->device_type }}">
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -94,7 +91,6 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="text-right mt-3">
@@ -102,12 +98,9 @@
                         <i class="fas fa-save"></i> Update Device
                     </button>
                 </div>
-
             </form>
-
         </div>
     </div>
-
 @stop
 
 @push('js')
