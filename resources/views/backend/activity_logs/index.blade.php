@@ -20,10 +20,12 @@
         <div class="card-body">
 
             <div class="row">
-
-                <div class="col-md-2">
-                    <label>User</label>
-                    <input type="text" id="user" class="form-control form-control-sm">
+                <div class="col-md-1"> <label>User</label> <select id="user" class="form-control form-control-sm">
+                        <option value="">All Users</option>
+                        @foreach ($users as $id => $name)
+                            <option value="{{ $id }}">{{ $name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="col-md-2">
@@ -41,9 +43,9 @@
                     <input type="date" id="to_date" class="form-control form-control-sm">
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>Source</label>
-                    <select name="source" class="form-control">
+                    <select id="source" name="source" class="form-control form-control-sm">
                         <option value="">All</option>
                         @foreach ($sources as $key => $label)
                             <option value="{{ $key }}" {{ request('source') == $key ? 'selected' : '' }}>
@@ -52,7 +54,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <label>Description</label>
                     <input type="text" id="description" class="form-control form-control-sm">
                 </div>
@@ -157,7 +159,7 @@
                         d.from_date = $('#from_date').val();
                         d.to_date = $('#to_date').val();
                         d.description = $('#description').val();
-                        //add source also
+                        d.source = $('#source').val();
                     }
                 },
 

@@ -32,18 +32,15 @@ class ActivityLogController extends Controller
         🔥 FILTERS
         ========================== */
 
-            // FILTER BY REAL USER vs SYSTEM / FAKE
-            // 'real' = has causer_type = App\Models\User
-            // 'faker' = system/seeder actions (null or other)
-            if ($request->filled('source')) {
-                if ($request->source === 'real') {
-                    $query->where('causer_type', 'App\Models\User');
-                } elseif ($request->source === 'faker') {
-                    $query->where(function ($q) {
-                        $q->whereNull('causer_type')
-                            ->orWhere('causer_type', '!=', 'App\Models\User');
-                    });
-                }
+            // 🔹 Filter by source: real vs faker/system 
+
+            $source = $request->source ?? 'real'; // 🔥 default 
+            if ($source === 'real') {
+                $query->where('causer_type', 'App\Models\User');
+            } elseif ($source === 'faker') {
+                $query->where(function ($q) {
+                    $q->whereNull('causer_type')->orWhere('causer_type', '!=', 'App\Models\User');
+                });
             }
 
             // User filter (only real users)
@@ -126,7 +123,7 @@ class ActivityLogController extends Controller
 
         return view('backend.activity_logs.index', compact('users', 'sources'));
     }
-    
+
     public function destroy($id)
     {
         $activity = Activity::findOrFail($id);
