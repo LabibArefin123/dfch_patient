@@ -17,6 +17,12 @@ class Weekly extends Controller
         }
 
         $query = Patient::query();
+
+        // ✅ FIX: Add this (same as PDF)
+        if ($request->filled('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+        
         $parent->applyWeeklyFilters($query, $request);
 
         return Excel::download(

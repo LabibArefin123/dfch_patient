@@ -96,7 +96,6 @@ Route::group(['middleware' => ['auth', 'check_banned_device']],     function () 
     Route::resource('roles', RoleController::class);
     Route::resource('permissions', PermissionController::class);
     Route::post('/permissions/delete-selected', [PermissionController::class, 'deleteSelected'])->name('permissions.deleteSelected');
-    Route::resource('system_users', SystemUserController::class);
     Route::resource('ban_users', BanUserController::class);
     Route::resource('banned_devices', BannedDeviceController::class);
     Route::resource('system_problems', SystemProblemController::class);
@@ -104,6 +103,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device']],     function () 
     Route::post('/user_devices/{id}/unban', [UserDeviceController::class, 'unban'])->name('user_devices.unban');
     Route::resource('user_devices', UserDeviceController::class);
     Route::post('/system-users/{user}/change-password', [SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
+    Route::resource('system_users', SystemUserController::class);
 
     //Setting 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');

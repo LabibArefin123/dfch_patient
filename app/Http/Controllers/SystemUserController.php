@@ -130,8 +130,8 @@ class SystemUserController extends Controller
         ]);
 
         $user->update([
-            // 🔐 ENCRYPT (reversible)
-            'password' => Crypt::encryptString($request->password),
+            // 🔐 HASH (one-way, secure)
+            'password' => Hash::make($request->password),
         ]);
 
         return back()->with('success', 'Password updated successfully.');

@@ -17,6 +17,12 @@ class Daily extends Controller
         }
 
         $query = Patient::query();
+
+        // ✅ FIX: Add this (same as PDF)
+        if ($request->filled('ids')) {
+            $query->whereIn('id', $request->ids);
+        }
+
         $parent->applyDailyFilters($query, $request);
 
         return Excel::download(
@@ -29,4 +35,3 @@ class Daily extends Controller
         );
     }
 }
-

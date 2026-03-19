@@ -59,48 +59,95 @@
                     </table>
                     <!-- Change Password Modal -->
                     <div class="modal fade" id="changePasswordModal" tabindex="-1">
-                        <div class="modal-dialog modal-dialog-centered">
-                            <div class="modal-content shadow-lg">
-                                <div class="modal-header">
+                        <div class="modal-dialog modal-dialog-centered modal-lg"> {{-- wider --}}
+                            <div class="modal-content shadow-lg rounded-4">
+
+                                {{-- HEADER --}}
+                                <div class="modal-header bg-dark text-white">
                                     <h5 class="modal-title">
-                                        Change Password – <span id="modalUserName"></span>
+                                        🔐 Change Password – <span id="modalUserName"></span>
                                     </h5>
-                                    <button type="button" class="close" data-dismiss="modal">
+                                    <button type="button" class="close text-white" data-dismiss="modal">
                                         <span>&times;</span>
                                     </button>
                                 </div>
 
                                 <form method="POST" id="changePasswordForm">
                                     @csrf
-                                    <div class="modal-body">
-                                        <div class="form-group">
-                                            <label>New Password</label>
-                                            <div class="input-group">
-                                                <input type="password" name="password" id="password" class="form-control"
-                                                    required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text toggle-password" data-target="password">
-                                                        <i class="fas fa-eye"></i>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
 
-                                        <div class="form-group">
-                                            <label>Confirm Password</label>
-                                            <div class="input-group">
-                                                <input type="password" name="password_confirmation"
-                                                    id="password_confirmation" class="form-control" required>
-                                                <div class="input-group-append">
-                                                    <span class="input-group-text toggle-password"
-                                                        data-target="password_confirmation">
-                                                        <i class="fas fa-eye"></i>
-                                                    </span>
+                                    <div class="modal-body">
+                                        <div class="row">
+
+                                            {{-- LEFT : FORM --}}
+                                            <div class="col-md-7">
+
+                                                {{-- PASSWORD --}}
+                                                <div class="form-group">
+                                                    <label class="fw-bold">New Password</label>
+                                                    <div class="input-group">
+                                                        <input type="password" name="password" id="password"
+                                                            class="form-control" required>
+
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text toggle-password"
+                                                                data-target="password">
+                                                                <i class="fas fa-eye"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                {{-- CONFIRM --}}
+                                                <div class="form-group">
+                                                    <label class="fw-bold">Confirm Password</label>
+                                                    <div class="input-group">
+                                                        <input type="password" name="password_confirmation"
+                                                            id="password_confirmation" class="form-control" required>
+
+                                                        <div class="input-group-append">
+                                                            <span class="input-group-text toggle-password"
+                                                                data-target="password_confirmation">
+                                                                <i class="fas fa-eye"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+
+                                            {{-- RIGHT : PASSWORD PREVIEW --}}
+                                            {{-- RIGHT : PASSWORD PREVIEW --}}
+                                            <div class="col-md-5 border-left">
+                                                <h6 class="fw-bold mb-3">🔎 Password Strength</h6>
+
+                                                <div id="strengthText" class="mb-2 text-muted">
+                                                    Enter password to see strength
+                                                </div>
+
+                                                <div class="progress mb-3" style="height:8px;">
+                                                    <div id="strengthBar" class="progress-bar" role="progressbar"
+                                                        style="width:0%"></div>
+                                                </div>
+
+                                                <ul class="small pl-3">
+                                                    <li id="rule-length">❌ At least 8 characters</li>
+                                                    <li id="rule-upper">❌ Uppercase letter</li>
+                                                    <li id="rule-lower">❌ Lowercase letter</li>
+                                                    <li id="rule-number">❌ Number</li>
+                                                    <li id="rule-special">❌ Special character</li>
+                                                </ul>
+
+                                                {{-- New Password Confirmation Message --}}
+                                                <div id="passwordMatchMessage" class="mt-3 text-success fw-bold"
+                                                    style="display:none;">
+                                                    ✅ Your new password is: <span id="newPasswordPreview"></span>
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
 
+                                    {{-- FOOTER --}}
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-dismiss="modal">
                                             Close
@@ -109,6 +156,7 @@
                                             Update Password
                                         </button>
                                     </div>
+
                                 </form>
                             </div>
                         </div>
@@ -124,52 +172,121 @@
         document.addEventListener('DOMContentLoaded', function() {
 
             /* ============================
-               CHANGE PASSWORD MODAL
+               OPEN MODAL
             ============================ */
             document.querySelectorAll('.change-password-btn').forEach(button => {
                 button.addEventListener('click', function() {
-
                     const userId = this.dataset.userId;
                     const userName = this.dataset.userName;
 
-                    // Set modal title
                     document.getElementById('modalUserName').innerText = userName;
 
-                    // Set correct form action
                     const form = document.getElementById('changePasswordForm');
                     form.action = `/system-users/${userId}/change-password`;
-
-                    // Reset form fields
                     form.reset();
 
-                    // Show modal (AdminLTE / Bootstrap)
+                    // reset strength UI
+                    updateStrength('');
+                    hidePasswordMatchMessage();
+
                     $('#changePasswordModal').modal('show');
                 });
             });
 
             /* ============================
-               PASSWORD EYE TOGGLE
+               EYE TOGGLE
             ============================ */
-            document.addEventListener('click', function(e) {
-                if (e.target.closest('.toggle-password')) {
-
-                    const toggle = e.target.closest('.toggle-password');
-                    const input = document.getElementById(toggle.dataset.target);
-                    const icon = toggle.querySelector('i');
+            document.querySelectorAll('.toggle-password').forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const input = document.getElementById(this.dataset.target);
+                    const icon = this.querySelector('i');
 
                     if (!input) return;
 
                     if (input.type === 'password') {
                         input.type = 'text';
-                        icon.classList.remove('fa-eye');
-                        icon.classList.add('fa-eye-slash');
+                        icon.classList.replace('fa-eye', 'fa-eye-slash');
                     } else {
                         input.type = 'password';
-                        icon.classList.remove('fa-eye-slash');
-                        icon.classList.add('fa-eye');
+                        icon.classList.replace('fa-eye-slash', 'fa-eye');
                     }
-                }
+                });
             });
+
+            /* ============================
+               PASSWORD STRENGTH & MATCH
+            ============================ */
+            const passwordInput = document.getElementById('password');
+            const confirmInput = document.getElementById('password_confirmation');
+
+            passwordInput.addEventListener('keyup', handlePasswordInput);
+            confirmInput.addEventListener('keyup', handlePasswordInput);
+
+            function handlePasswordInput() {
+                const pwd = passwordInput.value;
+                const confirmPwd = confirmInput.value;
+
+                updateStrength(pwd);
+                checkPasswordMatch(pwd, confirmPwd);
+            }
+
+            function updateStrength(password) {
+                let score = 0;
+                const rules = {
+                    length: password.length >= 8,
+                    upper: /[A-Z]/.test(password),
+                    lower: /[a-z]/.test(password),
+                    number: /[0-9]/.test(password),
+                    special: /[^A-Za-z0-9]/.test(password),
+                };
+
+                Object.values(rules).forEach(val => val && score++);
+
+                // Update rules UI
+                document.getElementById('rule-length').innerText = rules.length ? '✅ At least 8 characters' :
+                    '❌ At least 8 characters';
+                document.getElementById('rule-upper').innerText = rules.upper ? '✅ Uppercase letter' :
+                    '❌ Uppercase letter';
+                document.getElementById('rule-lower').innerText = rules.lower ? '✅ Lowercase letter' :
+                    '❌ Lowercase letter';
+                document.getElementById('rule-number').innerText = rules.number ? '✅ Number' : '❌ Number';
+                document.getElementById('rule-special').innerText = rules.special ? '✅ Special character' :
+                    '❌ Special character';
+
+                // Update bar & text
+                const bar = document.getElementById('strengthBar');
+                const text = document.getElementById('strengthText');
+                let percent = (score / 5) * 100;
+                bar.style.width = percent + '%';
+
+                if (score <= 2) {
+                    bar.className = 'progress-bar bg-danger';
+                    text.innerText = 'Weak Password';
+                } else if (score <= 4) {
+                    bar.className = 'progress-bar bg-warning';
+                    text.innerText = 'Medium Strength';
+                } else {
+                    bar.className = 'progress-bar bg-success';
+                    text.innerText = 'Strong Password';
+                }
+            }
+
+            function checkPasswordMatch(password, confirmPassword) {
+                const messageDiv = document.getElementById('passwordMatchMessage');
+                const previewSpan = document.getElementById('newPasswordPreview');
+
+                if (password && confirmPassword && password === confirmPassword) {
+                    messageDiv.style.display = 'block';
+                    previewSpan.innerText = password;
+                } else {
+                    hidePasswordMatchMessage();
+                }
+            }
+
+            function hidePasswordMatchMessage() {
+                document.getElementById('passwordMatchMessage').style.display = 'none';
+                document.getElementById('newPasswordPreview').innerText = '';
+            }
 
         });
     </script>
