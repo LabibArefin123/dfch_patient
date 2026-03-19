@@ -130,9 +130,14 @@ class SystemUserController extends Controller
         ]);
 
         $user->update([
-            // 🔐 HASH (one-way, secure)
             'password' => Hash::make($request->password),
         ]);
+
+        // Log the password change activity
+        activity()
+            ->causedBy(auth()->user()) // the currently logged-in user
+            ->performedOn($user)       // the user whose password changed
+            ->log('Password changed');
 
         return back()->with('success', 'Password updated successfully.');
     }
@@ -146,6 +151,4 @@ class SystemUserController extends Controller
 
         return redirect()->route('system_users.index')->with('success', 'User deleted successfully!');
     }
-
-    
 }
