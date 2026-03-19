@@ -37,7 +37,7 @@
                         <label for="role">Assign Role<span class="text-danger">*</span></label>
                         <select class="form-control @error('role') is-invalid @enderror" id="role" name="role">
                             <option value="">Select Role</option>
-                            @foreach (App\Models\Role::all() as $role)
+                            @foreach (Spatie\Permission\Models\Role::all() as $role)
                                 <option value="{{ $role->name }}"
                                     {{ old('role', $user->roles->first()?->name) == $role->name ? 'selected' : '' }}>
                                     {{ ucfirst($role->name) }}

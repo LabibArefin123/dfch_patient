@@ -1,65 +1,128 @@
-@extends('layouts.app')
+@extends('frontend.layouts.app')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Reset Password') }}</div>
+    <div class="login-wrapper">
+        <div class="login-glass">
 
-                <div class="card-body">
-                    <form method="POST" action="{{ route('password.update') }}">
-                        @csrf
+            {{-- LEFT : INFO --}}
+            <div class="about-slider">
+                <img src="{{ asset('uploads/images/login_page/logo.png') }}" class="hospital-logo" alt="DFCH Logo">
 
-                        <input type="hidden" name="token" value="{{ $token }}">
+                {{-- SHORT --}}
+                <div class="about-content short" id="aboutShort">
+                    <h4 class="fw-bold mb-3">Reset Your Password</h4>
+                    <p>
+                        You're just one step away. Create a new password to securely access
+                        your hospital management account.
+                    </p>
 
-                        <div class="row mb-3">
-                            <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email Address') }}</label>
+                    <button class="btn btn-outline-light rounded-pill mt-3" onclick="toggleAbout(true)">
+                        More Info
+                    </button>
+                </div>
 
-                            <div class="col-md-6">
-                                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ $email ?? old('email') }}" required autocomplete="email" autofocus>
+                {{-- FULL --}}
+                <div class="about-content full" id="aboutFull" style="display:none;">
+                    <h4 class="fw-bold mb-3">Password Guidelines</h4>
 
-                                @error('email')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
+                    <ul class="ps-3">
+                        <li>Minimum 8 characters</li>
+                        <li>Use uppercase & lowercase letters</li>
+                        <li>Include numbers & symbols</li>
+                        <li>Avoid common or old passwords</li>
+                    </ul>
 
-                        <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="new-password">
-
-                                @error('password')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
-                            <label for="password-confirm" class="col-md-4 col-form-label text-md-end">{{ __('Confirm Password') }}</label>
-
-                            <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
-                            </div>
-                        </div>
-
-                        <div class="row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Reset Password') }}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
+                    <button class="btn btn-outline-light rounded-pill mt-3" onclick="toggleAbout(false)">
+                        Show Less
+                    </button>
                 </div>
             </div>
+
+            {{-- RIGHT : RESET FORM --}}
+            <div class="login-panel">
+                <div class="text-center mb-4">
+                    <h4 class="fw-bold">Create New Password</h4>
+                    <p class="text-muted">Hospital Management System</p>
+                </div>
+
+                <form method="POST" action="{{ route('password.update') }}">
+                    @csrf
+
+                    {{-- TOKEN --}}
+                    <input type="hidden" name="token" value="{{ $token }}">
+
+                    {{-- EMAIL --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Email Address</label>
+                        <input id="email" type="email"
+                            class="form-control form-control-lg @error('email') is-invalid @enderror" name="email"
+                            value="{{ $email ?? old('email') }}" required autofocus>
+
+                        @error('email')
+                            <div class="invalid-feedback d-block">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+
+                    {{-- PASSWORD --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">New Password</label>
+                        <input id="password" type="password"
+                            class="form-control form-control-lg @error('password') is-invalid @enderror" name="password"
+                            placeholder="Enter new password" required>
+
+                        @error('password')
+                            <div class="invalid-feedback d-block">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+                    </div>
+
+                    {{-- CONFIRM PASSWORD --}}
+                    <div class="mb-3">
+                        <label class="form-label fw-semibold">Confirm Password</label>
+                        <input id="password-confirm" type="password" class="form-control form-control-lg"
+                            name="password_confirmation" placeholder="Confirm new password" required>
+                    </div>
+
+                    <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
+                        🔐 Reset Password
+                    </button>
+
+                    <div class="text-center mt-3">
+                        <a href="{{ route('login') }}" class="text-decoration-none dev-link">
+                            ← Back to Login
+                        </a>
+                    </div>
+                </form>
+            </div>
+
         </div>
     </div>
-</div>
+
+    {{-- BACKGROUND --}}
+    <style>
+        body {
+            background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
+        }
+    </style>
+
+    <link rel="stylesheet" href="{{ asset('css/backend/login.css') }}">
+
+    {{-- JS --}}
+    <script>
+        function toggleAbout(showFull) {
+            const shortAbout = document.getElementById('aboutShort');
+            const fullAbout = document.getElementById('aboutFull');
+
+            if (showFull) {
+                shortAbout.style.display = 'none';
+                fullAbout.style.display = 'block';
+            } else {
+                fullAbout.style.display = 'none';
+                shortAbout.style.display = 'block';
+            }
+        }
+    </script>
 @endsection
