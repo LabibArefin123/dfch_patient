@@ -67,9 +67,8 @@
                                     <h5 class="modal-title">
                                         🔐 Change Password – <span id="modalUserName"></span>
                                     </h5>
-                                    <button type="button" class="close text-white" data-dismiss="modal">
-                                        <span>&times;</span>
-                                    </button>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
                                 </div>
 
                                 <form method="POST" id="changePasswordForm">
@@ -149,9 +148,8 @@
 
                                     {{-- FOOTER --}}
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                            Close
-                                        </button>
+                                        <button type="button" class="btn btn-secondary"
+                                            data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-danger">
                                             Update Password
                                         </button>
