@@ -59,22 +59,6 @@
             });
         });
 
-        // Update Password Confirmation
-        document.getElementById('updatePasswordBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'Do you want to update your password?',
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Yes, update it!',
-                cancelButtonText: 'Cancel'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById('updatePasswordForm').submit();
-                }
-            });
-        });
         document.addEventListener('DOMContentLoaded', function() {
             document.querySelectorAll('.toggle-password').forEach(toggle => {
                 toggle.addEventListener('click', function() {

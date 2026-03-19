@@ -51,7 +51,7 @@ Route::get('/user_profile', function () {
 })->middleware(['auth', 'verified'])->name('profile');
 
 //Route::group(['middleware' => ['auth', 'permission']], function () {
-Route::group(['middleware' => ['auth', 'check_banned_device']],     function () {
+Route::group(['middleware' => ['auth', 'check_banned_device']],  function () {
 
     // Profile Routes
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');

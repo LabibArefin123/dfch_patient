@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Spatie\Permission\Traits\HasRoles;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\Activitylog\LogOptions;
+use Carbon\Carbon;
 
 class User extends Authenticatable
 {
@@ -27,6 +28,7 @@ class User extends Authenticatable
         'two_factor_code',
         'two_factor_expires_at',
         'session_timeout',
+        'last_seen',
         'is_maintenance',
         'is_banned',
         'maintenance_message',
@@ -41,6 +43,7 @@ class User extends Authenticatable
     {
         return [
             'email_verified_at' => 'datetime',
+            'last_seen' => 'datetime',
         ];
     }
 
@@ -107,5 +110,10 @@ class User extends Authenticatable
             ->logOnlyDirty()
             ->useLogName('User')
             ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}");
+    }
+
+    public function isOnline()
+    {
+        return $this->last_seen && $this->last_seen->gt(now()->subMinutes(5));
     }
 }
