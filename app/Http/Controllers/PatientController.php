@@ -2,16 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Organization;
+use App\Services\Patient\PatientService;
 use App\Models\Patient;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Maatwebsite\Excel\Facades\Excel;
-use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Validators\ValidationException;
 use Illuminate\Support\Carbon;
-use PhpOffice\PhpWord\IOFactory;
-use App\Imports\PatientsImport;
-use App\Exports\PatientsExport;
 use App\Models\PatientDocument;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
@@ -607,197 +600,43 @@ class PatientController extends Controller
         return back()->with('success', 'Patient deleted successfully');
     }
 
-    public function deleteSelected(Request $request)
+    public function deleteSelected(Request $request, PatientService $service)
     {
-        $ids = $request->ids;
-
-        if (!$ids || count($ids) === 0) {
-            return response()->json([
-                'status' => false,
-                'message' => 'No patients selected.'
-            ]);
-        }
-
-        Patient::whereIn('id', $ids)->delete();
-
-        return response()->json([
-            'status' => true,
-            'message' => 'Selected patients deleted successfully.'
-        ]);
+        return response()->json(
+            $service->deleteSelected($request->ids)
+        );
     }
 
-    public function exportExcel(Request $request)
+    public function exportExcel(Request $request, PatientService $service)
     {
-        $patientsQuery = $this->filteredPatients($request);
-
-        // If IDs sent → filter by selected
-        if ($request->filled('ids')) {
-            $patientsQuery->whereIn('id', $request->ids);
-        }
-
-        $patients = $patientsQuery->get();
-
-        return Excel::download(new PatientsExport($patients), 'patients.xlsx');
+        return $service->exportExcel($request, $this->filteredPatients($request));
     }
 
-    public function exportPdf(Request $request)
+    public function exportPdf(Request $request, PatientService $service)
     {
-        try {
-            $patientsQuery = $this->filteredPatients($request);
-
-            if ($request->filled('ids')) {
-                $patientsQuery->whereIn('id', $request->ids);
-            }
-            $organization = Organization::first();
-            $patients = $patientsQuery->get();
-
-            return Pdf::loadView('backend.patient_management.pdf', compact('patients','organization'))
-                ->stream('patients.pdf');
-        } catch (\Throwable $e) {
-            Log::error("PDF export error: " . $e->getMessage());
-            return response()->json([
-                'error' => 'PDF export failed',
-                'message' => $e->getMessage()
-            ], 500);
-        }
+        return $service->exportPdf($request, $this->filteredPatients($request));
     }
 
-    public function importExcel(Request $request)
+    public function importExcel(Request $request, PatientService $service)
     {
-        $request->validate([
-            'file' => 'required|mimes:xlsx,xls'
-        ]);
+        $request->validate(['file' => 'required|mimes:xlsx,xls']);
 
-        try {
-
-            $import = new PatientsImport;
-            Excel::import($import, $request->file('file'));
-
-            // If there are row validation failures
-            if ($import->failures()->isNotEmpty()) {
-
-                $errors = [];
-
-                foreach ($import->failures() as $failure) {
-                    $errors[] = "Row {$failure->row()} - " .
-                        implode(', ', $failure->errors());
-                }
-
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'Some rows failed validation.',
-                    'errors' => $errors
-                ], 422);
-            }
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Patients Imported Successfully'
-            ]);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Import failed. ' . $e->getMessage()
-            ], 500);
-        }
+        return response()->json(
+            $service->importExcel($request->file('file'))
+        );
     }
 
-
-    public function importWord(Request $request)
+    public function importWord(Request $request, PatientService $service)
     {
-        $request->validate([
-            'file' => 'required|mimes:doc,docx'
-        ]);
+        $request->validate(['file' => 'required|mimes:doc,docx']);
 
-        try {
-
-            $file = $request->file('file');
-            $phpWord = IOFactory::load($file->getPathname());
-
-            $rows = [];
-
-            foreach ($phpWord->getSections() as $section) {
-                foreach ($section->getElements() as $element) {
-
-                    if (method_exists($element, 'getRows')) {
-
-                        foreach ($element->getRows() as $index => $row) {
-
-                            $cells = $row->getCells();
-                            $rowData = [];
-
-                            foreach ($cells as $cell) {
-                                $text = '';
-                                foreach ($cell->getElements() as $cellElement) {
-                                    if (method_exists($cellElement, 'getText')) {
-                                        $text .= $cellElement->getText();
-                                    }
-                                }
-                                $rowData[] = trim($text);
-                            }
-
-                            $rows[] = $rowData;
-                        }
-                    }
-                }
-            }
-
-            if (count($rows) <= 1) {
-                return response()->json([
-                    'status' => 'error',
-                    'message' => 'No data found in Word file.'
-                ], 422);
-            }
-
-            // Remove heading row
-            $headings = array_shift($rows);
-
-            foreach ($rows as $row) {
-
-                Patient::create([
-                    'patient_name' => $row[0] ?? null,
-                    'patient_f_name' => $row[1] ?? null,
-                    'patient_m_name' => $row[2] ?? null,
-                    'age' => $row[3] ?? null,
-                    'gender' => $row[4] ?? null,
-                    'phone_1' => $row[5] ?? null,
-                    'phone_2' => $row[6] ?? null,
-                    'phone_f_1' => $row[7] ?? null,
-                    'phone_m_1' => $row[8] ?? null,
-                    'location_type' => $row[9] ?? null,
-                    'location_simple' => $row[10] ?? null,
-                    'city' => $row[11] ?? null,
-                    'district' => $row[12] ?? null,
-                    'country' => $row[13] ?? null,
-                    'is_recommend' => $row[14] ?? 0,
-                    'date_of_patient_added' => $row[15] ?? Carbon::now()->toDateString(),
-                ]);
-            }
-
-            return response()->json([
-                'status' => 'success',
-                'message' => 'Patients Imported Successfully from Word'
-            ]);
-        } catch (\Exception $e) {
-
-            return response()->json([
-                'status' => 'error',
-                'message' => 'Word import failed. ' . $e->getMessage()
-            ], 500);
-        }
+        return response()->json(
+            $service->importWord($request->file('file'))
+        );
     }
 
-    public function printCard($id)
+    public function printCard($id, PatientService $service)
     {
-        $patient = Patient::findOrFail($id);
-        $organization = Organization::first();
-
-        $pdf = Pdf::loadView(
-            'backend.patient_management.print_card',
-            compact('patient', 'organization')
-        )->setPaper('a4', 'portrait');
-
-        return $pdf->stream('patient_card_' . $patient->patient_code . '.pdf');
+        return $service->printCard($id);
     }
 }
