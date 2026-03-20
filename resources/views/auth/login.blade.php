@@ -1,6 +1,12 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+    <style>
+        body {
+            background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('css/backend/login.css') }}">
     <div class="login-wrapper">
         <div class="login-glass" id="sliderContainer">
 
@@ -192,14 +198,5 @@
 
         </div>
     </div>
-
-    {{-- STYLES --}}
-    <style>
-        body {
-            background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
-        }
-    </style>
-    <link rel="stylesheet" href="{{ asset('css/backend/login.css') }}">
     <script src="{{ asset('js/custom_frontend/login_page/login.js') }}"></script>
 @endsection
-
