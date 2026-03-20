@@ -70,20 +70,23 @@
                     @csrf
                     <div class="mb-3">
                         <label class="form-label fw-semibold">Email or Username</label>
-                        <input type="text" name="login" class="form-control form-control-lg"
+                        <input type="text" name="login"
+                            class="form-control form-control-lg @error('login') is-invalid @enderror"
                             placeholder="Enter email or username">
                     </div>
 
                     <div class="mb-4">
                         <label for="password" class="form-label fw-semibold"></label>
                         <input id="password" type="password"
-                            class="form-control form-control-lg rounded-3 shadow-sm @error('password') is-invalid @enderror"
+                            class="form-control form-control-lg rounded-3 shadow-sm @error('login') is-invalid @enderror"
                             name="password" placeholder="Enter your password" required>
 
                         {{-- Show password errors only if maintenance is OFF --}}
-                        @error('password')
+                        @error('login')
                             @unless (session('maintenance'))
-                                <div class="invalid-feedback d-block mt-1"><strong>{{ $message }}</strong></div>
+                                <div class="invalid-feedback d-block mt-2">
+                                    <strong>{{ $message }}</strong>
+                                </div>
                             @endunless
                         @enderror
 
@@ -103,7 +106,11 @@
                             </div>
                         @endif
                     </div>
-
+                    @if ($errors->has('login'))
+                        <div class="alert alert-danger mt-2">
+                            {{ $errors->first('login') }}
+                        </div>
+                    @endif
                     <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
                         Login
                     </button>
@@ -117,8 +124,7 @@
                     <hr class="my-4">
 
                     <div class="text-center">
-                        <a href="javascript:void(0)" onclick="openProblemModal()"
-                            class="text-decoration-none dev-link fw-semibold">
+                        <a href="javascript:void(0)" id="openProblemBtn" class="text-decoration-none dev-link fw-semibold">
                             ⚠ Facing a system problem?
                         </a>
                         <p class="text-muted small mt-1">
@@ -136,7 +142,7 @@
 
             <div class="modal-header">
                 <h5 class="fw-bold mb-0">Report a System Problem</h5>
-                <button type="button" class="close-btn" onclick="closeProblemModal()">×</button>
+                <button type="button" class="close-btn" id="closeModalBtn">×</button>
             </div>
 
             <form method="POST" action="{{ route('system_problem.store') }}" enctype="multipart/form-data">
@@ -194,35 +200,6 @@
         }
     </style>
     <link rel="stylesheet" href="{{ asset('css/backend/login.css') }}">
-    {{-- SLIDER JS --}}
-    <script>
-        function toggleAbout(showFull) {
-            const shortAbout = document.getElementById('aboutShort');
-            const fullAbout = document.getElementById('aboutFull');
-
-            if (showFull) {
-                shortAbout.style.display = 'none';
-                fullAbout.style.display = 'block';
-            } else {
-                fullAbout.style.display = 'none';
-                shortAbout.style.display = 'block';
-            }
-        }
-    </script>
-    <script>
-        function openProblemModal() {
-            document.getElementById('problemModal').classList.add('show');
-        }
-
-        function closeProblemModal() {
-            document.getElementById('problemModal').classList.remove('show');
-        }
-
-        // Close when clicking outside
-        document.getElementById('problemModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeProblemModal();
-            }
-        });
-    </script>
+    <script src="{{ asset('js/custom_frontend/login_page/login.js') }}"></script>
 @endsection
+
