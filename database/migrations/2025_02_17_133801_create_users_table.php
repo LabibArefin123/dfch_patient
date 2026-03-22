@@ -37,10 +37,11 @@ class CreateUsersTable extends Migration
             // 🛠 Maintenance Mode
             $table->boolean('is_maintenance')->default(0);
             $table->string('maintenance_message')->nullable();
-
+            
             // 🚫 Ban System
             $table->boolean('is_banned')->default(0);
-
+            
+            $table->boolean('is_notifications')->default(0);
             // 🟢 Online Status
             $table->timestamp('last_seen')->nullable();
 
