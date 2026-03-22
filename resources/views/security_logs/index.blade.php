@@ -63,14 +63,25 @@
                                     🌍 {{ $log->country }}
                                 </td>
 
+
                                 <td>
                                     <span
                                         class="badge 
                                     @if ($log->attack_type == 'SQL_INJECTION') bg-danger
                                     @elseif($log->attack_type == 'XSS') bg-warning
-                                    @else bg-secondary @endif">
+                                    @elseif($log->attack_type == 'PATH_TRAVERSAL') bg-info
+                                    @elseif($log->attack_type == 'COMMAND_INJECTION') bg-secondary @endif">
                                         {{ $log->attack_type }}
                                     </span>
+
+                                    @php
+                                        $attempts = \App\Models\SecurityLog::where('ip_address', $log->ip_address)
+                                            ->where('attack_type', $log->attack_type)
+                                            ->count();
+                                    @endphp
+                                    @if ($attempts >= 3)
+                                        <span class="badge bg-dark">🚫 Blocked</span>
+                                    @endif
                                 </td>
 
                                 <td class="small text-muted">

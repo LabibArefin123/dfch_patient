@@ -114,6 +114,9 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack']],
     Route::post('/settings/toggle-2fa', [SettingController::class, 'toggle2FA'])->name('settings.toggle2fa');
     Route::get('/settings/2fa/resend', [SettingController::class, 'resend'])->name('settings.2fa.resend');
     Route::post('/settings/2fa/verify', [SettingController::class, 'verify'])->name('settings.2fa.verify');
+    Route::get('settings/notifications', [SettingController::class, 'notificationSettings'])->name('settings.notification.index');
+    Route::post('settings/notifications', [SettingController::class, 'notificationUpdate'])->name('settings.notification.update');
+    Route::post('settings/notifications/test', [SettingController::class, 'sendTestNotification'])->name('settings.notification.test');
     Route::get('/settings/timeout', [SettingController::class, 'showTimeout'])->name('settings.timeout');
     Route::post('/settings/timeout', [SettingController::class, 'updateTimeout'])->name('settings.timeout.update');
     Route::get('/settings/database-backup', [SettingController::class, 'databaseBackup'])->name('settings.database.backup');

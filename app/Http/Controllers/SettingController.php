@@ -7,6 +7,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Mail;
 use Yajra\DataTables\Facades\DataTables;
 
 class SettingController extends Controller
@@ -430,5 +431,42 @@ class SettingController extends Controller
         Session::put('primary_color', $request->primary_color);
 
         return back()->with('success', 'Theme updated successfully!');
+    }
+
+    public function notificationSettings()
+    {
+        $user = auth()->user(); // or User::first() if global
+        return view('backend.setting_management.setting_menu.notifications_setting.index', compact('user'));
+    }
+
+    public function notificationUpdate(Request $request)
+    {
+        $user = auth()->user(); // or User::first() for global setting
+
+        $user->is_notifications = $request->has('is_notifications');
+        $user->save();
+
+        return back()->with('success', 'Notification settings updated successfully.');
+    }
+
+
+    public function sendTestNotification()
+    {
+        $user = auth()->user();
+
+        if (!$user->is_notifications) {
+            return back()->with('error', 'Notifications are disabled for your account.');
+        }
+
+        try {
+            Mail::raw('This is a test notification email.', function ($message) use ($user) {
+                $message->to($user->email)
+                    ->subject('Test Notification');
+            });
+
+            return back()->with('success', 'Test notification email sent successfully!');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Failed to send test email: ' . $e->getMessage());
+        }
     }
 }

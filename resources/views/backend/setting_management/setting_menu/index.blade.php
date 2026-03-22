@@ -78,19 +78,15 @@
                     <div class="card-body">
 
                         <ul class="list-group">
-
-                            <li class="list-group-item">
-                                <strong>Enable/Disable Notifications</strong>
-                            </li>
-
-                            <li class="list-group-item">
-                                <strong>Notification Triggers</strong><br>
-                                Meeting schedule, visitor approval, pass expiry, emergency alerts, system errors
-                            </li>
-
-                            <li class="list-group-item">
-                                <strong>Notification Channels</strong><br>
-                                Email, SMS, Web Push, In-App Alerts
+                             <li class="list-group-item">
+                                <a href="{{ route('settings.notification.index') }}"
+                                    class="text-decoration-none text-dark d-flex justify-content-between align-items-center">
+                                    <div>
+                                        <strong>Enable/Disable Notifications</strong><br>
+                                        Email, SMS, Web Push, In-App Alerts
+                                    </div>
+                                    <i class="fas fa-chevron-right text-muted"></i>
+                                </a>
                             </li>
 
                         </ul>

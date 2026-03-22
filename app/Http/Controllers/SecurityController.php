@@ -12,22 +12,20 @@ class SecurityController extends Controller
      */
     public function index(Request $request)
     {
-        $query = SecurityLog::with('user')->latest();
+        $query = SecurityLog::query();
 
-        // 🔍 Filter by attack type
-        if ($request->attack_type) {
-            $query->where('attack_type', $request->attack_type);
+        // Search filter
+        if ($search = $request->get('search')) {
+            $query->where('ip_address', 'like', "%{$search}%")
+                ->orWhere('url', 'like', "%{$search}%");
         }
 
-        // 🔍 Search IP / URL
-        if ($request->search) {
-            $query->where(function ($q) use ($request) {
-                $q->where('ip_address', 'like', '%' . $request->search . '%')
-                    ->orWhere('url', 'like', '%' . $request->search . '%');
-            });
+        // Attack type filter
+        if ($type = $request->get('attack_type')) {
+            $query->where('attack_type', $type);
         }
 
-        $logs = $query->paginate(20);
+        $logs = $query->latest()->paginate(20);
 
         return view('security_logs.index', compact('logs'));
     }

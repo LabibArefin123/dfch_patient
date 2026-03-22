@@ -32,6 +32,7 @@ class User extends Authenticatable
         'is_maintenance',
         'is_banned',
         'maintenance_message',
+        'is_notifications',
     ];
 
     protected $hidden = [
