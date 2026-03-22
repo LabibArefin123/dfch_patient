@@ -27,6 +27,7 @@
                                 <th>Phone 2</th>
                                 <th>Username</th>
                                 <th>Password</th>
+                                <th>Status</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -42,10 +43,22 @@
                                     <td>{{ $user->username ?? 'Not Provided' }}</td>
                                     <td>{{ $user->decrypted_password ?? 'Not Provided' }}</td>
                                     <td>
+                                        <span class="badge {{ $user->is_online ? 'bg-success' : 'bg-danger' }}">
+                                            <i class="fas fa-circle me-1" style="font-size:8px;"></i>
+                                            {{ $user->is_online ? 'Online' : 'Offline' }}
+                                        </span>
+
+                                        <div class="small text-muted">
+                                            {{ $user->last_seen ? $user->last_seen->diffForHumans() : 'Never active' }}
+                                        </div>
+                                    </td>
+                                    <td>
                                         <a href="{{ route('system_users.show', $user->id) }}"
-                                            class="btn btn-info btn-sm me-2">View</a>
+                                            class="btn btn-info btn-sm me-1">View</a>
+
                                         <a href="{{ route('system_users.edit', $user->id) }}"
-                                            class="btn btn-warning btn-sm me-2">Edit</a>
+                                            class="btn btn-warning btn-sm me-1">Edit</a>
+
                                         @if (auth()->user()->hasRole('admin'))
                                             <button class="btn btn-danger btn-sm change-password-btn"
                                                 data-user-id="{{ $user->id }}" data-user-name="{{ $user->name }}">

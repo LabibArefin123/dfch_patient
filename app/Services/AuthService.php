@@ -66,6 +66,11 @@ class AuthService
         Auth::login($user, $request->boolean('remember'));
         $request->session()->regenerate();
 
+        // ✅ LOG LOGIN
+        activity('User')
+            ->causedBy($user)
+            ->log('User logged in');
+
         $this->handleAuthenticated($request, $user);
     }
 

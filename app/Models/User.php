@@ -106,13 +106,30 @@ class User extends Authenticatable
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()
-            ->logFillable()
+            ->logOnly(['name', 'email'])
             ->logOnlyDirty()
+            ->dontSubmitEmptyLogs()
             ->useLogName('User')
-            ->setDescriptionForEvent(fn(string $eventName) => "User {$eventName}");
+            ->setDescriptionForEvent(function (string $eventName) {
+                return match ($eventName) {
+                    'created' => 'User created',
+                    'deleted' => 'User deleted',
+                    'updated' => 'User updated', // must return string
+                    default => 'User activity',  // ❗ NEVER return null
+                };
+            });
     }
 
-    public function isOnline()
+    protected static function booted()
+    {
+        static::updating(function ($user) {
+            if ($user->isDirty('last_seen') && count($user->getDirty()) === 1) {
+                return false; // ❌ stop logging last_seen updates
+            }
+        });
+    }
+
+    public function getIsOnlineAttribute()
     {
         return $this->last_seen && $this->last_seen->gt(now()->subMinutes(5));
     }

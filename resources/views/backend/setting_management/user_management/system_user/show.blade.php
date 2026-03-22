@@ -21,21 +21,24 @@
 
 @section('content')
     <div class="container-fluid">
-
         <div class="row justify-content-center">
             <div class="col-lg-12">
-
                 <div class="card shadow border-0">
-
                     <!-- HEADER -->
                     <div class="card-header bg-white border-bottom d-flex align-items-center justify-content-between">
+
+                        <style>
+                            .badge.bg-success {
+                                box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
+                            }
+                        </style>
                         <h5 class="mb-0 fw-semibold">Profile Information</h5>
 
                         <div class="ms-auto text-end">
 
-                            <span class="badge {{ $user->isOnline() ? 'bg-success' : 'bg-secondary' }}">
+                            <span class="badge {{ $user->is_online ? 'bg-success' : 'bg-danger' }}">
                                 <i class="fas fa-circle me-1" style="font-size:8px;"></i>
-                                {{ $user->isOnline() ? 'Online' : 'Offline' }}
+                                {{ $user->is_online ? 'Online' : 'Offline' }}
                             </span>
 
                             <div class="small text-muted">
@@ -44,7 +47,6 @@
 
                         </div>
                     </div>
-
                     <div class="card-body">
                         <div class="row g-4">
                             <div class="col-md-6">

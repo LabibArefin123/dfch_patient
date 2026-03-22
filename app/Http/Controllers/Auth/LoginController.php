@@ -65,6 +65,14 @@ class LoginController extends Controller
      */
     public function logout(Request $request)
     {
+        $user = Auth::user();
+
+        if ($user) {
+            activity('User')
+                ->causedBy($user)
+                ->log('User logged out');
+        }
+
         Auth::logout();
 
         $request->session()->invalidate();
