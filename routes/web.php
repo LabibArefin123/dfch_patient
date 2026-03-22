@@ -18,6 +18,7 @@ use App\Http\Controllers\BannedDeviceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SystemProblemController;
+use App\Http\Controllers\SecurityController;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -51,7 +52,7 @@ Route::get('/user_profile', function () {
 })->middleware(['auth', 'verified'])->name('profile');
 
 //Route::group(['middleware' => ['auth', 'permission']], function () {
-Route::group(['middleware' => ['auth', 'check_banned_device']],  function () {
+Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack']],  function () {
 
     // Profile Routes
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -104,6 +105,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device']],  function () {
     Route::resource('user_devices', UserDeviceController::class);
     Route::post('/system-users/{user}/change-password', [SystemUserController::class, 'updatePassword'])->name('system_users.password.update');
     Route::resource('system_users', SystemUserController::class);
+    Route::resource('security_logs', SecurityController::class);
 
     //Setting 
     Route::get('/settings', [SettingController::class, 'index'])->name('settings.index');

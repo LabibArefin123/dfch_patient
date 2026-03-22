@@ -551,8 +551,15 @@ return [
                             'active' => ['system_problems*'],
                             'icon' => 'fas fa-bug',
                         ],
+                        [
+                            'text' => 'Security Logs',
+                            'route' => 'security_logs.index',
+                            'can' => 'security_logs.index',
+                            'icon' => 'fas fa-shield-alt',
+                        ],
                     ],
-                ],
+                    ],
+
             ],
         ],
         [

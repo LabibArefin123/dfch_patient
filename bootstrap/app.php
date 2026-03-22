@@ -19,6 +19,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
             'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
             'check_banned_device' => \App\Http\Middleware\CheckBannedDevice::class,
+            'detect.attack' => \App\Http\Middleware\DetectAttack::class,
         ]);
 
         // ✅ ADD THIS PART (IMPORTANT)
