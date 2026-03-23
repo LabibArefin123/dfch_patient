@@ -299,12 +299,12 @@ class PatientController extends Controller
                         : asset('uploads/images/default.jpg');
 
                     return '
-        <div class="text-center">
-            <img src="' . $photo . '" 
-                 class="patient-img"
-                 alt="photo">
-        </div>
-    ';
+                    <div class="text-center">
+                        <img src="' . $photo . '" 
+                            class="patient-img"
+                            alt="photo">
+                    </div>
+                ';
                 })
                 ->addColumn('patient_code', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>')
                 ->addColumn('name', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box"><strong>' . $p->patient_name . '</strong><br><small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br><small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small></a>')
@@ -323,11 +323,15 @@ class PatientController extends Controller
 
                 ->addColumn('action', function ($p) {
 
+                    $showUrl   = route('patients.show', $p->id);
                     $editUrl   = route('patients.edit', $p->id);
                     $printUrl  = route('patients.print_card', $p->id);
                     $deleteUrl = route('patients.destroy', $p->id);
 
                     return '
+                    <a href="' . $showUrl . '" class="btn btn-secondary btn-sm mr-1">
+                        <i class="fas fa-eye"></i>
+                    </a>
                     <a href="' . $editUrl . '" class="btn btn-warning btn-sm mr-1">
                         <i class="fas fa-edit"></i>
                     </a>
