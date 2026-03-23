@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SystemProblem;
 use Yajra\DataTables\DataTables;
+use App\Notifications\SystemProblemNotification;
+use Illuminate\Support\Facades\Notification;
 
 class SystemProblemController extends Controller
 {
@@ -93,6 +95,22 @@ class SystemProblemController extends Controller
         }
 
         return view('backend.setting_management.system_problem.index');
+    }
+
+    public function notify($id)
+    {
+        $problem = SystemProblem::findOrFail($id);
+
+        // Always send to your email
+        Notification::route('mail', 'mdlabibarefin@gmail.com')
+            ->notify(new SystemProblemNotification($problem));
+
+        // Optional: update status_email column
+        $problem->update([
+            'status_email' => 'Sent'
+        ]);
+
+        return response()->json(['success' => true]);
     }
     /**
      * Show the form for creating a new resource.

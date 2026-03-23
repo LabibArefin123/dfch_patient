@@ -116,33 +116,18 @@
                 const id = $(this).data('id');
 
                 Swal.fire({
-                    title: 'Send Notification',
-                    html: `
-                <input type="email" id="to_email" class="swal2-input" placeholder="Recipient Email">
-                <textarea id="remarks" class="swal2-textarea" placeholder="Remarks (optional)"></textarea>
-            `,
+                    title: 'Send Notification?',
+                    text: "Email will be sent automatically!",
+                    icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Send',
-                    preConfirm: () => {
-                        const email = Swal.getPopup().querySelector('#to_email').value;
-                        const remarks = Swal.getPopup().querySelector('#remarks').value;
-                        if (!email) {
-                            Swal.showValidationMessage('Recipient email is required');
-                        }
-                        return {
-                            email,
-                            remarks
-                        };
-                    }
+                    confirmButtonText: 'Yes, send it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.post('/system-problems/notify/' + id, {
-                                to_email: result.value.email,
-                                remarks: result.value.remarks,
                                 _token: '{{ csrf_token() }}'
                             })
                             .done(function(res) {
-                                Swal.fire('Success!', 'Email sent successfully!', 'success');
+                                Swal.fire('Sent!', 'Email sent successfully 🚀', 'success');
                                 table.ajax.reload();
                             })
                             .fail(function(err) {

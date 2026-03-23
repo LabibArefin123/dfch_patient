@@ -1,22 +1,39 @@
 @component('mail::message')
-    # System Problem Notification
+    # 🚨 System Issue Notification
 
-    **Problem ID:** {{ $problem->problem_uid }}
-    **Title:** {{ $problem->problem_title }}
-    **Priority:** {{ ucfirst($problem->status) }}
+    A system issue has been recorded in the monitoring system. Please review the details below:
 
-    **Description:**
+    ---
+
+    ### 🔎 Issue Summary
+    - **Problem ID:** {{ $problem->problem_uid }}
+    - **Title:** {{ $problem->problem_title }}
+    - **Priority Level:** {{ ucfirst($problem->status) }}
+    - **Reported On:** {{ $problem->created_at->format('d M Y, h:i A') }}
+
+    ---
+
+    ### 📝 Description
     {{ $problem->problem_description }}
 
     @if ($remarks)
-        **Remarks:**
+        ---
+
+        ### 💬 System Assessment
         {{ $remarks }}
     @endif
 
+    ---
+
     @component('mail::button', ['url' => route('system_problems.show', $problem->id)])
-        View Problem
+        View Full Details
     @endcomponent
 
-    Thanks,<br>
-    {{ config('app.name') }}
+    ---
+
+    If this issue is critical, immediate action is recommended.
+
+    Thanks & Regards,
+    **{{ config('app.name') }}**
+    _System Monitoring & Alert Service_
 @endcomponent
