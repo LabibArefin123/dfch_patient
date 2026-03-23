@@ -46,16 +46,33 @@
 @section('content')
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
+    <style>
+        .patient-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+            /* change to 50% if you want circle */
+            border: 2px solid #dee2e6;
+            transition: 0.3s;
+        }
 
+        .patient-img:hover {
+            transform: scale(1.2);
+            border-color: #007bff;
+        }
+    </style>
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
             <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
                 <thead class="table-dark">
                     <tr>
+
                         <th width="30">
                             <input type="checkbox" id="select-all">
                         </th>
                         <th>#</th>
+                        <th>Photo</th>
                         <th>Patient Code</th>
                         <th>Name</th>
                         <th>Age</th>

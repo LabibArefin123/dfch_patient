@@ -106,7 +106,20 @@ class PatientController extends Controller
 
             return DataTables::of($baseQuery)
                 ->addIndexColumn()
+                ->addColumn('photo', function ($p) {
 
+                    $photo = $p->patient_photo && file_exists(public_path($p->patient_photo))
+                        ? asset($p->patient_photo)
+                        : asset('uploads/images/default.jpg');
+
+                    return '
+        <div class="text-center">
+            <img src="' . $photo . '" 
+                 class="patient-img"
+                 alt="photo">
+        </div>
+    ';
+                })
                 ->addColumn('patient_code', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
                 })
@@ -178,7 +191,7 @@ class PatientController extends Controller
                 ';
                 })
 
-                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'checkbox', 'action'])
+                ->rawColumns(['photo','patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'checkbox', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,
@@ -523,6 +536,7 @@ class PatientController extends Controller
             'remarks'                            => 'nullable|string|max:255',
             'date_of_patient_added'              => 'required|date|',
             'documents.*'                        => 'nullable|file|mimes:pdf,jpg,jpeg,png',
+            'patient_photo.*'                    => 'nullable|file|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         /* ============================
@@ -587,6 +601,33 @@ class PatientController extends Controller
                     'document_type' => 'recommendation',
                 ]);
             }
+        }
+        /* ============================
+   PATIENT PHOTO UPLOAD
+============================ */
+        if ($request->hasFile('patient_photo')) {
+
+            // Delete old photo (optional but recommended)
+            if ($patient->patient_photo && file_exists(public_path($patient->patient_photo))) {
+                unlink(public_path($patient->patient_photo));
+            }
+
+            $file = $request->file('patient_photo');
+            $extension = $file->getClientOriginalExtension();
+
+            $filename = 'patient_' . time() . '.' . $extension;
+
+            $destinationPath = public_path('uploads/patient_photos');
+
+            if (!file_exists($destinationPath)) {
+                mkdir($destinationPath, 0755, true);
+            }
+
+            $file->move($destinationPath, $filename);
+
+            $patient->update([
+                'patient_photo' => 'uploads/patient_photos/' . $filename
+            ]);
         }
 
         return redirect()

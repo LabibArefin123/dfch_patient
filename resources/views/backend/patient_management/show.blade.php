@@ -175,14 +175,80 @@
 
                 {{-- RIGHT IMAGE --}}
                 <div class="col-md-3 d-flex justify-content-end">
+                    <style>
+                        .patient-photo-box {
+                            width: 200px;
+                            height: 200px;
+                            border-radius: 12px;
+                            overflow: hidden;
+                            border: 3px solid #e9ecef;
+                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+                            transition: 0.3s ease;
+                        }
+
+                        .patient-photo-box:hover {
+                            transform: scale(1.03);
+                            border-color: #007bff;
+                        }
+
+                        .patient-photo-img {
+                            width: 100%;
+                            height: 100%;
+                            object-fit: contain;
+                            /* 🔥 FORCE SQUARE */
+                        }
+
+                        .zoom-modal {
+                            display: none;
+                            position: fixed;
+                            z-index: 9999;
+                            padding-top: 60px;
+                            left: 0;
+                            top: 0;
+                            width: 100%;
+                            height: 100%;
+                            overflow: auto;
+                            background-color: rgba(0, 0, 0, 0.9);
+                        }
+
+                        .zoom-modal-content {
+                            margin: auto;
+                            display: block;
+                            max-width: 80%;
+                            max-height: 80%;
+                            border-radius: 10px;
+                        }
+
+                        .zoom-close {
+                            position: absolute;
+                            top: 20px;
+                            right: 35px;
+                            color: #fff;
+                            font-size: 40px;
+                            font-weight: bold;
+                            cursor: pointer;
+                        }
+                    </style>
                     <div class="text-center">
-                        <div class="border rounded mb-2" style="width:200px;height:200px;">
-                            <img src="{{ $patient->photo_path ? asset($patient->photo_path) : asset('images/patient_placeholder.png') }}"
-                                alt="Patient Photo" class="img-fluid rounded"
-                                style="width:100%;height:100%;object-fit:cover;">
+
+                        <div class="patient-photo-box mb-2">
+
+                            <img src="{{ $patient->patient_photo && file_exists(public_path($patient->patient_photo))
+                                ? asset($patient->patient_photo)
+                                : asset('uploads/images/default.jpg') }}"
+                                alt="Patient Photo" class="patient-photo-img zoomable" data-action="zoom">
+
                         </div>
+
                         <small class="text-muted">Patient Photo</small>
+
                     </div>
+                    <!-- Image Zoom Modal -->
+                    <div id="imageZoomModal" class="zoom-modal">
+                        <span class="zoom-close">&times;</span>
+                        <img class="zoom-modal-content" id="zoomedImage">
+                    </div>
+
                 </div>
 
             </div>
@@ -197,6 +263,7 @@
 @stop
 
 @section('js')
+    <script src="{{ asset('js/backend/patient_management/zoomgit .js') }}"></script>
     <script>
         $(document).on('click', '.dev-link', function() {
 
