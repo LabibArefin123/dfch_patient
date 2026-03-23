@@ -322,7 +322,6 @@ class PatientController extends Controller
                 })
 
                 ->addColumn('action', function ($p) {
-
                     $showUrl   = route('patients.show', $p->id);
                     $editUrl   = route('patients.edit', $p->id);
                     $printUrl  = route('patients.print_card', $p->id);
