@@ -157,20 +157,27 @@
                         <input type="text" class="form-control mb-2" disabled
                             value="{{ $patient->recommend_doctor_name }}">
 
-                        <input type="text" class="form-control mb-3" disabled
-                            value="{{ $patient->recommend_note ?? '-' }}">
+                        <div class="form-control mb-3" style="height:auto;">
+                            {!! $patient->recommend_note ?? '-' !!}
+                        </div>
                     @endif
 
                     {{-- MEDICAL --}}
                     <h6 class="text-muted">Medical Information</h6>
-                    <textarea class="form-control mb-2" rows="2" disabled>{{ $patient->patient_problem_description ?? 'N/A' }}</textarea>
+
+                    <div class="form-control mb-3" style="height:auto;">
+                        {!! $patient->patient_problem_description ?? '-' !!}
+                    </div>
                     <h6 class="text-muted">Drug Information</h6>
-                    <textarea class="form-control mb-3" rows="2" disabled>{{ $patient->patient_drug_description ?? 'N/A' }}</textarea>
+                    <div class="form-control mb-3" style="height:auto;">
+                        {!! $patient->patient_drug_description ?? '-' !!}
+                    </div>
 
                     {{-- REMARKS --}}
                     <h6 class="text-muted">Remarks</h6>
-                    <textarea class="form-control" rows="2" disabled>{{ $patient->remarks ?? 'No remarks' }}</textarea>
-
+                    <div class="form-control mb-3" style="height:auto;">
+                        {!! $patient->remarks ?? '-' !!}
+                    </div>
                 </div>
 
                 {{-- RIGHT IMAGE --}}
