@@ -168,37 +168,73 @@
     <div class="mb-4"></div>
 @stop
 @section('js')
+    <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
+
     <script>
         $(document).on('click', '#remarksBtn', function() {
+
             Swal.fire({
                 title: 'Add Remarks',
                 html: `
-                <select id="remark_type" class="swal2-input">
-                    <option value="">Select Option</option>
-                    <option value="solved">✔ Problem Solved</option>
-                    <option value="custom">✍ Custom Message</option>
-                </select>
+            <select id="remark_type" class="swal2-input">
+                <option value="">Select Option</option>
+                <option value="solved">✔ Problem Solved</option>
+                <option value="custom">✍ Custom Message</option>
+            </select>
 
-                <textarea id="custom_remark" class="swal2-textarea"
-                    placeholder="Write custom message..." style="display:none;"></textarea>
-            `,
+            <div id="custom_remark_container" style="display:none; margin-top:10px;">
+                <div id="custom_remark_editor" style="height:150px; background:#fff;"></div>
+            </div>
+        `,
                 showCancelButton: true,
                 confirmButtonText: 'Save',
                 didOpen: () => {
                     const select = document.getElementById('remark_type');
-                    const textarea = document.getElementById('custom_remark');
+                    const container = document.getElementById('custom_remark_container');
 
+                    // Initialize Quill editor
+                    let quill;
                     select.addEventListener('change', function() {
                         if (this.value === 'custom') {
-                            textarea.style.display = 'block';
+                            container.style.display = 'block';
+                            if (!quill) {
+                                quill = new Quill('#custom_remark_editor', {
+                                    theme: 'snow',
+                                    placeholder: 'Write your custom message...',
+                                    modules: {
+                                        toolbar: [
+                                            [{
+                                                'header': [1, 2, 3, false]
+                                            }],
+                                            ['bold', 'italic', 'underline',
+                                                'strike'],
+                                            [{
+                                                'list': 'ordered'
+                                            }, {
+                                                'list': 'bullet'
+                                            }],
+                                            [{
+                                                'align': []
+                                            }],
+                                            ['link', 'clean']
+                                        ]
+                                    }
+                                });
+                            }
                         } else {
-                            textarea.style.display = 'none';
+                            container.style.display = 'none';
                         }
                     });
                 },
                 preConfirm: () => {
                     const type = document.getElementById('remark_type').value;
-                    const custom = document.getElementById('custom_remark').value;
+                    let custom = '';
+
+                    if (type === 'custom') {
+                        const quillEditor = document.querySelector('#custom_remark_editor .ql-editor');
+                        custom = quillEditor ? quillEditor.innerHTML.trim() : '';
+                    }
 
                     if (!type) {
                         Swal.showValidationMessage('Please select a remark type');
@@ -227,6 +263,7 @@
                     });
                 }
             });
+
         });
     </script>
 @endsection
