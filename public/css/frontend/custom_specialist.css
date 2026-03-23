@@ -121,6 +121,13 @@
     overflow-y: auto;
     padding-right: 5px;
 }
+
+/* Optional title spacing */
+.col-md-4 p {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
 /* =========================
    DOCTOR LIST WITH AVATAR
 ========================= */

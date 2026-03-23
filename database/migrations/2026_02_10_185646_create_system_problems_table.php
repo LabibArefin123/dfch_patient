@@ -14,6 +14,8 @@ return new class extends Migration {
             $table->text('problem_description');
             $table->enum('status', ['low', 'medium', 'high', 'critical'])->default('low');
             $table->string('problem_file')->nullable();
+            $table->json('multiple_images')->nullable();
+            $table->json('multiple_pdfs')->nullable();
             $table->timestamps();
         });
     }

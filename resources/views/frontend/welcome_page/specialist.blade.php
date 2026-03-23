@@ -96,6 +96,7 @@
 
                     <!-- RIGHT: Vertical Doctor List -->
                     <div class="col-md-4">
+                        <p>Doctor List</p>
                         <div class="doctor-list">
 
                             @foreach ($doctors as $i => $doc)

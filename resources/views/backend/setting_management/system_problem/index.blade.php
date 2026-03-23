@@ -32,50 +32,7 @@
 @stop
 
 @section('js')
-    {{-- <script>
-        $(function() {
-            $('#systemProblemTable').DataTable({
-                processing: true,
-                serverSide: true,
-                responsive: true,
-                ajax: "{{ route('system_problems.index') }}",
-                columns: [{
-                        data: 'DT_RowIndex',
-                        name: 'DT_RowIndex',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'problem_uid',
-                        name: 'problem_uid'
-                    },
-                    {
-                        data: 'problem_title',
-                        name: 'problem_title'
-                    },
-                    {
-                        data: 'status',
-                        name: 'status'
-                    },
-                    {
-                        data: 'problem_file',
-                        name: 'problem_file',
-                        orderable: false,
-                        searchable: false
-                    },
-                    {
-                        data: 'created_at',
-                        name: 'created_at'
-                    },
-                    {
-                        data: 'action',
-                        orderable: false,
-                        searchable: false
-                    }
-                ]
-            });
-        });
-    </script> --}}
+    
     <script>
     function showDtToast(message) {
         $('#dtErrorMessage').text(message);

@@ -102,47 +102,54 @@ class WelcomePageController extends Controller
     public function system_problem_store(Request $request)
     {
         $request->validate([
-            'problem_title'       => 'required|string|max:255',
+            'problem_title' => 'required|string|max:255',
             'problem_description' => 'required|string',
-            'status'              => 'required|in:low,medium,high,critical',
-            'problem_file'        => 'nullable|file|mimes:jpg,jpeg,png,pdf,doc,docx|max:4096',
+            'status' => 'required|in:low,medium,high,critical',
+            'problem_file' => 'nullable|file|max:4096',
+            'multiple_images.*' => 'nullable|image|max:4096',
+            'multiple_pdfs.*' => 'nullable|file|max:4096',
         ]);
 
-        // Generate readable unique ID
         $uid = 'DFCH-PROB-' . strtoupper(Str::random(6));
 
+        // SINGLE FILE
         $fileName = null;
-
         if ($request->hasFile('problem_file')) {
+            $file = $request->file('problem_file');
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('uploads/problem/files'), $fileName);
+        }
 
-            $file      = $request->file('problem_file');
-            $extension = $file->getClientOriginalExtension();
-            $original  = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+        // MULTIPLE IMAGES
+        $images = [];
+        if ($request->hasFile('multiple_images')) {
+            foreach ($request->file('multiple_images') as $img) {
+                $name = time() . '_' . $img->getClientOriginalName();
+                $img->move(public_path('uploads/problem/images'), $name);
+                $images[] = $name;
+            }
+        }
 
-            // Time format: HHMMSS_DDMMYY
-            $timeStamp = Carbon::now()->format('His_dmy');
-
-            // Clean filename
-            $fileName = Str::slug($original) . '_' . $timeStamp . '.' . $extension;
-
-            // Decide folder
-            $imageExt = ['jpg', 'jpeg', 'png'];
-            $folder   = in_array(strtolower($extension), $imageExt)
-                ? 'uploads/problem/images'
-                : 'uploads/problem/files';
-
-            // Move file
-            $file->move(public_path($folder), $fileName);
+        // MULTIPLE FILES
+        $files = [];
+        if ($request->hasFile('multiple_pdfs')) {
+            foreach ($request->file('multiple_pdfs') as $f) {
+                $name = time() . '_' . $f->getClientOriginalName();
+                $f->move(public_path('uploads/problem/files'), $name);
+                $files[] = $name;
+            }
         }
 
         SystemProblem::create([
-            'problem_uid'        => $uid,
-            'problem_title'      => $request->problem_title,
+            'problem_uid' => $uid,
+            'problem_title' => $request->problem_title,
             'problem_description' => $request->problem_description,
-            'status'             => $request->status,
-            'problem_file'       => $fileName, // only filename saved
+            'status' => $request->status,
+            'problem_file' => $fileName,
+            'multiple_images' => $images,
+            'multiple_pdfs' => $files,
         ]);
 
-        return back()->with('success', '✅ Your problem has been submitted successfully.');
+        return back()->with('success', '✅ Problem submitted successfully!');
     }
 }

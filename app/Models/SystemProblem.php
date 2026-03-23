@@ -12,5 +12,12 @@ class SystemProblem extends Model
         'problem_description',
         'status',
         'problem_file',
+        'multiple_images',
+        'multiple_pdfs',
+    ];
+
+    protected $casts = [
+        'multiple_images' => 'array',
+        'multiple_pdfs' => 'array',
     ];
 }
