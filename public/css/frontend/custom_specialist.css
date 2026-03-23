@@ -109,3 +109,83 @@
     object-fit: contain; /* keep full image */
     object-position: center;
 }
+
+/* =========================
+   RIGHT SIDE DOCTOR LIST
+========================= */
+.doctor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 420px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+/* =========================
+   DOCTOR LIST WITH AVATAR
+========================= */
+.doctor-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 12px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    border-left: 4px solid transparent;
+    font-size: 14px;
+}
+
+/* Avatar */
+.doctor-item img {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid transparent;
+    transition: 0.3s;
+}
+
+/* Hover */
+.doctor-item:hover {
+    background: #ffecec;
+    transform: translateX(6px);
+}
+
+/* Active */
+.doctor-item.active {
+    background: #ff6b6b;
+    color: #fff;
+    border-left: 4px solid #8b0000;
+}
+
+.doctor-item.active img {
+    border-color: #fff;
+}
+
+/* =========================
+   FADE ANIMATION
+========================= */
+.fade-out {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.25s ease;
+}
+
+.fade-in {
+    opacity: 1;
+    transform: translateY(0);
+    transition: all 0.35s ease;
+}
+
+/* Scrollbar (optional sexy UI) */
+.doctor-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.doctor-list::-webkit-scrollbar-thumb {
+    background: #ff6b6b;
+    border-radius: 10px;
+}

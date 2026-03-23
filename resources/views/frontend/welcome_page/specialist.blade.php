@@ -83,10 +83,35 @@
 
             <!-- RIGHT : INFO -->
             <div class="col-lg-7">
-                <div id="spec-info">
-                    <h3 class="fw-bold" id="docName">{{ $doctors[0]['name'] }}</h3>
-                    <p class="text-danger fw-semibold" id="docDegree">{{ $doctors[0]['degree'] }}</p>
-                    <p class="lh-lg" id="docDetails">{!! $doctors[0]['details'] !!}</p>
+                <div class="row">
+
+                    <!-- LEFT: Doctor Info -->
+                    <div class="col-md-8">
+                        <div id="spec-info">
+                            <h3 class="fw-bold" id="docName">{{ $doctors[0]['name'] }}</h3>
+                            <p class="text-danger fw-semibold" id="docDegree">{{ $doctors[0]['degree'] }}</p>
+                            <p class="lh-lg" id="docDetails">{!! $doctors[0]['details'] !!}</p>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT: Vertical Doctor List -->
+                    <div class="col-md-4">
+                        <div class="doctor-list">
+
+                            @foreach ($doctors as $i => $doc)
+                                <div class="doctor-item {{ $i === 0 ? 'active' : '' }}"
+                                    data-index="{{ $i }}">
+
+                                    <img src="{{ asset('uploads/images/welcome_page/doctors/' . $doc['image']) }}"
+                                        alt="{{ $doc['name'] }}">
+
+                                    <span>{{ $doc['name'] }}</span>
+                                </div>
+                            @endforeach
+
+                        </div>
+                    </div>
+
                 </div>
             </div>
 
@@ -107,6 +132,7 @@
     const docDegree = document.getElementById('docDegree');
     const docDetails = document.getElementById('docDetails');
     const stripItems = document.querySelectorAll('.strip-item');
+    const doctorItems = document.querySelectorAll('.doctor-item');
 
     function startAutoSlide() {
         clearInterval(autoSlide);
@@ -116,28 +142,65 @@
     function updateDoctor(index, resetTimer = true) {
         const doctor = doctors[index];
 
-        stripItems.forEach((el, i) => {
-            el.classList.toggle('active', i === index);
-        });
+        // Fade out first
+        const infoBox = document.getElementById('spec-info');
+        const previewWrap = document.querySelector('.preview-wrap');
 
-        previewImg.src =
-            "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctor.image;
+        infoBox.classList.add('fade-out');
+        previewWrap.classList.add('fade-out');
 
-        docName.innerText = doctor.name;
-        docDegree.innerText = doctor.degree;
-        docDetails.innerHTML = doctor.details;
+        setTimeout(() => {
 
-        if (doctor.route) {
-            doctorLink.href = doctor.route;
-            doctorLink.style.pointerEvents = 'auto';
-        } else {
-            doctorLink.href = 'javascript:void(0)';
-            doctorLink.style.pointerEvents = 'none';
-        }
+            // Update active states
+            stripItems.forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+
+            doctorItems.forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+
+            // Update content
+            previewImg.src =
+                "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctor.image;
+
+            docName.innerText = doctor.name;
+            docDegree.innerText = doctor.degree;
+            docDetails.innerHTML = doctor.details;
+
+            if (doctor.route) {
+                doctorLink.href = doctor.route;
+                doctorLink.style.pointerEvents = 'auto';
+            } else {
+                doctorLink.href = 'javascript:void(0)';
+                doctorLink.style.pointerEvents = 'none';
+            }
+
+            // Fade back in
+            infoBox.classList.remove('fade-out');
+            previewWrap.classList.remove('fade-out');
+
+            infoBox.classList.add('fade-in');
+            previewWrap.classList.add('fade-in');
+
+        }, 200);
 
         currentDoctor = index;
         if (resetTimer) startAutoSlide();
     }
+
+    // 👉 Vertical list interaction
+    doctorItems.forEach(item => {
+        const index = Number(item.dataset.index);
+
+        item.addEventListener('mouseenter', () => {
+            updateDoctor(index, false);
+        });
+
+        item.addEventListener('click', () => {
+            updateDoctor(index, true);
+        });
+    });
 
     function nextDoctor() {
         updateDoctor((currentDoctor + 1) % doctors.length, false);
