@@ -263,7 +263,7 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/backend/patient_management/zoomgit .js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script>
         $(document).on('click', '.dev-link', function() {
 
