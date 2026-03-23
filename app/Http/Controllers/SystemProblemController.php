@@ -42,9 +42,25 @@ class SystemProblemController extends Controller
                     return $row->remarks ? e($row->remarks) : 'N/A';
                 })
                 ->addColumn('notify', function ($row) {
-                    return '<button class="btn btn-sm btn-success notify-btn" data-id="' . $row->id . '">Notify</button>';
-                })
 
+                    if ($row->status_email === 'Sent') {
+
+                        $time = $row->updated_at
+                            ? $row->updated_at->format('d M Y, h:i A')
+                            : 'N/A';
+
+                        return '<span class="badge bg-success"
+                    data-bs-toggle="tooltip"
+                    title="Sent at: ' . $time . '">
+                    Already Sent
+                </span>';
+                    }
+
+                    return '<button class="btn btn-sm btn-success notify-btn"
+                data-id="' . $row->id . '">
+                <i class="fas fa-paper-plane"></i> Notify
+            </button>';
+                })
                 // Attachments column (images & PDFs)
                 ->editColumn('problem_file', function ($row) {
                     $attachments = [];

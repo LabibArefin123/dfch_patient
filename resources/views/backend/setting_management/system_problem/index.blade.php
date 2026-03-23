@@ -9,7 +9,13 @@
 @stop
 
 @section('content')
-
+    <style>
+        .dataTables_processing {
+            background: transparent !important;
+            box-shadow: none !important;
+            border: none !important;
+        }
+    </style>
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
             <table class="table table-striped table-hover text-nowrap w-100" id="systemProblemTable">
@@ -54,6 +60,11 @@
                 serverSide: true,
                 responsive: true,
                 ajax: "{{ route('system_problems.index') }}",
+
+                language: {
+                    processing: "" // 🔥 removes white box
+                },
+
                 columns: [{
                         data: 'DT_RowIndex',
                         orderable: false,
@@ -98,7 +109,7 @@
                     }
                 ],
                 drawCallback: function() {
-                    // Optional: any JS after redraw
+                    initTooltips();
                 }
             });
 
@@ -123,6 +134,7 @@
                     confirmButtonText: 'Yes, send it!'
                 }).then((result) => {
                     if (result.isConfirmed) {
+
                         $.post('/system-problems/notify/' + id, {
                                 _token: '{{ csrf_token() }}'
                             })
