@@ -14,6 +14,8 @@ class SystemProblem extends Model
         'problem_file',
         'multiple_images',
         'multiple_pdfs',
+        'status_email',
+        'remarks',
     ];
 
     protected $casts = [

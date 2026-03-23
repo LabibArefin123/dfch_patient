@@ -31,35 +31,33 @@ class SystemProblemController extends Controller
                     return '<span class="badge bg-' . $badge . '">' . ucfirst($row->status) . '</span>';
                 })
 
-                // Attachments column (supports single file, multiple images, multiple PDFs)
+                ->editColumn('status_email', function ($row) {
+                    return $row->status_email ?
+                        '<span class="badge bg-info">' . $row->status_email . '</span>' :
+                        '<span class="text-muted">Not Notified</span>';
+                })
+                ->editColumn('remarks', function ($row) {
+                    return $row->remarks ? e($row->remarks) : 'N/A';
+                })
+                ->addColumn('notify', function ($row) {
+                    return '<button class="btn btn-sm btn-success notify-btn" data-id="' . $row->id . '">Notify</button>';
+                })
+
+                // Attachments column (images & PDFs)
                 ->editColumn('problem_file', function ($row) {
                     $attachments = [];
 
-                    // Single file
                     if ($row->problem_file) {
-                        $attachments[] = [
-                            'name' => $row->problem_file,
-                            'type' => pathinfo($row->problem_file, PATHINFO_EXTENSION),
-                        ];
+                        $attachments[] = ['name' => $row->problem_file, 'type' => pathinfo($row->problem_file, PATHINFO_EXTENSION)];
                     }
-
-                    // Multiple images
                     if (!empty($row->multiple_images) && is_array($row->multiple_images)) {
                         foreach ($row->multiple_images as $img) {
-                            if ($img) $attachments[] = [
-                                'name' => $img,
-                                'type' => pathinfo($img, PATHINFO_EXTENSION),
-                            ];
+                            if ($img) $attachments[] = ['name' => $img, 'type' => pathinfo($img, PATHINFO_EXTENSION)];
                         }
                     }
-
-                    // Multiple PDFs
                     if (!empty($row->multiple_pdfs) && is_array($row->multiple_pdfs)) {
                         foreach ($row->multiple_pdfs as $pdf) {
-                            if ($pdf) $attachments[] = [
-                                'name' => $pdf,
-                                'type' => pathinfo($pdf, PATHINFO_EXTENSION),
-                            ];
+                            if ($pdf) $attachments[] = ['name' => $pdf, 'type' => pathinfo($pdf, PATHINFO_EXTENSION)];
                         }
                     }
 
@@ -70,46 +68,32 @@ class SystemProblemController extends Controller
 
                         if (in_array($ext, ['jpg', 'jpeg', 'png', 'gif'])) {
                             $filePath = asset('uploads/problem/images/' . $name);
-                            $html .= '<a href="' . $filePath . '" target="_blank">
-                                    <img src="' . $filePath . '" style="max-height:40px;margin:2px;" class="img-thumbnail">
-                                  </a>';
+                            $html .= '<a href="' . $filePath . '" target="_blank"><img src="' . $filePath . '" style="max-height:40px;margin:2px;" class="img-thumbnail"></a>';
                         } elseif ($ext === 'pdf') {
                             $filePath = asset('uploads/problem/files/' . $name);
-                            $html .= '<a href="' . $filePath . '" target="_blank" class="btn btn-sm btn-outline-info me-1">
-                                    <i class="fas fa-file-pdf"></i>
-                                  </a>';
+                            $html .= '<a href="' . $filePath . '" target="_blank" class="btn btn-sm btn-outline-info me-1"><i class="fas fa-file-pdf"></i></a>';
                         } else {
                             $filePath = asset('uploads/problem/files/' . $name);
-                            $html .= '<a href="' . $filePath . '" target="_blank" class="btn btn-sm btn-outline-secondary me-1">
-                                    <i class="fas fa-file"></i>
-                                  </a>';
+                            $html .= '<a href="' . $filePath . '" target="_blank" class="btn btn-sm btn-outline-secondary me-1"><i class="fas fa-file"></i></a>';
                         }
                     }
-
                     return $html ?: '<span class="text-muted">No attachments</span>';
                 })
 
-                // Format reported date
                 ->editColumn('created_at', function ($row) {
                     return $row->created_at->format('d M Y, h:i A');
                 })
 
-                // Action buttons
                 ->addColumn('action', function ($row) {
-                    $show = '<a href="' . route('system_problems.show', $row->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>';
-                    $edit = '<a href="' . route('system_problems.edit', $row->id) . '" class="btn btn-sm btn-warning"><i class="fas fa-edit"></i></a>';
-                    return $show . ' ' . $edit;
+                    return '<a href="' . route('system_problems.show', $row->id) . '" class="btn btn-sm btn-primary"><i class="fas fa-eye"></i></a>';
                 })
 
-                ->rawColumns(['status', 'problem_file', 'action'])
+                ->rawColumns(['status', 'status_email', 'problem_file', 'notify', 'action'])
                 ->make(true);
         }
 
         return view('backend.setting_management.system_problem.index');
     }
-
-   
-
     /**
      * Show the form for creating a new resource.
      */

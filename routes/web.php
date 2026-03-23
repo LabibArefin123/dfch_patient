@@ -18,6 +18,7 @@ use App\Http\Controllers\BannedDeviceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\SystemProblemController;
+use App\Http\Controllers\SystemProblemNotifyController;
 use App\Http\Controllers\SecurityController;
 
 use Illuminate\Support\Facades\Auth;
@@ -99,6 +100,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack']],
     Route::post('/permissions/delete-selected', [PermissionController::class, 'deleteSelected'])->name('permissions.deleteSelected');
     Route::resource('ban_users', BanUserController::class);
     Route::resource('banned_devices', BannedDeviceController::class);
+    Route::post('system-problems/notify/{systemProblem}', [SystemProblemNotifyController::class, 'sendEmail'])->name('system_problems.notify');
     Route::resource('system_problems', SystemProblemController::class);
     Route::post('/user_devices/{id}/ban', [UserDeviceController::class, 'ban'])->name('user_devices.ban');
     Route::post('/user_devices/{id}/unban', [UserDeviceController::class, 'unban'])->name('user_devices.unban');

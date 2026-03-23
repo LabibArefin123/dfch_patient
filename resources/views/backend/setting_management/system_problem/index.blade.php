@@ -19,6 +19,9 @@
                         <th>Problem ID</th>
                         <th>Title</th>
                         <th>Priority</th>
+                        <th>Status Email</th>
+                        <th>Remarks</th>
+                        <th>Notify</th>
                         <th>Attachment</th>
                         <th>Reported At</th>
                         <th>Actions</th>
@@ -32,58 +35,122 @@
 @stop
 
 @section('js')
-    
     <script>
-    function showDtToast(message) {
-        $('#dtErrorMessage').text(message);
-        $('#dtErrorToast').addClass('show');
-    }
+        $(function() {
 
-    function closeDtToast() {
-        $('#dtErrorToast').removeClass('show');
-    }
+            function showDtToast(message) {
+                $('#dtErrorMessage').text(message);
+                $('#dtErrorToast').addClass('show');
+            }
 
-    $(function () {
+            function closeDtToast() {
+                $('#dtErrorToast').removeClass('show');
+            }
 
-        $.fn.dataTable.ext.errMode = 'none'; // Disable default alert
+            $.fn.dataTable.ext.errMode = 'none'; // Disable default alert
 
-        const table = $('#systemProblemTable').DataTable({
-            processing: true,
-            serverSide: true,
-            responsive: true,
-            ajax: {
-                url: "{{ route('system_problems.index') }}",
-                error: function (xhr, error, thrown) {
-
-                    // Developer console
-                    console.error('DataTable Error:', xhr.responseText);
-
-                    // Friendly UI message
-                    showDtToast(
-                        'We couldn’t load the system problems right now. ' +
-                        'Please contact the system administrator.'
-                    );
+            const table = $('#systemProblemTable').DataTable({
+                processing: true,
+                serverSide: true,
+                responsive: true,
+                ajax: "{{ route('system_problems.index') }}",
+                columns: [{
+                        data: 'DT_RowIndex',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'problem_uid'
+                    },
+                    {
+                        data: 'problem_title'
+                    },
+                    {
+                        data: 'status'
+                    },
+                    {
+                        data: 'status_email',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'remarks',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'notify',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'problem_file',
+                        orderable: false,
+                        searchable: false
+                    },
+                    {
+                        data: 'created_at'
+                    },
+                    {
+                        data: 'action',
+                        orderable: false,
+                        searchable: false
+                    }
+                ],
+                drawCallback: function() {
+                    // Optional: any JS after redraw
                 }
-            },
-            columns: [
-                { data: 'DT_RowIndex', orderable: false, searchable: false },
-                { data: 'problem_uid' },
-                { data: 'problem_title' },
-                { data: 'status' },
-                { data: 'problem_file', orderable: false, searchable: false },
-                { data: 'created_at' },
-                { data: 'action', orderable: false, searchable: false }
-            ]
-        });
+            });
 
-        // Catch column mismatch / JSON issues
-        table.on('error.dt', function (e, settings, techNote, message) {
-            console.error('DataTable Tech Error:', message);
-            showDtToast(
-                'A system configuration issue was detected. ' +
-                'Please notify the technical team.'
-            );
+            // Catch column mismatch / JSON issues
+            table.on('error.dt', function(e, settings, techNote, message) {
+                console.error('DataTable Tech Error:', message);
+                showDtToast(
+                    'A system configuration issue was detected. ' +
+                    'Please notify the technical team.'
+                );
+            });
+
+            // Notify button click
+            $(document).on('click', '.notify-btn', function() {
+                const id = $(this).data('id');
+
+                Swal.fire({
+                    title: 'Send Notification',
+                    html: `
+                <input type="email" id="to_email" class="swal2-input" placeholder="Recipient Email">
+                <textarea id="remarks" class="swal2-textarea" placeholder="Remarks (optional)"></textarea>
+            `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Send',
+                    preConfirm: () => {
+                        const email = Swal.getPopup().querySelector('#to_email').value;
+                        const remarks = Swal.getPopup().querySelector('#remarks').value;
+                        if (!email) {
+                            Swal.showValidationMessage('Recipient email is required');
+                        }
+                        return {
+                            email,
+                            remarks
+                        };
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.post('/system-problems/notify/' + id, {
+                                to_email: result.value.email,
+                                remarks: result.value.remarks,
+                                _token: '{{ csrf_token() }}'
+                            })
+                            .done(function(res) {
+                                Swal.fire('Success!', 'Email sent successfully!', 'success');
+                                table.ajax.reload();
+                            })
+                            .fail(function(err) {
+                                Swal.fire('Error', 'Failed to send email.', 'error');
+                            });
+                    }
+                });
+            });
         });
-    });
-</script>
+    </script>
 @endsection
