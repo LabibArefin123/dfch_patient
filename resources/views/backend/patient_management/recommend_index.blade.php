@@ -27,35 +27,6 @@
             <button id="delete-selected" class="btn btn-danger btn-sm d-none">
                 <i class="fas fa-trash"></i> Delete Selected
             </button>
-            {{-- More Actions --}}
-            {{-- <div class="dropdown">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                    <i class="fas fa-ellipsis-v"></i>
-                </button>
-
-                <div class="dropdown-menu dropdown-menu-right">
-
-                    <a class="dropdown-item export-excel" href="{{ route('patients.export.excel') }}">
-                        <i class="fas fa-file-excel text-success"></i> Export Excel
-                    </a>
-
-                    <a class="dropdown-item export-pdf" href="{{ route('patients.export.pdf') }}">
-                        <i class="fas fa-file-pdf text-danger"></i> Export PDF
-                    </a>
-
-                    <div class="dropdown-divider"></div>
-
-                    <a class="dropdown-item import-excel" href="{{ route('patients.import.excel') }}">
-                        <i class="fas fa-upload"></i> Import Excel
-                    </a>
-
-                    <a class="dropdown-item" href="{{ route('patients.print') }}">
-                        <i class="fas fa-print"></i> Print
-                    </a>
-
-                </div>
-            </div> --}}
-
         </div>
     </div>
 @stop
@@ -65,7 +36,22 @@
 
     {{-- Filter --}}
     @include('backend.patient_management.filter.filter')
+    <style>
+        .patient-img {
+            width: 45px;
+            height: 45px;
+            object-fit: cover;
+            border-radius: 8px;
+            /* change to 50% if you want circle */
+            border: 2px solid #dee2e6;
+            transition: 0.3s;
+        }
 
+        .patient-img:hover {
+            transform: scale(1.2);
+            border-color: #007bff;
+        }
+    </style>
     {{-- Table --}}
     <div class="card shadow-sm border-success">
         <div class="card-header bg-success text-white">
@@ -80,6 +66,7 @@
                             <input type="checkbox" id="select-all">
                         </th>
                         <th>#</th>
+                        <th>Phone</th>
                         <th>Patient Code</th>
                         <th>Name</th>
                         <th>Age</th>

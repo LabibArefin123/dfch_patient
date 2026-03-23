@@ -24,9 +24,7 @@ $(function () {
         columns: [
             { data: "checkbox", name: "checkbox" },
             { data: "DT_RowIndex", orderable: false, searchable: false },
-
-            { data: "photo", orderable: false, searchable: false }, // ✅ NEW
-
+            { data: "photo", orderable: false, searchable: false }, 
             { data: "patient_code", name: "patient_code" },
             { data: "name", name: "patient_name" },
             { data: "age", name: "age" },

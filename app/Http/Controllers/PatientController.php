@@ -167,11 +167,15 @@ class PatientController extends Controller
 
                 ->addColumn('action', function ($p) {
 
+                    $showUrl   = route('patients.show', $p->id);
                     $editUrl   = route('patients.edit', $p->id);
                     $printUrl  = route('patients.print_card', $p->id);
                     $deleteUrl = route('patients.destroy', $p->id);
 
                     return '
+                    <a href="' . $showUrl . '" class="btn btn-primary btn-sm mr-1">
+                        <i class="fas fa-eye"></i>
+                    </a>
                     <a href="' . $editUrl . '" class="btn btn-warning btn-sm mr-1">
                         <i class="fas fa-edit"></i>
                     </a>
@@ -191,7 +195,7 @@ class PatientController extends Controller
                 ';
                 })
 
-                ->rawColumns(['photo','patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'checkbox', 'action'])
+                ->rawColumns(['photo', 'patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'checkbox', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,
@@ -288,6 +292,20 @@ class PatientController extends Controller
 
             return DataTables::of($baseQuery)
                 ->addIndexColumn()
+                ->addColumn('photo', function ($p) {
+
+                    $photo = $p->patient_photo && file_exists(public_path($p->patient_photo))
+                        ? asset($p->patient_photo)
+                        : asset('uploads/images/default.jpg');
+
+                    return '
+        <div class="text-center">
+            <img src="' . $photo . '" 
+                 class="patient-img"
+                 alt="photo">
+        </div>
+    ';
+                })
                 ->addColumn('patient_code', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>')
                 ->addColumn('name', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box"><strong>' . $p->patient_name . '</strong><br><small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br><small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small></a>')
                 ->addColumn('age', fn($p) => '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->age . '</a>')
@@ -329,7 +347,7 @@ class PatientController extends Controller
                 ';
                 })
 
-                ->rawColumns(['patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'checkbox', 'action'])
+                ->rawColumns(['photo', 'patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'checkbox', 'action'])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,
