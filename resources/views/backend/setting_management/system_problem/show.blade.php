@@ -55,6 +55,21 @@
                     <textarea class="form-control" rows="5" readonly>{{ $systemProblem->problem_description }}</textarea>
                 </div>
 
+                {{-- Remarks --}}
+                <div class="col-md-12 mb-3">
+                    <label class="form-label fw-semibold">Remarks</label>
+
+                    @if (!empty($systemProblem->remarks))
+                        <div class="alert alert-success shadow-sm">
+                            {{ $systemProblem->remarks }}
+                        </div>
+                    @else
+                        <div class="alert alert-light text-muted">
+                            No remarks added yet.
+                        </div>
+                    @endif
+                </div>
+
                 {{-- Attachments --}}
                 <div class="col-md-12 mb-3">
                     <label class="form-label fw-semibold">Attachments</label>
@@ -136,11 +151,82 @@
                     @else
                         <p class="text-muted">No attachments provided.</p>
                     @endif
+                    {{-- Floating Remarks Button (Admin Only) --}}
+                    @role('admin')
+                        @if (empty($systemProblem->remarks))
+                            <button id="remarksBtn" class="btn btn-primary shadow"
+                                style="position: absolute; bottom: 20px; right: 20px;">
+                                <i class="fas fa-comment-dots"></i> Add Remarks
+                            </button>
+                        @endif
+                    @endrole
                 </div>
-
             </div>
         </div>
     </div>
 
     <div class="mb-4"></div>
 @stop
+@section('js')
+    <script>
+        $(document).on('click', '#remarksBtn', function() {
+            Swal.fire({
+                title: 'Add Remarks',
+                html: `
+                <select id="remark_type" class="swal2-input">
+                    <option value="">Select Option</option>
+                    <option value="solved">✔ Problem Solved</option>
+                    <option value="custom">✍ Custom Message</option>
+                </select>
+
+                <textarea id="custom_remark" class="swal2-textarea"
+                    placeholder="Write custom message..." style="display:none;"></textarea>
+            `,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                didOpen: () => {
+                    const select = document.getElementById('remark_type');
+                    const textarea = document.getElementById('custom_remark');
+
+                    select.addEventListener('change', function() {
+                        if (this.value === 'custom') {
+                            textarea.style.display = 'block';
+                        } else {
+                            textarea.style.display = 'none';
+                        }
+                    });
+                },
+                preConfirm: () => {
+                    const type = document.getElementById('remark_type').value;
+                    const custom = document.getElementById('custom_remark').value;
+
+                    if (!type) {
+                        Swal.showValidationMessage('Please select a remark type');
+                    }
+
+                    if (type === 'custom' && !custom) {
+                        Swal.showValidationMessage('Custom message is required');
+                    }
+
+                    return {
+                        type,
+                        custom
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post("{{ route('system_problems.remarks', $systemProblem->id) }}", {
+                        _token: '{{ csrf_token() }}',
+                        type: result.value.type,
+                        custom: result.value.custom
+                    }).done(function() {
+                        Swal.fire('Saved!', 'Remarks added successfully.', 'success')
+                            .then(() => location.reload());
+                    }).fail(function() {
+                        Swal.fire('Error', 'Failed to save remarks.', 'error');
+                    });
+                }
+            });
+        });
+    </script>
+@endsection

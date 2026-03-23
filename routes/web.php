@@ -101,6 +101,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack']],
     Route::resource('ban_users', BanUserController::class);
     Route::resource('banned_devices', BannedDeviceController::class);
     Route::post('system-problems/notify/{systemProblem}', [SystemProblemController::class, 'notify'])->name('system_problems.notify');
+    Route::post('/system-problems/{id}/remarks', [SystemProblemController::class, 'saveRemarks'])->name('system_problems.remarks');
     Route::resource('system_problems', SystemProblemController::class);
     Route::post('/user_devices/{id}/ban', [UserDeviceController::class, 'ban'])->name('user_devices.ban');
     Route::post('/user_devices/{id}/unban', [UserDeviceController::class, 'unban'])->name('user_devices.unban');

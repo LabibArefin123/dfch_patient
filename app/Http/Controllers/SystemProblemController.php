@@ -112,6 +112,26 @@ class SystemProblemController extends Controller
 
         return response()->json(['success' => true]);
     }
+
+    public function saveRemarks(Request $request, $id)
+    {
+        $problem = SystemProblem::findOrFail($id);
+
+        // Generate remarks
+        if ($request->type === 'solved') {
+            $remarks = '✅ This issue has been resolved successfully.';
+
+            // Optional: auto update status
+            $problem->status = 'low';
+        } else {
+            $remarks = $request->custom;
+        }
+
+        $problem->remarks = $remarks;
+        $problem->save();
+
+        return response()->json(['success' => true]);
+    }
     /**
      * Show the form for creating a new resource.
      */
