@@ -28,10 +28,10 @@ class User extends Authenticatable
         'two_factor_code',
         'two_factor_expires_at',
         'session_timeout',
-        'last_seen',
         'is_maintenance',
-        'is_banned',
         'maintenance_message',
+        'is_banned',
+        'last_seen',
         'is_notifications',
     ];
 
