@@ -1,0 +1,20 @@
+/* ===================================
+CARD EFFECTS
+=================================== */
+
+.department-card:hover {
+    transform: translateY(-8px);
+
+    background: #ff6b6b;
+
+    box-shadow: 0 15px 35px rgba(255, 107, 107, 0.25);
+}
+
+.department-card:hover i,
+.department-card:hover h6 {
+    color: #ffffff;
+}
+
+.department-card:hover .bi-truck {
+    color: #ffffff;
+}

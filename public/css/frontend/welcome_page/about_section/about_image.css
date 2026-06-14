@@ -1,0 +1,24 @@
+/* ===================================
+   ABOUT IMAGE
+=================================== */
+
+.about-image-wrapper {
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0,0,0,.08);
+}
+
+.about-image {
+    width: 100%;
+    height: 550px;
+    object-fit: contain;
+    display: block;
+}
+
+.about-image:hover {
+    transform: scale(1.03);
+}
+
+.magnify-img {
+    cursor: pointer;
+}

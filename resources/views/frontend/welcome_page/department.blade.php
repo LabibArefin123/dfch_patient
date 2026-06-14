@@ -1,5 +1,8 @@
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/department_section/department_base.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/department_section/department_card.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/department_section/department_effects.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/department_section/department_responsive.css') }}">
 <section class="py-5 bg-green" id="departments">
-    <link rel="stylesheet" href="{{ asset('css/frontend/custom_department.css') }}">
     <div class="container">
         <!-- Section Header -->
         <div class="text-center mb-5">
@@ -12,15 +15,14 @@
 
         <!-- Departments Grid -->
         <div class="row g-4">
-
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card">
                     <i class="bi bi-scissors"></i>
                     <h6>Operation Theater (OT)</h6>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card">
                     <!-- bi-bed replacement: bi-house-door-fill (symbolizing a room) -->
                     <i class="bi bi-house-door-fill"></i>
@@ -28,14 +30,14 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card">
                     <i class="bi bi-heart-pulse"></i>
                     <h6>Colonoscopy</h6>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card">
                     <!-- bi-x-ray replacement: bi-activity (symbolizing diagnostics/activity) -->
                     <i class="bi bi-activity"></i>
@@ -43,21 +45,21 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card">
                     <i class="bi bi-heart"></i>
                     <h6>ICU</h6>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card">
                     <i class="bi bi-cpu"></i>
                     <h6>MRI</h6>
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card">
                     <!-- bi-flask replacement: bi-droplet (for lab/liquid tests) -->
                     <i class="bi bi-droplet"></i>
@@ -65,7 +67,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-3 col-md-4 col-sm-6">
+            <div class="col-lg-3 col-md-4 col-6">
                 <div class="department-card emergency">
                     <!-- bi-ambulance replacement: bi-truck (for emergency vehicle) -->
                     <i class="bi bi-truck"></i>
