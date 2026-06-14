@@ -1,3 +1,8 @@
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/goal_section/goal_base.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/goal_section/goal_content.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/goal_section/goal_image.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/goal_section/goal_icons.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/goal_section/goal_responsive.css') }}">
 <section class="py-5 bg-white" id="goals">
     <div class="container">
         <div class="row align-items-center g-5">
@@ -72,37 +77,5 @@
         </div>
     </div>
 
-    <!-- Page Styles -->
-    <style>
-        .goal-icon {
-            width: 45px;
-            height: 45px;
-            background-color: #e8f6ff;
-            color: #0dcaf0;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            flex-shrink: 0;
-        }
-
-        .about-image-placeholder {
-            width: 100%;
-            height: 320px;
-            border-radius: 12px;
-            background-color: #f5f7fa;
-            border: 2px dashed #cfd8dc;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 15px;
-        }
-
-        @media (max-width: 768px) {
-            .about-image-placeholder {
-                height: 260px;
-            }
-        }
-    </style>
+    
 </section>

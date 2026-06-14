@@ -1,0 +1,34 @@
+/* ===================================
+FOOTER BASE
+=================================== */
+
+.custom-footer {
+    background: #1f2937;
+    color: #ffffff;
+    padding: 60px 0 20px;
+}
+
+.custom-footer h6 {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: #ffc107;
+}
+
+.custom-footer p,
+.custom-footer li {
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.onstage-text {
+    font-family: "OnStage", sans-serif;
+    color: #ff6b6b;
+}
+
+.footer-bottom {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+    text-align: center;
+}

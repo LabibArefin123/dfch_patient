@@ -1,0 +1,32 @@
+/* ===================================
+FOOTER LINKS
+=================================== */
+
+.custom-footer-link {
+    display: inline-block;
+    color: #ffffff;
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s;
+    padding: 3px 0;
+}
+
+.custom-footer-link:hover {
+    color: #ff6b6b;
+}
+
+.footer-links ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 8px;
+}
+
+.custom-map-link {
+    color: #ffffff;
+    text-decoration: none;
+    line-height: 1.8;
+}

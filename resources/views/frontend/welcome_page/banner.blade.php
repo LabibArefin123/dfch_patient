@@ -16,21 +16,66 @@
                     'align' => 'right',
                     'name' => 'Prof. Dr. AKM Fazlul Haque',
                     'designation' => 'Fellow, Colorectal Surgery (Singapore)',
-                    'details' => 'International Scholar, Colorectal Surgery (USA)<br>
-                        Founder Chairman (RETD), Department of Colorectal Surgery<br>
-                        Bangladesh Medical University, Dhaka<br>
-                        <strong>25 Years of Dedicated Service</strong>',
+                    'details' => '
+                International Scholar, Colorectal Surgery (USA)<br>
+                Founder Chairman (Retd.), Department of Colorectal Surgery<br>
+                Bangladesh Medical University, Dhaka<br>
+                <strong>25 Years of Dedicated Service</strong>
+            ',
                     'route' => route('doc_1'),
                 ],
+
                 [
                     'image' => 'image_2.png',
                     'align' => 'left',
                     'name' => 'Dr. Asif Almas Haque',
-                    'designation' => 'MBBS (SSMC), MRCS (ENG)',
-                    'details' => 'FCPS (Surgery), FCPS (Colorectal Surgery), FRCS (ENG)<br>
-                        Fellow of American College of Surgeons (FACS)<br>
-                        Fellow of American Society of Colon & Rectal Surgeons (FASCRS)',
+                    'designation' => 'MBBS (SSMC), MRCS (England)',
+                    'details' => '
+                FCPS (Surgery), FCPS (Colorectal Surgery), FRCS (England)<br>
+                Fellow of American College of Surgeons (FACS)<br>
+                Fellow of American Society of Colon & Rectal Surgeons (FASCRS)
+            ',
                     'route' => route('doc_2'),
+                ],
+
+                [
+                    'image' => 'image_3.png',
+                    'align' => 'right',
+                    'name' => 'Dr. Fatema Sharmin (Anny)',
+                    'designation' => 'MBBS, DA, FCPS (Anaesthesiology)',
+                    'details' => '
+                Assistant Professor<br>
+                Department of Anaesthesiology<br>
+                Bangladesh Medical College Hospital, Dhanmondi<br>
+                Consultant (Anesthesiology)<br>
+                Dr. Fazlul Haque Colorectal Hospital Ltd.
+            ',
+                    'route' => route('doc_3'),
+                ],
+
+                [
+                    'image' => 'image_4.png',
+                    'align' => 'left',
+                    'name' => 'Dr. Sakib Sarwat Haque',
+                    'designation' => 'MBBS (DU), FCPS (Surgery), MRCS (Edinburgh)',
+                    'details' => '
+                Colorectal Surgeon<br>
+                Director<br>
+                Dr. Fazlul Haque Colorectal Hospital Ltd.
+            ',
+                    'route' => route('doc_4'),
+                ],
+
+                [
+                    'image' => 'image_5.png',
+                    'align' => 'right',
+                    'name' => 'Dr. Asma Husain Noora',
+                    'designation' => 'MBBS, FCPS (Surgery), MRCS (Edinburgh)',
+                    'details' => '
+                Consultant Surgeon<br>
+                Dr. Fazlul Haque Colorectal Hospital Ltd.
+            ',
+                    'route' => route('doc_5'),
                 ],
             ];
         @endphp

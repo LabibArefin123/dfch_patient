@@ -1,0 +1,26 @@
+/* ===================================
+GOAL CONTENT
+=================================== */
+
+.goal-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 30px;
+}
+
+.goal-item:last-child {
+    margin-bottom: 0;
+}
+
+.goal-content h6 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #212529;
+    margin-bottom: 8px;
+}
+
+.goal-content p {
+    color: #6c757d;
+    line-height: 1.8;
+    margin-bottom: 0;
+}

@@ -1,0 +1,33 @@
+/* ===================================
+FOOTER EFFECTS
+=================================== */
+
+.custom-footer-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+
+    width: 0;
+    height: 2px;
+
+    background: #ff6b6b;
+
+    transition: width .3s ease;
+}
+
+.custom-footer-link:hover::after {
+    width: 100%;
+}
+
+.custom-map-link {
+    transition: .3s ease;
+}
+
+.custom-map-link:hover {
+    color: #ff6b6b;
+}
+
+footer a:hover {
+    text-decoration: none;
+}

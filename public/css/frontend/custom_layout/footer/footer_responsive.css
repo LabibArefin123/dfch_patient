@@ -1,0 +1,68 @@
+/* ===================================
+TABLET
+=================================== */
+
+@media (max-width: 991.98px) {
+    .custom-footer {
+        padding: 50px 0 20px;
+    }
+
+    .footer-column {
+        margin-bottom: 30px;
+    }
+}
+
+/* ===================================
+MOBILE 2×2
+=================================== */
+
+@media (max-width: 767.98px) {
+    .footer-grid {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .footer-grid .footer-column {
+        width: 50%;
+        padding: 0 10px;
+        margin-bottom: 25px;
+    }
+
+    .custom-footer h6 {
+        font-size: 0.95rem;
+    }
+
+    .custom-footer p,
+    .custom-footer li,
+    .custom-footer a {
+        font-size: 13px;
+    }
+
+    .footer-contact-item {
+        gap: 8px;
+    }
+}
+
+/* ===================================
+SMALL MOBILE
+=================================== */
+
+@media (max-width: 575.98px) {
+    .footer-grid .footer-column {
+        width: 50%;
+    }
+
+    .custom-footer h6 {
+        font-size: 0.9rem;
+    }
+
+    .custom-footer p,
+    .custom-footer li,
+    .custom-footer a {
+        font-size: 12px;
+    }
+
+    .footer-bottom {
+        font-size: 12px;
+    }
+}

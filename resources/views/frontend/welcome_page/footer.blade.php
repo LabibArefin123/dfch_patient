@@ -1,6 +1,10 @@
 <!-- Footer -->
+<link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/footer/footer_base.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/footer/footer_contact.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/footer/footer_effects.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/footer/footer_links.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/footer/footer_responsive.css') }}">
 <footer class="footer bg-info text-white pt-2">
-    <link rel="stylesheet" href="{{ asset('css/frontend/custom_footer.css') }}">
     <div class="container">
         <div class="row align-items-start g-4">
             <!-- Left: Logo / Image -->

@@ -1,0 +1,111 @@
+/* ===================================
+TABLET
+=================================== */
+
+@media (max-width: 991.98px) {
+    .goal-section {
+        padding: 60px 0;
+    }
+
+    .goal-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .goal-image-wrapper {
+        height: 380px;
+        margin-top: 30px;
+    }
+
+    .goal-image {
+        max-width: 90%;
+        object-fit: contain;
+    }
+}
+
+/* ===================================
+MOBILE
+=================================== */
+
+@media (max-width: 767.98px) {
+    .goal-section {
+        padding: 50px 0;
+    }
+
+    .goal-title {
+        font-size: 1.7rem;
+        text-align: center;
+        margin-bottom: 30px;
+    }
+
+    .goal-item {
+        margin-bottom: 25px;
+    }
+
+    .goal-icon {
+        width: 48px;
+        height: 48px;
+        min-width: 48px;
+        font-size: 18px;
+    }
+
+    .goal-content h6 {
+        font-size: 1rem;
+    }
+
+    .goal-content p {
+        font-size: 0.92rem;
+    }
+
+    .goal-image-wrapper {
+        height: 280px;
+        margin-top: 25px;
+        padding: 15px;
+    }
+
+    .goal-image {
+        width: auto;
+        max-width: 95%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+}
+
+/* ===================================
+SMALL MOBILE
+=================================== */
+
+@media (max-width: 575.98px) {
+    .goal-title {
+        font-size: 1.5rem;
+    }
+
+    .goal-image-wrapper {
+        height: 220px;
+        padding: 10px;
+    }
+
+    .goal-image {
+        width: auto;
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+    }
+
+    .goal-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        font-size: 16px;
+        margin-right: 12px;
+    }
+
+    .goal-content h6 {
+        font-size: 0.95rem;
+    }
+
+    .goal-content p {
+        font-size: 0.88rem;
+        line-height: 1.7;
+    }
+}

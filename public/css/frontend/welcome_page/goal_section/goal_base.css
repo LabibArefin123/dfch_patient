@@ -1,0 +1,14 @@
+/* ===================================
+GOALS SECTION
+=================================== */
+
+.goal-section {
+    padding: 80px 0;
+}
+
+.goal-title {
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: #212529;
+    margin-bottom: 35px;
+}
