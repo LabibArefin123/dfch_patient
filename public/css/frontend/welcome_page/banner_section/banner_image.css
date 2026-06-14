@@ -1,0 +1,29 @@
+/* =========================
+   DOCTOR IMAGE
+========================= */
+
+.doctor-img {
+    position: absolute;
+    bottom: 0;
+    max-height: 92%;
+    object-fit: contain;
+    filter: drop-shadow(0 20px 35px rgba(0, 0, 0, 0.55));
+    transition: transform 0.6s ease;
+    z-index: 1;
+}
+
+.slide.active .doctor-img {
+    transform: translateY(-6px);
+}
+
+/* LEFT IMAGE */
+
+.doctor-img.left {
+    left: 6%;
+}
+
+/* RIGHT IMAGE */
+
+.doctor-img.right {
+    right: 3%;
+}

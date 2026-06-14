@@ -1,5 +1,12 @@
 <section id="banner" class="bg-white w-100">
-    <link rel="stylesheet" href="{{ asset('css/frontend/custom_banner.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_base.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_content.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_image.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_indicators.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_navigation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_slide.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_doctor.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/banner_section/banner_responsive.css') }}">
 
     <div id="slider" class="position-relative w-100" style="height:70vh;">
         @php

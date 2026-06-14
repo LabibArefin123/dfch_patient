@@ -1,0 +1,29 @@
+/* =========================
+   NAVIGATION ARROWS
+========================= */
+
+.arrow-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 0.6rem 0.9rem;
+    border-radius: 50%;
+    border: none;
+    color: #fff;
+    font-size: 1.25rem;
+    cursor: pointer;
+    z-index: 5;
+    transition: background 0.3s ease;
+}
+
+.arrow-btn:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.arrow-btn.start {
+    left: 15px;
+}
+
+.arrow-btn.end {
+    right: 15px;
+}

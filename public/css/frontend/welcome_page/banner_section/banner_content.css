@@ -1,0 +1,29 @@
+/* =========================
+   TEXT CONTENT
+========================= */
+
+.doctor-slide h2 {
+    letter-spacing: 0.3px;
+    color: #8b0000;
+}
+
+.doctor-slide p {
+    font-size: 1.05rem;
+    color: #333;
+}
+
+/* EXTRA FIX FOR AKM (RIGHT IMAGE SLIDE) */
+
+.slide:first-child .col-md-6.text-white {
+    padding-right: 3rem;
+    padding-left: 1.5rem;
+}
+
+.doctor-image-link img {
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.doctor-image-link img:hover {
+    transform: scale(1.03);
+}
