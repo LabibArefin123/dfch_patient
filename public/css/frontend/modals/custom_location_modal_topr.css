@@ -1,0 +1,66 @@
+/* ===================================
+   TABLET
+=================================== */
+
+@media (max-width: 991.98px) {
+    #locationModal .modal-dialog {
+        max-width: 90%;
+    }
+
+    #locationModal iframe {
+        height: 320px;
+    }
+}
+
+/* ===================================
+   MOBILE
+=================================== */
+
+@media (max-width: 767.98px) {
+    #locationModal .modal-dialog {
+        margin: 15px;
+    }
+
+    #locationModal .modal-body {
+        padding: 15px;
+    }
+
+    #locationModal iframe {
+        height: 250px;
+    }
+
+    .location-actions {
+        flex-direction: column;
+    }
+
+    .location-actions .btn {
+        width: 100%;
+    }
+
+    .location-address strong {
+        font-size: 16px;
+    }
+
+    .location-address p {
+        font-size: 14px;
+    }
+}
+
+/* ===================================
+   SMALL MOBILE
+=================================== */
+
+@media (max-width: 575.98px) {
+    #locationModal iframe {
+        height: 220px;
+    }
+
+    #locationModal .modal-title {
+        font-size: 18px;
+    }
+
+    .location-actions .btn {
+        padding: 10px;
+        font-size: 13px;
+    }
+}

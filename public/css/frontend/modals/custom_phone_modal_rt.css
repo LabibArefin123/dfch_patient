@@ -1,0 +1,85 @@
+/* ===================================
+   PHONE MODAL RESPONSIVE
+=================================== */
+
+/* TABLET */
+@media (max-width: 991.98px) {
+    .modal-body .btn {
+        font-size: 14px;
+        padding: 10px 12px;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 767.98px) {
+    .modal-body {
+        padding: 20px;
+    }
+
+    /* Stack buttons vertically */
+    .modal-body .row {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+
+    .modal-body .row .col-6 {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+    }
+
+    .modal-body .btn {
+        width: 100%;
+        font-size: 14px;
+        padding: 12px;
+        white-space: normal;
+        line-height: 1.4;
+    }
+
+    .modal-body p {
+        font-size: 15px;
+    }
+}
+
+/* SMALL MOBILE */
+@media (max-width: 575.98px) {
+    .modal-dialog {
+        margin: 10px;
+    }
+
+    .modal-content {
+        border-radius: 12px;
+    }
+
+    .modal-header h5 {
+        font-size: 1rem;
+    }
+
+    .modal-body {
+        padding: 15px;
+    }
+
+    .modal-body p {
+        font-size: 14px;
+        margin-bottom: 20px !important;
+    }
+
+    .modal-body .btn {
+        font-size: 13px;
+        padding: 11px;
+    }
+}
+
+/* EXTRA SMALL DEVICES */
+@media (max-width: 360px) {
+    .modal-body .btn {
+        font-size: 12px;
+        padding: 10px;
+    }
+
+    .modal-header h5 {
+        font-size: 0.9rem;
+    }
+}

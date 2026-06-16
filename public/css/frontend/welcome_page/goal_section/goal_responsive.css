@@ -26,6 +26,9 @@ TABLET
 /* ===================================
 MOBILE
 =================================== */
+/* ===================================
+MOBILE
+=================================== */
 
 @media (max-width: 767.98px) {
     .goal-section {
@@ -57,20 +60,29 @@ MOBILE
         font-size: 0.92rem;
     }
 
-    .goal-image-wrapper {
-        height: 280px;
+    /* Image below text */
+    .col-lg-6:last-child {
         margin-top: 25px;
-        padding: 15px;
+        text-align: center;
     }
 
-    .goal-image {
-        width: auto;
-        max-width: 95%;
-        max-height: 100%;
-        object-fit: contain;
+    .about-image-placeholder {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .about-image-placeholder img,
+    .magnify-img {
+        width: 50%;
+        max-width: 220px;
+        height: auto !important;
+        max-height: 240px !important;
+        object-fit: contain !important;
+        margin: 0 auto;
+        display: block;
     }
 }
-
 /* ===================================
 SMALL MOBILE
 =================================== */
@@ -78,18 +90,6 @@ SMALL MOBILE
 @media (max-width: 575.98px) {
     .goal-title {
         font-size: 1.5rem;
-    }
-
-    .goal-image-wrapper {
-        height: 220px;
-        padding: 10px;
-    }
-
-    .goal-image {
-        width: auto;
-        max-width: 100%;
-        max-height: 100%;
-        object-fit: contain;
     }
 
     .goal-icon {
@@ -107,5 +107,12 @@ SMALL MOBILE
     .goal-content p {
         font-size: 0.88rem;
         line-height: 1.7;
+    }
+
+    .about-image-placeholder img,
+    .magnify-img {
+        width: 85%;
+        max-width: 3000px;
+        max-height: 300px !important;
     }
 }

@@ -30,7 +30,10 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/frontend/frontend.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_top.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_topr.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_contact_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_phone_modal_rt.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_land_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
@@ -59,6 +62,7 @@
         });
     </script>
 
+    @include('frontend.modal.custom_location')
     @include('frontend.modal.custom_phone')
     @include('frontend.modal.custom_land_phone')
     @include('frontend.modal.footer.phone')
