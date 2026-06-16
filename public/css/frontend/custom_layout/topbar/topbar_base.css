@@ -1,0 +1,25 @@
+/* =========================
+   TOPBAR BASE
+========================= */
+
+.topbar-wrapper {
+    background: #1f2937;
+    color: #fff;
+    padding: 8px 15px;
+}
+
+.topbar-left,
+.topbar-right {
+    display: flex;
+    align-items: center;
+}
+
+.divider {
+    margin: 0 8px;
+    opacity: .6;
+}
+
+.goog-te-gadget {
+    height: 0 !important;
+    overflow: hidden;
+}

@@ -1,0 +1,37 @@
+/* =========================
+   SOCIAL ICONS
+========================= */
+
+.social-icon {
+    width: 32px;
+    height: 32px;
+    background: #e63946;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    text-decoration: none;
+    transition: all .3s ease;
+}
+
+.social-icon:hover {
+    transform: scale(1.1);
+    background: #ff6b6b;
+    color: #fff;
+}
+
+#langToggle {
+    background: #ff6b6b;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: .3s;
+}
+
+#langToggle:hover {
+    background: #e63946;
+}

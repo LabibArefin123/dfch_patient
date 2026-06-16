@@ -1,90 +1,71 @@
-<!-- Top Info Bar -->
-<link rel="stylesheet" href="{{ asset('css/frontend/custom_topbar.css') }}">
-<div class="bg-info  py-2">
-    <div class="container-fluid d-flex justify-content-between align-items-center flex-wrap">
-        <style>
-            .goog-te-banner-frame.skiptranslate,
-            .goog-te-balloon-frame,
-            #goog-gt-tt {
-                display: none !important;
-            }
+        <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/topbar/topbar_base.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/topbar/topbar_links.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/topbar/topbar_social.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/topbar/topbar_google.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/topbar/topbar_modal.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/topbar/topbar_responsive.css') }}">
+        <!-- Top Info Bar -->
+        <div class="topbar-wrapper">
+            <div class="container-fluid">
 
-            .goog-te-gadget {
-                height: 0 !important;
-                overflow: hidden;
-            }
-        </style>
-        <!-- LEFT : Address + WhatsApp + Map -->
-        <div class="d-flex align-items-center flex-wrap gap-2 text-white">
-            <i class="fas fa-map-marker-alt"></i>
-            <a href="#" class="header-link " id="openMapModal">
-                86 (New), 726/A (Old), Satmasjid Road, Dhanmondi, Dhaka-1209
-            </a>
-            <span class="mx-2">|</span>
-             <a href="#" class="header-link open-phone-modal">
-                <i class="fas fa-phone-alt"></i>
-                01755697173
-            </a>
+                <div class="d-flex justify-content-between align-items-center topbar-container">
 
-            <span class="divider">|</span>
+                    <!-- LEFT -->
+                    <div class="topbar-left text-white">
 
-            <a href="#" class="header-link open-phone-modal">
-                <i class="fas fa-phone-alt"></i>
-                01755697176
-            </a>
-            <span>|</span>
-              <a href="#" class="header-link open-land-phone-modal">
-                <i class="fas fa-phone-alt"></i>
-                0241023155
-            </a>
-         
+                        <i class="fas fa-map-marker-alt"></i>
 
-        </div>
-        <!-- Hidden Google Translate Widget -->
-        <div id="google_translate_element" style="display:none;"></div>
-        <!-- RIGHT : SOCIAL ICONS -->
-        <div class="d-flex align-items-center gap-2">
-            <a href="https://www.youtube.com/@ProfDrAKMFazlulHaque" target="_blank" class="social-icon">
-                <i class="fab fa-youtube"></i>
-            </a>
-            <a href="https://www.facebook.com/DrFazlulHaqueColorectalHospitalLtd/" class="social-icon" target="_blank">
-                <i class="fab fa-facebook-f"></i>
-            </a>
-            <button id="langToggle"
-                style="background:#ff6b6b; color:white; padding:6px 12px; border:none; border-radius:4px; cursor:pointer;">
-                EN
-            </button>
-        </div>
-    </div>
+                        <a href="#" class="header-link" id="openMapModal">
+                            86 (New), 726/A (Old), Satmasjid Road,
+                            Dhanmondi, Dhaka-1209
+                        </a>
 
-    <div id="mapModal" class="map-modal">
-        <div class="map-modal-content">
-            <span class="close-modal">&times;</span>
-            <h4>Our Location</h4>
+                        <span class="divider">|</span>
 
-            <!-- Bigger Map -->
-            <iframe src="https://www.google.com/maps?q=726/A+Satmasjid+Road,+Dhaka+1209,+Bangladesh&output=embed"
-                width="100%" height="380" style="border:0; border-radius:8px;" allowfullscreen loading="lazy">
-            </iframe>
+                        <a href="#" class="header-link open-phone-modal">
+                            <i class="fas fa-phone-alt"></i>
+                            01755697173
+                        </a>
 
-            <!-- Map Action Buttons -->
-            <div class="map-actions">
-                <button class="map-btn google" onclick="openMap('google')">
-                    🗺️ Google Maps
-                </button>
+                        <span class="divider">|</span>
 
-                <button class="map-btn pathao" onclick="openMap('pathao')">
-                    🚕 Pathao
-                </button>
+                        <a href="#" class="header-link open-phone-modal">
+                            <i class="fas fa-phone-alt"></i>
+                            01755697176
+                        </a>
 
-                <button class="map-btn uber" onclick="openMap('uber')">
-                    🚖 Uber
-                </button>
+                        <span class="divider">|</span>
+
+                        <a href="#" class="header-link open-land-phone-modal">
+                            <i class="fas fa-phone-alt"></i>
+                            0241023155
+                        </a>
+
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="topbar-right gap-2">
+
+                        <a href="https://www.youtube.com/@ProfDrAKMFazlulHaque" target="_blank" class="social-icon">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+
+                        <a href="https://www.facebook.com/DrFazlulHaqueColorectalHospitalLtd/" target="_blank"
+                            class="social-icon">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+
+                        <button id="langToggle">
+                            EN
+                        </button>
+
+                    </div>
+
+                </div>
+
             </div>
         </div>
-    </div>
-</div>
 
-<!-- Google Translate Library -->
-<script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<!------start of translate english/bangla link js--->
+        <!-- Google Translate Library -->
+        <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        <!------start of translate english/bangla link js--->
