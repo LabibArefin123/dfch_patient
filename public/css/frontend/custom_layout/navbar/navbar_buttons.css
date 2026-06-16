@@ -1,0 +1,17 @@
+/* ===============================
+   LOGIN BUTTON
+================================ */
+
+.login-btn {
+    color: #000 !important;
+    border-color: #ff6b6b;
+    transition: 0.2s;
+}
+
+.login-btn:hover,
+.login-btn:focus {
+    background: #ff6b6b !important;
+    color: #fff !important;
+    border-color: #ff6b6b !important;
+    box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
+}

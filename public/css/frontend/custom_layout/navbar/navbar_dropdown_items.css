@@ -1,0 +1,29 @@
+/* ===================================
+   DROPDOWN ITEMS
+=================================== */
+
+.dropdown-menu li {
+    list-style: none;
+}
+
+.dropdown-menu .dropdown-item {
+    display: block;
+
+    padding: 11px 18px;
+
+    font-size: 15px;
+    color: #333;
+
+    text-decoration: none;
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease,
+        padding-left 0.25s ease;
+}
+
+.dropdown-menu .dropdown-item:hover {
+    background: #ff6b6b;
+    color: #fff;
+    padding-left: 24px;
+}

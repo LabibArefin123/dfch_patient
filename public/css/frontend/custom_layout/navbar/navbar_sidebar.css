@@ -1,0 +1,86 @@
+/* ===================================
+   MOBILE SIDEBAR
+=================================== */
+
+.mobile-navbar {
+    position: fixed;
+    top: 0;
+    left: -320px;
+    width: 300px;
+    max-width: 85%;
+    height: 100vh;
+    background: #ffffff;
+    overflow-y: auto;
+    z-index: 9999;
+    transition: 0.35s ease;
+    box-shadow: 5px 0 25px rgba(0, 0, 0, 0.15);
+}
+
+.mobile-navbar.active {
+    left: 0;
+}
+
+/* ===================================
+   SIDEBAR HEADER
+=================================== */
+
+.mobile-navbar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #003366;
+    color: #fff;
+    padding: 18px 20px;
+}
+
+.mobile-navbar-header h5 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.mobile-navbar-close {
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 26px;
+    cursor: pointer;
+}
+
+/* ===================================
+   MENU ITEMS
+=================================== */
+
+.mobile-navbar-menu,
+.mobile-navbar ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.mobile-navbar ul li a {
+    display: block;
+    padding: 14px 20px;
+    color: #333;
+    text-decoration: none;
+    border-bottom: 1px solid #f1f1f1;
+    transition: 0.3s ease;
+}
+
+.mobile-navbar ul li a:hover {
+    background: #ff6b6b;
+    color: #fff;
+}
+
+/* ===================================
+   SCROLLBAR
+=================================== */
+
+.mobile-navbar::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mobile-navbar::-webkit-scrollbar-thumb {
+    background: #cfcfcf;
+    border-radius: 10px;
+}

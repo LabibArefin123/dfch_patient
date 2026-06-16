@@ -1,0 +1,44 @@
+/* ===================================
+   DESKTOP DROPDOWN BASE
+=================================== */
+
+.navbar-nav .dropdown-toggle::after {
+    display: none;
+}
+
+.navbar-nav .nav-item {
+    position: relative;
+}
+
+
+/* ===================================
+   MAIN DROPDOWN
+=================================== */
+
+.navbar-nav .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 240px;
+
+    display: none;
+
+    padding: 8px 0;
+    margin-top: 0;
+
+    background: #ffffff;
+    border: none;
+    border-radius: 8px;
+
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+
+    z-index: 9999;
+}
+
+.navbar-nav .nav-item.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.navbar-nav .dropdown-menu.show {
+    display: block;
+}

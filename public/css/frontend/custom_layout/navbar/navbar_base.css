@@ -1,0 +1,17 @@
+/* ===============================
+   NAVBAR BASE
+================================ */
+
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+.navbar-nav .nav-item {
+    position: relative;
+}
+
+.top-info-bar {
+    background: #003366;
+    font-size: 14px;
+}
