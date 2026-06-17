@@ -13,7 +13,7 @@
 <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/navbar/navbar_overlay.css') }}">
 <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/navbar/navbar_sidebar.css') }}">
 <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/navbar/navbar_mobile_dropdown.css') }}">
-<nav class="main-header navbar navbar-expand-md navbar-light navbar-white"
+<nav class="main-header navbar navbar-expand-md navbar-light navbar-white bg-info"
     style="padding-left: 30px; padding-right: 30px;">
     <div class="container-fluid">
 
