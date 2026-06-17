@@ -1,0 +1,172 @@
+/* ==========================================
+   Tablet & Small Laptop
+========================================== */
+@media (max-width: 992px) {
+    .login-wrapper {
+        padding: 15px;
+        align-items: flex-start;
+    }
+
+    .login-glass {
+        flex-direction: column;
+        width: 100%;
+        min-height: auto;
+        height: auto;
+        transform: none !important;
+        border-radius: 20px;
+    }
+
+    .about-slider,
+    .login-panel {
+        width: 100%;
+    }
+
+    .about-slider {
+        padding: 30px;
+        text-align: center;
+    }
+
+    .login-panel {
+        padding: 0;
+        max-height: none;
+    }
+
+    .login-panel-scroll {
+        padding: 30px;
+        overflow: visible;
+        height: auto;
+    }
+
+    .hospital-logo {
+        max-width: 350px;
+        margin: 0 auto 20px;
+    }
+
+    .about-content.full {
+        max-height: 250px;
+    }
+}
+
+/* ==========================================
+   Mobile Landscape / Small Tablets
+========================================== */
+@media (max-width: 768px) {
+    .login-wrapper {
+        padding: 12px;
+    }
+
+    .login-glass {
+        width: 100%;
+        border-radius: 18px;
+    }
+
+    .about-slider {
+        padding: 25px;
+    }
+
+    .login-panel-scroll {
+        padding: 25px;
+    }
+
+    .hospital-logo {
+        width: 100%;
+        max-width: 300px;
+        max-height: 140px;
+        object-fit: contain;
+    }
+
+    .about-slider h4,
+    .login-panel h4 {
+        font-size: 1.4rem;
+    }
+
+    .about-slider p,
+    .login-panel p {
+        font-size: 0.95rem;
+    }
+}
+
+/* ==========================================
+   Mobile Phones
+========================================== */
+@media (max-width: 576px) {
+    .login-wrapper {
+        padding: 10px;
+    }
+
+    .login-glass {
+        border-radius: 15px;
+    }
+
+    .about-slider {
+        padding: 20px;
+    }
+
+    .login-panel-scroll {
+        padding: 20px;
+    }
+
+    .hospital-logo {
+        width: 100%;
+        max-width: 240px;
+        max-height: 100px;
+        margin-bottom: 15px;
+    }
+
+    .about-slider h4,
+    .login-panel h4 {
+        font-size: 1.2rem;
+    }
+
+    .about-slider p,
+    .login-panel p,
+    .about-slider li {
+        font-size: 0.9rem;
+    }
+
+    .form-control {
+        min-height: 48px;
+        font-size: 16px;
+    }
+
+    .login-btn {
+        min-height: 48px;
+        font-size: 15px;
+    }
+
+    .problem-modal-content {
+        width: 95%;
+        padding: 20px;
+        border-radius: 15px;
+    }
+
+    .about-content.full {
+        max-height: 200px;
+    }
+}
+
+/* ==========================================
+   Very Small Phones
+========================================== */
+@media (max-width: 380px) {
+    .about-slider {
+        padding: 15px;
+    }
+
+    .login-panel-scroll {
+        padding: 15px;
+    }
+
+    .hospital-logo {
+        max-width: 180px;
+    }
+
+    .about-slider h4,
+    .login-panel h4 {
+        font-size: 1.1rem;
+    }
+
+    .login-btn {
+        font-size: 14px;
+    }
+}

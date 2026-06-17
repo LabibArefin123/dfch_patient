@@ -1,0 +1,8 @@
+.hospital-logo {
+    width: 100%;
+    max-width: 520px;
+    height: auto;
+    object-fit: contain;
+    display: block;
+    margin: 0 auto 25px;
+}

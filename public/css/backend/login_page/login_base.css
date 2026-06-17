@@ -1,0 +1,26 @@
+.login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.login-glass {
+    width: 95%;
+    max-width: 1200px;
+    height: 600px;
+    display: flex;
+    overflow: hidden;
+    backdrop-filter: blur(18px);
+    background: rgba(103, 186, 255, 0.15);
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+    transition: transform 0.8s ease;
+}
+
+.login-glass.login-active {
+    transform: translateX(0);
+}
+
+.login-glass.about-active {
+    transform: translateX(-45%);
+}

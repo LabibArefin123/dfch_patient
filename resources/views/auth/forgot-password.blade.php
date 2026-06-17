@@ -1,32 +1,67 @@
 @extends('frontend.layouts.app')
 
 @section('content')
+    <style>
+        body {
+            background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
+        }
+    </style>
+
+    {{-- Login Page CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_base.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_logo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_buttons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_responsive.css') }}">
+
     <div class="login-wrapper">
+
         <div class="login-glass">
 
-            {{-- LEFT : ABOUT (Same as Login Page) --}}
+            {{-- LEFT PANEL --}}
             <div class="about-slider">
+
                 <img src="{{ asset('uploads/images/login_page/logo.png') }}" class="hospital-logo" alt="DFCH Logo">
 
                 <div class="about-content short">
-                    <h4 class="fw-bold mb-3">Reset Your Password</h4>
+
+                    <h4 class="fw-bold mb-3">
+                        Reset Your Password
+                    </h4>
+
                     <p>
-                        Forgot your password? No worries. Enter your registered email
-                        address and we’ll send you a secure reset link.
+                        Forgot your password? Don't worry.
+                        Enter your registered email address and we will send
+                        you a secure password reset link.
                     </p>
+
+                    <p class="mt-3">
+                        The reset link is valid for a limited time and helps
+                        keep your account protected from unauthorized access.
+                    </p>
+
                 </div>
+
             </div>
 
-            {{-- RIGHT : FORGOT PASSWORD --}}
+            {{-- RIGHT PANEL --}}
             <div class="login-panel">
+
                 <div class="text-center mb-4">
-                    <h4 class="fw-bold">Forgot Password</h4>
-                    <p class="text-muted">Recover your account securely</p>
+                    <h4 class="fw-bold">
+                        Forgot Password
+                    </h4>
+
+                    <p class="text-muted">
+                        Recover your account securely
+                    </p>
                 </div>
 
-                {{-- SESSION STATUS --}}
+                {{-- SUCCESS MESSAGE --}}
                 @if (session('status'))
-                    <div class="alert alert-success rounded-3">
+                    <div class="alert alert-success rounded-3 mb-3">
                         {{ session('status') }}
                     </div>
                 @endif
@@ -36,41 +71,44 @@
 
                     {{-- EMAIL --}}
                     <div class="mb-3">
-                        <label class="form-label fw-semibold">Email Address</label>
+                        <label class="form-label fw-semibold">
+                            Email Address
+                        </label>
+
                         <input type="email" name="email" value="{{ old('email') }}"
                             class="form-control form-control-lg @error('email') is-invalid @enderror"
-                            placeholder="Enter your registered email" required autofocus>
+                            placeholder="Enter your registered email address" required autofocus>
 
                         @error('email')
-                            <div class="invalid-feedback d-block">
+                            <div class="invalid-feedback d-block mt-2">
                                 <strong>{{ $message }}</strong>
                             </div>
                         @enderror
                     </div>
 
-                    {{-- SUBMIT --}}
-                    <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
-                        Send Reset Link
+                    {{-- SEND LINK BUTTON --}}
+                    <button type="submit" class="btn login-btn w-100 rounded-pill mt-3">
+
+                        Send Password Reset Link
+
                     </button>
 
                     {{-- BACK TO LOGIN --}}
-                    <div class="text-center mt-3">
+                    <div class="text-center mt-4">
+
                         <a href="{{ route('login') }}" class="text-decoration-none dev-link">
+
                             ← Back to Login
+
                         </a>
+
                     </div>
+
                 </form>
+
             </div>
 
         </div>
+
     </div>
-
-    {{-- BACKGROUND --}}
-    <style>
-        body {
-            background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
-        }
-    </style>
-
-    <link rel="stylesheet" href="{{ asset('css/backend/login.css') }}">
 @endsection
