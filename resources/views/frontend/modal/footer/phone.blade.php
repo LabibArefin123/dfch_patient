@@ -1,40 +1,54 @@
-<div class="modal fade" id="phoneModalFooter" tabindex="-1">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Contact Doctor</h5>
-                <button type="button" class="close" data-bs-dismiss="modal">&times;</button>
+<div class="modal fade" id="phoneModalFooter" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered phone-modal-dialog">
+        <div class="modal-content phone-modal-content">
+
+            <div class="modal-header border-0">
+                <h5 class="modal-title" id="phoneModalLabel">
+                    📞 Contact Us
+                </h5>
+
+                <button type="button" class="btn-close phone-modal-close" data-bs-dismiss="modal" aria-label="Close">
+                </button>
             </div>
 
-            <div class="modal-body text-center">
-                <p class="mb-4">Choose how you want to contact:</p>
+            <div class="modal-body">
 
-                <!-- First Number -->
-                <div class="row mb-3">
-                    <div class="col-6">
-                        <a href="tel:01755697173" class="btn btn-outline-primary w-100">
-                            📞 Call 01755697173
-                        </a>
+                <p class="phone-modal-subtitle">
+                    Choose your preferred contact method
+                </p>
+
+                <!-- Contact Card 1 -->
+                <div class="contact-card">
+                    <div class="contact-number">
+                        📱 01755697173
                     </div>
-                    <div class="col-6">
+
+                    <div class="contact-actions">
+                        <a href="tel:01755697173" class="btn btn-primary">
+                            Call Now
+                        </a>
+
                         <a href="https://wa.me/8801755697173?text=Hello%20Doctor,%20I%20would%20like%20to%20book%20an%20appointment."
-                            target="_blank" class="btn btn-outline-primary w-100">
-                            💬 WhatsApp
+                            target="_blank" class="btn btn-success">
+                            WhatsApp
                         </a>
                     </div>
                 </div>
 
-                <!-- Second Number -->
-                <div class="row">
-                    <div class="col-6">
-                        <a href="tel:01755697176" class="btn btn-outline-primary w-100">
-                            📞 Call 01755697176
-                        </a>
+                <!-- Contact Card 2 -->
+                <div class="contact-card">
+                    <div class="contact-number">
+                        📱 01755697176
                     </div>
-                    <div class="col-6">
+
+                    <div class="contact-actions">
+                        <a href="tel:01755697176" class="btn btn-primary">
+                            Call Now
+                        </a>
+
                         <a href="https://wa.me/8801755697176?text=Hello%20Doctor,%20I%20would%20like%20to%20book%20an%20appointment."
-                            target="_blank" class="btn btn-outline-primary w-100">
-                            💬 WhatsApp
+                            target="_blank" class="btn btn-success">
+                            WhatsApp
                         </a>
                     </div>
                 </div>

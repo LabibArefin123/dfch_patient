@@ -1,0 +1,101 @@
+/* Modal Box */
+.phone-modal-content {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* Header */
+.phone-modal-content .modal-header {
+    padding: 20px 25px 10px;
+}
+
+.phone-modal-content .modal-title {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #0d6efd;
+}
+
+/* Close Button */
+.phone-modal-close {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    z-index: 10;
+}
+
+/* Body */
+.phone-modal-content .modal-body {
+    padding: 20px 25px 30px;
+}
+
+.phone-modal-subtitle {
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 20px;
+    font-size: 0.95rem;
+}
+
+/* Contact Card */
+.contact-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    padding: 18px;
+    margin-bottom: 15px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.contact-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
+
+.contact-number {
+    font-size: 1.1rem;
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 15px;
+    color: #212529;
+}
+
+/* Buttons */
+.contact-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.contact-actions .btn {
+    flex: 1;
+    border-radius: 10px;
+    padding: 10px;
+    font-weight: 600;
+}
+
+/* Mobile */
+@media (max-width: 576px) {
+    .phone-modal-dialog {
+        margin: 15px;
+    }
+
+    .phone-modal-content .modal-body {
+        padding: 15px;
+    }
+
+    .contact-actions {
+        flex-direction: column;
+    }
+
+    .contact-actions .btn {
+        width: 100%;
+    }
+
+    .contact-number {
+        font-size: 1rem;
+    }
+
+    .phone-modal-content .modal-title {
+        font-size: 1.1rem;
+    }
+}

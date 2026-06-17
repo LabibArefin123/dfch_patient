@@ -37,6 +37,7 @@
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_land_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_phone_modal_footer.css') }}">
 </head>
 
 <body>
