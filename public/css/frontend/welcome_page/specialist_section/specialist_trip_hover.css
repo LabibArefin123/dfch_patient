@@ -1,0 +1,20 @@
+.strip-item:hover,
+.strip-item.active {
+    opacity: 1;
+    transform: skewX(0deg);
+}
+
+.strip-item.active {
+    border-color: #ff6b6b;
+}
+
+.strip-item:hover {
+    border-color: rgba(139, 0, 0, 0.4);
+}
+
+.strip-item:hover img,
+.strip-item.active img {
+    transform: scale(1.05);
+    object-fit: contain;
+    object-position: center;
+}

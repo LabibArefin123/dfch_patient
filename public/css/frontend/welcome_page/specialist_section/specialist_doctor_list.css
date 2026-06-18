@@ -1,0 +1,30 @@
+/* =========================
+   RIGHT SIDE DOCTOR LIST
+========================= */
+
+.doctor-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    max-height: 420px;
+    overflow-y: auto;
+
+    padding-right: 5px;
+}
+
+.col-md-4 p {
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+
+/* Scrollbar */
+
+.doctor-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.doctor-list::-webkit-scrollbar-thumb {
+    background: #ff6b6b;
+    border-radius: 10px;
+}

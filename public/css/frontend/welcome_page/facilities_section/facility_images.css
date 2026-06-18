@@ -1,0 +1,5 @@
+.facility-image {
+    max-height: 420px;
+    width: 100%;
+    object-fit: cover;
+}

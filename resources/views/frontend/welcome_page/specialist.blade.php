@@ -1,3 +1,11 @@
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_layout.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_preview.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_preview_hover.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_trip.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_trip_hover.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_doctor_list.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_doctor_item.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/specialist_section/specialist_animations.css') }}">
 <section id="specialists" class="py-5">
     <div class="container">
 
@@ -119,113 +127,12 @@
         </div>
     </div>
 </section>
-
-<link rel="stylesheet" href="{{ asset('css/frontend/custom_specialist.css') }}">
 <script>
-    let currentDoctor = 0;
-    let autoSlide;
-    const slideInterval = 15000;
     const doctors = @json($doctors);
 
-    const previewImg = document.getElementById('previewImg');
-    const doctorLink = document.getElementById('doctorLink');
-    const docName = document.getElementById('docName');
-    const docDegree = document.getElementById('docDegree');
-    const docDetails = document.getElementById('docDetails');
-    const stripItems = document.querySelectorAll('.strip-item');
-    const doctorItems = document.querySelectorAll('.doctor-item');
-
-    function startAutoSlide() {
-        clearInterval(autoSlide);
-        autoSlide = setInterval(nextDoctor, slideInterval);
-    }
-
-    function updateDoctor(index, resetTimer = true) {
-        const doctor = doctors[index];
-
-        // Fade out first
-        const infoBox = document.getElementById('spec-info');
-        const previewWrap = document.querySelector('.preview-wrap');
-
-        infoBox.classList.add('fade-out');
-        previewWrap.classList.add('fade-out');
-
-        setTimeout(() => {
-
-            // Update active states
-            stripItems.forEach((el, i) => {
-                el.classList.toggle('active', i === index);
-            });
-
-            doctorItems.forEach((el, i) => {
-                el.classList.toggle('active', i === index);
-            });
-
-            // Update content
-            previewImg.src =
-                "{{ asset('uploads/images/welcome_page/doctors/') }}/" + doctor.image;
-
-            docName.innerText = doctor.name;
-            docDegree.innerText = doctor.degree;
-            docDetails.innerHTML = doctor.details;
-
-            if (doctor.route) {
-                doctorLink.href = doctor.route;
-                doctorLink.style.pointerEvents = 'auto';
-            } else {
-                doctorLink.href = 'javascript:void(0)';
-                doctorLink.style.pointerEvents = 'none';
-            }
-
-            // Fade back in
-            infoBox.classList.remove('fade-out');
-            previewWrap.classList.remove('fade-out');
-
-            infoBox.classList.add('fade-in');
-            previewWrap.classList.add('fade-in');
-
-        }, 200);
-
-        currentDoctor = index;
-        if (resetTimer) startAutoSlide();
-    }
-
-    // 👉 Vertical list interaction
-    doctorItems.forEach(item => {
-        const index = Number(item.dataset.index);
-
-        item.addEventListener('mouseenter', () => {
-            updateDoctor(index, false);
-        });
-
-        item.addEventListener('click', () => {
-            updateDoctor(index, true);
-        });
-    });
-
-    function nextDoctor() {
-        updateDoctor((currentDoctor + 1) % doctors.length, false);
-    }
-
-    // ✅ FIXED: Hover updates EVERYTHING (but doesn’t reset timer)
-    stripItems.forEach(item => {
-        const index = Number(item.dataset.index);
-
-        item.addEventListener('mouseenter', () => {
-            updateDoctor(index, false);
-        });
-
-        item.addEventListener('mouseleave', () => {
-            updateDoctor(currentDoctor, false);
-        });
-
-        item.addEventListener('click', e => {
-            e.preventDefault();
-            updateDoctor(index, true);
-        });
-    });
-
-    // Init
-    updateDoctor(0);
-    startAutoSlide();
+    const doctorImageBasePath =
+        "{{ asset('uploads/images/welcome_page/doctors') }}";
 </script>
+<script src="{{ asset('js/custom_frontend/welcome_page/specialist_section/specialist_config.js') }}"></script>
+<script src="{{ asset('js/custom_frontend/welcome_page/specialist_section/specialist_slider.js') }}"></script>
+<script src="{{ asset('js/custom_frontend/welcome_page/specialist_section/specialist_events.js') }}"></script>

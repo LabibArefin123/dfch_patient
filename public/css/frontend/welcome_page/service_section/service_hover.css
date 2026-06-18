@@ -1,0 +1,8 @@
+.service-list li:hover {
+    background-color: #ff6b6b;
+    color: #ffffff;
+}
+
+.service-list li:hover .arrow-icon {
+    color: #ffffff;
+}

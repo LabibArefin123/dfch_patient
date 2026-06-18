@@ -1,3 +1,8 @@
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/facilities_section/facility_content.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/facilities_section/facility_images.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/facilities_section/facility_tabs.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/facilities_section/facility_lists.css') }}">
+<link rel="stylesheet" href="{{ asset('css/frontend/welcome_page/facilities_section/facility_animation.css') }}">
 <section id="facilities" class="py-5 bg-white">
     <div class="container">
 

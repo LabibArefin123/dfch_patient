@@ -42,39 +42,3 @@
 .facility-tab.active i {
     animation: pulse 1.2s infinite;
 }
-
-@keyframes pulse {
-    0% {
-        transform: scale(1);
-    }
-
-    50% {
-        transform: scale(1.15);
-    }
-
-    100% {
-        transform: scale(1);
-    }
-}
-
-.facility-content {
-    display: none;
-}
-
-.facility-content.active {
-    display: block;
-}
-
-.facility-image {
-    max-height: 420px;
-    width: 100%;
-    object-fit: cover;
-}
-
-.facility-list {
-    padding-left: 18px;
-}
-
-.facility-list li {
-    margin-bottom: 10px;
-}
