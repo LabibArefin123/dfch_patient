@@ -51,25 +51,58 @@
                       {{ $errors->first('login') }}
                   </div>
               @endif
-              <button class="btn login-btn w-100 py-2 rounded-pill mt-3">
-                  Login
+              blade
+              {{-- LOGIN BUTTON --}}
+              <button type="submit" class="btn login-btn w-100 py-2 rounded-pill mt-3">
+
+                  <i class="fas fa-sign-in-alt me-2"></i>
+                  Sign In
+
               </button>
 
-              <div class="text-center mt-3">
-                  <a href="{{ route('password.request') }}" id="forgotPasswordLink"
-                      class="text-decoration-none header-link">
-                      Forgot Password?
-                  </a>
-              </div>
-              <hr class="my-4">
+              {{-- QUICK ACCESS ACTIONS --}}
+              <div class="row g-2 mt-3">
 
-              <div class="text-center">
-                  <a href="javascript:void(0)" id="openProblemBtn" class="text-decoration-none header-link fw-semibold">
-                      ⚠ Facing a system problem?
-                  </a>
-                  <p class="text-muted small mt-1">
-                      Let us know — our technical team will take care of it.
-                  </p>
+                  {{-- GUEST ACCESS --}}
+                  <div class="col-6">
+
+                      <a href="{{ route('welcome') }}" class="btn btn-outline-secondary w-100 rounded-pill">
+
+                          <i class="fas fa-home me-1"></i>
+                          Guest Access
+
+                      </a>
+
+                  </div>
+
+                  {{-- REGISTER --}}
+                  <div class="col-6">
+
+                      <a href="{{ route('register') }}" class="btn btn-outline-danger w-100 rounded-pill">
+
+                          <i class="fas fa-user-plus me-1"></i>
+                          Register
+
+                      </a>
+
+                  </div>
+
+              </div>
+
+              <div class="text-center mt-2">
+                  <small class="text-muted">
+                      Register for a personalized experience, or continue as a guest to explore our departments,
+                      specialists, facilities, and healthcare services.
+                  </small>
+              </div>
+
+
+              <div class="text-center mt-3"> <a href="{{ route('password.request') }}" id="forgotPasswordLink"
+                      class="text-decoration-none header-link"> Forgot Password? </a> </div>
+              <hr class="my-4">
+              <div class="text-center"> <a href="javascript:void(0)" id="openProblemBtn"
+                      class="text-decoration-none header-link fw-semibold"> ⚠ Facing a system problem? </a>
+                  <p class="text-muted small mt-1"> Let us know — our technical team will take care of it. </p>
               </div>
           </form>
       </div>
