@@ -39,64 +39,65 @@
 
             {{-- RIGHT PANEL --}}
             <div class="login-panel">
+                <div class="login-panel-scroll">
+                    <div class="text-center mb-4">
+                        <h4 class="fw-bold">
+                            Forgot Password
+                        </h4>
 
-                <div class="text-center mb-4">
-                    <h4 class="fw-bold">
-                        Forgot Password
-                    </h4>
+                        <p class="text-muted">
+                            Recover your account securely
+                        </p>
+                    </div>
 
-                    <p class="text-muted">
-                        Recover your account securely
-                    </p>
+                    {{-- SUCCESS MESSAGE --}}
+                    @if (session('status'))
+                        <div class="alert alert-success rounded-3 mb-3">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('password.email') }}">
+                        @csrf
+
+                        {{-- EMAIL --}}
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">
+                                Email Address
+                            </label>
+
+                            <input type="email" name="email" value="{{ old('email') }}"
+                                class="form-control form-control-lg @error('email') is-invalid @enderror"
+                                placeholder="Enter your registered email address" required autofocus>
+
+                            @error('email')
+                                <div class="invalid-feedback d-block mt-2">
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                            @enderror
+                        </div>
+
+                        {{-- SEND LINK BUTTON --}}
+                        <button type="submit" class="btn login-btn w-100 rounded-pill mt-3">
+
+                            Send Password Reset Link
+
+                        </button>
+
+                        {{-- BACK TO LOGIN --}}
+                        <div class="text-center mt-4">
+
+                            <a href="{{ route('login') }}" class="text-decoration-none header-link">
+
+                                ← Back to Login
+
+                            </a>
+
+                        </div>
+
+                    </form>
+
                 </div>
-
-                {{-- SUCCESS MESSAGE --}}
-                @if (session('status'))
-                    <div class="alert alert-success rounded-3 mb-3">
-                        {{ session('status') }}
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('password.email') }}">
-                    @csrf
-
-                    {{-- EMAIL --}}
-                    <div class="mb-3">
-                        <label class="form-label fw-semibold">
-                            Email Address
-                        </label>
-
-                        <input type="email" name="email" value="{{ old('email') }}"
-                            class="form-control form-control-lg @error('email') is-invalid @enderror"
-                            placeholder="Enter your registered email address" required autofocus>
-
-                        @error('email')
-                            <div class="invalid-feedback d-block mt-2">
-                                <strong>{{ $message }}</strong>
-                            </div>
-                        @enderror
-                    </div>
-
-                    {{-- SEND LINK BUTTON --}}
-                    <button type="submit" class="btn login-btn w-100 rounded-pill mt-3">
-
-                        Send Password Reset Link
-
-                    </button>
-
-                    {{-- BACK TO LOGIN --}}
-                    <div class="text-center mt-4">
-
-                        <a href="{{ route('login') }}" class="text-decoration-none header-link">
-
-                            ← Back to Login
-
-                        </a>
-
-                    </div>
-
-                </form>
-
             </div>
 
         </div>
