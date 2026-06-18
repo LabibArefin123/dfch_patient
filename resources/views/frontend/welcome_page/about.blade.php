@@ -46,7 +46,7 @@
 
                 <p class="about-text">
                     <strong>
-                        <a href="https://fazlulhaquehospital.com/" target="_blank" class="header-link">
+                        <a href="https://fazlulhaquehospital.com/" target="_blank" class="header-link text-white">
                             {{ $orgName }} (DFCH)
                         </a>
                     </strong>

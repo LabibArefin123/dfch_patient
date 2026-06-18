@@ -15,28 +15,28 @@
 
                 <i class="fas fa-map-marker-alt"></i>
 
-                <a href="#" class="header-link" id="openMapModal">
+                <a href="#" class="header-link text-white" id="openMapModal">
                     86 (New), 726/A (Old), Satmasjid Road,
                     Dhanmondi, Dhaka-1209
                 </a>
 
                 <span class="divider">|</span>
 
-                <a href="#" class="header-link open-phone-modal">
+                <a href="#" class="header-link open-phone-modal text-white">
                     <i class="fas fa-phone-alt"></i>
                     01755697173
                 </a>
 
                 <span class="divider">|</span>
 
-                <a href="#" class="header-link open-phone-modal">
+                <a href="#" class="header-link open-phone-modal text-white">
                     <i class="fas fa-phone-alt"></i>
                     01755697176
                 </a>
 
                 <span class="divider">|</span>
 
-                <a href="#" class="header-link open-land-phone-modal">
+                <a href="#" class="header-link open-land-phone-modal text-white">
                     <i class="fas fa-phone-alt"></i>
                     0241023155
                 </a>
