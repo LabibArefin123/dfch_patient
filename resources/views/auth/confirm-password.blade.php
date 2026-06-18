@@ -1,27 +1,132 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('This is a secure area of the application. Please confirm your password before continuing.') }}
-    </div>
+@extends('frontend.layouts.app')
 
-    <form method="POST" action="{{ route('password.confirm') }}">
-        @csrf
+@section('content')
 
-        <!-- Password -->
-        <div>
-            <x-input-label for="password" :value="__('Password')" />
+<style>
+body {
+    background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
+}
+</style>
 
-            <x-text-input id="password" class="block mt-1 w-full"
+{{-- Login Page CSS --}}
+<link rel="stylesheet" href="{{ asset('css/backend/login_page/login_base.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backend/login_page/login_layout.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backend/login_page/login_logo.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backend/login_page/login_buttons.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backend/login_page/login_form.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backend/login_page/login_modal.css') }}">
+<link rel="stylesheet" href="{{ asset('css/backend/login_page/login_responsive.css') }}">
+
+<div class="login-wrapper">
+
+    <div class="login-glass">
+
+        {{-- LEFT PANEL --}}
+        <div class="about-slider">
+
+            <img src="{{ asset('uploads/images/login_page/logo.png') }}"
+                 class="hospital-logo"
+                 alt="Hospital Logo">
+
+            <div class="about-content short">
+
+                <h4 class="fw-bold mb-3">
+                    Confirm Your Password
+                </h4>
+
+                <p>
+                    This is a secure area of the application.
+                    Please confirm your password before continuing.
+                </p>
+
+                <p>
+                    Password confirmation helps protect sensitive
+                    information and administrative functions.
+                </p>
+
+                <ul class="ps-3">
+                    <li>Enhanced account security</li>
+                    <li>Protected sensitive data</li>
+                    <li>Secure user verification</li>
+                    <li>Safe administrative access</li>
+                </ul>
+
+            </div>
+
+        </div>
+
+        {{-- RIGHT PANEL --}}
+        <div class="login-panel">
+
+            <div class="login-panel-scroll">
+
+                <div class="text-center mb-4">
+
+                    <h4 class="fw-bold">
+                        Confirm Password
+                    </h4>
+
+                    <p class="text-muted">
+                        Please enter your password to continue
+                    </p>
+
+                </div>
+
+                <form method="POST" action="{{ route('password.confirm') }}">
+                    @csrf
+
+                    {{-- PASSWORD --}}
+                    <div class="mb-3">
+
+                        <label class="form-label fw-semibold">
+                            Password
+                        </label>
+
+                        <input
+                            id="password"
                             type="password"
                             name="password"
-                            required autocomplete="current-password" />
+                            class="form-control @error('password') is-invalid @enderror"
+                            placeholder="Enter your current password"
+                            required
+                            autocomplete="current-password">
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                        @error('password')
+                            <div class="invalid-feedback d-block mt-2">
+                                <strong>{{ $message }}</strong>
+                            </div>
+                        @enderror
+
+                    </div>
+
+                    {{-- CONFIRM BUTTON --}}
+                    <button type="submit"
+                            class="btn login-btn w-100 rounded-pill mt-3">
+
+                        Confirm Password
+
+                    </button>
+
+                </form>
+
+                <div class="text-center mt-4">
+
+                    <a href="{{ route('dashboard') }}"
+                       class="text-decoration-none dev-link">
+
+                        Back to Dashboard
+
+                    </a>
+
+                </div>
+
+            </div>
+
         </div>
 
-        <div class="flex justify-end mt-4">
-            <x-primary-button>
-                {{ __('Confirm') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout>
+    </div>
+
+</div>
+
+@endsection
+

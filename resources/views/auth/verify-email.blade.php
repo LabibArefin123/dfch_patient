@@ -1,31 +1,124 @@
-<x-guest-layout>
-    <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-        {{ __('Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn\'t receive the email, we will gladly send you another.') }}
-    </div>
+@extends('frontend.layouts.app')
 
-    @if (session('status') == 'verification-link-sent')
-        <div class="mb-4 font-medium text-sm text-green-600 dark:text-green-400">
-            {{ __('A new verification link has been sent to the email address you provided during registration.') }}
-        </div>
-    @endif
+@section('content')
+    <style>
+        body {
+            background: url('{{ asset('uploads/images/welcome_page/cover.png') }}') center/cover no-repeat;
+        }
+    </style>
 
-    <div class="mt-4 flex items-center justify-between">
-        <form method="POST" action="{{ route('verification.send') }}">
-            @csrf
+    {{-- Login Page CSS --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_base.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_logo.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_buttons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_form.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/login_page/login_responsive.css') }}">
 
-            <div>
-                <x-primary-button>
-                    {{ __('Resend Verification Email') }}
-                </x-primary-button>
+    <div class="login-wrapper">
+
+        <div class="login-glass">
+
+            {{-- LEFT PANEL --}}
+            <div class="about-slider">
+
+                <img src="{{ asset('uploads/images/login_page/logo.png') }}" class="hospital-logo" alt="Hospital Logo">
+
+                <div class="about-content short">
+
+                    <h4 class="fw-bold mb-3">
+                        Verify Your Email
+                    </h4>
+
+                    <p>
+                        Thanks for registering. Before getting started,
+                        please verify your email address by clicking the
+                        link we emailed to you.
+                    </p>
+
+                    <p>
+                        If you didn't receive the email, we can send
+                        another verification link instantly.
+                    </p>
+
+                    <ul class="ps-3">
+                        <li>Email verification required</li>
+                        <li>Secure account activation</li>
+                        <li>Protects your account access</li>
+                        <li>Quick verification process</li>
+                    </ul>
+
+                </div>
+
             </div>
-        </form>
 
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
+            {{-- RIGHT PANEL --}}
+            <div class="login-panel">
 
-            <button type="submit" class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800">
-                {{ __('Log Out') }}
-            </button>
-        </form>
+                <div class="login-panel-scroll">
+
+                    <div class="text-center mb-4">
+
+                        <h4 class="fw-bold">
+                            Email Verification
+                        </h4>
+
+                        <p class="text-muted">
+                            Verify your email address to continue
+                        </p>
+
+                    </div>
+
+                    {{-- SUCCESS MESSAGE --}}
+                    @if (session('status') == 'verification-link-sent')
+                        <div class="alert alert-success">
+
+                            A new verification link has been sent to the email
+                            address you provided during registration.
+
+                        </div>
+                    @endif
+
+                    {{-- RESEND VERIFICATION --}}
+                    <form method="POST" action="{{ route('verification.send') }}">
+                        @csrf
+
+                        <button type="submit" class="btn login-btn w-100 rounded-pill">
+
+                            Resend Verification Email
+
+                        </button>
+
+                    </form>
+
+                    {{-- LOGOUT --}}
+                    <form method="POST" action="{{ route('logout') }}" class="mt-3">
+                        @csrf
+
+                        <button type="submit" class="btn btn-outline-light w-100 rounded-pill">
+
+                            Log Out
+
+                        </button>
+
+                    </form>
+
+                    <div class="text-center mt-4">
+
+                        <small class="text-muted">
+                            Check your inbox and spam folder if you don't
+                            see the verification email.
+                        </small>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
-</x-guest-layout>
+@endsection
+
