@@ -1,0 +1,59 @@
+.location-modal-footer {
+    border: none;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.location-modal-footer .modal-header {
+    background: #ff6b6b;
+    color: #fff;
+    border: none;
+}
+
+.location-modal-footer .modal-title {
+    font-weight: 700;
+}
+
+.location-modal-footer .btn-close {
+    filter: brightness(0) invert(1);
+}
+
+.location-address {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.location-address h6 {
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.location-address p {
+    color: #666;
+    margin-bottom: 0;
+}
+
+.location-modal-footer iframe {
+    border-radius: 12px;
+}
+
+.location-action-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+.location-action-buttons .btn {
+    min-width: 180px;
+    border-radius: 30px;
+    padding: 12px 20px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+}
+
+.location-action-buttons .btn:hover {
+    transform: translateY(-2px);
+}
+

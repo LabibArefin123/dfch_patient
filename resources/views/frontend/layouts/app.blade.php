@@ -36,7 +36,7 @@
     <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_state.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_hover.css') }}">
-    
+
     {{-- TOPBAR AND FOOTER MODAL SECTION --}}
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_top.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_topr.css') }}">
@@ -45,6 +45,7 @@
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_land_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_phone_modal_footer.css') }}">
 
     {{-- IMAGE MODAL SECTION --}}
@@ -117,6 +118,8 @@
     <script src="{{ asset('js/custom_frontend/modals/language.js') }}"></script> {{-- Language Modal JS --}}
     <script src="{{ asset('js/custom_frontend/modals/magnified_image_modal.js') }}"></script> {{-- Magnified Image Modal JS --}}
     <script src="{{ asset('js/custom_frontend/modals/custom_footer_modal.js') }}"></script> {{-- Footer Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/location_footer_config.js') }}"></script> {{-- Footer Location Config JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/location_footer_actions.js') }}"></script> {{-- Footer Location Action JS --}}
 
     {{-- UI SECTION --}}
     <script src="{{ asset('js/custom_frontend/ui/custom_banner.js') }}"></script> {{-- banner aniamtion JS --}}
