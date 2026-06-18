@@ -17,7 +17,7 @@
             At
             <strong>
                 <a href="https://fazlulhaquehospital.com/" target="_blank"
-                    class="dev-link fw-bold text-decoration-none">
+                    class="header-link fw-bold text-decoration-none">
                     {{ $orgName }} (DFCH)
                 </a>
             </strong>,

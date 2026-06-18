@@ -12,7 +12,7 @@
 
             <!-- Breadcrumb -->
             <div class="facility-breadcrumb">
-                <a href="{{ route('welcome') }}" class="dev-link">Home</a>
+                <a href="{{ route('welcome') }}" class="header-link">Home</a>
                 <span>/</span>
                 <span>Hospital Pharmacy</span>
             </div>
@@ -47,8 +47,7 @@
 
                 <!-- RIGHT IMAGE -->
                 <div class="facility-image">
-                    <img src="{{ asset('uploads/images/welcome_page/facilities/Pharmacy.jpeg') }}"
-                        alt="Hospital Pharmacy"
+                    <img src="{{ asset('uploads/images/welcome_page/facilities/Pharmacy.jpeg') }}" alt="Hospital Pharmacy"
                         class="facility-img magnify-img">
                 </div>
 

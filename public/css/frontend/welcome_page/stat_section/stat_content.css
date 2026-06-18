@@ -1,0 +1,10 @@
+.stat-number {
+    font-size: 36px;
+    font-weight: 700;
+    color: #222;
+}
+
+.stat-label {
+    font-size: 15px;
+    color: #666;
+}

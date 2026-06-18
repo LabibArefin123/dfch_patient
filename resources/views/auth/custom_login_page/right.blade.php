@@ -55,14 +55,15 @@
           </button>
 
           <div class="text-center mt-3">
-              <a href="{{ route('password.request') }}" id="forgotPasswordLink" class="text-decoration-none dev-link">
+              <a href="{{ route('password.request') }}" id="forgotPasswordLink"
+                  class="text-decoration-none header-link">
                   Forgot Password?
               </a>
           </div>
           <hr class="my-4">
 
           <div class="text-center">
-              <a href="javascript:void(0)" id="openProblemBtn" class="text-decoration-none dev-link fw-semibold">
+              <a href="javascript:void(0)" id="openProblemBtn" class="text-decoration-none header-link fw-semibold">
                   ⚠ Facing a system problem?
               </a>
               <p class="text-muted small mt-1">

@@ -12,7 +12,7 @@
 
             <!-- Breadcrumb -->
             <div class="facility-breadcrumb">
-                <a href="{{ route('welcome') }}" class="dev-link">Home</a>
+                <a href="{{ route('welcome') }}" class="header-link">Home</a>
                 <span>/</span>
                 <span>Laboratory Services</span>
             </div>
@@ -60,8 +60,7 @@
                 <!-- RIGHT IMAGE -->
                 <div class="facility-image">
                     <img src="{{ asset('uploads/images/welcome_page/facilities/laboratory.jpeg') }}"
-                        alt="Laboratory Services"
-                        class="facility-img magnify-img">
+                        alt="Laboratory Services" class="facility-img magnify-img">
                 </div>
 
             </div>

@@ -1,0 +1,34 @@
+/* Close button */
+
+.image-modal .close-btn {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    color: #333;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background-color: #f8f8f8;
+
+    width: 32px;
+    height: 32px;
+
+    text-align: center;
+    line-height: 32px;
+
+    border-radius: 50%;
+
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+
+    transition: 0.2s;
+}
+
+.image-modal .close-btn:hover {
+    background-color: #ff6b6b;
+    color: #fff;
+}

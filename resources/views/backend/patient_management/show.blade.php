@@ -70,7 +70,8 @@
                         <div class="col-md-3 mb-2">
                             <div class="form-control bg-light">
                                 Personal:
-                                <span class="dev-link text-primary font-weight-bold" data-phone="{{ $patient->phone_1 }}">
+                                <span class="header-link text-primary font-weight-bold"
+                                    data-phone="{{ $patient->phone_1 }}">
                                     {{ $patient->phone_1 }}
                                 </span>
                             </div>
@@ -79,7 +80,8 @@
                         <div class="col-md-3 mb-2">
                             <div class="form-control bg-light">
                                 Alt:
-                                <span class="dev-link text-primary font-weight-bold" data-phone="{{ $patient->phone_2 }}">
+                                <span class="header-link text-primary font-weight-bold"
+                                    data-phone="{{ $patient->phone_2 }}">
                                     {{ $patient->phone_2 ?? 'N/A' }}
                                 </span>
                             </div>
@@ -88,7 +90,7 @@
                         <div class="col-md-3 mb-2">
                             <div class="form-control bg-light">
                                 Father:
-                                <span class="dev-link text-primary font-weight-bold"
+                                <span class="header-link text-primary font-weight-bold"
                                     data-phone="{{ $patient->phone_f_1 }}">
                                     {{ $patient->phone_f_1 ?? 'N/A' }}
                                 </span>
@@ -98,7 +100,7 @@
                         <div class="col-md-3 mb-2">
                             <div class="form-control bg-light">
                                 Mother:
-                                <span class="dev-link text-primary font-weight-bold"
+                                <span class="header-link text-primary font-weight-bold"
                                     data-phone="{{ $patient->phone_m_1 }}">
                                     {{ $patient->phone_m_1 ?? 'N/A' }}
                                 </span>
@@ -325,7 +327,7 @@
 @section('js')
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script>
-        $(document).on('click', '.dev-link', function() {
+        $(document).on('click', '.header-link', function() {
 
             let phone = $(this).data('phone');
 

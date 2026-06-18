@@ -97,7 +97,7 @@
                     </button>
 
                     <div class="text-center mt-3">
-                        <a href="{{ route('login') }}" class="text-decoration-none dev-link">
+                        <a href="{{ route('login') }}" class="text-decoration-none header-link">
                             ← Back to Login
                         </a>
                     </div>

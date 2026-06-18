@@ -12,7 +12,7 @@
 
             <!-- Breadcrumb -->
             <div class="facility-breadcrumb">
-                <a href="{{ route('welcome') }}" class="dev-link">Home</a>
+                <a href="{{ route('welcome') }}" class="header-link">Home</a>
                 <span>/</span>
                 <span>Private Cabin</span>
             </div>
@@ -53,8 +53,7 @@
 
                 <!-- RIGHT IMAGE -->
                 <div class="facility-image">
-                    <img src="{{ asset('uploads/images/welcome_page/facilities/cabin.jpg') }}"
-                        alt="Private Cabin"
+                    <img src="{{ asset('uploads/images/welcome_page/facilities/cabin.jpg') }}" alt="Private Cabin"
                         class="facility-img magnify-img">
                 </div>
 

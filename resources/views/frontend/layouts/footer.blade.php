@@ -1,7 +1,7 @@
 <footer class="main-footer d-flex justify-content-between align-items-center px-4 py-3 bg-light shadow-sm">
     <div>
         © {{ date('Y') }}
-        <a href="https://fazlulhaquehospital.com/" target="_blank" class="dev-link fw-bold text-decoration-none">
+        <a href="https://fazlulhaquehospital.com/" target="_blank" class="header-link fw-bold text-decoration-none">
             <strong> {{ $orgLogo }}.</strong>
         </a> All rights reserved.
     </div>
@@ -9,7 +9,7 @@
     <div class="footer-right">
         Design and Developed by
         <a href="https://www.labib.work" target="_blank"
-            class="dev-link fw-bold text-decoration-none ms-1 totalofftec-link">
+            class="header-link fw-bold text-decoration-none ms-1 totalofftec-link">
             Labib Arefin
         </a>
     </div>
@@ -23,16 +23,16 @@
         font-style: normal;
     }
 
-    .dev-link {
+    .header-link {
         padding: 1px 1px;
-    text-decoration: none;
+        text-decoration: none;
         border-radius: 4px;
         transition: background-color 0.3s ease;
         color: #000;
         text-decoration: none;
     }
 
-    .dev-link:hover {
+    .header-link:hover {
         background-color: #ff6b6b;
         color: #fff;
     }

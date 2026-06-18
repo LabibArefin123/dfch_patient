@@ -40,7 +40,7 @@ function updateDoctor(index, resetTimer = true) {
 
         infoBox.classList.add("fade-in");
         previewWrap.classList.add("fade-in");
-    }, 150);
+    }, 200);
 
     currentDoctor = index;
 

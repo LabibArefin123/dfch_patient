@@ -31,6 +31,13 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/frontend/frontend.css') }}">
+
+    {{-- BACK TO TOP SECTION --}}
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_state.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_hover.css') }}">
+    
+    {{-- TOPBAR AND FOOTER MODAL SECTION --}}
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_top.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_topr.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_contact_modal.css') }}">
@@ -39,6 +46,11 @@
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_phone_modal_footer.css') }}">
+
+    {{-- IMAGE MODAL SECTION --}}
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/image_part/image_modal_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/image_part/image_modal_content.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/image_part/image_modal_close.css') }}">
 </head>
 
 <body>

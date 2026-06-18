@@ -1,4 +1,4 @@
-.dev-link {
+.header-link {
     position: relative;
     color: #2b2b2b;
     text-decoration: none;
@@ -8,7 +8,7 @@
     transition: color 0.25s ease;
 }
 
-.dev-link::after {
+.header-link::after {
     content: "";
     position: absolute;
     top: 0;
@@ -22,11 +22,11 @@
     z-index: -1;
 }
 
-.dev-link:hover {
+.header-link:hover {
     color: #fff;
 }
 
-.dev-link:hover::after {
+.header-link:hover::after {
     width: 100%;
 }
 

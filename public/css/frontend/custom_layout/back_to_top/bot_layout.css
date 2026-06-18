@@ -1,0 +1,32 @@
+/* Back To Top Button */
+
+.back-to-top {
+    position: fixed;
+
+    bottom: 25px;
+    right: 25px;
+
+    width: 52px;
+    height: 52px;
+
+    border-radius: 50%;
+
+    background-color: #ff6b6b;
+    color: #fff;
+
+    border: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 22px;
+
+    cursor: pointer;
+
+    transition: all 0.3s ease;
+
+    z-index: 9999;
+
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+}

@@ -1,4 +1,3 @@
-
 @extends('frontend.layouts.app')
 
 @section('content')
@@ -144,7 +143,7 @@
 
                     <div class="text-center mt-4">
 
-                        <a href="{{ route('login') }}" class="text-decoration-none dev-link">
+                        <a href="{{ route('login') }}" class="text-decoration-none header-link">
 
                             Back to Login
 

@@ -12,7 +12,7 @@
 
             <!-- Breadcrumb -->
             <div class="facility-breadcrumb">
-                <a href="{{ route('welcome') }}" class="dev-link">Home</a>
+                <a href="{{ route('welcome') }}" class="header-link">Home</a>
                 <span>/</span>
                 <span>ECG Services</span>
             </div>

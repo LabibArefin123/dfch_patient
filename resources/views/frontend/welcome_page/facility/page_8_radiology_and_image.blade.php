@@ -12,17 +12,17 @@
 
             <!-- Breadcrumb -->
             <div class="facility-breadcrumb">
-                <a href="{{ route('welcome') }}" class="dev-link">Home</a>
+                <a href="{{ route('welcome') }}" class="header-link">Home</a>
                 <span>/</span>
                 <span>Radiology & Imaging</span>
             </div>
 
             <!-- TOP IMAGES -->
             <div class="facility-top-images">
-                <img src="{{ asset('uploads/images/welcome_page/facilities/xray.jpeg') }}"
-                    alt="Radiology Room" class="top-img magnify-img">
-                <img src="{{ asset('uploads/images/welcome_page/facilities/radio.jpeg') }}"
-                    alt="Imaging Room" class="top-img magnify-img">
+                <img src="{{ asset('uploads/images/welcome_page/facilities/xray.jpeg') }}" alt="Radiology Room"
+                    class="top-img magnify-img">
+                <img src="{{ asset('uploads/images/welcome_page/facilities/radio.jpeg') }}" alt="Imaging Room"
+                    class="top-img magnify-img">
             </div>
 
             <div class="facility-content">

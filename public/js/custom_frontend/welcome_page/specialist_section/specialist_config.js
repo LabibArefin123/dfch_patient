@@ -1,7 +1,7 @@
 let currentDoctor = 0;
 let autoSlide;
 
-const slideInterval = 15000;
+const slideInterval = 10000;
 
 const previewImg = document.getElementById("previewImg");
 const doctorLink = document.getElementById("doctorLink");

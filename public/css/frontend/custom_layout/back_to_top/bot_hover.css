@@ -1,0 +1,4 @@
+.back-to-top:hover {
+    background-color: #b02a37;
+    transform: translateY(-4px);
+}
