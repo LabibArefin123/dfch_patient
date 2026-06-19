@@ -82,15 +82,33 @@
 /* =========================
    SMALL MOBILE
 ========================= */
-
+/* =========================
+   SMALL MOBILE
+========================= */
 @media (max-width: 480px) {
     .topbar-left {
-        flex-direction: column;
-        gap: 8px;
+        display: flex;
+        flex-direction: row; /* Keep horizontal */
+        flex-wrap: wrap; /* Allow wrapping if needed */
+        justify-content: center;
+        align-items: center;
+        gap: 6px;
     }
 
-    .topbar-left a {
+    /* Address remains full width */
+    .topbar-left .header-link:first-of-type {
+        width: 100%;
         display: block;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+
+    /* Phone numbers stay inline */
+    .topbar-left .open-phone-modal,
+    .topbar-left .open-land-phone-modal {
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
     }
 
     .topbar-right {
