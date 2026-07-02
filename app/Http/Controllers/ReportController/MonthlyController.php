@@ -11,7 +11,7 @@ use App\Services\Reports\DataTableService;
 class MonthlyController extends Controller
 {
     protected $dataTableService;
-    
+
     public function __construct(DataTableService $dataTableService)
     {
         $this->dataTableService = $dataTableService;
@@ -28,7 +28,9 @@ class MonthlyController extends Controller
             $query = Patient::query();
             $parent->applyMonthlyFilters($query, $request);
 
-            return $this->dataTableService->response($query, 'date_of_patient_added');
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->make(true);
         }
 
         return view('backend.report_management.patient.monthly_report');

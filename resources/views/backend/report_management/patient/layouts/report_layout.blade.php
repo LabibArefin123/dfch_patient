@@ -97,7 +97,28 @@
                 serverSide: true,
                 responsive: true,
                 ajax: {
-                    url: "{{ $ajaxRoute }}",
+                    url: (() => {
+                        const routeName =
+                            "{{ \Illuminate\Support\Facades\Route::currentRouteName() }}";
+
+                        switch (routeName) {
+                            case "report.daily":
+                                return "{{ route('report.daily') }}";
+
+                            case "report.weekly":
+                                return "{{ route('report.weekly') }}";
+
+                            case "report.monthly":
+                                return "{{ route('report.monthly') }}";
+
+                            case "report.yearly":
+                                return "{{ route('report.yearly') }}";
+
+                            default:
+                                return "{{ url()->current() }}";
+                        }
+                    })(),
+
                     data: function(d) {
                         $('#filterForm').serializeArray().forEach(function(item) {
                             d[item.name] = item.value;
