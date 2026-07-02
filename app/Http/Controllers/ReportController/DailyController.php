@@ -30,16 +30,6 @@ class DailyController extends Controller
 
             return DataTables::of($query)
                 ->addIndexColumn()
-
-                ->addColumn('select', function ($row) {
-                    return '<input type="checkbox" value="' . $row->id . '">';
-                })
-
-                ->addColumn('action', function ($row) {
-                    return view('backend.patient.partials.action', compact('row'))->render();
-                })
-
-                ->rawColumns(['select', 'action'])
                 ->make(true);
         }
 
