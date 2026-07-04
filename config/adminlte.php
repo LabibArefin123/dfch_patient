@@ -439,9 +439,9 @@ return [
                 ],
 
                 [
-                    'text'  => 'Patient Documents',
-                    // 'route' => 'patient-documents.index',
-                    // 'can'   => 'patient-documents.index',
+                    'text'  => 'Cancer Documents',
+                    'route' => 'patient-cancer-photos.index',
+                    'can'   => 'patient-cancer-photos.index',
                     'icon'  => 'fas fa-file-medical',
                 ],
 

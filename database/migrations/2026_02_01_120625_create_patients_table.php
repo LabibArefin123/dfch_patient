@@ -52,6 +52,8 @@ return new class extends Migration {
             $table->enum('registration_source', ['reception', 'online', 'referral'])->nullable();
             $table->string('patient_photo')->nullable();
             $table->text('remarks')->nullable();
+            // Cancer History
+            $table->boolean('is_old_cancer')->default(false)->comment('0 = No, 1 = Yes');
 
             $table->timestamps();
         });

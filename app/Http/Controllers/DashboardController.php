@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use App\Models\PatientCancerPhoto;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,11 @@ class DashboardController extends Controller
             ->whereYear('date_of_patient_added', $today->year)
             ->count();
 
-        //Recommended Patients Count
+        /*
+    |--------------------------------------------------------------------------
+    | Recommended Patients Count
+    |--------------------------------------------------------------------------
+    */
         $totalRecommendedPatients = Patient::where('is_recommend', 1)->count();
 
         $todayRecommendedPatients = Patient::where('is_recommend', 1)
@@ -48,14 +53,33 @@ class DashboardController extends Controller
             ->whereYear('date_of_patient_added', $today->year)
             ->count();
 
+        /*
+    |--------------------------------------------------------------------------
+    | Cancer Patient History Count
+    |--------------------------------------------------------------------------
+    */
+        $totalCancerPatientHistory = PatientCancerPhoto::count();
+
+        $todayCancerPatientHistory = PatientCancerPhoto::whereDate('created_at', $today)
+            ->count();
+
+        $monthlyCancerPatientHistory = PatientCancerPhoto::whereMonth('created_at', $today->month)
+            ->whereYear('created_at', $today->year)
+            ->count();
+
         return view('backend.dashboard', compact(
             'totalPatients',
             'todayPatients',
             'weeklyPatients',
             'monthlyPatients',
+
             'totalRecommendedPatients',
             'todayRecommendedPatients',
-            'monthlyRecommendedPatients'
+            'monthlyRecommendedPatients',
+
+            'totalCancerPatientHistory',
+            'todayCancerPatientHistory',
+            'monthlyCancerPatientHistory'
         ));
     }
 

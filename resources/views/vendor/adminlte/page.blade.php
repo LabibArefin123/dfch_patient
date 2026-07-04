@@ -5,6 +5,7 @@
 
 <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
 <link rel="stylesheet" href="{{ asset('css/custom_backend.css') }}">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> --}}
 
@@ -117,8 +118,8 @@
         </div>
 
         <!-- start of delete animation model -->
-        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
-            aria-labelledby="deleteConfirmLabel" aria-hidden="true">
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmLabel"
+            aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content text-center p-4">
 
@@ -520,6 +521,7 @@
 
     <!-- start of jquery and bootstrap table -->
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

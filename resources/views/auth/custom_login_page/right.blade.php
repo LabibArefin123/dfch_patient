@@ -8,17 +8,17 @@
 
           <form method="POST" action="{{ route('login') }}">
               @csrf
-              <div class="mb-3">
+              <div class="mb-1">
                   <label class="form-label fw-semibold">Email or Username</label>
                   <input type="text" name="login"
-                      class="form-control form-control-lg @error('login') is-invalid @enderror"
+                      class="form-control form-control @error('login') is-invalid @enderror"
                       placeholder="Enter email or username">
               </div>
 
-              <div class="mb-4">
-                  <label for="password" class="form-label fw-semibold"></label>
+              <div class="mb-1">
+                  <label for="password" class="form-label fw-semibold">Password</label>
                   <input id="password" type="password"
-                      class="form-control form-control-lg rounded-3 shadow-sm @error('login') is-invalid @enderror"
+                      class="form-control form-control rounded-3 shadow-sm @error('login') is-invalid @enderror"
                       name="password" placeholder="Enter your password" required>
 
                   {{-- Show password errors only if maintenance is OFF --}}
@@ -51,7 +51,6 @@
                       {{ $errors->first('login') }}
                   </div>
               @endif
-              blade
               {{-- LOGIN BUTTON --}}
               <button type="submit" class="btn login-btn w-100 py-2 rounded-pill mt-3">
 

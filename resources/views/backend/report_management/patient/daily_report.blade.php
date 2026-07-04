@@ -97,125 +97,14 @@
 
 @push('js')
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-
-            const dayFilter = document.getElementById('day_filter');
-            const customRange = document.getElementById('daily_custom_range');
-            const fromDate = document.getElementById('daily_from_date');
-            const toDate = document.getElementById('daily_to_date');
-
-            function toggleDailyDates() {
-                if (dayFilter.value === 'custom') {
-                    customRange.classList.remove('d-none');
-                } else {
-                    customRange.classList.add('d-none');
-                    fromDate.value = '';
-                    toDate.value = '';
-                }
-            }
-
-            dayFilter.addEventListener('change', toggleDailyDates);
-
-            toggleDailyDates();
-        });
+        window.dailyReportRoutes = {
+    pdf: @json($pdfRoute),
+            excel: @json($excelRoute)
+        };
     </script>
-    <script>
-        let selectedRows = [];
-        let lastChecked = null;
-
-        function updateSelectedArray() {
-            selectedRows = [];
-
-            $('.row-checkbox:checked').each(function() {
-                selectedRows.push($(this).val());
-            });
-
-            toggleSelectedButtons();
-        }
-
-        $(document).on('click', '.row-checkbox', function(e) {
-
-            let checkboxes = $('.row-checkbox');
-            let currentIndex = checkboxes.index(this);
-
-            if (!lastChecked) {
-                lastChecked = this;
-            }
-
-            if (e.shiftKey) {
-
-                let lastIndex = checkboxes.index(lastChecked);
-                let start = Math.min(lastIndex, currentIndex);
-                let end = Math.max(lastIndex, currentIndex);
-
-                checkboxes.slice(start, end + 1).prop('checked', lastChecked.checked);
-
-            }
-
-            lastChecked = this;
-
-            updateSelectedArray();
-        });
-
-        $('#selectAll').on('change', function() {
-
-            $('.row-checkbox').prop('checked', this.checked);
-
-            updateSelectedArray();
-
-        });
-
-        function toggleSelectedButtons() {
-
-            if (selectedRows.length > 0) {
-
-                $('#downloadSelectedPdf').removeClass('d-none');
-                $('#downloadSelectedExcel').removeClass('d-none');
-
-            } else {
-
-                $('#downloadSelectedPdf').addClass('d-none');
-                $('#downloadSelectedExcel').addClass('d-none');
-
-            }
-        }
-
-        $('#downloadSelectedPdf').on('click', function(e) {
-
-            e.preventDefault();
-
-            if (selectedRows.length === 0) {
-                alert('Please select rows');
-                return;
-            }
-
-            let params = new URLSearchParams($('#filterForm').serialize());
-
-            selectedRows.forEach(id => {
-                params.append('ids[]', id);
-            });
-
-            window.open("{{ $pdfRoute }}?" + params.toString(), '_blank');
-
-        });
-
-        $('#downloadSelectedExcel').on('click', function(e) {
-
-            e.preventDefault();
-
-            if (selectedRows.length === 0) {
-                alert('Please select rows');
-                return;
-            }
-
-            let params = new URLSearchParams($('#filterForm').serialize());
-
-            selectedRows.forEach(id => {
-                params.append('ids[]', id);
-            });
-
-            window.location.href = "{{ $excelRoute }}?" + params.toString();
-
-        });
-    </script>
+    <script src="{{ asset('js/backend/report_management/daily_report/daily-report-date-filter.js') }}"></script>
+    <script src="{{ asset('js/backend/report_management/daily_report/daily-report-selection-state.js') }}"></script>
+    <script src="{{ asset('js/backend/report_management/daily_report/daily-report-selection-events.js') }}"></script>
+    <script src="{{ asset('js/backend/report_management/daily_report/daily-report-download-actions.js') }}"></script>
+    <script src="{{ asset('js/backend/report_management/daily_report/daily-report-init.js') }}"></script>
 @endpush

@@ -42,6 +42,7 @@ class Patient extends Model
 
         'date_of_patient_added',
         'remarks',
+        'is_old_cancer',
     ];
 
     protected $casts = [

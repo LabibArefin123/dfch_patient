@@ -11,7 +11,7 @@ class PatientSeeder extends Seeder
     public function run(): void
     {
         $startDate = Carbon::create(2026, 3, 1);
-        $endDate   = Carbon::create(2026, 3, 25);
+        $endDate   = Carbon::create(2026, 7, 30);
 
         $baseId = Patient::max('id') ?? 0;
 
@@ -51,7 +51,7 @@ class PatientSeeder extends Seeder
 
         while ($startDate <= $endDate) {
 
-            $dailyCount = rand(50, 150);
+            $dailyCount = rand(10, 25);
 
             for ($i = 0; $i < $dailyCount; $i++) {
 

@@ -16,7 +16,6 @@
             </p>
         </div>
 
-        {{-- Toggle Switch --}}
         {{-- Toggle Button --}}
         <div class="mb-3 d-flex justify-content-end">
             <button id="toggleViewBtn" class="btn btn-primary">
@@ -76,15 +75,40 @@
                                     theme="danger" icon="fas fa-user-md"
                                     url="{{ route('patients.recommend', ['is_recommend' => 1]) }}" />
                             </div>
+
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                                 <x-adminlte-small-box title="{{ $todayRecommendedPatients }}" text="Today's Recommended"
                                     theme="warning" icon="fas fa-stethoscope"
                                     url="{{ route('patients.recommend', ['is_recommend' => 1, 'date_filter' => 'today']) }}" />
                             </div>
+
                             <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
                                 <x-adminlte-small-box title="{{ $monthlyRecommendedPatients }}" text="Monthly Recommended"
                                     theme="success" icon="fas fa-chart-line"
                                     url="{{ route('patients.recommend', ['is_recommend' => 1, 'date_filter' => 'this_month']) }}" />
+                            </div>
+
+                            <div class="col-12 mt-3">
+                                <hr>
+                                <h5 class="text-danger font-weight-bold">🩺 Cancer Patient History Overview</h5>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $totalCancerPatientHistory }}" text="Total Cancer History"
+                                    theme="primary" icon="fas fa-notes-medical"
+                                    url="{{ route('patient-cancer-photos.index') }}" />
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $todayCancerPatientHistory }}"
+                                    text="Today's Cancer History" theme="warning" icon="fas fa-calendar-day"
+                                    url="{{ route('patient-cancer-photos.index', ['date_filter' => 'today']) }}" />
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 col-sm-12 mb-3">
+                                <x-adminlte-small-box title="{{ $monthlyCancerPatientHistory }}"
+                                    text="Monthly Cancer History" theme="danger" icon="fas fa-procedures"
+                                    url="{{ route('patient-cancer-photos.index', ['date_filter' => 'this_month']) }}" />
                             </div>
 
                         </div>
@@ -125,8 +149,8 @@
                                     icon="fas fa-users" />
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
-                                <x-adminlte-small-box title="{{ $todayPatients }}" text="Registered Today" theme="light"
-                                    icon="fas fa-calendar-day" />
+                                <x-adminlte-small-box title="{{ $todayPatients }}" text="Registered Today"
+                                    theme="light" icon="fas fa-calendar-day" />
                             </div>
                             <div class="col-lg-3 col-md-6 col-sm-12 mb-3">
                                 <x-adminlte-small-box title="{{ $weeklyPatients }}" text="This Week" theme="primary"

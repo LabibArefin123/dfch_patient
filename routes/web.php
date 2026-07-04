@@ -8,6 +8,7 @@ use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientCancerPhotoController;
 use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\PermissionController;
@@ -81,6 +82,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::post('patients/delete-selected', [PatientController::class, 'deleteSelected'])->name('patients.delete_selected');
     Route::resource('patients', PatientController::class);
 
+    Route::resource('patient-cancer-photos',PatientCancerPhotoController::class);
     //Report Module
     Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');
     Route::get('daily_report/pdf', [ReportController::class, 'daily_report_pdf'])->name('report.daily.pdf');
