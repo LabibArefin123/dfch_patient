@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Patient\PatientService;
 use App\Models\Patient;
+use App\Models\PatientCancerPhoto;
 use Illuminate\Support\Carbon;
 use App\Models\PatientDocument;
 use Illuminate\Http\Request;
@@ -14,7 +15,8 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         // Base Query with Filters
-        $baseQuery = Patient::query()
+        $baseQuery = Patient::withCount('cancerPhotos')
+            ->with('cancerPhotos')
 
             // Gender Filter
             ->when($request->gender, function ($q) use ($request) {
@@ -24,6 +26,14 @@ class PatientController extends Controller
             // Recommendation Filter
             ->when($request->filled('is_recommend'), function ($q) use ($request) {
                 $q->where('is_recommend', (int) $request->is_recommend);
+            })
+            // Old Cancer Filter
+            ->when($request->filled('is_old_cancer'), function ($q) use ($request) {
+                if ($request->is_old_cancer == '1') {
+                    $q->has('cancerPhotos');
+                } else {
+                    $q->doesntHave('cancerPhotos');
+                }
             })
 
             // Location Filter
@@ -98,7 +108,6 @@ class PatientController extends Controller
 
         // If AJAX → return DataTable + counts
         if ($request->ajax()) {
-
             // Clone query for counts
             $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
             $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 60])->count();
@@ -113,12 +122,12 @@ class PatientController extends Controller
                         : asset('uploads/images/default.jpg');
 
                     return '
-        <div class="text-center">
-            <img src="' . $photo . '" 
-                 class="patient-img"
-                 alt="photo">
-        </div>
-    ';
+                    <div class="text-center">
+                        <img src="' . $photo . '" 
+                            class="patient-img"
+                            alt="photo">
+                    </div>
+                ';
                 })
                 ->addColumn('patient_code', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
@@ -126,8 +135,8 @@ class PatientController extends Controller
 
                 ->addColumn('name', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box"><strong>' . $p->patient_name . '</strong><br>
-            <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
-            <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small></a>';
+                    <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
+                    <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small></a>';
                 })
 
                 ->addColumn('age', function ($p) {
@@ -154,6 +163,39 @@ class PatientController extends Controller
                 ->addColumn('is_recommend', function ($p) {
                     $status = $p->is_recommend ? '<span class="badge badge-success">Yes</span>' : '<span class="badge badge-secondary">No</span>';
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $status . '</a>';
+                })
+
+                ->addColumn('does_old_cancer', function ($p) {
+
+                    if ($p->cancerPhotos->isEmpty()) {
+                        return '
+                        <span class="badge badge-success">
+                            <i class="fas fa-check-circle"></i> No
+                        </span>';
+                    }
+
+                    return '
+                    <a href="' . route('patients.cancer.photos', $p) . '" class="hover-box">
+                        <span class="badge badge-danger">
+                            <i class="fas fa-radiation"></i> Yes
+                        </span>
+                    </a>';
+                })
+
+                ->addColumn('total_cancer_photos', function ($p) {
+                    $reports = $p->cancerPhotos->count();
+                    $totalCancer = $p->cancerPhotos->sum('total_cancer');
+                    return '<a href="' . route('patients.cancer.photos', $p) . '">
+                        <span class="badge badge-primary">
+                            Reports : ' . $reports . '
+                        </span>
+
+                        <br>
+
+                        <span class="badge badge-danger">
+                            Cancer : ' . $totalCancer . '
+                        </span>
+                    </a>';
                 })
 
                 ->addColumn('date', function ($p) {
@@ -195,7 +237,21 @@ class PatientController extends Controller
                 ';
                 })
 
-                ->rawColumns(['photo', 'patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'date', 'checkbox', 'action'])
+                ->rawColumns([
+                    'photo',
+                    'patient_code',
+                    'name',
+                    'age',
+                    'gender',
+                    'phone',
+                    'location',
+                    'is_recommend',
+                    'does_old_cancer',
+                    'total_cancer_photos',
+                    'date',
+                    'checkbox',
+                    'action'
+                ])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,

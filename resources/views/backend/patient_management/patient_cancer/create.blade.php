@@ -7,7 +7,7 @@
 @section('content_header')
     <div class="d-flex justify-content-between">
         <h1><i class="fas fa-x-ray text-danger"></i> Add Patient Cancer Report</h1>
-        <a href="{{ route('patient-cancer-photos.index') }}" class="btn btn-secondary">
+        <a href="{{ route('patient-cancer-photos.index') }}" class="btn btn-secondary back-btn">
             <i class="fas fa-arrow-left"></i> Back
         </a>
     </div>
@@ -152,88 +152,25 @@
                         </div>
 
                     </div>
+
                     <div class="card-footer">
                         <button type="submit" class="btn btn-success">
                             <i class="fas fa-save"></i> Save Report
                         </button>
-
                         <button type="reset" class="btn btn-warning">
                             <i class="fas fa-redo"></i> Reset
                         </button>
-
                         <a href="{{ route('patient-cancer-photos.index') }}" class="btn btn-secondary float-right">
                             <i class="fas fa-arrow-left"></i> Back
                         </a>
                     </div>
-
             </form>
         </div>
     </div>
     <div style="height: 50px;"></div>
 @stop
-
 @section('js')
-    <script>
-        $(function() {
-
-            $('.select2').select2({
-                theme: 'bootstrap4',
-                width: '100%'
-            });
-
-            $('#addDescription').click(function() {
-
-                $('#descriptionArea').append(`
-                <div class="input-group mb-2">
-                <input type="text" name="xray_description[]" class="form-control" placeholder="Enter X-Ray Description">
-                <div class="input-group-append">
-                <button type="button" class="btn btn-danger removeDescription">
-                <i class="fas fa-trash"></i>
-                </button>
-                </div>
-                </div>
-                `);
-
-            });
-
-            $(document).on('click', '.removeDescription', function() {
-                $(this).closest('.input-group').remove();
-            });
-
-            $('#xray_photo').change(function() {
-
-                $('#previewContainer').html('');
-
-                if (this.files) {
-
-                    Array.from(this.files).forEach(function(file) {
-
-                        let reader = new FileReader();
-
-                        reader.onload = function(e) {
-
-                            $('#previewContainer').append(`
-                            <div class="col-md-3 mb-3">
-                            <div class="card">
-                            <img src="${e.target.result}" class="card-img-top" style="height:220px;object-fit:cover;">
-                            <div class="card-footer text-center">
-                            <small class="text-muted">${file.name}</small>
-                            </div>
-                            </div>
-                            </div>
-                            `);
-
-                        }
-
-                        reader.readAsDataURL(file);
-
-                    });
-
-                }
-
-            });
-
-        });
-    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/create_page/patient-cancer-description.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/create_page/patient-cancer-image-preview.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search.js') }}"></script>
-@stop
+@endsection

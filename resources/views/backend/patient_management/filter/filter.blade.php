@@ -48,11 +48,6 @@
                     </select>
                 </div>
 
-                {{-- <div class="col-md-4">
-                    <label class="small text-muted">Location Keyword</label>
-                    <input type="text" name="location_value" class="form-control form-control-sm"
-                        placeholder="e.g. Dhaka, Chittagong, USA" value="{{ request('location_value') }}">
-                </div> --}}
                 <div class="col-md-4">
                     <label class="small text-muted">Filter by Gender</label>
                     <select name="gender" class="form-control form-control-sm">
@@ -96,7 +91,25 @@
                     <label class="small text-muted">End Date</label>
                     <input type="date" name="to_date" class="form-control form-control-sm">
                 </div>
+                
+                <div class="col-md-3">
+                    <label class="small text-muted">
+                        <i class="fas fa-radiation text-danger"></i>
+                        Cancer History
+                    </label>
 
+                    <select name="is_old_cancer" class="form-control form-control-sm">
+                        <option value="">All Patients</option>
+
+                        <option value="1" {{ request('is_old_cancer') == '1' ? 'selected' : '' }}>
+                            🔴 Has Cancer Reports
+                        </option>
+
+                        <option value="0" {{ request('is_old_cancer') == '0' ? 'selected' : '' }}>
+                            🟢 No Cancer Reports
+                        </option>
+                    </select>
+                </div>
                 <div class="col-md-3 d-flex align-items-end">
                     <button type="submit" class="btn btn-primary">
                         Apply Filter

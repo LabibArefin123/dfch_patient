@@ -37,6 +37,18 @@ class PatientCancerPhotoController extends Controller
         );
     }
 
+    public function patientCancerPhotos(Patient $patient)
+    {
+        $patientCancerPhotos = $patient->cancerPhotos()
+            ->latest()
+            ->paginate(20);
+
+        return view(
+            'backend.patient_management.patient_cancer.index',
+            compact('patient', 'patientCancerPhotos')
+        );
+    }
+
     /**
      * Show create page.
      */
@@ -139,7 +151,7 @@ class PatientCancerPhotoController extends Controller
         $patientCancerPhoto->load('patient');
 
         return view(
-            'patient_cancer_photos.show',
+            'backend.patient_management.patient_cancer.show',
             compact('patientCancerPhoto')
         );
     }
@@ -149,11 +161,10 @@ class PatientCancerPhotoController extends Controller
      */
     public function edit(PatientCancerPhoto $patientCancerPhoto)
     {
-        $patients = Patient::orderBy('patient_name')
-            ->pluck('patient_name', 'id');
+        $patients = Patient::orderBy('patient_name')->get();
 
         return view(
-            'patient_cancer_photos.edit',
+            'backend.patient_management.patient_cancer.edit',
             compact('patientCancerPhoto', 'patients')
         );
     }

@@ -13,6 +13,9 @@ $(function () {
                 d.date_filter = $("select[name=date_filter]").val();
                 d.from_date = $("input[name=from_date]").val();
                 d.to_date = $("input[name=to_date]").val();
+
+                // NEW
+                d.is_old_cancer = $("select[name=is_old_cancer]").val();
             },
             dataSrc: function (json) {
                 $("#childCount").text(json.childPatients ?? 0);
@@ -22,18 +25,55 @@ $(function () {
             },
         },
         columns: [
-            { data: "checkbox", name: "checkbox" },
-            { data: "DT_RowIndex", orderable: false, searchable: false },
-            { data: "photo", orderable: false, searchable: false }, 
+            {
+                data: "checkbox",
+                name: "checkbox",
+                orderable: false,
+                searchable: false,
+            },
+            {
+                data: "DT_RowIndex",
+                name: "DT_RowIndex",
+                orderable: false,
+                searchable: false,
+            },
+            {
+                data: "photo",
+                name: "photo",
+                orderable: false,
+                searchable: false,
+            },
             { data: "patient_code", name: "patient_code" },
             { data: "name", name: "patient_name" },
             { data: "age", name: "age" },
             { data: "gender", name: "gender" },
             { data: "phone", name: "phone_1" },
-            { data: "location", orderable: false, searchable: false },
+            {
+                data: "location",
+                name: "location",
+                orderable: false,
+                searchable: false,
+            },
             { data: "is_recommend", name: "is_recommend" },
+            {
+                data: "does_old_cancer",
+                name: "is_old_cancer",
+                orderable: false,
+                searchable: false,
+            },
+            {
+                data: "total_cancer_photos",
+                name: "total_cancer_photos",
+                orderable: false,
+                searchable: false,
+            },
             { data: "date", name: "date_of_patient_added" },
-            { data: "action", orderable: false, searchable: false },
+            {
+                data: "action",
+                name: "action",
+                orderable: false,
+                searchable: false,
+            },
         ],
     });
 

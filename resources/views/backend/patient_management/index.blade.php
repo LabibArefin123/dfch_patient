@@ -67,7 +67,6 @@
             <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
                 <thead class="table-dark">
                     <tr>
-
                         <th width="30">
                             <input type="checkbox" id="select-all">
                         </th>
@@ -80,8 +79,10 @@
                         <th>Phone</th>
                         <th>Location</th>
                         <th>Recommended</th>
+                        <th>Old Cancer</th>
+                        <th>Cancer Report</th>
                         <th>Date Added</th>
-                        <th>Actions</th>
+                        <th width="170">Actions</th>
                     </tr>
                 </thead>
             </table>

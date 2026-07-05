@@ -43,6 +43,43 @@
         </div>
         <!-- end of modal animation -->
 
+        <!-- start of image zoom modal animation -->
+        <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+                <div class="modal-content border-0 shadow">
+                    <div class="modal-header bg-danger text-white">
+                        <h5 class="modal-title">
+                            <i class="fas fa-x-ray mr-2"></i>
+                            X-Ray Preview
+                        </h5>
+
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
+                        </button>
+                    </div>
+
+                    <div class="modal-body text-center bg-light">
+
+                        <img id="modalPreviewImage" src="" class="img-fluid rounded shadow"
+                            style="max-height:75vh;object-fit:contain;">
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <a id="downloadImage" href="" target="_blank" class="btn btn-danger">
+                            <i class="fas fa-download"></i>
+                            Open Original
+                        </a>
+
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                            <i class="fas fa-times"></i>
+                            Close
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end of image zoom modal animation -->
+
         <!-- start of create animation model -->
         <div class="modal fade" id="createConfirmModal" tabindex="-1" role="dialog" aria-labelledby="createConfirmLabel"
             aria-hidden="true">
@@ -118,8 +155,8 @@
         </div>
 
         <!-- start of delete animation model -->
-        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog" aria-labelledby="deleteConfirmLabel"
-            aria-hidden="true">
+        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
+            aria-labelledby="deleteConfirmLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content text-center p-4">
 
@@ -643,5 +680,19 @@
         });
     </script>
     {{-- end of warning limit --}}
+
+    {{-- start of image zoom modal js --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.previewImageBtn').forEach(function(button) {
+                button.addEventListener('click', function() {
+                    let image = this.dataset.image;
+                    document.getElementById('modalPreviewImage').src = image;
+                    document.getElementById('downloadImage').href = image;
+                });
+            });
+        });
+    </script>
+    {{-- start of image zoom modal js --}}
 @section('plugins.Datatables', true)
 @stop

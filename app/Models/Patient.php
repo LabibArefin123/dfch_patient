@@ -10,7 +10,7 @@ use Spatie\Activitylog\LogOptions;
 class Patient extends Model
 {
     use HasFactory, LogsActivity;
-    
+
     protected $fillable = [
         'patient_code',
         'patient_name',
@@ -47,6 +47,7 @@ class Patient extends Model
 
     protected $casts = [
         'is_recommend' => 'boolean',
+        'is_old_cancer' => 'boolean',
         'date_of_patient_added' => 'date',
     ];
 
@@ -63,5 +64,10 @@ class Patient extends Model
             ->logOnlyDirty()
             ->useLogName('patient')
             ->setDescriptionForEvent(fn(string $eventName) => "Patient {$eventName}");
+    }
+
+    public function cancerPhotos()
+    {
+        return $this->hasMany(PatientCancerPhoto::class);
     }
 }
