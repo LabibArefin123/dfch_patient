@@ -46,12 +46,12 @@
 
                 <p class="about-text">
                     <strong>
-                        <a href="https://fazlulhaquehospital.com/" target="_blank" class="header-link text-white">
+                        <a href="https://fazlulhaquehospital.com/" target="_blank" class="header-link ">
                             {{ $orgName }} (DFCH)
                         </a>
                     </strong>
                     is a premier center dedicated exclusively to colorectal healthcare.
-                    Established on <strong>23 June 2024</strong>, the hospital was founded with a vision
+                    Established on <strong>24 June 2024</strong>, the hospital was founded with a vision
                     to provide specialized, patient-centered and world-class treatment through advanced
                     medical expertise and compassionate care.
                 </p>

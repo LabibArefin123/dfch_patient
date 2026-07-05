@@ -3,16 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Yajra\DataTables\Facades\DataTables;
-use App\Exports\PatientReportExport;
-use Maatwebsite\Excel\Facades\Excel;
-use Barryvdh\DomPDF\Facade\Pdf;
-use Barryvdh\Snappy\Facades\SnappyPdf as SPDF;
-use Illuminate\Support\Facades\Log;
 use Carbon\Carbon;
-use App\Models\Patient;
-use App\Models\Organization;
-
 use App\Services\Reports\DataTableService;
 use App\Services\Reports\PdfService;
 

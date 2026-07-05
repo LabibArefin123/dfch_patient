@@ -124,7 +124,9 @@
                             d[item.name] = item.value;
                         });
                     }
+                    
                 },
+                
                 columns: {!! $columns !!}
             });
 
