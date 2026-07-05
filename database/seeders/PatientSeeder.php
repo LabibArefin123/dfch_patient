@@ -101,6 +101,9 @@ class PatientSeeder extends Seeder
 
                     // BD Phone
                     'phone_1' => '01' . rand(3, 9) . rand(10000000, 99999999),
+                    'phone_2' => '01' . rand(3, 9) . rand(10000000, 99999999),
+                    'phone_f_1' => '01' . rand(3, 9) . rand(10000000, 99999999),
+                    'phone_m_1' => '01' . rand(3, 9) . rand(10000000, 99999999),
 
                     // Medical
                     'patient_problem_description' => $problems[array_rand($problems)],
