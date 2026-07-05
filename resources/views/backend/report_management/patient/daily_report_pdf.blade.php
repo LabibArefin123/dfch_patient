@@ -100,24 +100,6 @@
                         <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
                         <strong>Total Records:</strong> {{ $totalRecords }}
                       </td>
-
-                    {{--   <td style="text-align:right; border:none;">
-                        @if ($totalPages > 1)
-
-                            @if ($page > 1)
-                                <span style="padding:4px 8px;">
-                                    &#x276E; Previous
-                                </span>
-                            @endif
-
-                            @if ($page < $totalPages)
-                                <span style="padding:4px 8px;">
-                                    Next &#x276F;
-                                </span>
-                            @endif
-
-                        @endif
-                    </td> --}}
                 </tr>
             </table>
 

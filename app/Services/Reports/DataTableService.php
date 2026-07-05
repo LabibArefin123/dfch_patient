@@ -2,47 +2,70 @@
 
 namespace App\Services\Reports;
 
-use Yajra\DataTables\Facades\DataTables;
 use Carbon\Carbon;
+use Yajra\DataTables\Facades\DataTables;
 
 class DataTableService
 {
-    public function response($query, $dateColumn)
+    public function response($query, $dateColumn = 'date_of_patient_added')
     {
         return DataTables::of($query)
             ->addIndexColumn()
-
-            ->addColumn('location', function ($row) {
-                if ($row->location_type == 1) {
-                    return $row->location_simple;
-                } elseif ($row->location_type == 2) {
-                    return $row->house_address . ', ' .
-                        $row->city . ', ' .
-                        $row->district . ' - ' .
-                        $row->post_code;
-                }
-
-                return $row->country . ' (Passport: ' . $row->passport_no . ')';
-            })
-
-            ->editColumn('is_recommend', fn($r) => $r->is_recommend ? 'Yes' : 'No')
-
-            ->addColumn('date', function ($row) use ($dateColumn) {
-                return Carbon::parse($row->$dateColumn)
-                    ->format('d-m-Y') . ' (' .
-                    Carbon::parse($row->$dateColumn)
-                    ->format('d F Y') . ')';
-            })
-
-            ->addColumn('action', function ($r) {
-                return '<a href="' . route('patients.show', $r->id) . '" class="btn btn-sm btn-primary">View</a>';
-            })
 
             ->addColumn('select', function ($row) {
                 return '<input type="checkbox" class="row-checkbox" value="' . $row->id . '">';
             })
 
-            ->rawColumns(['select', 'action'])
+            ->addColumn('location', function ($p) {
+
+                if ($p->location_type == 1) {
+
+                    $location = $p->location_simple ?? 'N/A';
+                } elseif ($p->location_type == 2) {
+
+                    $location = collect([
+                        $p->house_address,
+                        $p->city,
+                        $p->district,
+                    ])->filter()->implode('<br>');
+                } else {
+
+                    $location = collect([
+                        $p->country,
+                        $p->passport_no ? 'Passport: ' . $p->passport_no : null,
+                    ])->filter()->implode('<br>');
+                }
+
+                return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">'
+                    . $location .
+                    '</a>';
+            })
+
+            ->editColumn('is_recommend', function ($row) {
+                return $row->is_recommend ? 'Yes' : 'No';
+            })
+
+            ->addColumn('date', function ($row) use ($dateColumn) {
+
+                if (empty($row->$dateColumn)) {
+                    return '-';
+                }
+
+                return Carbon::parse($row->$dateColumn)->format('d M Y');
+            })
+
+            ->addColumn('action', function ($row) {
+                return '<a href="' . route('patients.show', $row->id) . '" class="btn btn-sm btn-primary">
+                            View
+                        </a>';
+            })
+
+            ->rawColumns([
+                'select',
+                'location',
+                'action',
+            ])
+
             ->make(true);
     }
 }
