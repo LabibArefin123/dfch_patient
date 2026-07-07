@@ -438,6 +438,89 @@ class PatientController extends Controller
         return view('backend.patient_management.recommend_index', compact('childPatients', 'adultPatients', 'seniorPatients'));
     }
 
+    public function patientSummarySearch(Request $request)
+    {
+        $request->validate([
+            'search' => 'required|string|max:255',
+        ]);
+
+        $search = trim($request->search);
+
+        $patients = Patient::withCount([
+            'documents',
+            'cancerPhotos'
+        ])
+            ->where(function ($query) use ($search) {
+
+                $query->where('patient_name', 'like', "%{$search}%")
+                    ->orWhere('patient_code', 'like', "%{$search}%")
+                    ->orWhere('phone_1', 'like', "%{$search}%")
+                    ->orWhere('phone_2', 'like', "%{$search}%")
+                    ->orWhere('phone_f_1', 'like', "%{$search}%")
+                    ->orWhere('phone_m_1', 'like', "%{$search}%");
+            })
+            ->orderBy('patient_name')
+            ->get();
+
+        if ($patients->isEmpty()) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'Patient not found.',
+            ]);
+        }
+
+        return response()->json([
+            'status' => true,
+            'count' => $patients->count(),
+            'patients' => $patients->map(function ($patient) {
+
+                return [
+
+                    'id' => $patient->id,
+
+                    'patient_code' => $patient->patient_code,
+
+                    'patient_name' => $patient->patient_name,
+
+                    'patient_photo' => $patient->patient_photo
+                        ? asset($patient->patient_photo)
+                        : asset('uploads/images/default.jpg'),
+
+                    'age' => $patient->age,
+
+                    'gender' => $patient->gender,
+
+                    'phone' => $patient->phone_1,
+
+                    'father' => $patient->patient_f_name,
+
+                    'mother' => $patient->patient_m_name,
+
+                    'problem' => $patient->patient_problem_description,
+
+                    'drug' => $patient->patient_drug_description,
+
+                    'remarks' => $patient->remarks,
+
+                    'recommend' => $patient->is_recommend,
+
+                    'doctor' => $patient->recommend_doctor_name,
+
+                    'recommend_note' => $patient->recommend_note,
+
+                    'documents' => $patient->documents_count,
+
+                    'cancer_reports' => $patient->cancer_photos_count,
+
+                    'date' => optional($patient->date_of_patient_added)
+                        ->format('d F Y'),
+
+                ];
+            }),
+        ]);
+    }
+
     private function filteredPatients(Request $request)
     {
         return Patient::query()

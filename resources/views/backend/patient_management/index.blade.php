@@ -11,6 +11,15 @@
                 <i class="fas fa-plus"></i> Add Patient
             </a>
 
+            <button type="button" class="btn btn-primary btn-sm" id="openPatientSummaryModal" data-toggle="modal"
+                data-target="#patientSummaryModal">
+
+                <i class="fas fa-comments-medical mr-1"></i>
+
+                Patient Summary
+
+            </button>
+
             <button id="delete-selected" class="btn btn-danger btn-sm d-none">
                 <i class="fas fa-trash"></i> Delete Selected
             </button>
@@ -47,6 +56,7 @@
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
     @include('backend.patient_management.modals.patient_photo_modal')
+    @include('backend.patient_management.modals.patient_summary_modal')
     <style>
         .patient-img {
             width: 45px;
@@ -110,7 +120,9 @@
             index: "{{ route('patients.index') }}"
         };
     </script>
-
+    <script>
+        const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
+    </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_load_modal_info.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patients.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/importFile.js') }}"></script>
@@ -118,4 +130,10 @@
     <script src="{{ asset('js/backend/patient_management/exportPDFFile.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/ajaxFile.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/selectFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_search.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_result.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>
 @endsection
