@@ -1,10 +1,25 @@
+/**
+ * Patient Info Tab Toggle Handler
+ * Dynamically switches tabs when patient selection or reset events are fired.
+ */
 $(function () {
-    // "Yes" button click handler - resets field, sets focus, and switches tab back
-    $("#patientSearchAgain").on("click", function () {
-        $("#patientSummarySearch").val("").focus();
-        $("#patientSummaryAction").addClass("d-none");
+    // 1. Auto-switch to profile tab when 'Show' button is clicked inside Search results card list
+    $(document).on("click", ".patient-summary-show", function () {
+        const profileTabLink = $("#profile-tab");
+        if (profileTabLink.length) {
+            // Support both Bootstrap 4 and Bootstrap 5 toggle conventions
+            profileTabLink.tab("show");
+            // Safely toggle profile active icon color styling
+            profileTabLink
+                .find("i")
+                .removeClass("text-muted")
+                .addClass("text-primary");
+            $("#results-tab").find("i").addClass("text-muted");
+        }
+    });
 
-        // 🆕 Automatically switch back to Search Results Tab
+    // 2. Auto-switch back to results tab when 'Search Again' (Yes) is clicked
+    $("#patientSearchAgain").on("click", function () {
         const resultsTabLink = $("#results-tab");
         if (resultsTabLink.length) {
             resultsTabLink.tab("show");
@@ -16,12 +31,7 @@ $(function () {
         }
     });
 
-    // "No" button click handler - closes modal
-    $("#patientSummaryClose").on("click", function () {
-        $("#patientSummaryModal").modal("hide");
-    });
-
-    // Update active icon colors on manual tab clicking
+    // Toggle active icon colors on manual tab clicking
     $('#patientSummaryTabs a[data-toggle="tab"]').on(
         "shown.bs.tab",
         function (e) {

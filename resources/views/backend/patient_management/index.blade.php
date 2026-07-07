@@ -125,12 +125,18 @@
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
     </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_load_modal_info.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_info_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patients.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/importFile.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/exportExcelFile.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/exportPDFFile.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/ajaxFile.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/selectFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_date_info.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_date_validator.js') }}">
+    </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_search.js') }}">
     </script>
@@ -145,5 +151,6 @@
     </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail.js') }}">
     </script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}">
+    </script>
 @endsection

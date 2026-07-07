@@ -46,6 +46,14 @@ $(document).on("click", ".patient-summary-show", function () {
     const patientData = $(this).data("patient");
     if (patientData) {
         renderPatientDetail(patientData);
+        
+        // 🆕 Shift tabs dynamically to the Profile tab when clicked
+        const profileTabLink = $('#profile-tab');
+        if (profileTabLink.length) {
+            profileTabLink.tab('show');
+            profileTabLink.find('i').removeClass('text-muted').addClass('text-primary');
+            $('#results-tab').find('i').addClass('text-muted');
+        }
     }
 });
 

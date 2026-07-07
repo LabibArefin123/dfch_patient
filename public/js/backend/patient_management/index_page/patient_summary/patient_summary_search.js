@@ -1,9 +1,11 @@
 function patientSummarySearch() {
     let keyword = $("#patientSummarySearch").val().trim();
 
-    if (keyword === "") return;
+    if (!keyword) return;
 
-    // 1. Bulletproof inline intercept for "close" command
+    /*-----------------------------------
+    Close Command
+    ------------------------------------*/
     if (keyword.toLowerCase() === "close") {
         $("#patientSummarySearch").val("");
 
@@ -12,71 +14,120 @@ function patientSummarySearch() {
             ".col-lg-7, .col-lg-12",
         );
 
-        if (chatCol.length && detailCol.length) {
-            // Hide the chat column
-            chatCol.addClass("d-none");
+        chatCol.addClass("d-none");
+        detailCol.removeClass("col-lg-7").addClass("col-lg-12");
 
-            // Expand the details column to full size
-            detailCol.removeClass("col-lg-7").addClass("col-lg-12");
+        if (!$("#reopenChatBtn").length) {
+            detailCol.css("position", "relative").append(`
+                <button
+                    id="reopenChatBtn"
+                    class="btn btn-outline-primary btn-sm position-absolute"
+                    style="top:15px;right:15px;z-index:999;border-radius:20px;">
 
-            // Add a floating restore chat button if not already present
-            if ($("#reopenChatBtn").length === 0) {
-                const reopenBtn = $(`
-                    <button id="reopenChatBtn" class="btn btn-outline-primary btn-sm position-absolute" 
-                            style="top: 15px; right: 15px; z-index: 100; border-radius: 20px; padding: 6px 16px;">
-                        <i class="fas fa-comments mr-1"></i> Open Chat
-                    </button>
-                `);
+                    <i class="fas fa-comments mr-1"></i>
 
-                reopenBtn.on("click", function () {
-                    chatCol.removeClass("d-none");
-                    detailCol.removeClass("col-lg-12").addClass("col-lg-7");
-                    reopenBtn.remove();
-                });
+                    Open Chat
 
-                detailCol.css("position", "relative").append(reopenBtn);
-            }
+                </button>
+            `);
         }
+
         return;
     }
 
-    // 2. Immediately post user's text inside the chat bubble
+    /*-----------------------------------
+    Future Date Validation
+    ------------------------------------*/
+    if (patientSummaryIsFutureSearch(keyword)) {
+        patientSummaryFutureWarning(function () {
+            doPatientSummarySearch(keyword);
+        });
+
+        return;
+    }
+
+    doPatientSummarySearch(keyword);
+}
+
+/*========================================================
+Actual AJAX
+========================================================*/
+
+function doPatientSummarySearch(keyword) {
     appendUserMessage(keyword);
 
-    // 3. Clear input field immediately for natural chat interface
     $("#patientSummarySearch").val("");
 
-    // 4. Initiate thinking indicator
     patientSearching();
 
     $.ajax({
         url: patientSummarySearchUrl,
+
         type: "POST",
+
         data: {
             search: keyword,
             _token: $('meta[name="csrf-token"]').attr("content"),
         },
+
         success: function (res) {
             patientTypingDone();
 
             if (!res.status) {
-                appendBotMessage(
-                    "❌ Patient not found in this chat.<br><br>Search another patient?",
-                );
+                appendBotMessage(`
+                    <b>Patient not found.</b><br><br>
+
+                    Please try searching with:
+
+                    • Patient Name<br>
+                    • Patient Code<br>
+                    • Phone Number<br>
+                    • Date (15/07/2026)<br>
+                    • Day & Month (15 August)<br>
+                    • Today<br>
+                    • Yesterday<br>
+                    • Last 7 Days<br>
+                    • Last 30 Days<br>
+                    • This Month
+                `);
+
                 $("#patientSummaryAction").removeClass("d-none");
-                $("#patientSearchResult").html("");
-                $("#patientSummaryDetail").html("");
+
+                $("#patientSearchResult").empty();
+
+                $("#patientSummaryDetail").empty();
+
                 return;
             }
 
-            appendBotMessage("✅ Found " + res.count + " patient(s).");
+            appendDateSearchInfo(res.patients, keyword);
 
-            // Delegate rendering to result module
             renderPatientResults(res.patients);
         },
+
         error: function () {
             patientTypingDone();
-            appendBotMessage("Something went wrong.");
+
+            appendBotMessage(
+                "Unable to complete the search at the moment. Please try again.",
+            );
         },
     });
 }
+
+/*========================================================
+Reopen Chat
+========================================================*/
+
+$(document).on("click", "#reopenChatBtn", function () {
+    const chatCol = $("#patientSummaryChat").closest(".col-lg-5");
+    const detailCol = $("#patientSummaryDetail").closest(
+        ".col-lg-12, .col-lg-7",
+    );
+
+    chatCol.removeClass("d-none");
+
+    detailCol.removeClass("col-lg-12").addClass("col-lg-7");
+
+    $(this).remove();
+});

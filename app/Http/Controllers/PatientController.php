@@ -446,24 +446,109 @@ class PatientController extends Controller
 
         $search = trim($request->search);
 
-        $patients = Patient::withCount([
+        $query = Patient::withCount([
             'documents',
             'cancerPhotos'
-        ])
-            ->where(function ($query) use ($search) {
+        ]);
 
-                $query->where('patient_name', 'like', "%{$search}%")
-                    ->orWhere('patient_code', 'like', "%{$search}%")
-                    ->orWhere('phone_1', 'like', "%{$search}%")
-                    ->orWhere('phone_2', 'like', "%{$search}%")
-                    ->orWhere('phone_f_1', 'like', "%{$search}%")
-                    ->orWhere('phone_m_1', 'like', "%{$search}%");
-            })
+        $query->where(function ($q) use ($search) {
+
+            // Normal text search
+            $q->where('patient_name', 'like', "%{$search}%")
+                ->orWhere('patient_code', 'like', "%{$search}%")
+                ->orWhere('phone_1', 'like', "%{$search}%")
+                ->orWhere('phone_2', 'like', "%{$search}%")
+                ->orWhere('phone_f_1', 'like', "%{$search}%")
+                ->orWhere('phone_m_1', 'like', "%{$search}%");
+
+            $lower = strtolower($search);
+
+            /*
+        |--------------------------------------------------------------------------
+        | Quick date keywords
+        |--------------------------------------------------------------------------
+        */
+
+            if ($lower === 'today') {
+                $q->orWhereDate('date_of_patient_added', today());
+            }
+
+            if ($lower === 'yesterday') {
+                $q->orWhereDate('date_of_patient_added', today()->subDay());
+            }
+
+            if (in_array($lower, ['last 7 days', 'last7days'])) {
+                $q->orWhereDate('date_of_patient_added', '>=', today()->subDays(7));
+            }
+
+            if (in_array($lower, ['last 30 days', 'last30days'])) {
+                $q->orWhereDate('date_of_patient_added', '>=', today()->subDays(30));
+            }
+
+            if ($lower === 'this month') {
+                $q->orWhereBetween('date_of_patient_added', [
+                    now()->startOfMonth(),
+                    now()->endOfMonth()
+                ]);
+            }
+
+            /*
+        |--------------------------------------------------------------------------
+        | 15/07/2026 or 15-07-2026
+        |--------------------------------------------------------------------------
+        */
+
+            foreach (['d/m/Y', 'd-m-Y'] as $format) {
+
+                try {
+
+                    $date = Carbon::createFromFormat($format, $search);
+
+                    $q->orWhereDate('date_of_patient_added', $date);
+
+                    break;
+                } catch (\Exception $e) {
+                }
+            }
+
+            /*
+        |--------------------------------------------------------------------------
+        | 15 August 2026
+        |--------------------------------------------------------------------------
+        */
+
+            try {
+
+                $date = Carbon::parse($search);
+
+                $q->orWhereDate('date_of_patient_added', $date);
+            } catch (\Exception $e) {
+            }
+
+            /*
+        |--------------------------------------------------------------------------
+        | 15 August (any year)
+        |--------------------------------------------------------------------------
+        */
+
+            if (preg_match('/^\d{1,2}\s+[a-zA-Z]+$/', $search)) {
+
+                try {
+
+                    $date = Carbon::parse($search . ' ' . now()->year);
+
+                    $q->orWhereDay('date_of_patient_added', $date->day)
+                        ->orWhereMonth('date_of_patient_added', $date->month);
+                } catch (\Exception $e) {
+                }
+            }
+        });
+
+        $patients = $query
             ->orderBy('patient_name')
             ->get();
 
         if ($patients->isEmpty()) {
-
             return response()->json([
                 'status' => false,
                 'message' => 'Patient not found.',
@@ -476,46 +561,27 @@ class PatientController extends Controller
             'patients' => $patients->map(function ($patient) {
 
                 return [
-
                     'id' => $patient->id,
-
                     'patient_code' => $patient->patient_code,
-
                     'patient_name' => $patient->patient_name,
-
                     'patient_photo' => $patient->patient_photo
                         ? asset($patient->patient_photo)
                         : asset('uploads/images/default.jpg'),
 
                     'age' => $patient->age,
-
                     'gender' => $patient->gender,
-
                     'phone' => $patient->phone_1,
-
                     'father' => $patient->patient_f_name,
-
                     'mother' => $patient->patient_m_name,
-
                     'problem' => $patient->patient_problem_description,
-
                     'drug' => $patient->patient_drug_description,
-
                     'remarks' => $patient->remarks,
-
                     'recommend' => $patient->is_recommend,
-
                     'doctor' => $patient->recommend_doctor_name,
-
                     'recommend_note' => $patient->recommend_note,
-
                     'documents' => $patient->documents_count,
-
                     'cancer_reports' => $patient->cancer_photos_count,
-
-                    'date' => optional($patient->date_of_patient_added)
-                        ->format('d F Y'),
-
+                    'date' => optional($patient->date_of_patient_added)->format('d F Y'),
                 ];
             }),
         ]);
