@@ -133,7 +133,15 @@
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_search.js') }}">
     </script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_state.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_typing.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_scroll.js') }}">
+    </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_result.js') }}">
     </script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail.js') }}">
+    </script>
 @endsection

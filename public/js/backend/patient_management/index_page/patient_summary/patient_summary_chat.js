@@ -27,14 +27,3 @@ function appendUserMessage(message) {
 
     scrollPatientChat();
 }
-
-function scrollPatientChat() {
-    let chat = $("#patientSummaryChat");
-
-    chat.stop().animate(
-        {
-            scrollTop: chat[0].scrollHeight,
-        },
-        300,
-    );
-}
