@@ -57,6 +57,7 @@
     @include('backend.patient_management.filter.filter')
     @include('backend.patient_management.modals.patient_photo_modal')
     @include('backend.patient_management.modals.patient_summary_modal')
+    @include('backend.patient_management.modals.patient_view_modal')
     <style>
         .patient-img {
             width: 45px;
@@ -144,4 +145,5 @@
     </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail.js') }}">
     </script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}"></script>
 @endsection

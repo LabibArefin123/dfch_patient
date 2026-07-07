@@ -205,6 +205,11 @@ class PatientCancerPhotoController extends Controller
             $relativeFolder = 'uploads/images/patient_photos/' . $patientFolderName . '/cancer';
             $uploadPath = public_path($relativeFolder);
 
+
+            $patientFolder = Str::slug($patient->patient_name . '-' . $patient->id);
+            $relativeFolder = "uploads/images/patients/{$patientFolder}/cancer_photos";
+            $uploadPath     = public_path($relativeFolder);
+            
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0777, true);
             }

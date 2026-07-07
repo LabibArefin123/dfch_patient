@@ -521,6 +521,17 @@ class PatientController extends Controller
         ]);
     }
 
+    public function getModalDetails($id)
+    {
+        // Eager load the plural 'cancerPhotos' relation matching your show page
+        $patient = Patient::with(['documents', 'cancerPhotos'])->findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'patient' => $patient
+        ]);
+    }
+
     private function filteredPatients(Request $request)
     {
         return Patient::query()
