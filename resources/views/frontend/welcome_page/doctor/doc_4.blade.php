@@ -4,7 +4,7 @@
 <link rel="stylesheet" href="{{ asset('css/frontend/doctor/doc_4.css') }}">
 
 @section('content')
-    @include('frontend.welcome_page.header')
+    @include('frontend.custom_layout.header')
     <div class="doctor-banner" style="background-image: url('{{ asset('uploads/images/welcome_page/cover.png') }}');">
         <nav class="breadcrumb-custom">
             <a href="{{ route('welcome') }}" class="doc-link text-decoration-none">Home</a>
@@ -15,50 +15,50 @@
     </div>
 
     <section class="doctor-profile">
-       
-            <div class="doctor-card">
-                <div class="row align-items-start">
 
-                    <!-- Image + Book Now -->
-                    <div class="col-md-5 mb-4 mb-md-0">
-                        <div class="doctor-image">
-                            <img src="{{ asset('uploads/images/welcome_page/doctors/image_4.jpg') }}"
-                                alt="Dr. Sakib Sarwat Haque" class="magnify-img">
+        <div class="doctor-card">
+            <div class="row align-items-start">
 
-                            <a href="#" class="book-btn">Book Now</a>
-                        </div>
+                <!-- Image + Book Now -->
+                <div class="col-md-5 mb-4 mb-md-0">
+                    <div class="doctor-image">
+                        <img src="{{ asset('uploads/images/welcome_page/doctors/image_4.jpg') }}"
+                            alt="Dr. Sakib Sarwat Haque" class="magnify-img">
+
+                        <a href="#" class="book-btn">Book Now</a>
                     </div>
+                </div>
 
-                    <!-- Content -->
-                    <div class="col-md-7">
-                        <h2 class="doctor-name">Dr. Sakib Sarwat Haque</h2>
+                <!-- Content -->
+                <div class="col-md-7">
+                    <h2 class="doctor-name">Dr. Sakib Sarwat Haque</h2>
 
-                        <p class="doctor-degree">
-                            MBBS, FCPS (Surgery), MRCS (Edinburgh)
-                        </p>
+                    <p class="doctor-degree">
+                        MBBS, FCPS (Surgery), MRCS (Edinburgh)
+                    </p>
 
-                        <p class="doctor-designation">
-                            Consultant Surgeon<br>
-                            Dr. Fazlul Haque Colorectal Hospital Ltd.
-                        </p>
+                    <p class="doctor-designation">
+                        Consultant Surgeon<br>
+                        Dr. Fazlul Haque Colorectal Hospital Ltd.
+                    </p>
 
-                        <h5 class="section-title">About the Doctor</h5>
-                        <p>
-                            Dr. Sakib Sarwat Haque is a skilled consultant surgeon with advanced training
-                            in general and colorectal surgery. He is committed to delivering safe,
-                            evidence-based, and patient-centered surgical care.
-                        </p>
+                    <h5 class="section-title">About the Doctor</h5>
+                    <p>
+                        Dr. Sakib Sarwat Haque is a skilled consultant surgeon with advanced training
+                        in general and colorectal surgery. He is committed to delivering safe,
+                        evidence-based, and patient-centered surgical care.
+                    </p>
 
-                        <p>
-                            He is currently serving at Dr. Fazlul Haque Colorectal Hospital Ltd.,
-                            where he is involved in both elective and emergency surgical procedures.
-                        </p>
-
-                    </div>
+                    <p>
+                        He is currently serving at Dr. Fazlul Haque Colorectal Hospital Ltd.,
+                        where he is involved in both elective and emergency surgical procedures.
+                    </p>
 
                 </div>
+
             </div>
+        </div>
     </section>
 
-    @include('frontend.welcome_page.footer')
+    @include('frontend.custom_layout.footer')
 @endsection

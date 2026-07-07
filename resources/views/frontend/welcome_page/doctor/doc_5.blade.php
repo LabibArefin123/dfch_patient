@@ -5,7 +5,7 @@
 
 @section('content')
 
-    @include('frontend.welcome_page.header')
+    @include('frontend.custom_layout.header')
     <div class="doctor-banner" style="background-image: url('{{ asset('uploads/images/welcome_page/cover.png') }}');">
         <nav class="breadcrumb-custom">
             <a href="{{ route('welcome') }}" class="doc-link text-decoration-none">Home</a>
@@ -61,5 +61,5 @@
             </div>
         </div>
     </section>
-    @include('frontend.welcome_page.footer')
+    @include('frontend.custom_layout.footer')
 @endsection

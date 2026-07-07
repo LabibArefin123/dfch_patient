@@ -17,6 +17,7 @@
 @stop
 
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/show_page/zoom-modal.css') }}">
     <div class="card shadow-sm">
         <div class="card-body">
 
@@ -237,62 +238,7 @@
 
                 {{-- RIGHT IMAGE --}}
                 <div class="col-md-3 d-flex justify-content-end">
-                    <style>
-                        .patient-photo-box {
-                            width: 200px;
-                            height: 200px;
-                            border-radius: 12px;
-                            overflow: hidden;
-                            border: 3px solid #e9ecef;
-                            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-                            transition: 0.3s ease;
-                        }
-
-                        .patient-photo-box:hover {
-                            transform: scale(1.03);
-                            border-color: #007bff;
-                        }
-
-                        .patient-photo-img {
-                            width: 100%;
-                            height: 100%;
-                            object-fit: contain;
-                            /* 🔥 FORCE SQUARE */
-                        }
-
-                        .zoom-modal {
-                            display: none;
-                            position: fixed;
-                            z-index: 9999;
-                            padding-top: 60px;
-                            left: 0;
-                            top: 0;
-                            width: 100%;
-                            height: 100%;
-                            overflow: auto;
-                            background-color: rgba(0, 0, 0, 0.9);
-                        }
-
-                        .zoom-modal-content {
-                            margin: auto;
-                            display: block;
-                            max-width: 80%;
-                            max-height: 80%;
-                            border-radius: 10px;
-                        }
-
-                        .zoom-close {
-                            position: absolute;
-                            top: 20px;
-                            right: 35px;
-                            color: #fff;
-                            font-size: 40px;
-                            font-weight: bold;
-                            cursor: pointer;
-                        }
-                    </style>
                     <div class="text-center">
-
                         <div class="patient-photo-box mb-2">
 
                             <img src="{{ $patient->patient_photo && file_exists(public_path($patient->patient_photo))
@@ -318,32 +264,93 @@
         </div>
     </div>
     <div class="card mt-4">
-        <div class="card-body" style="height:50px;">
-            <!-- Intentionally left blank -->
+        <div class="card-header bg-danger text-white">
+            <h5 class="mb-0">
+                <i class="fas fa-x-ray"></i>
+                Cancer Reports
+                <span class="badge badge-light">
+                    {{ $patient->cancerPhotos->count() }}
+                </span>
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            @forelse($patient->cancerPhotos as $report)
+
+                <div class="border rounded p-3 mb-4">
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-3">
+                            <strong>Total Cancer</strong>
+
+                            <div class="form-control bg-light">
+                                {{ $report->total_cancer }}
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <strong>Remarks</strong>
+
+                            <div class="form-control bg-light" style="min-height:60px">
+                                {{ $report->remarks ?: 'N/A' }}
+                            </div>
+                        </div>
+
+                    </div>
+
+                    @if (!empty($report->xray_photo))
+                        <div class="row">
+
+                            @foreach ($report->xray_photo as $index => $photo)
+                                <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+
+                                    <div class="card h-100">
+
+                                        <a href="{{ asset($photo) }}" target="_blank">
+
+                                            <img src="{{ asset($photo) }}" class="card-img-top img-fluid"
+                                                style="height:220px;object-fit:cover;">
+
+                                        </a>
+
+                                        <div class="card-body">
+
+                                            <strong>Description</strong>
+
+                                            <p class="mb-0">
+
+                                                {{ $report->xray_description[$index] ?? 'N/A' }}
+
+                                            </p>
+
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            @endforeach
+
+                        </div>
+                    @endif
+
+                </div>
+
+            @empty
+
+                <div class="alert alert-warning mb-0">
+                    No cancer reports found for this patient.
+                </div>
+
+            @endforelse
+
         </div>
     </div>
+    <div style="height: 40px;"></div>
 @stop
 
 @section('js')
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
-    <script>
-        $(document).on('click', '.header-link', function() {
-
-            let phone = $(this).data('phone');
-
-            if (!phone || phone === 'N/A') {
-                return;
-            }
-
-            phone = phone.toString().replace(/[^0-9]/g, '');
-
-            $('#selectedPhone').text(phone);
-            $('#confirmWhatsapp').attr('href', 'https://wa.me/' + phone);
-
-            $('#callConfirmModal').modal('show');
-            $('#cancelCall').on('click', function() {
-                $('#callConfirmModal').modal('hide');
-            });
-        });
-    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_phone_whatsapp.js') }}"></script>
 @endsection

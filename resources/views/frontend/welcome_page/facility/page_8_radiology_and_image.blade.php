@@ -5,7 +5,7 @@
 @section('title', 'Radiology & Imaging | Dr. Fazlul Haque Colorectal Hospital Limited')
 
 @section('content')
-    @include('frontend.welcome_page.header')
+    @include('frontend.custom_layout.header')
 
     <section class="facility-page bg-white">
         <div class="container">
@@ -64,5 +64,5 @@
         </div>
     </section>
 
-    @include('frontend.welcome_page.footer')
+    @include('frontend.custom_layout.footer')
 @endsection

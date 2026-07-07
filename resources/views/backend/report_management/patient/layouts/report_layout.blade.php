@@ -81,9 +81,7 @@
 
         </div>
     </div>
-    <div class="card mt-4">
-        <div class="card-body" style="height:50px;"></div>
-    </div>
+    <div style="height: 40px;"></div>
 
     {{-- Reusable Confirm Modal --}}
     @include('backend.report_management.patient.partials.confirm_pdf_modal')
@@ -124,9 +122,9 @@
                             d[item.name] = item.value;
                         });
                     }
-                    
+
                 },
-                
+
                 columns: {!! $columns !!}
             });
 
