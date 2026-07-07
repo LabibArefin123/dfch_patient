@@ -17,6 +17,7 @@ class Patient extends Model
         'patient_f_name',
         'patient_m_name',
         'patient_photo',
+        'face_embedding',
         'age',
         'gender',
 

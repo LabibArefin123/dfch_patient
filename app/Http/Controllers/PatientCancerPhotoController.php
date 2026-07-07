@@ -78,41 +78,54 @@ class PatientCancerPhotoController extends Controller
 
         DB::beginTransaction();
 
-        $photos = [];
+        $uploadedPhotos = [];
 
         try {
             $patient = Patient::findOrFail($request->patient_id);
 
-            $patientName = $patient->patient_name ?? ('patient-' . $patient->id);
-            $patientFolderName = Str::slug($patientName);
-
-            $relativeFolder = 'uploads/images/patient_photos/' . $patientFolderName . '/cancer';
+            /*
+        |--------------------------------------------------------------------------
+        | Build patient folder
+        |--------------------------------------------------------------------------
+        */
+            $patientFolder = Str::slug(($patient->patient_name ?? 'patient') . '-' . $patient->id);
+            $relativeFolder = "uploads/images/patients/{$patientFolder}/cancer_photos";
             $uploadPath = public_path($relativeFolder);
 
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0777, true);
             }
 
+            /*
+        |--------------------------------------------------------------------------
+        | Upload images and convert to WEBP
+        |--------------------------------------------------------------------------
+        */
+            $photos = [];
+
             if ($request->hasFile('xray_photo')) {
                 foreach ($request->file('xray_photo') as $imageFile) {
                     $filename = time() . '_' . uniqid() . '.webp';
                     $savePath = $uploadPath . DIRECTORY_SEPARATOR . $filename;
 
-                    /*
-                |--------------------------------------------------------------------------
-                | Convert to WEBP + resize if too large
-                |--------------------------------------------------------------------------
-                */
                     Image::load($imageFile->getRealPath())
-                        ->fit(Fit::Max, 1800, 1800) // keeps image inside 1800x1800 without ugly stretch
-                        ->quality(75)
+                        ->width(1800) // resize large images
                         ->format('webp')
+                        ->quality(75)
                         ->save($savePath);
 
-                    $photos[] = $relativeFolder . '/' . $filename;
+                    $relativePath = $relativeFolder . '/' . $filename;
+
+                    $photos[] = $relativePath;
+                    $uploadedPhotos[] = $relativePath;
                 }
             }
 
+            /*
+        |--------------------------------------------------------------------------
+        | Create DB record
+        |--------------------------------------------------------------------------
+        */
             PatientCancerPhoto::create([
                 'patient_id' => $request->patient_id,
                 'total_cancer' => $request->total_cancer,
@@ -129,8 +142,13 @@ class PatientCancerPhotoController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            if (!empty($photos)) {
-                foreach ($photos as $photo) {
+            /*
+        |--------------------------------------------------------------------------
+        | Delete uploaded files if store fails
+        |--------------------------------------------------------------------------
+        */
+            if (!empty($uploadedPhotos)) {
+                foreach ($uploadedPhotos as $photo) {
                     $fullPath = public_path($photo);
 
                     if (file_exists($fullPath)) {
@@ -209,7 +227,7 @@ class PatientCancerPhotoController extends Controller
             $patientFolder = Str::slug($patient->patient_name . '-' . $patient->id);
             $relativeFolder = "uploads/images/patients/{$patientFolder}/cancer_photos";
             $uploadPath     = public_path($relativeFolder);
-            
+
             if (!file_exists($uploadPath)) {
                 mkdir($uploadPath, 0777, true);
             }

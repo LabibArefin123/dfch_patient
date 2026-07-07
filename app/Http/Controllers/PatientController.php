@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class PatientController extends Controller
 {
@@ -584,6 +585,48 @@ class PatientController extends Controller
                     'date' => optional($patient->date_of_patient_added)->format('d F Y'),
                 ];
             }),
+        ]);
+    }
+
+    public function patientPhotoSearch(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|max:10240'
+        ]);
+
+        $photo = $request->file('photo');
+
+        $temp = $photo->store('temp');
+
+        $python = base_path('python/face_search.py');
+
+        $command = "python " .
+            escapeshellarg($python) . " " .
+            escapeshellarg(storage_path("app/" . $temp));
+
+        $result = shell_exec($command);
+
+        Storage::delete($temp);
+
+        if (!$result) {
+            return response()->json([
+                'status' => false,
+                'message' => 'No face detected.'
+            ]);
+        }
+
+        $ids = json_decode($result, true);
+
+        $patients = Patient::whereIn('id', $ids)
+            ->withCount([
+                'documents',
+                'cancerPhotos'
+            ])
+            ->get();
+
+        return response()->json([
+            'status' => true,
+            'patients' => $patients
         ]);
     }
 

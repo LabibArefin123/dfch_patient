@@ -124,6 +124,7 @@
     <script>
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
     </script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_photo_search.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_load_modal_info.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_info_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patients.js') }}"></script>
