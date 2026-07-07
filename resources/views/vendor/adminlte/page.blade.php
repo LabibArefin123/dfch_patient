@@ -14,133 +14,18 @@
 
 @section('body')
     <div class="wrapper">
-        <!-- start of modal animation -->
-        <div class="modal fade" id="backConfirmModal" tabindex="-1" role="dialog" aria-labelledby="backConfirmLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content text-center p-4">
-                    <!-- Animated Circle Icon -->
-                    <div class="mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="animate-bounce" width="50" height="50"
-                            fill="#FFC107" viewBox="0 0 16 16">
-                            <path
-                                d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0-12a.905.905 0 0 1 .9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 3.995A.905.905 0 0 1 8 3zm.002 6a1 1 0 1 1-2.002 0 1 1 0 0 1 2.002 0z" />
-                        </svg>
-                    </div>
-
-                    <!-- Modal Message -->
-                    <div class="modal-body mb-3">
-                        Please fill up the required fields before leaving the page. Do you want to leave?
-                    </div>
-
-                    <!-- Footer Buttons -->
-                    <div class="modal-footer d-flex justify-content-center gap-2">
-                        <button type="button" class="btn btn-success" data-dismiss="modal">Stay</button>
-                        <a href="#" class="btn btn-danger leave-page">Leave</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end of modal animation -->
-
-        <!-- start of image zoom modal animation -->
-        <div class="modal fade" id="imagePreviewModal" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
-                <div class="modal-content border-0 shadow">
-                    <div class="modal-header bg-danger text-white">
-                        <h5 class="modal-title">
-                            <i class="fas fa-x-ray mr-2"></i>
-                            X-Ray Preview
-                        </h5>
-
-                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
-                        </button>
-                    </div>
-
-                    <div class="modal-body text-center bg-light">
-
-                        <img id="modalPreviewImage" src="" class="img-fluid rounded shadow"
-                            style="max-height:75vh;object-fit:contain;">
-
-                    </div>
-
-                    <div class="modal-footer">
-                        <a id="downloadImage" href="" target="_blank" class="btn btn-danger">
-                            <i class="fas fa-download"></i>
-                            Open Original
-                        </a>
-
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            <i class="fas fa-times"></i>
-                            Close
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- end of image zoom modal animation -->
-
-        <!-- start of create animation model -->
-        <div class="modal fade" id="createConfirmModal" tabindex="-1" role="dialog" aria-labelledby="createConfirmLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content text-center p-4">
-
-                    <!-- Animated Check Icon -->
-                    <div class="mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#28A745"
-                            viewBox="0 0 16 16">
-                            <path
-                                d="M16 2a2 2 0 0 1-2 2h-1v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4H2a2 2 0 0 1 0-4h12a2 2 0 0 1 2 2zM5 4v10h6V4H5zm3 7.5a.5.5 0 0 1-.374-.832l1.5-1.5a.5.5 0 1 1 .707.707L8.707 10.5l1.126 1.126a.5.5 0 1 1-.707.707l-1.5-1.5A.5.5 0 0 1 8 11.5z" />
-                        </svg>
-                    </div>
-
-                    <!-- Message -->
-                    <div class="modal-body mb-3">
-                        Are you sure you want to <strong>create</strong> this record?
-                    </div>
-
-                    <!-- Footer Buttons -->
-                    <div class="modal-footer d-flex justify-content-center gap-2">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-success">Confirm</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- end of create animation model -->
-
-        <!-- start of edit animation model -->
-        <div class="modal fade" id="editConfirmModal" tabindex="-1" role="dialog" aria-labelledby="editConfirmLabel"
-            aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content text-center p-4">
-
-                    <!-- Animated Pencil Icon -->
-                    <div class="mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#17A2B8"
-                            viewBox="0 0 16 16">
-                            <path
-                                d="M12.146.854a.5.5 0 0 1 .708 0l2.292 2.292a.5.5 0 0 1 0 .708l-9.193 9.193a.5.5 0 0 1-.168.11l-4 1.5a.5.5 0 0 1-.65-.65l1.5-4a.5.5 0 0 1 .11-.168l9.193-9.193zM11.207 2L3.5 9.707l-.793 2.121 2.121-.793L13.293 3 11.207 2z" />
-                        </svg>
-                    </div>
-
-                    <!-- Message -->
-                    <div class="modal-body mb-3">
-                        Are you sure you want to <strong>update</strong> this record?
-                    </div>
-
-                    <!-- Footer Buttons -->
-                    <div class="modal-footer d-flex justify-content-center gap-2">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="submit" class="btn btn-info">Confirm</button>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-        <!-- end of edit animation model -->
+        <!-- start of validate modal and its animation -->
+        @include('backend.global_modals.modal_validation')
+        <!-- Bootstrap 5 Premium Image Zoom Modal -->
+        @include('backend.global_modals.modal_image_zoom')
+        <!-- xray image zoom modal animation -->
+        @include('backend.global_modals.modal_xray_image')
+        <!-- create animation model -->
+        @include('backend.global_modals.modal_create_confirm')
+        <!-- edit animation model -->
+        @include('backend.global_modals.modal_edit_confirm')
+        <!-- start of delete animation model -->
+        @include('backend.global_modals.modal_delete_confirm')
 
         <div id="dtErrorToast" class="dt-error-toast">
             <div class="dt-error-box">
@@ -154,39 +39,7 @@
             </div>
         </div>
 
-        <!-- start of delete animation model -->
-        <div class="modal fade" id="deleteConfirmModal" tabindex="-1" role="dialog"
-            aria-labelledby="deleteConfirmLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" role="document">
-                <div class="modal-content text-center p-4">
 
-                    <!-- Animated Warning Icon -->
-                    <div class="mb-3">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="animate-bounce" width="50" height="50"
-                            fill="#DC3545" viewBox="0 0 16 16">
-                            <path
-                                d="M8.982 1.566a1 1 0 0 0-1.964 0L.165 13.233A1 1 0 0 0 1 14.5h14a1 1 0 0 0 .835-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1-2.002 0 1 1 0 0 1 2.002 0z" />
-                        </svg>
-                    </div>
-
-                    <!-- Message -->
-                    <div class="modal-body mb-3">
-                        Are you sure you want to <strong>delete</strong> this record? <br>
-                        This action cannot be undone.
-                    </div>
-
-                    <!-- Footer Buttons -->
-                    <div class="modal-footer d-flex justify-content-center gap-2">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <form id="deleteForm" method="POST" action="#">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="btn btn-danger">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
         {{-- Preloader --}}
         @if ($preloaderHelper->isPreloaderEnabled())
             @include('adminlte::partials.common.preloader')
@@ -684,13 +537,18 @@
     {{-- start of image zoom modal js --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.previewImageBtn').forEach(function(button) {
-                button.addEventListener('click', function() {
-                    let image = this.dataset.image;
-                    document.getElementById('modalPreviewImage').src = image;
-                    document.getElementById('downloadImage').href = image;
+            const imageZoomModal = document.getElementById('imageZoomModal');
+            if (imageZoomModal) {
+                imageZoomModal.addEventListener('show.bs.modal', function(event) {
+                    // Get the link element that triggered the modal
+                    const triggerElement = event.relatedTarget;
+                    // Extract the image source from the data attribute
+                    const imgSrc = triggerElement.getAttribute('data-bs-img-src');
+                    // Dynamically update the modal image source
+                    const modalImage = imageZoomModal.querySelector('#modalZoomImage');
+                    modalImage.src = imgSrc;
                 });
-            });
+            }
         });
     </script>
     {{-- start of image zoom modal js --}}

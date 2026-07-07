@@ -166,10 +166,10 @@
                         @foreach ($photos as $photo)
                             <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
                                 <div class="card shadow-sm border-0 h-100">
-                                    <a href="{{ asset($photo) }}" target="_blank" class="text-decoration-none">
-                                        <img src="{{ asset($photo) }}" alt="X-Ray Image" class="card-img-top"
-                                            style="height: 250px; object-fit: cover; border-radius: 0.35rem 0.35rem 0 0;">
-                                    </a>
+
+                                    <img src="{{ asset($photo) }}" alt="X-Ray Image" class="card-img-top"
+                                        style="height: 250px; object-fit: cover; border-radius: 0.35rem 0.35rem 0 0;">
+
 
                                     <div class="card-footer bg-white text-center">
                                         <button type="button" class="btn btn-sm btn-outline-danger previewImageBtn"

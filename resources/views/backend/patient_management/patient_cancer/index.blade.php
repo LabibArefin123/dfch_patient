@@ -118,15 +118,43 @@
 
                                 <td>
                                     @if (!empty($report->xray_photo) && is_array($report->xray_photo))
-                                        <div class="d-flex flex-wrap">
+                                        <div class="d-flex flex-wrap align-items-center">
                                             @foreach ($report->xray_photo as $photo)
-                                                <a href="{{ asset($photo) }}" target="_blank">
-                                                    <img src="{{ asset($photo) }}" class="img-thumbnail m-1"
+                                                <style>
+                                                    /* Premium Hover Animation for Thumbnails */
+                                                    .magnify-img:hover {
+                                                        transform: scale(1.08) translateY(-2px);
+                                                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+                                                    }
+
+                                                    /* Styling for the premium close button hover effect */
+                                                    .zoom-modal-close-btn {
+                                                        cursor: pointer;
+                                                    }
+
+                                                    .zoom-modal-close-btn:hover {
+                                                        background: rgba(255, 255, 255, 0.15) !important;
+                                                        border-color: rgba(255, 255, 255, 0.4) !important;
+                                                        transform: scale(1.05);
+                                                        color: #ffffff !important;
+                                                        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1) !important;
+                                                    }
+
+                                                    .zoom-modal-close-btn:active {
+                                                        transform: scale(0.95);
+                                                    }
+                                                </style>
+                                                <a href="#" data-bs-toggle="modal" data-bs-target="#imageZoomModal"
+                                                    data-bs-img-src="{{ asset($photo) }}" style="text-decoration: none;">
+                                                    <img src="{{ asset($photo) }}" class="img-thumbnail m-1 magnify-img"
+                                                        alt="X-Ray Photo"
                                                         style="
-                            width: 80px;
-                            height: 80px;
-                            object-fit: cover;
-                        ">
+                                                        width: 80px;
+                                                        height: 80px;
+                                                        object-fit: cover;
+                                                        cursor: zoom-in;
+                                                            transition: transform 0.2s ease, box-shadow 0.2s ease;
+                                                    ">
                                                 </a>
                                             @endforeach
                                         </div>
@@ -224,7 +252,6 @@
 
 
 @section('js')
-
     <script>
         $(function() {
 

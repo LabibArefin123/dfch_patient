@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\Patient\PatientService;
 use App\Models\Patient;
+use Carbon\Carbon;
 use App\Models\PatientCancerPhoto;
 use App\Models\PatientDocument;
 use Illuminate\Http\Request;
@@ -122,14 +123,27 @@ class PatientController extends Controller
                         ? asset($p->patient_photo)
                         : asset('uploads/images/default.jpg');
 
+                    $formattedDate = $p->date_of_patient_added
+                        ? Carbon::parse($p->date_of_patient_added)->format('d F Y')
+                        : 'N/A';
+
                     return '
                     <div class="text-center">
-                        <img src="' . $photo . '" 
-                            class="patient-img"
-                            alt="photo">
-                    </div>
-                ';
+                        <img src="' . $photo . '"
+                            class="patient-img patient-image-modal-btn"
+                            style="cursor:pointer"
+                            alt="Patient"
+
+                            data-photo="' . $photo . '"
+                            data-name="' . e($p->patient_name) . '"
+                            data-code="' . e($p->patient_code) . '"
+                            data-age="' . e($p->age) . ' years old"
+                            data-gender="' . e($p->gender) . '"
+                            data-phone="' . e($p->phone_1) . '"
+                            data-date="' . $formattedDate . '">
+                    </div>';
                 })
+                ->rawColumns(['photo'])
                 ->addColumn('patient_code', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
                 })

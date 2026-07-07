@@ -46,6 +46,7 @@
 @section('content')
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
+    @include('backend.patient_management.modals.patient_photo_modal')
     <style>
         .patient-img {
             width: 45px;
@@ -110,6 +111,7 @@
         };
     </script>
 
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_load_modal_info.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patients.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/importFile.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/exportExcelFile.js') }}"></script>
