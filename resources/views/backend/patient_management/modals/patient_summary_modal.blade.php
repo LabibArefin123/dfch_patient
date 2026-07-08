@@ -61,13 +61,32 @@
                                 <input type="text" id="patientSummarySearch" class="form-control"
                                     placeholder="Search patient...">
                                 <div class="input-group-append">
-                                    <button id="patientPhotoBtn">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-success" id="patientPhotoBtn"
+                                            title="Search Patient by Photo">
 
-                                        <i class="fas fa-camera"></i>
+                                            <i class="fas fa-camera"></i>
 
-                                    </button>
+                                        </button>
 
-                                    <input type="file" id="patientPhotoInput" accept="image/*" capture="environment"
+                                        <input type="file" id="patientPhotoInput" accept=".jpg,.jpeg,.png,.webp"
+                                            hidden>
+                                        {{-- Search by Recommendation Document --}}
+                                        <button type="button" class="btn btn-outline-info" id="patientDocumentBtn"
+                                            title="Search Patient by Recommendation Document" data-toggle="tooltip"
+                                            data-placement="top">
+
+                                            <i class="fas fa-file-medical mr-1"></i>
+
+                                            <span class="d-none d-md-inline">
+                                                Document
+                                            </span>
+
+                                        </button>
+
+                                    </div>
+
+                                    <input type="file" id="patientDocumentInput" accept=".pdf,.jpg,.jpeg,.png,.webp"
                                         hidden>
                                     <button class="btn btn-primary" id="patientSummarySearchBtn">
                                         <i class="fas fa-search"></i>

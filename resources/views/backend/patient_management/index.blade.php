@@ -123,8 +123,11 @@
     </script>
     <script>
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
+        const patientDocumentSearchUrl="{{ route('patients.document.search') }}";
+        const patientPhotoSearchUrl="{{ route('patients.photo.search') }}";
     </script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_photo_search.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_document_search.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_photo_search.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_load_modal_info.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_info_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patients.js') }}"></script>

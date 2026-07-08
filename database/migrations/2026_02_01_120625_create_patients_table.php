@@ -51,6 +51,7 @@ return new class extends Migration {
             $table->date('date_of_patient_added')->nullable();
             $table->enum('registration_source', ['reception', 'online', 'referral'])->nullable();
             $table->string('patient_photo')->nullable();
+            $table->string('photo_hash')->nullable();
             $table->longText('face_embedding')->nullable();
             $table->text('remarks')->nullable();
             // Cancer History

@@ -16,8 +16,6 @@ class Patient extends Model
         'patient_name',
         'patient_f_name',
         'patient_m_name',
-        'patient_photo',
-        'face_embedding',
         'age',
         'gender',
 
@@ -36,14 +34,16 @@ class Patient extends Model
         'phone_m_1',
         'patient_problem_description',
         'patient_drug_description',
-
+        
         'is_recommend',
         'recommend_doctor_name',
         'recommend_note',
-
+        
         'date_of_patient_added',
         'remarks',
         'is_old_cancer',
+        'patient_photo',
+        'photo_hash',
     ];
 
     protected $casts = [

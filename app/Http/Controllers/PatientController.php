@@ -502,22 +502,14 @@ class PatientController extends Controller
             foreach (['d/m/Y', 'd-m-Y'] as $format) {
 
                 try {
-
                     $date = Carbon::createFromFormat($format, $search);
-
                     $q->orWhereDate('date_of_patient_added', $date);
-
                     break;
                 } catch (\Exception $e) {
                 }
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | 15 August 2026
-        |--------------------------------------------------------------------------
-        */
-
+            /*15 August 2026 */
             try {
 
                 $date = Carbon::parse($search);
@@ -560,7 +552,8 @@ class PatientController extends Controller
             'status' => true,
             'count' => $patients->count(),
             'patients' => $patients->map(function ($patient) {
-
+                $patientFolder = Str::slug($patient->patient_name);
+                
                 return [
                     'id' => $patient->id,
                     'patient_code' => $patient->patient_code,
@@ -580,6 +573,7 @@ class PatientController extends Controller
                     'recommend' => $patient->is_recommend,
                     'doctor' => $patient->recommend_doctor_name,
                     'recommend_note' => $patient->recommend_note,
+                    'document_folder' => asset("uploads/documents/{$patientFolder}/recommend_doc"),
                     'documents' => $patient->documents_count,
                     'cancer_reports' => $patient->cancer_photos_count,
                     'date' => optional($patient->date_of_patient_added)->format('d F Y'),
@@ -588,45 +582,154 @@ class PatientController extends Controller
         ]);
     }
 
-    public function patientPhotoSearch(Request $request)
+    public function patientDocumentSearch(Request $request)
     {
         $request->validate([
-            'photo' => 'required|image|max:10240'
+            'document' => 'required|file|max:20480'
         ]);
 
-        $photo = $request->file('photo');
+        $hash = hash_file(
+            'sha256',
+            $request->file('document')->getRealPath()
+        );
 
-        $temp = $photo->store('temp');
+        $documents = PatientDocument::with([
+            'patient'
+        ])
+            ->where('file_hash', $hash)
+            ->get();
 
-        $python = base_path('python/face_search.py');
+        if ($documents->isEmpty()) {
 
-        $command = "python " .
-            escapeshellarg($python) . " " .
-            escapeshellarg(storage_path("app/" . $temp));
-
-        $result = shell_exec($command);
-
-        Storage::delete($temp);
-
-        if (!$result) {
             return response()->json([
                 'status' => false,
-                'message' => 'No face detected.'
+                'message' => 'No matching recommendation document found.'
             ]);
         }
 
-        $ids = json_decode($result, true);
+        $patients = $documents
+            ->pluck('patient')
+            ->unique('id')
+            ->values();
 
-        $patients = Patient::whereIn('id', $ids)
-            ->withCount([
-                'documents',
-                'cancerPhotos'
-            ])
+        return response()->json([
+
+            'status' => true,
+
+            'count' => $patients->count(),
+
+            'patients' => $patients->map(function ($patient) {
+
+                return [
+
+                    'id' => $patient->id,
+
+                    'patient_code' => $patient->patient_code,
+
+                    'patient_name' => $patient->patient_name,
+
+                    'patient_photo' => $patient->patient_photo
+                        ? asset($patient->patient_photo)
+                        : asset('uploads/images/default.jpg'),
+
+                    'age' => $patient->age,
+
+                    'gender' => $patient->gender,
+
+                    'phone' => $patient->phone_1,
+
+                    'father' => $patient->patient_f_name,
+
+                    'mother' => $patient->patient_m_name,
+
+                    'problem' => $patient->patient_problem_description,
+
+                    'drug' => $patient->patient_drug_description,
+
+                    'remarks' => $patient->remarks,
+
+                    'recommend' => $patient->is_recommend,
+
+                    'doctor' => $patient->recommend_doctor_name,
+
+                    'recommend_note' => $patient->recommend_note,
+
+                    'documents' => $patient->documents()->count(),
+
+                    'cancer_reports' => $patient->cancerPhotos()->count(),
+
+                    'date' => optional($patient->date_of_patient_added)
+                        ->format('d F Y')
+
+                ];
+            })
+
+        ]);
+    }
+
+    public function patientPhotoSearch(Request $request)
+    {
+        $request->validate([
+            'photo' => 'required|image|max:10240',
+        ]);
+
+        $hash = hash_file(
+            'sha256',
+            $request->file('photo')->getRealPath()
+        );
+
+        $patients = Patient::withCount([
+            'documents',
+            'cancerPhotos'
+        ])
+            ->where('photo_hash', $hash)
             ->get();
+
+        if ($patients->isEmpty()) {
+
+            return response()->json([
+                'status' => false,
+                'message' => 'No matching patient photo found.',
+            ]);
+        }
 
         return response()->json([
             'status' => true,
-            'patients' => $patients
+            'count' => $patients->count(),
+            'patients' => $patients->map(function ($patient) {
+
+                return [
+                    'id' => $patient->id,
+                    'patient_code' => $patient->patient_code,
+                    'patient_name' => $patient->patient_name,
+
+                    'patient_photo' => $patient->patient_photo
+                        ? asset($patient->patient_photo)
+                        : asset('uploads/images/default.jpg'),
+
+                    'age' => $patient->age,
+                    'gender' => $patient->gender,
+                    'phone' => $patient->phone_1,
+
+                    'father' => $patient->patient_f_name,
+                    'mother' => $patient->patient_m_name,
+
+                    'problem' => $patient->patient_problem_description,
+                    'drug' => $patient->patient_drug_description,
+
+                    'remarks' => $patient->remarks,
+
+                    'recommend' => $patient->is_recommend,
+                    'doctor' => $patient->recommend_doctor_name,
+                    'recommend_note' => $patient->recommend_note,
+
+                    'documents' => $patient->documents_count,
+                    'cancer_reports' => $patient->cancer_photos_count,
+
+                    'date' => optional($patient->date_of_patient_added)
+                        ->format('d F Y'),
+                ];
+            }),
         ]);
     }
 
@@ -841,12 +944,13 @@ class PatientController extends Controller
                     '.' . $extension;
 
                 $file->move($documentPath, $filename);
-
+                $fileHash = hash_file('sha256', $file->getRealPath());
                 PatientDocument::create([
                     'patient_id'    => $patient->id,
                     'document_name' => $file->getClientOriginalName(),
                     'file_path'     => "uploads/documents/{$patientFolder}/recommend_doc/{$filename}",
                     'document_type' => 'recommendation',
+                    'file_hash'     => $fileHash,
                 ]);
             }
         }

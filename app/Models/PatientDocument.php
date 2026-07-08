@@ -16,6 +16,7 @@ class PatientDocument extends Model
         'document_name',
         'file_path',
         'document_type',
+        'file_hash',
     ];
 
     /**
