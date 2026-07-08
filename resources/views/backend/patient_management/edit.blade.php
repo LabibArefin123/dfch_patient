@@ -12,7 +12,7 @@
 @stop
 
 @section('content')
-
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_preview.css') }}">
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -23,6 +23,7 @@
         </div>
     @endif
 
+    @include('backend.patient_management.modals.patient_image_info')
     <div class="card">
         <div class="card-body">
 
@@ -168,39 +169,83 @@
                                 <label>Doctor's Note</label>
                                 <textarea name="recommend_note" id="edit_recommend_note" class="form-control">{!! $patient->recommend_note !!}</textarea>
                             </div>
-
-                            <!-- Existing Documents -->
+                            {{-- Existing Documents --}}
                             <div class="form-group col-md-12">
                                 <label>Patient Documents</label>
 
-                                <div class="card p-2" style="min-height:100px;">
-                                    @php
-                                        $documents = $patient->documents->where('document_type', 'recommendation');
-                                    @endphp
+                                <div class="card shadow-sm border-0">
+                                    <div class="card-body">
+                                        @if ($documents->count() > 0)
+                                            <div class="row">
+                                                @foreach ($documents as $doc)
+                                                    <div class="col-md-4 col-lg-3 mb-3">
+                                                        <div class="card h-100 shadow-sm border document-card">
 
-                                    @if ($documents->count() > 0)
-                                        <ul class="list-group">
-                                            @foreach ($documents as $doc)
-                                                <li
-                                                    class="list-group-item d-flex justify-content-between align-items-center">
-                                                    <span>{{ $doc->document_name }}</span>
+                                                            {{-- 3:2 Preview --}}
+                                                            <div
+                                                                class="document-preview-3x2 bg-light border-bottom d-flex align-items-center justify-content-center overflow-hidden">
+                                                                @if ($doc->is_image)
+                                                                    <img src="{{ $doc->file_url }}"
+                                                                        alt="{{ $doc->document_name }}"
+                                                                        class="img-fluid w-100 h-100 document-preview-image">
+                                                                @else
+                                                                    <div class="document-file-placeholder">
+                                                                        <div class="document-file-placeholder-inner">
+                                                                            <i
+                                                                                class="fas fa-file-alt document-file-icon"></i>
+                                                                            <span class="document-file-ext">
+                                                                                {{ $doc->extension ?: 'FILE' }}
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                @endif
+                                                            </div>
 
-                                                    <a href="{{ asset($doc->file_path) }}" target="_blank"
-                                                        class="btn btn-sm btn-primary">
-                                                        View
-                                                    </a>
-                                                </li>
-                                            @endforeach
-                                        </ul>
-                                    @else
-                                        <div class="text-center text-muted">
-                                            No file available
-                                        </div>
-                                    @endif
+                                                            <div class="card-body">
+                                                                <div class="document-title"
+                                                                    title="{{ $doc->document_name }}">
+                                                                    {{ $doc->document_name }}
+                                                                </div>
+
+                                                                <div class="document-meta">
+                                                                    <span class="document-meta-line">
+                                                                        {{ strtoupper($doc->extension ?: 'FILE') }} •
+                                                                        {{ $doc->file_size_formatted }}
+                                                                    </span>
+
+                                                                    @if ($doc->is_image && $doc->width && $doc->height)
+                                                                        <span class="document-meta-line">
+                                                                            {{ $doc->width }} × {{ $doc->height }} px
+                                                                        </span>
+                                                                    @endif
+                                                                </div>
+
+                                                                <div class="document-actions">
+                                                                    <a href="{{ $doc->file_url }}" target="_blank"
+                                                                        class="btn btn-sm btn-primary">
+                                                                        View
+                                                                    </a>
+
+                                                                    <a href="{{ $doc->file_url }}" download
+                                                                        class="btn btn-sm btn-success">
+                                                                        Download
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                @endforeach
+                                            </div>
+                                        @else
+                                            <div class="text-center text-muted py-4">
+                                                No file available
+                                            </div>
+                                        @endif
+                                    </div>
                                 </div>
                             </div>
 
-                            <!-- Upload New Documents -->
+                            {{-- Upload New Documents --}}
                             <div class="form-group col-md-6">
                                 <label>Add More Documents</label>
                                 <input type="file" name="documents[]" multiple class="form-control">
@@ -214,103 +259,118 @@
                                     value="{{ old('date_of_patient_added', $patient->date_of_patient_added ? \Carbon\Carbon::parse($patient->date_of_patient_added)->format('Y-m-d') : '') }}">
 
                                 @error('date_of_patient_added')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
+                                    <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
+
                         </div>
-                    </div>
 
+                        <div class="col-md-6 text-center">
+                            <label>Patient Profile Image</label>
+                            <br>
 
-                    <div class="form-group col-md-12">
-                        <label>Remarks</label>
-                        <textarea name="remarks" id="edit_remarks" class="form-control">{!! $patient->remarks !!}</textarea>
-                    </div>
+                            <img id="patientPreview" src="{{ $patientImageUrl }}"
+                                class="img-thumbnail shadow patient-photo-box" alt="Patient Image">
 
-                    <div class="form-group col-md-12">
-                        <label>Patient's Problem</label>
-                        <textarea name="patient_problem_description" id="edit_patient_problem_description" class="form-control">{!! $patient->patient_problem_description !!}</textarea>
-                    </div>
-
-                    <div class="form-group col-md-12">
-                        <label>Patient's Drug Description</label>
-                        <textarea name="patient_drug_description" id="edit_patient_drug_description" class="form-control">{!! $patient->patient_drug_description !!}</textarea>
-                    </div>
-                    <div class="form-group col-md-12">
-                        <style>
-                            .progress-circle {
-                                width: 90px;
-                                height: 90px;
-                                border-radius: 50%;
-                                display: flex;
-                                align-items: center;
-                                justify-content: center;
-                                font-weight: 600;
-                                margin: auto;
-                                background: conic-gradient(#28a745 0%, #e9ecef 0%);
-                                transition: 0.4s ease;
-                            }
-                        </style>
-
-                        <label class="font-weight-bold">Patient Photo</label>
-
-                        <div class="card shadow-sm p-3 text-center">
-
-                            <!-- Image Preview -->
-                            <div class="mb-3">
-                                <img id="mainPreview"
-                                    src="{{ $patient->patient_photo ? asset($patient->patient_photo) : 'https://via.placeholder.com/150' }}"
-                                    class="rounded-circle shadow"
-                                    style="width:140px;height:140px;object-fit:cover;border:3px solid #eee;">
-                            </div>
-
-                            <!-- Hidden REAL input (IMPORTANT) -->
-                            <input type="file" name="patient_photo" id="hiddenPhotoInput" hidden>
-
-                            <!-- Action Button -->
-                            <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
-                                data-target="#photoModal">
-                                <i class="fa fa-upload"></i> Change Photo
-                            </button>
-                        </div>
-                    </div>
-                    <div class="modal fade" id="photoModal">
-                        <div class="modal-dialog modal-md">
-                            <div class="modal-content p-4">
-
-                                <h5 class="mb-3 text-center">Upload Patient Photo</h5>
-
-                                <!-- Select File -->
-                                <input type="file" id="photoInput" class="form-control mb-3">
-
-                                <!-- Preview -->
-                                <div class="text-center mb-3">
-                                    <img id="previewImage" class="rounded shadow" style="max-width:180px; display:none;">
-                                </div>
-
-                                <!-- Progress -->
-                                <div class="text-center mb-3">
-                                    <div class="progress-circle" id="progressCircle">0%</div>
-                                </div>
-
-                                <!-- Info -->
-                                <div id="fileInfo" class="small text-muted text-center mb-3"></div>
-
-                                <!-- Buttons -->
-                                <div class="d-flex justify-content-between">
-                                    <button class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
-                                    <button type="button" id="confirmUpload" class="btn btn-success btn-sm" disabled>
-                                        ✔ Use This Photo
-                                    </button>
-                                </div>
-
+                            <div class="mt-2">
+                                <button type="button" class="btn btn-info btn-sm" data-toggle="modal"
+                                    data-target="#patientPhotoInfoModal">
+                                    View More
+                                </button>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <button class="btn btn-primary mt-2">Update</button>
+
+                        <div class="form-group col-md-12">
+                            <label>Remarks</label>
+                            <textarea name="remarks" id="edit_remarks" class="form-control">{!! $patient->remarks !!}</textarea>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label>Patient's Problem</label>
+                            <textarea name="patient_problem_description" id="edit_patient_problem_description" class="form-control">{!! $patient->patient_problem_description !!}</textarea>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            <label>Patient's Drug Description</label>
+                            <textarea name="patient_drug_description" id="edit_patient_drug_description" class="form-control">{!! $patient->patient_drug_description !!}</textarea>
+                        </div>
+                        <div class="form-group col-md-12">
+                            <style>
+                                .progress-circle {
+                                    width: 90px;
+                                    height: 90px;
+                                    border-radius: 50%;
+                                    display: flex;
+                                    align-items: center;
+                                    justify-content: center;
+                                    font-weight: 600;
+                                    margin: auto;
+                                    background: conic-gradient(#28a745 0%, #e9ecef 0%);
+                                    transition: 0.4s ease;
+                                }
+                            </style>
+
+                            <label class="font-weight-bold">Patient Photo</label>
+
+                            <div class="card shadow-sm p-3 text-center">
+
+                                <!-- Image Preview -->
+                                <div class="mb-3">
+                                    <img id="mainPreview"
+                                        src="{{ $patient->patient_photo ? asset($patient->patient_photo) : 'https://via.placeholder.com/150' }}"
+                                        class="rounded-circle shadow"
+                                        style="width:140px;height:140px;object-fit:cover;border:3px solid #eee;">
+                                </div>
+
+                                <!-- Hidden REAL input (IMPORTANT) -->
+                                <input type="file" name="patient_photo" id="hiddenPhotoInput" hidden>
+
+                                <!-- Action Button -->
+                                <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal"
+                                    data-target="#photoModal">
+                                    <i class="fa fa-upload"></i> Change Photo
+                                </button>
+                            </div>
+                        </div>
+                        <div class="modal fade" id="photoModal">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content p-4">
+
+                                    <h5 class="mb-3 text-center">Upload Patient Photo</h5>
+
+                                    <!-- Select File -->
+                                    <input type="file" id="photoInput" class="form-control mb-3">
+
+                                    <!-- Preview -->
+                                    <div class="text-center mb-3">
+                                        <img id="previewImage" class="rounded shadow"
+                                            style="max-width:180px; display:none;">
+                                    </div>
+
+                                    <!-- Progress -->
+                                    <div class="text-center mb-3">
+                                        <div class="progress-circle" id="progressCircle">0%</div>
+                                    </div>
+
+                                    <!-- Info -->
+                                    <div id="fileInfo" class="small text-muted text-center mb-3"></div>
+
+                                    <!-- Buttons -->
+                                    <div class="d-flex justify-content-between">
+                                        <button class="btn btn-secondary btn-sm" data-dismiss="modal">Cancel</button>
+                                        <button type="button" id="confirmUpload" class="btn btn-success btn-sm"
+                                            disabled>
+                                            ✔ Use This Photo
+                                        </button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary mt-2">Update</button>
             </form>
 
         </div>

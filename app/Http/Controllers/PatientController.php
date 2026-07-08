@@ -553,7 +553,7 @@ class PatientController extends Controller
             'count' => $patients->count(),
             'patients' => $patients->map(function ($patient) {
                 $patientFolder = Str::slug($patient->patient_name);
-                
+
                 return [
                     'id' => $patient->id,
                     'patient_code' => $patient->patient_code,
@@ -970,11 +970,175 @@ class PatientController extends Controller
         return view('backend.patient_management.show', compact('patient'));
     }
 
+
     public function edit(Patient $patient)
     {
-        return view('backend.patient_management.edit', compact('patient'));
-    }
+        /*
+    |--------------------------------------------------------------------------
+    | Helper for file size formatting
+    |--------------------------------------------------------------------------
+    */
+        $formatBytes = function ($bytes, $precision = 2) {
+            if (!$bytes || $bytes <= 0) {
+                return '0 B';
+            }
 
+            $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+            $pow = floor(log($bytes, 1024));
+            $pow = min($pow, count($units) - 1);
+
+            $bytes /= pow(1024, $pow);
+
+            return round($bytes, $precision) . ' ' . $units[$pow];
+        };
+
+        /*
+    |--------------------------------------------------------------------------
+    | Patient image info
+    |--------------------------------------------------------------------------
+    */
+        if (!empty($patient->patient_image)) {
+            $patientImagePath = Str::startsWith($patient->patient_image, 'uploads/')
+                ? $patient->patient_image
+                : 'uploads/images/patients/' . $patient->patient_image;
+        } else {
+            $patientImagePath = 'uploads/images/default.jpg';
+        }
+
+        $patientImageUrl = asset($patientImagePath);
+        $patientImageFullPath = public_path($patientImagePath);
+        $patientImageName = basename($patientImagePath);
+
+        $patientImageSize = file_exists($patientImageFullPath) ? filesize($patientImageFullPath) : 0;
+        $patientImageSizeFormatted = $formatBytes($patientImageSize);
+
+        $patientImageWidth = null;
+        $patientImageHeight = null;
+        $patientImageMime = null;
+        $patientImageOrientation = 'Unknown';
+        $patientImageAspectCategory = 'Unknown';
+        $patientImageExtension = strtolower(pathinfo($patientImageName, PATHINFO_EXTENSION));
+
+        if (file_exists($patientImageFullPath)) {
+            $imgInfo = @getimagesize($patientImageFullPath);
+
+            if ($imgInfo) {
+                $patientImageWidth = $imgInfo[0] ?? null;
+                $patientImageHeight = $imgInfo[1] ?? null;
+                $patientImageMime = $imgInfo['mime'] ?? null;
+
+                if ($patientImageWidth && $patientImageHeight) {
+                    if ($patientImageWidth > $patientImageHeight) {
+                        $patientImageOrientation = 'Landscape';
+                    } elseif ($patientImageHeight > $patientImageWidth) {
+                        $patientImageOrientation = 'Portrait';
+                    } else {
+                        $patientImageOrientation = 'Square';
+                    }
+
+                    $ratio = round($patientImageWidth / $patientImageHeight, 2);
+
+                    if ($patientImageWidth == $patientImageHeight) {
+                        $patientImageAspectCategory = 'Square';
+                    } elseif ($ratio >= 1.45 && $ratio <= 1.55) {
+                        $patientImageAspectCategory = '3:2 Rectangular';
+                    } elseif ($ratio >= 1.70 && $ratio <= 1.82) {
+                        $patientImageAspectCategory = '16:9 Wide';
+                    } elseif ($ratio > 1) {
+                        $patientImageAspectCategory = 'Horizontal Rectangular';
+                    } else {
+                        $patientImageAspectCategory = 'Vertical Rectangular';
+                    }
+                }
+            }
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Recommendation documents
+    |--------------------------------------------------------------------------
+    */
+        $documents = $patient->documents
+            ->where('document_type', 'recommendation')
+            ->map(function ($doc) use ($formatBytes) {
+                $extension = strtolower(pathinfo($doc->file_path, PATHINFO_EXTENSION));
+                $isImage = in_array($extension, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp']);
+
+                $fullPath = public_path($doc->file_path);
+                $fileUrl = asset($doc->file_path);
+                $fileSize = file_exists($fullPath) ? filesize($fullPath) : 0;
+                $mimeType = file_exists($fullPath) ? @mime_content_type($fullPath) : null;
+
+                $width = null;
+                $height = null;
+                $orientation = 'Unknown';
+                $aspectCategory = 'Unknown';
+
+                if ($isImage && file_exists($fullPath)) {
+                    $imageInfo = @getimagesize($fullPath);
+
+                    if ($imageInfo) {
+                        $width = $imageInfo[0] ?? null;
+                        $height = $imageInfo[1] ?? null;
+                        $mimeType = $imageInfo['mime'] ?? $mimeType;
+
+                        if ($width && $height) {
+                            if ($width > $height) {
+                                $orientation = 'Landscape';
+                            } elseif ($height > $width) {
+                                $orientation = 'Portrait';
+                            } else {
+                                $orientation = 'Square';
+                            }
+
+                            $ratio = round($width / $height, 2);
+
+                            if ($width == $height) {
+                                $aspectCategory = 'Square';
+                            } elseif ($ratio >= 1.45 && $ratio <= 1.55) {
+                                $aspectCategory = '3:2 Rectangular';
+                            } elseif ($ratio >= 1.70 && $ratio <= 1.82) {
+                                $aspectCategory = '16:9 Wide';
+                            } elseif ($ratio > 1) {
+                                $aspectCategory = 'Horizontal Rectangular';
+                            } else {
+                                $aspectCategory = 'Vertical Rectangular';
+                            }
+                        }
+                    }
+                }
+
+                $doc->file_url = $fileUrl;
+                $doc->extension = $extension;
+                $doc->is_image = $isImage;
+                $doc->file_size = $fileSize;
+                $doc->file_size_formatted = $formatBytes($fileSize);
+                $doc->mime_type = $mimeType;
+                $doc->width = $width;
+                $doc->height = $height;
+                $doc->orientation = $orientation;
+                $doc->aspect_category = $aspectCategory;
+
+                return $doc;
+            });
+
+        return view('backend.patient_management.edit', compact(
+            'patient',
+            'documents',
+            'patientImagePath',
+            'patientImageUrl',
+            'patientImageName',
+            'patientImageSize',
+            'patientImageSizeFormatted',
+            'patientImageWidth',
+            'patientImageHeight',
+            'patientImageMime',
+            'patientImageOrientation',
+            'patientImageAspectCategory',
+            'patientImageExtension'
+        ));
+    }
+    
     public function update(Request $request, Patient $patient)
     {
         $validated = $request->validate([
