@@ -47,11 +47,7 @@
             </form>
         </div>
     </div>
-    <div class="card mt-4">
-        <div class="card-body" style="height:50px;">
-            <!-- Intentionally left blank -->
-        </div>
-    </div>
+    <div style="height: 50px;"></div>
 @stop
 
 @section('js')

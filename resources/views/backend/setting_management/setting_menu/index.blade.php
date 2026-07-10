@@ -78,7 +78,7 @@
                     <div class="card-body">
 
                         <ul class="list-group">
-                             <li class="list-group-item">
+                            <li class="list-group-item">
                                 <a href="{{ route('settings.notification.index') }}"
                                     class="text-decoration-none text-dark d-flex justify-content-between align-items-center">
                                     <div>
@@ -269,9 +269,5 @@
             </div>
         </div>
     </div>
-    <div class="card mt-4">
-        <div class="card-body" style="height:50px;">
-            <!-- Intentionally left blank -->
-        </div>
-    </div>
+    <div style="height: 50px;"></div>
 @stop

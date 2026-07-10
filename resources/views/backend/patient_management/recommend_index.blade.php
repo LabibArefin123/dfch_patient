@@ -82,11 +82,7 @@
         </div>
     </div>
 
-    <div class="card mt-4">
-        <div class="card-body" style="height:50px;">
-            <!-- Intentionally left blank -->
-        </div>
-    </div>
+    <div style="height: 50px;"></div>
 
     <iframe id="downloadFrame" style="display:none;"></iframe>
     @include('backend.patient_management.modals.select_modal')

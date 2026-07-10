@@ -108,11 +108,7 @@
 
     <iframe id="downloadFrame" style="display:none;"></iframe>
 
-    <div class="card mt-4">
-        <div class="card-body" style="height:50px;">
-            <!-- Intentionally left blank -->
-        </div>
-    </div>
+    <div style="height: 50px;"></div>
 @stop
 
 @section('js')
@@ -123,10 +119,11 @@
     </script>
     <script>
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
-        const patientDocumentSearchUrl="{{ route('patients.document.search') }}";
-        const patientPhotoSearchUrl="{{ route('patients.photo.search') }}";
+        const patientDocumentSearchUrl = "{{ route('patients.document.search') }}";
+        const patientPhotoSearchUrl = "{{ route('patients.photo.search') }}";
     </script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_document_search.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_document_search.js') }}">
+    </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_photo_search.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_load_modal_info.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_info_toggle.js') }}"></script>
