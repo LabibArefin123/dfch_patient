@@ -55,7 +55,7 @@
 @section('content')
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
-    @include('backend.patient_management.modals.patient_photo_modal')
+    @include('backend.patient_management.modals.patient_photo_info_modal')
     @include('backend.patient_management.modals.patient_summary_modal')
     @include('backend.patient_management.modals.patient_view_modal')
     <style>
