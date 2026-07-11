@@ -1,3 +1,59 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/*
+|--------------------------------------------------------------------------
+| Back To Top
+|--------------------------------------------------------------------------
+*/
+
+@import "./frontend/custom_layout/back_to_top/bot_layout.css";
+@import "./frontend/custom_layout/back_to_top/bot_state.css";
+@import "./frontend/custom_layout/back_to_top/bot_hover.css";
+
+/*
+|--------------------------------------------------------------------------
+| Topbar Modal
+|--------------------------------------------------------------------------
+*/
+
+@import "./frontend/modals/topbar_modal/custom_location_modal_top.css";
+@import "./frontend/modals/topbar_modal/custom_location_modal_topr.css";
+@import "./frontend/modals/topbar_modal/custom_contact_modal.css";
+@import "./frontend/modals/topbar_modal/custom_phone_modal_rt.css";
+@import "./frontend/modals/topbar_modal/custom_land_modal.css";
+@import "./frontend/modals/topbar_modal/custom_email_modal.css";
+@import "./frontend/modals/topbar_modal/custom_location_modal.css";
+
+/*
+|--------------------------------------------------------------------------
+| Footer Modal
+|--------------------------------------------------------------------------
+*/
+
+@import "./frontend/modals/footer_modal/custom_location_modal_footer.css";
+@import "./frontend/modals/footer_modal/custom_phone_modal_footer.css";
+
+/*
+|--------------------------------------------------------------------------
+| Image Modal
+|--------------------------------------------------------------------------
+*/
+
+@import "./frontend/modals/image_part/image_modal_layout.css";
+@import "./frontend/modals/image_part/image_modal_content.css";
+@import "./frontend/modals/image_part/image_modal_close.css";
+
+/*
+|--------------------------------------------------------------------------
+| Login Page
+|--------------------------------------------------------------------------
+*/
+
+@import "./backend/login_page/login_base.css";
+@import "./backend/login_page/login_layout.css";
+@import "./backend/login_page/login_logo.css";
+@import "./backend/login_page/login_buttons.css";
+@import "./backend/login_page/login_modal.css";
+@import "./backend/login_page/login_responsive.css";

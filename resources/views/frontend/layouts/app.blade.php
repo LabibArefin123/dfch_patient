@@ -31,20 +31,6 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/frontend/frontend.css') }}">
-
-    {{-- BACK TO TOP SECTION --}}
-    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_layout.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_state.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_hover.css') }}">
-
-    {{-- TOPBAR AND FOOTER MODAL SECTION --}}
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal_top.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal_topr.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_contact_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_phone_modal_rt.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_land_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_email_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal.css') }}">
      
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/footer_modal/custom_location_modal_footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/footer_modal/custom_phone_modal_footer.css') }}">
