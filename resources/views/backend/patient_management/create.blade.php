@@ -52,34 +52,6 @@
 
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-
-            ClassicEditor
-                .create(document.querySelector('#patient_problem_description'))
-                .catch(error => {
-                    console.error(error);
-                });
-
-            ClassicEditor
-                .create(document.querySelector('#patient_drug_description'))
-                .catch(error => {
-                    console.error(error);
-                });
-
-        });
-    </script>
-    <script>
-        $('#location_type').on('change', function() {
-            $('.location').addClass('d-none');
-            $('.location-' + $(this).val()).removeClass('d-none');
-        });
-
-        $('#is_recommend').on('change', function() {
-            $(this).val() == 1 ?
-                $('.recommend-section').removeClass('d-none') :
-                $('.recommend-section').addClass('d-none');
-        });
-    </script>
+    <script src="{{ asset('js/backend/patient_management/create_page/create_form.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/create_editor.js') }}"></script>
 @stop

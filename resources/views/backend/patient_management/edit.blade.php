@@ -55,5 +55,6 @@
 
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-   
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_edit_form.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_photo_edit_modal.js') }}"></script>
 @stop
