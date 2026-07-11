@@ -55,6 +55,7 @@
     @include('backend.patient_management.modals.index_page.patient_photo_info_modal')
     @include('backend.patient_management.modals.index_page.patient_summary_modal')
     @include('backend.patient_management.modals.index_page.patient_view_modal')
+    @include('backend.patient_management.modals.index_page.patient_view_modal_animation')
     <style>
         .patient-img {
             width: 45px;
@@ -116,6 +117,7 @@
     </script>
     <script>
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
+        const patientSummaryAnimationSearchUrl = "{{ url('patients/summary/animation') }}";
         const patientDocumentSearchUrl = "{{ route('patients.document.search') }}";
         const patientPhotoSearchUrl = "{{ route('patients.photo.search') }}";
     </script>
@@ -136,6 +138,8 @@
         src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_date_validator.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_preview.js') }}">
+    </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_search.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>
@@ -151,4 +155,16 @@
     </script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}">
     </script>
+
+    {{-- Patient AI Animation --}}
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_photo_animate.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_information_animate.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_document_animate.js') }}">
+    </script>
+
 @endsection

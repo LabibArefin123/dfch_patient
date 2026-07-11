@@ -30,13 +30,29 @@ function renderPatientResults(patients) {
                             <br>
                             <small class="patient-meta-elem text-secondary"></small>
                         </div>
-                        <div class="col-md-2 text-right">
-                            <button class="btn btn-primary btn-sm patient-summary-show" style="border-radius: 6px;">
+                       <div class="col-md-2 text-end">
+
+                        <div class="d-flex justify-content-end gap-2">
+
+                            <button
+                                type="button"
+                                class="btn btn-primary btn-sm patient-summary-show">
+                                <i class="fas fa-eye me-1"></i>
                                 Show
                             </button>
+
+                            <button
+                                type="button"
+                                class="btn btn-outline-success btn-sm patient-summary-preview pulse-btn"
+                                data-id="${p.id}">
+                                <i class="fas fa-chart-line me-1"></i>
+                                Preview
+                            </button>
+
                         </div>
+
                     </div>
-                </div>
+                 </div>
             </div>
         `);
 
@@ -53,6 +69,7 @@ function renderPatientResults(patients) {
 
         // Bind data objects directly using jQuery data store
         card.find(".patient-summary-show").data("patient", p);
+        card.find(".patient-summary-preview").data("patient", p);
 
         container.append(card);
     });

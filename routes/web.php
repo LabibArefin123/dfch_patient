@@ -74,6 +74,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
     Route::post('patients/summary/search', [PatientController::class, 'patientSummarySearch']) ->name('patients.summary.search');
+    Route::get('patients/summary/animation/{patient}',[PatientController::class, 'patientSummaryAnimation'])->name('patients.summary.animation');
     Route::post('patients/document-search',[PatientController::class, 'patientDocumentSearch'])->name('patients.document.search');
     Route::post('patients/photo-search',[PatientController::class, 'patientPhotoSearch'])->name('patients.photo.search');
     Route::get('patients/{id}/modal-details', [PatientController::class, 'getModalDetails'])->name('patients.modal_details');

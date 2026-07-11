@@ -582,6 +582,19 @@ class PatientController extends Controller
         ]);
     }
 
+    public function patientSummaryAnimation(Patient $patient)
+    {
+        $patient->load([
+            'documents',
+            'cancerPhotos'
+        ]);
+
+        return response()->json([
+            'success' => true,
+            'patient' => $patient
+        ]);
+    }
+
     public function patientDocumentSearch(Request $request)
     {
         $request->validate([
