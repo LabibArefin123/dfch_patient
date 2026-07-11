@@ -3,7 +3,7 @@
         <div class="modal-content location-modal-content">
 
             <div class="modal-header">
-                <h5 class="modal-title">
+                <h5 class="modal-title ">
                     <i class="fas fa-map-marker-alt me-2"></i>
                     Our Location
                 </h5>

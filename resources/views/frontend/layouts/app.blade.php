@@ -38,15 +38,16 @@
     <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_hover.css') }}">
 
     {{-- TOPBAR AND FOOTER MODAL SECTION --}}
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_top.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_topr.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_contact_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_phone_modal_rt.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_land_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_email_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_location_modal_footer.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/frontend/modals/custom_phone_modal_footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal_top.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal_topr.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_contact_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_phone_modal_rt.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_land_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_email_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal.css') }}">
+     
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/footer_modal/custom_location_modal_footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/footer_modal/custom_phone_modal_footer.css') }}">
 
     {{-- IMAGE MODAL SECTION --}}
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/image_part/image_modal_layout.css') }}">
@@ -133,8 +134,6 @@
     <script src="{{ asset('js/custom_frontend/ui/custom_banner.js') }}"></script> {{-- banner aniamtion JS --}}
     <script src="{{ asset('js/custom_frontend/ui/facility_dropdown.js') }}"></script> {{-- Facility Dropdown JS --}}
     <script src="{{ asset('js/custom_frontend/ui/custom_back_top_button.js') }}"></script> {{-- Back to Top JS --}}
-
-
 </body>
 
 </html>
