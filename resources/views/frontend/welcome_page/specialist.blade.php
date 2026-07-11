@@ -133,4 +133,6 @@
     const doctorImageBasePath =
         "{{ asset('uploads/images/welcome_page/doctors') }}";
 </script>
-
+<script src="{{ asset('js/custom_frontend/welcome_page/specialist_section/specialist_config.js') }}"></script>
+<script src="{{ asset('js/custom_frontend/welcome_page/specialist_section/specialist_slider.js') }}"></script>
+<script src="{{ asset('js/custom_frontend/welcome_page/specialist_section/specialist_events.js') }}"></script>
