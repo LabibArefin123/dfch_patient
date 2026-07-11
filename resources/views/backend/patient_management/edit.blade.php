@@ -23,22 +23,20 @@
         </div>
     @endif
 
-    @include('backend.patient_management.modals.patient_image_info')
+    @include('backend.patient_management.modals.edit_page.patient_image_info')
     <div class="card">
         <div class="card-body">
-
             <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data"
                 data-confirm="edit">
                 @csrf
                 @method('PUT')
-
                 <div class="row">
                     @include('backend.patient_management.partial_pages.edit_page.part_1')
                     @include('backend.patient_management.partial_pages.edit_page.part_2')
                     @include('backend.patient_management.partial_pages.edit_page.part_3')
                     @include('backend.patient_management.partial_pages.edit_page.part_4')
                     @include('backend.patient_management.partial_pages.edit_page.part_5')
-                    @include('backend.patient_management.modals.patient_photo_validate_modal')
+                    @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
                 </div>
 
                 <button class="btn btn-primary mt-2">Update</button>
@@ -46,11 +44,7 @@
 
         </div>
     </div>
-    <div class="card mt-4">
-        <div style="height:50px;">
-            <!-- Intentionally left blank -->
-        </div>
-    </div>
+      <div style="height: 50px;"></div>
 @stop
 
 @section('js')

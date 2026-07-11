@@ -10,7 +10,7 @@
                     <div class="col-md-6 bg-light d-flex align-items-center justify-content-center p-4">
 
                         <label for="importFileInput"
-                            class="w-100 border border-2 border-primary rounded text-center p-5 cursor-pointer"
+                            class="w-100 border-2 border-primary rounded text-center p-5 cursor-pointer"
                             style="border-style: dashed; transition: 0.3s;">
 
                             <div class="mb-3">

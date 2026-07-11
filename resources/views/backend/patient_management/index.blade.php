@@ -13,11 +13,8 @@
 
             <button type="button" class="btn btn-primary btn-sm" id="openPatientSummaryModal" data-toggle="modal"
                 data-target="#patientSummaryModal">
-
                 <i class="fas fa-comments-medical mr-1"></i>
-
                 Patient Summary
-
             </button>
 
             <button id="delete-selected" class="btn btn-danger btn-sm d-none">
@@ -55,9 +52,9 @@
 @section('content')
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
-    @include('backend.patient_management.modals.patient_photo_info_modal')
-    @include('backend.patient_management.modals.patient_summary_modal')
-    @include('backend.patient_management.modals.patient_view_modal')
+    @include('backend.patient_management.modals.index_page.patient_photo_info_modal')
+    @include('backend.patient_management.modals.index_page.patient_summary_modal')
+    @include('backend.patient_management.modals.index_page.patient_view_modal')
     <style>
         .patient-img {
             width: 45px;
@@ -101,10 +98,10 @@
         </div>
     </div>
 
-    @include('backend.patient_management.modals.import_file_modal')
-    @include('backend.patient_management.modals.no_filter_modal')
-    @include('backend.patient_management.modals.progress_modal')
-    @include('backend.patient_management.modals.select_modal')
+    @include('backend.patient_management.modals.index_page.import_file_modal')
+    @include('backend.patient_management.modals.index_page.no_filter_modal')
+    @include('backend.patient_management.modals.index_page.progress_modal')
+    @include('backend.patient_management.modals.index_page.select_modal')
 
     <iframe id="downloadFrame" style="display:none;"></iframe>
 

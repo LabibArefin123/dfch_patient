@@ -154,11 +154,7 @@
                         @endif
                     </p>
 
-                    <div class="mt-4">
-                        <div style="height:10px;">
-                            <!-- Intentionally left blank -->
-                        </div>
-                    </div>
+                
                     {{-- RECOMMENDATION SECTION --}}
                     @if ($patient->is_recommend)
                         <div class="card shadow-sm mb-4">
