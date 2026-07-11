@@ -31,7 +31,21 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="{{ asset('css/frontend/frontend.css') }}">
-     
+
+    {{-- BACK TO TOP SECTION --}}
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_state.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/custom_layout/back_to_top/bot_hover.css') }}">
+
+    {{-- TOPBAR AND FOOTER MODAL SECTION --}}
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal_top.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal_topr.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_contact_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_phone_modal_rt.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_land_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_email_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/frontend/modals/topbar_modal/custom_location_modal.css') }}">
+
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/footer_modal/custom_location_modal_footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/frontend/modals/footer_modal/custom_phone_modal_footer.css') }}">
 
@@ -98,6 +112,30 @@
     </script>
     {{-- End of SweetAlert2 notifications --}}
     <script src="{{ asset('js/custom_frontend/sweet_alert.js') }}"></script> {{-- Sweet Alert Notification JS --}}
+
+    {{-- NAVIGATION SECTION --}}
+    <script src="{{ asset('js/custom_frontend/navigation/welcome_navigation.js') }}"></script> {{-- Welcome Navigation JS --}}
+    <script src="{{ asset('js/custom_frontend/navigation/navbar-toggle.js') }}"></script> {{-- Navbar Toggle JS --}}
+    <script src="{{ asset('js/custom_frontend/navigation/scroll_progress.js') }}"></script> {{-- Scroll Progress JS --}}
+
+    {{-- MAPS SECTION --}}
+    <script src="{{ asset('js/custom_frontend/maps/custom_top_map.js') }}"></script> {{-- Top Map Modal JS --}}
+
+    {{-- MODAL SECTION --}}
+    <script src="{{ asset('js/custom_frontend/modals/phone.js') }}"></script> {{-- Phone Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/land_phone.js') }}"></script> {{-- Land Phone Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/language.js') }}"></script> {{-- Language Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/magnified_image_modal.js') }}"></script> {{-- Magnified Image Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/custom_footer_modal.js') }}"></script> {{-- Footer Modal JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/location_footer_config.js') }}"></script> {{-- Footer Location Config JS --}}
+    <script src="{{ asset('js/custom_frontend/modals/location_footer_actions.js') }}"></script> {{-- Footer Location Action JS --}}
+
+    {{-- UI SECTION --}}
+    <script src="{{ asset('js/custom_frontend/ui/custom_banner.js') }}"></script> {{-- banner aniamtion JS --}}
+    <script src="{{ asset('js/custom_frontend/ui/facility_dropdown.js') }}"></script> {{-- Facility Dropdown JS --}}
+    <script src="{{ asset('js/custom_frontend/ui/custom_back_top_button.js') }}"></script> {{-- Back to Top JS --}}
+
+
 </body>
 
 </html>
