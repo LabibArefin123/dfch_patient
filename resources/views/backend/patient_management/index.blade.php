@@ -113,10 +113,10 @@
 
     <script>
         /*
-                |--------------------------------------------------------------------------
-                | Global Routes
-                |--------------------------------------------------------------------------
-                */
+                    |--------------------------------------------------------------------------
+                    | Global Routes
+                    |--------------------------------------------------------------------------
+                    */
 
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
@@ -255,4 +255,27 @@
         src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/document_section/patient_document_public.js') }}">
     </script>
 
+    {{-- ========================================================================= --}}
+    {{-- Patient AI Animation :: Cancer --}}
+    {{-- ========================================================================= --}}
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/cancer_section/patient_cancer_init.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/cancer_section/patient_cancer_render.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/cancer_section/patient_cancer_template.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/cancer_section/patient_cancer_animation.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/cancer_section/patient_cancer_effect.js') }}">
+    </script>
 @endsection

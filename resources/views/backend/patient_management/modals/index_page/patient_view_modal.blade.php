@@ -26,7 +26,7 @@
                     <div class="card-body bg-white pt-0">
                         <div class="row align-items-center">
                             <div class="col-md-3 text-center mb-3 mb-md-0">
-                                <img id="viewModalPhoto" src="/images/default-avatar.png"
+                                <img id="viewModalPhoto" src="/uploads/images/default.jpg"
                                     class="img-fluid rounded-circle border shadow-sm"
                                     style="width: 150px; height: 150px; object-fit: cover; background: #f1f5f9;">
                             </div>

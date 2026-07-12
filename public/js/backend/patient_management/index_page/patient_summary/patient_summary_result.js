@@ -59,7 +59,7 @@ function renderPatientResults(patients) {
         // Set safe text contents to avoid injection and attribute breakage
         card.find(".patient-photo-elem").attr(
             "src",
-            p.patient_photo || "/images/default-avatar.png",
+            p.patient_photo || "/uploads/images/default.jpg",
         );
         card.find(".patient-name-elem").text(p.patient_name);
         card.find(".patient-code-elem").text(p.patient_code);

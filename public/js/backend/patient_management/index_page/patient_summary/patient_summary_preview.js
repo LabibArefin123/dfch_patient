@@ -2,84 +2,141 @@
 |--------------------------------------------------------------------------
 | Patient Summary Preview
 |--------------------------------------------------------------------------
-| Opens the AI Preview modal and starts the animation.
+| Opens AI Preview Modal and performs sequential medical analysis.
 |--------------------------------------------------------------------------
 */
+
 $(document).on("click", ".patient-summary-preview", async function () {
     const patient = $(this).data("patient");
 
     if (!patient) return;
 
-    // Open AI Preview Modal
-    $("#patientAnimationModal").modal("show"); // Change to your modal id
+    /*
+    |--------------------------------------------------------------------------
+    | Open Modal
+    |--------------------------------------------------------------------------
+    */
 
-    // Reset
-    $("#patientAIProgressBar").css("width", "0%");
-    $("#patientAIProgressPercent").text("0%");
-    $("#patientAIStatusText").text("Initializing Medical Analysis...");
+    $("#patientAnimationModal").modal("show");
+
+    /*
+    |--------------------------------------------------------------------------
+    | Reset AI Dashboard
+    |--------------------------------------------------------------------------
+    */
+
+    updateProgress(0, "Initializing Medical Analysis...");
+
     $("#patientAISummaryGeneratedTime").text("--");
-
     $("#patientAITimeline").empty();
+
+    /*
+    |--------------------------------------------------------------------------
+    | Clear Previous Sections
+    |--------------------------------------------------------------------------
+    */
 
     PatientPhotoAnimate.clear();
     PatientInformationAnimate.clear();
+    PatientDocumentAnimate.clear();
+    PatientCancerAnimate.clear();
 
-    // Render Sections
+    /*
+    |--------------------------------------------------------------------------
+    | Render All Sections
+    |--------------------------------------------------------------------------
+    */
+
     PatientPhotoAnimate.render(patient);
     PatientInformationAnimate.render(patient);
+    PatientDocumentAnimate.render(patient);
+    PatientCancerAnimate.render(patient);
 
-    // ============================
-    // PHOTO ANIMATION
-    // ============================
+    /*
+    |--------------------------------------------------------------------------
+    | PHOTO ANALYSIS
+    |--------------------------------------------------------------------------
+    */
 
-    $("#patientAIProgressBar").css("width", "25%");
-    $("#patientAIProgressPercent").text("25%");
-    $("#patientAIStatusText").text("Loading Patient Profile...");
+    updateProgress(25, "Loading Patient Profile...");
 
     PatientPhotoAnimate.animate();
 
     await PatientPhotoAnimate.typing("Initializing AI engine...");
-    await PatientPhotoAnimate.thinking(5);
+    await PatientPhotoAnimate.thinking(3);
     PatientPhotoAnimate.complete();
 
-    // ============================
-    // INFORMATION ANIMATION
-    // ============================
+    /*
+    |--------------------------------------------------------------------------
+    | INFORMATION ANALYSIS
+    |--------------------------------------------------------------------------
+    */
 
-    $("#patientAIProgressBar").css("width", "60%");
-    $("#patientAIProgressPercent").text("60%");
-    $("#patientAIStatusText").text("Analyzing Patient Information...");
+    updateProgress(50, "Analyzing Patient Information...");
 
     PatientInformationAnimate.animate();
 
     await PatientInformationAnimate.typing("Reading patient information...");
-    await PatientInformationAnimate.thinking(5);
+
+    await PatientInformationAnimate.thinking(3);
+
     PatientInformationAnimate.complete();
 
-    PatientDocumentAnimate.render(patient);
+    /*
+    |--------------------------------------------------------------------------
+    | RECOMMENDATION ANALYSIS
+    |--------------------------------------------------------------------------
+    */
 
-    $("#patientAIProgressBar").css("width", "85%");
-    $("#patientAIProgressPercent").text("85%");
-    $("#patientAIStatusText").text("Analyzing Recommendation...");
+    updateProgress(75, "Analyzing Doctor Recommendation...");
 
     PatientDocumentAnimate.animate();
 
     await PatientDocumentAnimate.typing("Reading doctor's recommendation...");
-    await PatientDocumentAnimate.thinking(5);
+
+    await PatientDocumentAnimate.thinking(3);
+
     PatientDocumentAnimate.complete();
 
-    // ============================
-    // FINISH
-    // ============================
+    /*
+    |--------------------------------------------------------------------------
+    | CANCER REPORT ANALYSIS
+    |--------------------------------------------------------------------------
+    */
+
+    updateProgress(90, "Analyzing Cancer Reports...");
+
+    PatientCancerAnimate.animate();
+
+    await PatientCancerAnimate.typing("Scanning cancer reports...");
+
+    await PatientCancerAnimate.thinking(3);
+
+    PatientCancerAnimate.complete();
+
+    /*
+    |--------------------------------------------------------------------------
+    | FINISHED
+    |--------------------------------------------------------------------------
+    */
 
     $("#patientAIProgressBar").css("width", "100%");
+
     $("#patientAIProgressPercent").text("100%");
-    $("#patientAIStatusText").html(
-        '<i class="fas fa-check-circle mr-1"></i> Medical Analysis Completed',
-    );
+
+    $("#patientAIStatusText").html(`
+        <i class="fas fa-check-circle mr-1"></i>
+        Medical Analysis Completed Successfully
+    `);
 
     $("#patientAISummaryGeneratedTime").text(new Date().toLocaleString());
 });
+
+/**
+|--------------------------------------------------------------------------
+| Progress Helper
+|--------------------------------------------------------------------------
+*/
 
 function updateProgress(percent, status) {
     $("#patientAIProgressBar").css("width", percent + "%");
