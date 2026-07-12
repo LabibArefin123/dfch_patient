@@ -41,4 +41,8 @@ $(function () {
             }
         },
     );
+
+    window.PatientSummaryState = {
+        chatClosed: false,
+    };
 });

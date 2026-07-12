@@ -56,6 +56,7 @@
     @include('backend.patient_management.modals.index_page.patient_summary_modal')
     @include('backend.patient_management.modals.index_page.patient_view_modal')
     @include('backend.patient_management.modals.index_page.patient_view_modal_animation')
+    @include('backend.patient_management.modals.index_page.patient_close_modal')
     <style>
         .patient-img {
             width: 45px;
@@ -113,10 +114,10 @@
 
     <script>
         /*
-                    |--------------------------------------------------------------------------
-                    | Global Routes
-                    |--------------------------------------------------------------------------
-                    */
+                        |--------------------------------------------------------------------------
+                        | Global Routes
+                        |--------------------------------------------------------------------------
+                        */
 
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
