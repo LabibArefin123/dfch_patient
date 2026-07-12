@@ -110,53 +110,34 @@
 @stop
 
 @section('js')
+
     <script>
+        /*
+                |--------------------------------------------------------------------------
+                | Global Routes
+                |--------------------------------------------------------------------------
+                */
+
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
-    </script>
-    <script>
+
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
         const patientSummaryAnimationSearchUrl = "{{ url('patients/summary/animation') }}";
         const patientDocumentSearchUrl = "{{ route('patients.document.search') }}";
         const patientPhotoSearchUrl = "{{ route('patients.photo.search') }}";
     </script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_document_search.js') }}">
-    </script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_photo_search.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_load_modal_info.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_info_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/patients.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/importFile.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/exportExcelFile.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/exportPDFFile.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/ajaxFile.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/selectFile.js') }}"></script>
 
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_date_info.js') }}">
-    </script>
-
-    <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_date_validator.js') }}">
-    </script>
+    {{-- ========================================================================= --}}
+    {{-- Patient Summary Core --}}
+    {{-- ========================================================================= --}}
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary.js') }}"></script>
-
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_preview.js') }}">
-    </script>
-
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_search.js') }}">
-    </script>
-
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_state.js') }}">
     </script>
 
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_typing.js') }}">
-    </script>
-
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_scroll.js') }}">
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_search.js') }}">
     </script>
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_result.js') }}">
@@ -165,38 +146,113 @@
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail.js') }}">
     </script>
 
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_preview.js') }}">
+    </script>
+
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}">
     </script>
 
-    {{-- Patient AI Animation --}}
-    <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_photo_animate.js') }}">
+    {{-- ========================================================================= --}}
+    {{-- Patient Summary Helpers --}}
+    {{-- ========================================================================= --}}
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_typing.js') }}">
     </script>
-    <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_information_animate.js') }}">
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_scroll.js') }}">
     </script>
-    <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_document_init.js') }}">
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_date_info.js') }}">
     </script>
 
     <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_document_render.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_date_validator.js') }}">
+    </script>
+
+    {{-- ========================================================================= --}}
+    {{-- Patient AI Animation :: Photo --}}
+    {{-- ========================================================================= --}}
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/photo_section/patient_photo_init.js') }}">
     </script>
 
     <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_document_animate.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/photo_section/patient_photo_template.js') }}">
     </script>
 
     <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_document_effect.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/photo_section/patient_photo_render.js') }}">
     </script>
 
     <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_document_events.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/photo_section/patient_photo_animation.js') }}">
     </script>
 
     <script
-        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/patient_document_public.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/photo_section/patient_photo_effect.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/photo_section/patient_photo_public.js') }}">
+    </script>
+
+    {{-- ========================================================================= --}}
+    {{-- Patient AI Animation :: Information --}}
+    {{-- ========================================================================= --}}
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/information_section/patient_information_init.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/information_section/patient_information_template.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/information_section/patient_information_render.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/information_section/patient_information_animation.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/information_section/patient_information_effect.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/information_section/patient_information_public.js') }}">
+    </script>
+
+    {{-- ========================================================================= --}}
+    {{-- Patient AI Animation :: Recommendation Documents --}}
+    {{-- ========================================================================= --}}
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/document_section/patient_document_init.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/document_section/patient_document_render.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/document_section/patient_document_animate.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/document_section/patient_document_effect.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/document_section/patient_document_events.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_animation/document_section/patient_document_public.js') }}">
     </script>
 
 @endsection
