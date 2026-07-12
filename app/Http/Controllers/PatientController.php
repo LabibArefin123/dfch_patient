@@ -585,13 +585,41 @@ class PatientController extends Controller
     public function patientSummaryAnimation(Patient $patient)
     {
         $patient->load([
-            'documents',
+            'documents' => function ($query) {
+                $query->where('document_type', 'recommendation');
+            },
             'cancerPhotos'
         ]);
 
         return response()->json([
             'success' => true,
-            'patient' => $patient
+
+            'patient' => [
+
+                'id' => $patient->id,
+
+                'patient_name' => $patient->patient_name,
+
+                'is_recommend' => (bool) $patient->is_recommend,
+
+                'recommend_doctor_name' => $patient->recommend_doctor_name,
+
+                'recommend_note' => $patient->recommend_note,
+
+                'documents' => $patient->documents
+                    ->where('document_type', 'recommendation')
+                    ->values()
+                    ->map(function ($doc) {
+                        return [
+                            'id' => $doc->id,
+                            'document_name' => $doc->document_name,
+                            'file_path' => asset($doc->file_path),
+                            'document_type' => $doc->document_type,
+                        ];
+                    })->values(),
+
+            ]
+
         ]);
     }
 
@@ -986,30 +1014,37 @@ class PatientController extends Controller
 
     public function edit(Patient $patient)
     {
-        /*
-    |--------------------------------------------------------------------------
-    | Helper for file size formatting
-    |--------------------------------------------------------------------------
-    */
-        $formatBytes = function ($bytes, $precision = 2) {
-            if (!$bytes || $bytes <= 0) {
-                return '0 B';
-            }
+        $patientImage = $this->getPatientImageInfo($patient);
 
-            $units = ['B', 'KB', 'MB', 'GB', 'TB'];
-            $pow = floor(log($bytes, 1024));
-            $pow = min($pow, count($units) - 1);
+        $documents = $this->getRecommendationDocuments($patient);
 
-            $bytes /= pow(1024, $pow);
+        return view('backend.patient_management.edit', array_merge(
+            [
+                'patient'   => $patient,
+                'documents' => $documents,
+            ],
+            $patientImage
+        ));
+    }
 
-            return round($bytes, $precision) . ' ' . $units[$pow];
-        };
+    private function formatBytes($bytes, $precision = 2)
+    {
+        if (!$bytes || $bytes <= 0) {
+            return '0 B';
+        }
 
-        /*
-    |--------------------------------------------------------------------------
-    | Patient image info
-    |--------------------------------------------------------------------------
-    */
+        $units = ['B', 'KB', 'MB', 'GB', 'TB'];
+
+        $pow = floor(log($bytes, 1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= pow(1024, $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
+    }
+
+    private function getPatientImageInfo(Patient $patient): array
+    {
         if (!empty($patient->patient_image)) {
             $patientImagePath = Str::startsWith($patient->patient_image, 'uploads/')
                 ? $patient->patient_image
@@ -1022,8 +1057,11 @@ class PatientController extends Controller
         $patientImageFullPath = public_path($patientImagePath);
         $patientImageName = basename($patientImagePath);
 
-        $patientImageSize = file_exists($patientImageFullPath) ? filesize($patientImageFullPath) : 0;
-        $patientImageSizeFormatted = $formatBytes($patientImageSize);
+        $patientImageSize = file_exists($patientImageFullPath)
+            ? filesize($patientImageFullPath)
+            : 0;
+
+        $patientImageSizeFormatted = $this->formatBytes($patientImageSize);
 
         $patientImageWidth = null;
         $patientImageHeight = null;
@@ -1033,14 +1071,17 @@ class PatientController extends Controller
         $patientImageExtension = strtolower(pathinfo($patientImageName, PATHINFO_EXTENSION));
 
         if (file_exists($patientImageFullPath)) {
+
             $imgInfo = @getimagesize($patientImageFullPath);
 
             if ($imgInfo) {
+
                 $patientImageWidth = $imgInfo[0] ?? null;
                 $patientImageHeight = $imgInfo[1] ?? null;
                 $patientImageMime = $imgInfo['mime'] ?? null;
 
                 if ($patientImageWidth && $patientImageHeight) {
+
                     if ($patientImageWidth > $patientImageHeight) {
                         $patientImageOrientation = 'Landscape';
                     } elseif ($patientImageHeight > $patientImageWidth) {
@@ -1066,21 +1107,47 @@ class PatientController extends Controller
             }
         }
 
-        /*
-    |--------------------------------------------------------------------------
-    | Recommendation documents
-    |--------------------------------------------------------------------------
-    */
-        $documents = $patient->documents
+        return [
+            'patientImagePath' => $patientImagePath,
+            'patientImageUrl' => $patientImageUrl,
+            'patientImageName' => $patientImageName,
+            'patientImageSize' => $patientImageSize,
+            'patientImageSizeFormatted' => $patientImageSizeFormatted,
+            'patientImageWidth' => $patientImageWidth,
+            'patientImageHeight' => $patientImageHeight,
+            'patientImageMime' => $patientImageMime,
+            'patientImageOrientation' => $patientImageOrientation,
+            'patientImageAspectCategory' => $patientImageAspectCategory,
+            'patientImageExtension' => $patientImageExtension,
+        ];
+    }
+
+    private function getRecommendationDocuments(Patient $patient)
+    {
+        return $patient->documents
             ->where('document_type', 'recommendation')
-            ->map(function ($doc) use ($formatBytes) {
+            ->map(function ($doc) {
+
                 $extension = strtolower(pathinfo($doc->file_path, PATHINFO_EXTENSION));
-                $isImage = in_array($extension, ['jpg', 'jpeg', 'png', 'webp', 'gif', 'bmp']);
+
+                $isImage = in_array($extension, [
+                    'jpg',
+                    'jpeg',
+                    'png',
+                    'webp',
+                    'gif',
+                    'bmp'
+                ]);
 
                 $fullPath = public_path($doc->file_path);
-                $fileUrl = asset($doc->file_path);
-                $fileSize = file_exists($fullPath) ? filesize($fullPath) : 0;
-                $mimeType = file_exists($fullPath) ? @mime_content_type($fullPath) : null;
+
+                $fileSize = file_exists($fullPath)
+                    ? filesize($fullPath)
+                    : 0;
+
+                $mimeType = file_exists($fullPath)
+                    ? @mime_content_type($fullPath)
+                    : null;
 
                 $width = null;
                 $height = null;
@@ -1088,14 +1155,18 @@ class PatientController extends Controller
                 $aspectCategory = 'Unknown';
 
                 if ($isImage && file_exists($fullPath)) {
+
                     $imageInfo = @getimagesize($fullPath);
 
                     if ($imageInfo) {
+
                         $width = $imageInfo[0] ?? null;
                         $height = $imageInfo[1] ?? null;
+
                         $mimeType = $imageInfo['mime'] ?? $mimeType;
 
                         if ($width && $height) {
+
                             if ($width > $height) {
                                 $orientation = 'Landscape';
                             } elseif ($height > $width) {
@@ -1121,11 +1192,11 @@ class PatientController extends Controller
                     }
                 }
 
-                $doc->file_url = $fileUrl;
+                $doc->file_url = asset($doc->file_path);
                 $doc->extension = $extension;
                 $doc->is_image = $isImage;
                 $doc->file_size = $fileSize;
-                $doc->file_size_formatted = $formatBytes($fileSize);
+                $doc->file_size_formatted = $this->formatBytes($fileSize);
                 $doc->mime_type = $mimeType;
                 $doc->width = $width;
                 $doc->height = $height;
@@ -1134,24 +1205,8 @@ class PatientController extends Controller
 
                 return $doc;
             });
-
-        return view('backend.patient_management.edit', compact(
-            'patient',
-            'documents',
-            'patientImagePath',
-            'patientImageUrl',
-            'patientImageName',
-            'patientImageSize',
-            'patientImageSizeFormatted',
-            'patientImageWidth',
-            'patientImageHeight',
-            'patientImageMime',
-            'patientImageOrientation',
-            'patientImageAspectCategory',
-            'patientImageExtension'
-        ));
     }
-    
+
     public function update(Request $request, Patient $patient)
     {
         $validated = $request->validate([

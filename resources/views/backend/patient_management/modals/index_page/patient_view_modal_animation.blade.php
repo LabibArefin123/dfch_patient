@@ -34,7 +34,7 @@
 
                 </div>
 
-                <button type="button" class="close text-white ml-auto" data-dismiss="modal">
+                <button type="button" class="close text-white ml-auto" data-bs-dismiss="modal">
 
                     <span>&times;</span>
 
