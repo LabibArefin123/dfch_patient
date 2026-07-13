@@ -114,6 +114,21 @@
                                     <i class="fas fa-user text-muted"></i>
                                 </a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents-tab-pane"
+                                    role="tab" title="Patient Documents">
+
+                                    <i class="fas fa-file-medical text-muted"></i>
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link" id="cancer-tab" data-toggle="tab" href="#cancer-tab-pane"
+                                    role="tab" title="Patient Cancer Photos">
+
+                                    <i class="fas fa-images text-muted"></i>
+                                </a>
+                            </li>
                         </ul>
 
                         <!-- Tabs Content Container -->
@@ -143,6 +158,34 @@
                                         <p>Search and select a patient to view the complete summary.</p>
                                     </div>
                                 </div>
+                            </div>
+
+                            <div class="tab-pane fade p-3" id="documents-tab-pane">
+
+                                <div id="patientDocumentContent">
+                                    <div class="text-center text-muted mt-5">
+
+                                        <i class="fas fa-file-medical fa-4x mb-3"></i>
+
+                                        <h5>No Documents Loaded</h5>
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="tab-pane fade p-3" id="cancer-tab-pane">
+
+                                <div id="patientCancerContent">
+                                    <div class="text-center text-muted mt-5">
+
+                                        <i class="fas fa-images fa-4x mb-3"></i>
+
+                                        <h5>No Cancer Photos Loaded</h5>
+
+                                    </div>
+                                </div>
+
                             </div>
 
                         </div>

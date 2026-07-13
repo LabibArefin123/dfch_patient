@@ -25,47 +25,66 @@ $(document).on("click", ".patient-summary-documents", function (e) {
         </div>
     `);
 
-    $("#patientDocumentContentModal").modal("show");
+    $("#documents-tab").tab("show");
+
+    $("#patientDocumentContent").html(`
+        <div class="text-center py-5">
+
+            <i class="fas fa-spinner fa-spin fa-2x"></i>
+
+        </div>
+        `);
 
     $.ajax({
         url: url,
         type: "GET",
 
         success: function (res) {
-            const body = $("#patientDocumentContentBody");
+            const body = $("#patientDocumentContent");
 
             body.empty();
 
-            if (!res.status || res.documents.length === 0) {
+            if (!res.status || !res.documents.length) {
                 body.html(`
-                    <div class="col-12">
-
-                        <div class="alert alert-warning text-center mb-0">
-
-                            <i class="fas fa-folder-open mr-2"></i>
-
-                            No recommendation documents found.
-
-                        </div>
-
+                    <div class="alert alert-warning text-center">
+                        <i class="fas fa-folder-open fa-2x mb-3"></i>
+                        <h5>No Recommendation Documents</h5>
+                        <p class="mb-0 text-muted">
+                            No uploaded recommendation documents found.
+                        </p>
                     </div>
                 `);
-
                 return;
             }
 
-            $.each(res.documents, function (index, doc) {
+            body.append('<div class="row"></div>');
+
+            const row = body.find(".row");
+
+            $.each(res.documents, function (_, doc) {
                 let preview = "";
+                let footer = "";
 
                 if (doc.is_image) {
                     preview = `
                         <img
                             src="${doc.path}"
-                            class="card-img-top"
+                            class="card-img-top patient-document-image-preview"
+                            data-image="${doc.path}"
                             style="
-                                height:220px;
+                                height:260px;
                                 object-fit:cover;
+                                cursor:pointer;
                             ">
+                    `;
+
+                    footer = `
+                        <button
+                            class="btn btn-primary btn-sm patient-document-image-preview"
+                            data-image="${doc.path}">
+                            <i class="fas fa-search-plus mr-1"></i>
+                            Preview
+                        </button>
                     `;
                 } else if (doc.is_pdf) {
                     preview = `
@@ -73,61 +92,54 @@ $(document).on("click", ".patient-summary-documents", function (e) {
                             src="${doc.path}"
                             style="
                                 width:100%;
-                                height:220px;
+                                height:260px;
                                 border:0;
                             ">
                         </iframe>
                     `;
+
+                    footer = `
+                            <a
+                                href="${doc.path}"
+                                target="_blank"
+                                class="btn btn-danger btn-sm">
+                                <i class="fas fa-file-pdf mr-1"></i>
+                                Open PDF
+                            </a>
+                        `;
                 } else {
                     preview = `
                         <div
-                            class="d-flex
-                                   align-items-center
-                                   justify-content-center"
-                            style="height:220px;">
-
+                            class="d-flex align-items-center justify-content-center"
+                            style="height:260px;">
                             <i class="fas fa-file fa-5x text-secondary"></i>
-
                         </div>
+                    `;
+
+                    footer = `
+                        <a
+                            href="${doc.path}"
+                            target="_blank"
+                            class="btn btn-secondary btn-sm">
+                            Download
+                        </a>
                     `;
                 }
 
-                body.append(`
-                    <div class="col-lg-4 col-md-6 mb-4">
-
-                        <div class="card shadow-sm h-100">
-
+                row.append(`
+                    <div class="col-lg-6 col-md-6 mb-4">
+                        <div class="card border-0 shadow-sm h-100">
                             ${preview}
-
                             <div class="card-body">
-
-                                <h6
-                                    class="card-title text-truncate"
-                                    title="${doc.name}">
-
+                                <h6 class="text-truncate mb-0">
                                     ${doc.name}
-
                                 </h6>
-
                             </div>
 
                             <div class="card-footer bg-white text-center">
-
-                                <a
-                                    href="${doc.path}"
-                                    target="_blank"
-                                    class="btn btn-primary btn-sm">
-
-                                    <i class="fas fa-eye mr-1"></i>
-
-                                    View
-
-                                </a>
-
+                                ${footer}
                             </div>
-
                         </div>
-
                     </div>
                 `);
             });
@@ -147,4 +159,70 @@ $(document).on("click", ".patient-summary-documents", function (e) {
             `);
         },
     });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Document Image Preview
+|--------------------------------------------------------------------------
+*/
+
+$(document).on("click", ".patient-document-image-preview", function () {
+    const image = $(this).data("image");
+
+    $("#documentOverlayImage").attr("src", image).css("transform", "scale(1)");
+
+    $("#documentImageOverlay").removeClass("d-none").hide().fadeIn(200);
+});
+
+/*
+|--------------------------------------------------------------------------
+| Close Overlay
+|--------------------------------------------------------------------------
+*/
+
+$(document).on("click", "#closeDocumentImageOverlay", function () {
+    $("#documentImageOverlay").fadeOut(200, function () {
+        $(this).addClass("d-none");
+
+        $("#documentOverlayImage").attr("src", "");
+    });
+});
+
+/*
+|--------------------------------------------------------------------------
+| Click Outside
+|--------------------------------------------------------------------------
+*/
+
+$("#documentImageOverlay").on("click", function (e) {
+    if (e.target.id === "documentImageOverlay") {
+        $("#closeDocumentImageOverlay").click();
+    }
+});
+
+/*
+|--------------------------------------------------------------------------
+| ESC Key
+|--------------------------------------------------------------------------
+*/
+
+$(document).keyup(function (e) {
+    if (e.key === "Escape") {
+        $("#closeDocumentImageOverlay").click();
+    }
+});
+
+/*
+|--------------------------------------------------------------------------
+| Image Zoom
+|--------------------------------------------------------------------------
+*/
+
+let documentZoom = 1;
+
+$(document).on("click", "#documentOverlayImage", function () {
+    documentZoom = documentZoom === 1 ? 2 : 1;
+
+    $(this).css("transform", `scale(${documentZoom})`);
 });

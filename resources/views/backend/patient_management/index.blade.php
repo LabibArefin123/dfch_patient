@@ -53,9 +53,9 @@
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
     @include('backend.patient_management.modals.index_page.patient_photo_info_modal')
-    @include('backend.patient_management.modals.index_page.patient_document_content_modal')
-    @include('backend.patient_management.modals.index_page.patient_cancer_content_modal')
     @include('backend.patient_management.modals.index_page.patient_summary_modal')
+    @include('backend.patient_management.modals.index_page.patient_summary_document_overlay')
+    @include('backend.patient_management.modals.index_page.patient_summary_cancer_overlay')
     @include('backend.patient_management.modals.index_page.patient_view_modal')
     @include('backend.patient_management.modals.index_page.patient_view_modal_animation')
     @include('backend.patient_management.modals.index_page.patient_close_modal')
