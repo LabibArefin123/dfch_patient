@@ -1,40 +1,98 @@
+/**
+|--------------------------------------------------------------------------
+| Patient Summary State
+|--------------------------------------------------------------------------
+| Handles summary modal state and tab behavior.
+|--------------------------------------------------------------------------
+*/
+
 $(function () {
-    // "Yes" button click handler - resets field, sets focus, and switches tab back
+    window.PatientSummaryState = {
+        chatClosed: false,
+    };
+
+    /**
+     * Activate Search Result Tab
+     */
+    function activateResultsTab() {
+        const resultsTab = $("#results-tab");
+
+        if (!resultsTab.length) {
+            return;
+        }
+
+        resultsTab.tab("show");
+
+        $("#results-tab")
+            .find("i")
+            .removeClass("text-muted")
+            .addClass("text-primary");
+
+        $("#profile-tab")
+            .find("i")
+            .removeClass("text-primary")
+            .addClass("text-muted");
+    }
+
+    /**
+     * YES
+     * Search another patient
+     */
     $("#patientSearchAgain").on("click", function () {
-        $("#patientSummarySearch").val("").focus();
+        $("#patientSummarySearch").val("");
+
         $("#patientSummaryAction").addClass("d-none");
 
-        // 🆕 Automatically switch back to Search Results Tab
-        const resultsTabLink = $("#results-tab");
-        if (resultsTabLink.length) {
-            resultsTabLink.tab("show");
-            $("#profile-tab")
-                .find("i")
-                .removeClass("text-primary")
-                .addClass("text-muted");
-            resultsTabLink.find("i").removeClass("text-muted");
+        // Reopen chat if it was previously closed
+        if (
+            window.PatientSummaryState &&
+            window.PatientSummaryState.chatClosed
+        ) {
+            reopenPatientChat();
         }
+
+        // Restore Search Result tab
+        activateResultsTab();
+
+        // Focus after everything is restored
+        setTimeout(function () {
+            $("#patientSummarySearch").focus();
+        }, 100);
     });
 
-    // "No" button click handler - closes modal
+    /**
+     * NO
+     * Close Summary Modal
+     */
     $("#patientSummaryClose").on("click", function () {
         $("#patientSummaryModal").modal("hide");
     });
 
-    // Update active icon colors on manual tab clicking
+    /**
+     * Update tab icon colors
+     */
     $('#patientSummaryTabs a[data-toggle="tab"]').on(
         "shown.bs.tab",
         function (e) {
-            const activeTabId = $(e.target).attr("id");
-            if (activeTabId === "profile-tab") {
+            const activeTab = $(e.target).attr("id");
+
+            if (activeTab === "results-tab") {
+                $("#results-tab")
+                    .find("i")
+                    .removeClass("text-muted")
+                    .addClass("text-primary");
+
+                $("#profile-tab")
+                    .find("i")
+                    .removeClass("text-primary")
+                    .addClass("text-muted");
+            } else if (activeTab === "profile-tab") {
                 $("#profile-tab")
                     .find("i")
                     .removeClass("text-muted")
                     .addClass("text-primary");
-                $("#results-tab").find("i").addClass("text-muted");
-            } else if (activeTabId === "results-tab") {
-                $("#results-tab").find("i").removeClass("text-muted");
-                $("#profile-tab")
+
+                $("#results-tab")
                     .find("i")
                     .removeClass("text-primary")
                     .addClass("text-muted");
@@ -42,7 +100,25 @@ $(function () {
         },
     );
 
-    window.PatientSummaryState = {
-        chatClosed: false,
-    };
+    /**
+     * Reset state whenever modal is opened
+     */
+    $("#patientSummaryModal").on("shown.bs.modal", function () {
+        activateResultsTab();
+
+        $("#patientSummaryAction").addClass("d-none");
+
+        $("#patientSummarySearch").focus();
+    });
+
+    /**
+     * Cleanup when modal closes
+     */
+    $("#patientSummaryModal").on("hidden.bs.modal", function () {
+        $("#patientSummaryAction").addClass("d-none");
+
+        $("#patientSummarySearch").val("");
+
+        activateResultsTab();
+    });
 });

@@ -3,15 +3,7 @@ function patientSummarySearch() {
 
     if (!keyword) return;
 
-    if (window.PatientSummaryState.chatClosed) {
-        const modal = new bootstrap.Modal(
-            document.getElementById("patientChatClosedModal"),
-        );
-
-        modal.show();
-
-        return;
-    }
+    if (patientChatClosedWarning()) return;
 
     /*-----------------------------------
     Close Command

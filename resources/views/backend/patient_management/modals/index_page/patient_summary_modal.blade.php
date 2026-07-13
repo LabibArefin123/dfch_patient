@@ -1,7 +1,6 @@
 <div class="modal fade" id="patientSummaryModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content shadow-lg border-0" style="border-radius: 12px;">
-
             {{-- Header --}}
             <div class="modal-header bg-primary text-white py-3">
                 <h5 class="modal-title font-weight-bold">
@@ -16,7 +15,6 @@
             {{-- Body --}}
             <div class="modal-body p-0">
                 <div class="row no-gutters">
-
                     {{-- =========================
                     CHAT PANEL (LEFT)
                     ========================== --}}
@@ -64,9 +62,7 @@
                                     <div class="input-group-append">
                                         <button type="button" class="btn btn-outline-success" id="patientPhotoBtn"
                                             title="Search Patient by Photo">
-
                                             <i class="fas fa-camera"></i>
-
                                         </button>
 
                                         <input type="file" id="patientPhotoInput" accept=".jpg,.jpeg,.png,.webp"
@@ -81,9 +77,7 @@
                                             <span class="d-none d-md-inline">
                                                 Document
                                             </span>
-
                                         </button>
-
                                     </div>
 
                                     <input type="file" id="patientDocumentInput" accept=".pdf,.jpg,.jpeg,.png,.webp"

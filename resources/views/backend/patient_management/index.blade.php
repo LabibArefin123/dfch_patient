@@ -114,11 +114,10 @@
 
     <script>
         /*
-                        |--------------------------------------------------------------------------
-                        | Global Routes
-                        |--------------------------------------------------------------------------
-                        */
-
+        |--------------------------------------------------------------------------
+        | Global Routes
+        |--------------------------------------------------------------------------
+        */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
@@ -148,6 +147,9 @@
     </script>
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_preview.js') }}">
+    </script>
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_chat_validator.js') }}">
     </script>
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}">

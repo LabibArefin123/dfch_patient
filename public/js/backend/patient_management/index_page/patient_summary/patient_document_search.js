@@ -1,8 +1,15 @@
 $("#patientDocumentBtn").click(function () {
+    if (patientChatClosedWarning()) return;
+
     $("#patientDocumentInput").click();
 });
 
 $("#patientDocumentInput").change(function () {
+    if (patientChatClosedWarning()) {
+        $(this).val("");
+        return;
+    }
+    
     if (!this.files.length) return;
 
     let fd = new FormData();
