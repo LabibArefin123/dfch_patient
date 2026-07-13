@@ -53,26 +53,13 @@
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
     @include('backend.patient_management.modals.index_page.patient_photo_info_modal')
+    @include('backend.patient_management.modals.index_page.patient_document_content_modal')
+    @include('backend.patient_management.modals.index_page.patient_cancer_content_modal')
     @include('backend.patient_management.modals.index_page.patient_summary_modal')
     @include('backend.patient_management.modals.index_page.patient_view_modal')
     @include('backend.patient_management.modals.index_page.patient_view_modal_animation')
     @include('backend.patient_management.modals.index_page.patient_close_modal')
-    <style>
-        .patient-img {
-            width: 45px;
-            height: 45px;
-            object-fit: cover;
-            border-radius: 8px;
-            /* change to 50% if you want circle */
-            border: 2px solid #dee2e6;
-            transition: 0.3s;
-        }
-
-        .patient-img:hover {
-            transform: scale(1.2);
-            border-color: #007bff;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_image.css') }}">
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
             <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
@@ -114,10 +101,10 @@
 
     <script>
         /*
-        |--------------------------------------------------------------------------
-        | Global Routes
-        |--------------------------------------------------------------------------
-        */
+            |--------------------------------------------------------------------------
+            | Global Routes
+            |--------------------------------------------------------------------------
+            */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
@@ -125,6 +112,8 @@
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
         const patientSummaryAnimationSearchUrl = "{{ url('patients/summary/animation') }}";
         const patientDocumentSearchUrl = "{{ route('patients.document.search') }}";
+        const patientDocumentContentsUrl = "{{ route('patients.document.contents', ':id') }}";
+        const patientCancerPhotoContentsUrl = "{{ route('patients.cancer.photo.contents', ':id') }}";
         const patientPhotoSearchUrl = "{{ route('patients.photo.search') }}";
     </script>
 
@@ -150,6 +139,17 @@
     </script>
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_chat_validator.js') }}">
+    </script>
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_photo_search.js') }}"></script>
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_document_search.js') }}">
+    </script>
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_document_content.js') }}">
+    </script>
+
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_cancer_content.js') }}">
     </script>
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}">

@@ -708,6 +708,40 @@ class PatientController extends Controller
         ]);
     }
 
+    public function patientDocumentContents(Patient $patient)
+    {
+        $patient->load('documents');
+
+        $documents = $patient->documents->map(function ($document) {
+
+            $extension = strtolower(pathinfo($document->file_path, PATHINFO_EXTENSION));
+
+            return [
+                'id'        => $document->id,
+                'name'      => $document->document_name,
+                'path'      => asset($document->file_path),
+                'extension' => $extension,
+                'is_image'  => in_array($extension, [
+                    'jpg',
+                    'jpeg',
+                    'png',
+                    'webp',
+                ]),
+                'is_pdf'    => $extension === 'pdf',
+            ];
+        });
+
+        return response()->json([
+            'status'   => true,
+            'patient'  => [
+                'id'   => $patient->id,
+                'name' => $patient->patient_name,
+                'code' => $patient->patient_code,
+            ],
+            'documents' => $documents,
+        ]);
+    }
+
     public function patientPhotoSearch(Request $request)
     {
         $request->validate([
@@ -771,6 +805,43 @@ class PatientController extends Controller
                         ->format('d F Y'),
                 ];
             }),
+        ]);
+    }
+
+    public function patientCancerPhotoContents(Patient $patient)
+    {
+        $patient->load('cancerPhotos');
+
+        $photos = [];
+
+        foreach ($patient->cancerPhotos as $report) {
+
+            if (empty($report->xray_photo)) {
+                continue;
+            }
+
+            foreach ($report->xray_photo as $index => $photo) {
+
+                $photos[] = [
+                    'report_id' => $report->id,
+                    'photo' => asset($photo),
+                    'description' => $report->xray_description[$index] ?? '',
+                    'remarks' => $report->remarks,
+                    'total_cancer' => $report->total_cancer,
+                ];
+            }
+        }
+
+        return response()->json([
+            'status' => true,
+
+            'patient' => [
+                'id' => $patient->id,
+                'name' => $patient->patient_name,
+                'code' => $patient->patient_code,
+            ],
+
+            'photos' => $photos,
         ]);
     }
 

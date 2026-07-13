@@ -9,13 +9,7 @@ function patientChatClosedWarning() {
         return false;
     }
 
-    const modal = document.getElementById("patientChatClosedModal");
-
-    if (typeof bootstrap !== "undefined" && bootstrap.Modal) {
-        bootstrap.Modal.getOrCreateInstance(modal).show();
-    } else {
-        $("#patientChatClosedModal").modal("show");
-    }
+    $("#patientChatClosedModal").modal("show");
 
     return true;
 }

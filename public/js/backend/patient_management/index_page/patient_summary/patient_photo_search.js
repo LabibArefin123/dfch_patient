@@ -1,6 +1,5 @@
 $("#patientPhotoBtn").click(function () {
     if (patientChatClosedWarning()) return;
-
     $("#patientPhotoInput").click();
 });
 

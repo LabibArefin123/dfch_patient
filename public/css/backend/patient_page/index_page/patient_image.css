@@ -1,0 +1,14 @@
+.patient-img {
+    width: 45px;
+    height: 45px;
+    object-fit: cover;
+    border-radius: 8px;
+    /* change to 50% if you want circle */
+    border: 2px solid #dee2e6;
+    transition: 0.3s;
+}
+
+.patient-img:hover {
+    transform: scale(1.2);
+    border-color: #007bff;
+}
