@@ -1,4 +1,5 @@
 function patientSummarySearch() {
+    resetPatientTabs();
     let keyword = $("#patientSummarySearch").val().trim();
 
     if (!keyword) return;
@@ -25,11 +26,8 @@ function patientSummarySearch() {
                     id="reopenChatBtn"
                     class="btn btn-outline-primary btn-sm position-absolute"
                     style="top:15px;right:15px;z-index:999;border-radius:20px;">
-
                     <i class="fas fa-comments mr-1"></i>
-
                     Open Chat
-
                 </button>
             `);
         }
@@ -54,8 +52,8 @@ function patientSummarySearch() {
 /*========================================================
 Actual AJAX
 ========================================================*/
-
 function doPatientSummarySearch(keyword) {
+    resetPatientTabs();
     appendUserMessage(keyword);
 
     $("#patientSummarySearch").val("");
@@ -133,3 +131,4 @@ $(document).on("click", "#reopenChatBtn", function () {
 
     $(this).remove();
 });
+

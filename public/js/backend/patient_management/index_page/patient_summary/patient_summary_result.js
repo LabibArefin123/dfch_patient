@@ -135,7 +135,21 @@ function renderPatientResults(patients) {
             `${p.age || "-"} Years | ${p.gender || "-"} | ${p.phone || "-"}`,
         );
 
-        card.find(".patient-summary-show").data("patient", p);
+        card.find(".patient-summary-show")
+            .data("patient", p)
+            .attr("data-id", p.id);
+
+        $(document).off("click.patientTabs");
+
+        $(document).on(
+            "click.patientTabs",
+            ".patient-summary-show",
+            function () {
+                const patient = $(this).data("patient");
+
+                updatePatientTabs(patient);
+            },
+        );
 
         card.find(".patient-summary-preview").data("patient", p);
 

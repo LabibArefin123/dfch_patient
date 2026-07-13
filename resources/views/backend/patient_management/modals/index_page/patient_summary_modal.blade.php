@@ -114,20 +114,26 @@
                                     <i class="fas fa-user text-muted"></i>
                                 </a>
                             </li>
-                            <li class="nav-item">
+                            <li class="nav-item d-none" id="documents-tab-item">
+
                                 <a class="nav-link" id="documents-tab" data-toggle="tab" href="#documents-tab-pane"
                                     role="tab" title="Patient Documents">
 
-                                    <i class="fas fa-file-medical text-muted"></i>
+                                    <i class="fas fa-file-medical text-primary"></i>
+
                                 </a>
+
                             </li>
 
-                            <li class="nav-item">
+                            <li class="nav-item d-none" id="cancer-tab-item">
+
                                 <a class="nav-link" id="cancer-tab" data-toggle="tab" href="#cancer-tab-pane"
                                     role="tab" title="Patient Cancer Photos">
 
-                                    <i class="fas fa-images text-muted"></i>
+                                    <i class="fas fa-images text-danger"></i>
+
                                 </a>
+
                             </li>
                         </ul>
 
