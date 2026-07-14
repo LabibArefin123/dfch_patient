@@ -85,7 +85,7 @@
     <div style="height: 50px;"></div>
 
     <iframe id="downloadFrame" style="display:none;"></iframe>
-    @include('backend.patient_management.modals.select_modal')
+    @include('backend.patient_management.modals.index_page.select_modal')
 @stop
 
 @section('js')

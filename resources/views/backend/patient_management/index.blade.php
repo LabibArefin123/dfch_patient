@@ -48,7 +48,6 @@
     </div>
 @stop
 
-
 @section('content')
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
@@ -98,13 +97,12 @@
 @stop
 
 @section('js')
-
     <script>
         /*
-            |--------------------------------------------------------------------------
-            | Global Routes
-            |--------------------------------------------------------------------------
-            */
+                |--------------------------------------------------------------------------
+                | Global Routes
+                |--------------------------------------------------------------------------
+                */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
@@ -161,7 +159,8 @@
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>
 
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_helper.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_helper.js') }}">
+    </script>
 
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_typing.js') }}">
     </script>

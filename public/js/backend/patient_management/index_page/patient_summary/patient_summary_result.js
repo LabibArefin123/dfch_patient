@@ -17,11 +17,70 @@ function renderPatientResults(patients) {
                 No patient found.
             </div>
         `);
-
         return;
     }
 
     $.each(patients, function (i, p) {
+        console.log(p);
+        /*
+        |--------------------------------------------------------------------------
+        | Dropdown Items
+        |--------------------------------------------------------------------------
+        */
+        const hasRecommendation = Number(p.is_recommend) === 1;
+
+        const hasOldXray =
+            Number(p.cancer_photos_count || 0) > 0 ||
+            (Array.isArray(p.cancer_photos) && p.cancer_photos.length > 0);
+
+        let dropdownItems = "";
+
+        if (hasRecommendation) {
+            dropdownItems += `
+                <a
+                    href="#"
+                    class="dropdown-item patient-summary-documents"
+                    data-id="${p.id}"
+                    title="View Patient Documents">
+
+                    <i class="fas fa-folder-open text-primary mr-2"></i>
+
+                    Patient Documents
+
+                </a>
+            `;
+        }
+
+        if (hasOldXray) {
+            dropdownItems += `
+                <a
+                    href="#"
+                    class="dropdown-item patient-summary-cancer-photos"
+                    data-id="${p.id}">
+
+                    <i class="fas fa-images text-danger mr-2"></i>
+
+                    Patient Cancer Photos
+
+                </a>
+            `;
+        }
+
+        if (!dropdownItems) {
+            dropdownItems = `
+                <span class="dropdown-item text-muted">
+                    <i class="fas fa-info-circle mr-2"></i>
+                    No Additional Data
+                </span>
+            `;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Card
+        |--------------------------------------------------------------------------
+        */
+
         const card = $(`
             <div class="card mb-1 shadow-sm border-0">
 
@@ -50,23 +109,29 @@ function renderPatientResults(patients) {
 
                     </div>
 
-                    <div class="d-flex justify-content-end align-items-center">
+                    <div class="d-flex justify-content-end align-items-center mt-3">
 
                         <div class="btn-group">
 
                             <button
                                 type="button"
                                 class="btn btn-primary btn-sm patient-summary-show">
+
                                 <i class="fas fa-eye mr-1"></i>
+
                                 Show
+
                             </button>
 
                             <button
                                 type="button"
                                 class="btn btn-outline-success btn-sm patient-summary-preview pulse-btn"
                                 data-id="${p.id}">
+
                                 <i class="fas fa-chart-line mr-1"></i>
+
                                 Preview
+
                             </button>
 
                             <div class="dropdown">
@@ -84,28 +149,7 @@ function renderPatientResults(patients) {
 
                                 <div class="dropdown-menu dropdown-menu-right">
 
-                                   <a
-                                        href="#"
-                                        class="dropdown-item patient-summary-documents"
-                                        data-id="${p.id}"
-                                        title="View Patient Documents">
-
-                                        <i class="fas fa-folder-open text-primary mr-2"></i>
-
-                                        Patient Documents
-
-                                    </a>
-
-                                    <a
-                                        href="#"
-                                        class="dropdown-item patient-summary-cancer-photos"
-                                        data-id="${p.id}">
-
-                                        <i class="fas fa-images text-danger mr-2"></i>
-
-                                        Patient Cancer Photos
-
-                                    </a>
+                                    ${dropdownItems}
 
                                 </div>
 
@@ -139,20 +183,22 @@ function renderPatientResults(patients) {
             .data("patient", p)
             .attr("data-id", p.id);
 
-        $(document).off("click.patientTabs");
-
-        $(document).on(
-            "click.patientTabs",
-            ".patient-summary-show",
-            function () {
-                const patient = $(this).data("patient");
-
-                updatePatientTabs(patient);
-            },
-        );
-
         card.find(".patient-summary-preview").data("patient", p);
 
         container.append(card);
     });
 }
+
+/*
+|--------------------------------------------------------------------------
+| Show Button
+|--------------------------------------------------------------------------
+*/
+
+$(document)
+    .off("click.patientTabs")
+    .on("click.patientTabs", ".patient-summary-show", function () {
+        const patient = $(this).data("patient");
+
+        updatePatientTabs(patient);
+    });

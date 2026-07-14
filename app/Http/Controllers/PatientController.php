@@ -17,6 +17,12 @@ class PatientController extends Controller
 {
     public function index(Request $request)
     {
+        dd([
+            'ajax' => $request->ajax(),
+            'expectsJson' => $request->expectsJson(),
+            'draw' => $request->draw,
+            'all' => $request->all(),
+        ]);
         // Base Query with Filters
         $baseQuery = Patient::withCount('cancerPhotos')
             ->with('cancerPhotos')
