@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\WelcomePageController;
 use App\Http\Controllers\OrganizationController;
+use App\Http\Controllers\SpecialistController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivityLogController;
@@ -65,6 +66,9 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
 
     // Organization Routes
     Route::resource('organizations', OrganizationController::class);
+    
+    // Specialist Routes
+    Route::resource('specialists', SpecialistController::class);
 
     Route::get('/user_profile', [ProfileController::class, 'user_profile_show'])->name('user_profile_show');
     Route::get('/user_profile_edit', [ProfileController::class, 'user_profile_edit'])->name('user_profile_edit');
