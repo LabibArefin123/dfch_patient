@@ -125,26 +125,26 @@ class PatientController extends Controller
                         ? asset($p->patient_photo)
                         : asset('uploads/images/default.jpg');
 
-                    $formattedDate = $p->date_of_patient_added
-                        ? Carbon::parse($p->date_of_patient_added)->format('d F Y')
-                        : 'N/A';
-
                     return '
                     <div class="text-center">
-                        <img src="' . $photo . '"
-                            class="patient-img patient-image-modal-btn"
-                            style="cursor:pointer"
-                            alt="Patient"
 
-                            data-photo="' . $photo . '"
-                            data-name="' . e($p->patient_name) . '"
-                            data-code="' . e($p->patient_code) . '"
-                            data-age="' . e($p->age) . ' years old"
-                            data-gender="' . e($p->gender) . '"
-                            data-phone="' . e($p->phone_1) . '"
-                            data-date="' . $formattedDate . '">
+                        <img src="' . $photo . '"
+                            alt="' . e($p->patient_name) . '"
+                            class="patient-img img-thumbnail"
+                            style="
+                                width:50px;
+                                height:50px;
+                                object-fit:contain;
+                                cursor:pointer;
+                                background:#fff;
+                            "
+                            data-bs-toggle="modal"
+                            data-bs-target="#imageZoomModal"
+                            data-bs-img-src="' . $photo . '">
+
                     </div>';
                 })
+                
                 ->rawColumns(['photo'])
                 ->addColumn('patient_code', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
@@ -215,6 +215,23 @@ class PatientController extends Controller
                     </a>';
                 })
 
+                ->addColumn('emergency', function ($p) {
+
+                    if ($p->is_emergency) {
+
+                        return '
+                        <span class="badge badge-danger">
+                            <i class="fas fa-ambulance"></i>
+                            Emergency
+                        </span>';
+                                }
+
+                                return '
+                    <span class="badge badge-success">
+                        Normal
+                    </span>';
+                })
+
                 ->addColumn('date', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' .
                         \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y') .
@@ -265,6 +282,7 @@ class PatientController extends Controller
                     'is_recommend',
                     'does_old_cancer',
                     'total_cancer_photos',
+                    'emergency',
                     'date',
                     'checkbox',
                     'action'
@@ -918,6 +936,25 @@ class PatientController extends Controller
                     $request->to_date
                 ])
             );
+    }
+
+    public function updateEmergency(Request $request)
+    {
+        $request->validate([
+            'patient_ids' => 'required|array',
+            'patient_ids.*' => 'exists:patients,id',
+            'is_emergency' => 'required|boolean',
+        ]);
+
+        Patient::whereIn('id', $request->patient_ids)
+            ->update([
+                'is_emergency' => $request->is_emergency,
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Emergency status updated successfully.',
+        ]);
     }
 
     public function create()

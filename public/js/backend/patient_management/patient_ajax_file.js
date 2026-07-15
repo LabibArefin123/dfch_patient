@@ -43,31 +43,46 @@ $(function () {
                 orderable: false,
                 searchable: false,
             },
+
+            // NEW
+            {
+                data: "emergency",
+                name: "is_emergency",
+                orderable: false,
+                searchable: false,
+            },
+
             { data: "patient_code", name: "patient_code" },
             { data: "name", name: "patient_name" },
             { data: "age", name: "age" },
             { data: "gender", name: "gender" },
             { data: "phone", name: "phone_1" },
+
             {
                 data: "location",
                 name: "location",
                 orderable: false,
                 searchable: false,
             },
+
             { data: "is_recommend", name: "is_recommend" },
+
             {
                 data: "does_old_cancer",
                 name: "is_old_cancer",
                 orderable: false,
                 searchable: false,
             },
+
             {
                 data: "total_cancer_photos",
                 name: "total_cancer_photos",
                 orderable: false,
                 searchable: false,
             },
+
             { data: "date", name: "date_of_patient_added" },
+
             {
                 data: "action",
                 name: "action",

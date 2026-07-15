@@ -36,6 +36,7 @@ class Patient extends Model
         'patient_drug_description',
         
         'is_recommend',
+        'is_emergency',
         'recommend_doctor_name',
         'recommend_note',
         
@@ -70,5 +71,16 @@ class Patient extends Model
     public function cancerPhotos()
     {
         return $this->hasMany(PatientCancerPhoto::class);
+    }
+
+    public function emergencies()
+    {
+        return $this->hasMany(PatientEmergency::class);
+    }
+
+    public function latestEmergency()
+    {
+        return $this->hasOne(PatientEmergency::class)
+            ->latestOfMany();
     }
 }

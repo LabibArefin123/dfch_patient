@@ -82,6 +82,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::post('patients/document-search',[PatientController::class, 'patientDocumentSearch'])->name('patients.document.search');
     Route::post('patients/photo-search',[PatientController::class, 'patientPhotoSearch'])->name('patients.photo.search');
     Route::get('patients/{id}/modal-details', [PatientController::class, 'getModalDetails'])->name('patients.modal_details');
+    Route::post('/patients/emergency', [PatientController::class, 'updateEmergency'])->name('patients.emergency');
     Route::get('patients/recommend', [PatientController::class, 'patient_recommend'])->name('patients.recommend');
     Route::post('patients/export-excel', [PatientController::class, 'exportExcel'])->name('patients.export.excel');
     Route::post('patients/export-pdf', [PatientController::class, 'exportPdf'])->name('patients.export.pdf');

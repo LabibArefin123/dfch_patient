@@ -42,7 +42,18 @@
                     <a class="dropdown-item import-word" href="{{ route('patients.import.word') }}">
                         <i class="fas fa-upload"></i> Import Word
                     </a>
+
+                    <div class="dropdown-divider"></div>
+
+                    <a href="#" class="dropdown-item" data-toggle="modal" data-target="#patientEmergencyModal">
+
+                        <i class="fas fa-ambulance text-danger"></i>
+
+                        Emergency Status
+
+                    </a>
                 </div>
+
             </div>
         </div>
     </div>
@@ -69,6 +80,7 @@
                         </th>
                         <th>#</th>
                         <th>Photo</th>
+                        <th width="90">Emergency </th>
                         <th>Patient Code</th>
                         <th>Name</th>
                         <th>Age</th>
@@ -85,7 +97,7 @@
             </table>
         </div>
     </div>
-
+    @include('backend.patient_management.modals.index_page.patient_emergency_modal')
     @include('backend.patient_management.modals.index_page.import_file_modal')
     @include('backend.patient_management.modals.index_page.no_filter_modal')
     @include('backend.patient_management.modals.index_page.progress_modal')
@@ -99,10 +111,10 @@
 @section('js')
     <script>
         /*
-                |--------------------------------------------------------------------------
-                | Global Routes
-                |--------------------------------------------------------------------------
-                */
+                                |--------------------------------------------------------------------------
+                                | Global Routes
+                                |--------------------------------------------------------------------------
+                                */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
@@ -115,6 +127,7 @@
         const patientPhotoSearchUrl = "{{ route('patients.photo.search') }}";
     </script>
 
+    <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>
