@@ -17,12 +17,7 @@ class PatientController extends Controller
 {
     public function index(Request $request)
     {
-        dd([
-            'ajax' => $request->ajax(),
-            'expectsJson' => $request->expectsJson(),
-            'draw' => $request->draw,
-            'all' => $request->all(),
-        ]);
+       
         // Base Query with Filters
         $baseQuery = Patient::withCount('cancerPhotos')
             ->with('cancerPhotos')
@@ -281,6 +276,13 @@ class PatientController extends Controller
                 ])
                 ->make(true);
         }
+
+        // dd([
+        //     'ajax' => $request->ajax(),
+        //     'expectsJson' => $request->expectsJson(),
+        //     'draw' => $request->draw,
+        //     'all' => $request->all(),
+        // ]);
 
         // Initial Load (no filters)
         $childPatients  = Patient::where('age', '<', 18)->count();
