@@ -84,15 +84,12 @@
                             <td class="text-center align-middle">
 
                                 @php
-                                    $image = asset(
-                                        'uploads/images/welcome_page/doctors/' . $specialist->photo,
-                                    );
+                                    $image = asset('uploads/images/welcome_page/doctors/' . $specialist->photo);
                                 @endphp
 
-                                <a href="{{ $image }}">
-                                    <img src="{{ asset('uploads/images/welcome_page/doctors/' . $specialist->photo) }}"
-                                        style="width:80px;height:80px;object-fit:contain;" class="img-thumbnail" id="imageZoomModal">
-                                </a>
+                                <img src="{{ $image }}" alt="{{ $specialist->name }}" class="img-thumbnail zoomable"
+                                    style="width:80px;height:80px;object-fit:contain;cursor:pointer;" data-bs-toggle="modal"
+                                    data-bs-target="#imageZoomModal" data-bs-img-src="{{ $image }}">
 
                             </td>
 

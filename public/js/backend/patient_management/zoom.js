@@ -1,32 +1,46 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const modal = document.getElementById("imageZoomModal");
-    const modalImg = document.getElementById("zoomedImage");
-    const closeBtn = document.querySelector(".zoom-close");
+    const imageZoomModal = document.getElementById("imageZoomModal");
 
-    // Click on image
-    document.querySelectorAll(".zoomable").forEach((img) => {
+    if (!imageZoomModal) return;
+
+    const modalImage = imageZoomModal.querySelector("#modalZoomImage");
+
+    /**
+     * Bootstrap Modal Trigger
+     * For elements with:
+     * data-bs-toggle="modal"
+     * data-bs-target="#imageZoomModal"
+     * data-bs-img-src="..."
+     */
+    imageZoomModal.addEventListener("show.bs.modal", function (event) {
+        const trigger = event.relatedTarget;
+
+        if (!trigger) return;
+
+        const imgSrc = trigger.getAttribute("data-bs-img-src");
+
+        if (imgSrc) {
+            modalImage.src = imgSrc;
+        }
+    });
+
+    /**
+     * Support normal images with class="zoomable"
+     */
+    document.querySelectorAll(".zoomable").forEach(function (img) {
         img.addEventListener("click", function () {
-            modal.style.display = "block";
-            modalImg.src = this.src;
+            modalImage.src = this.src;
+
+            const modal = bootstrap.Modal.getOrCreateInstance(imageZoomModal);
+
+            modal.show();
         });
     });
 
-    // Close modal
-    closeBtn.onclick = function () {
-        modal.style.display = "none";
-    };
-
-    // Click outside image to close
-    modal.onclick = function (e) {
-        if (e.target === modal) {
-            modal.style.display = "none";
-        }
-    };
-
-    // ESC key close
-    document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") {
-            modal.style.display = "none";
-        }
+    /**
+     * Clear image when modal closes
+     */
+    imageZoomModal.addEventListener("hidden.bs.modal", function () {
+        modalImage.src = "";
     });
 });
