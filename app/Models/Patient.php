@@ -50,6 +50,7 @@ class Patient extends Model
     protected $casts = [
         'is_recommend' => 'boolean',
         'is_old_cancer' => 'boolean',
+        'is_emergency' => 'boolean',
         'date_of_patient_added' => 'date',
     ];
 
