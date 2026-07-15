@@ -85,15 +85,13 @@
 
                                 @php
                                     $image = asset(
-                                        'uploads/images/welcome_page/doctors/' . $specialist->photo . '.jpg',
+                                        'uploads/images/welcome_page/doctors/' . $specialist->photo,
                                     );
                                 @endphp
 
-                                <a href="{{ $image }}" target="_blank">
-
+                                <a href="{{ $image }}">
                                     <img src="{{ asset('uploads/images/welcome_page/doctors/' . $specialist->photo) }}"
-                                        style="width:80px;height:80px;object-fit:contain;" class="img-thumbnail">
-
+                                        style="width:80px;height:80px;object-fit:contain;" class="img-thumbnail" id="imageZoomModal">
                                 </a>
 
                             </td>
