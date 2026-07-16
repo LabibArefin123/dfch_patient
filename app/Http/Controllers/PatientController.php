@@ -19,7 +19,7 @@ class PatientController extends Controller
 {
     public function index(Request $request)
     {
-       
+
         // Base Query with Filters
         $baseQuery = Patient::withCount('cancerPhotos')
             ->with('cancerPhotos')
@@ -146,7 +146,7 @@ class PatientController extends Controller
 
                     </div>';
                 })
-                
+
                 ->rawColumns(['photo'])
                 ->addColumn('patient_code', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
@@ -226,9 +226,9 @@ class PatientController extends Controller
                             <i class="fas fa-ambulance"></i>
                             Emergency
                         </span>';
-                                }
+                    }
 
-                                return '
+                    return '
                     <span class="badge badge-success">
                         Normal
                     </span>';
@@ -939,38 +939,36 @@ class PatientController extends Controller
                 ])
             );
     }
-
     public function updateEmergency(Request $request)
     {
-        $request->validate([
-            'patient_ids' => 'required|array|min:1',
-            'patient_ids.*' => 'exists:patients,id',
-            'is_emergency' => 'required|boolean',
-            'reason' => 'nullable|string|max:1000',
+        $validated = $request->validate([
+            'patient_ids'   => ['required', 'array', 'min:1'],
+            'patient_ids.*' => ['integer', 'exists:patients,id'],
+            'is_emergency'  => ['required', 'boolean'],
+            'reason'        => ['nullable', 'string', 'max:1000'],
         ]);
 
-        DB::transaction(function () use ($request) {
+        DB::transaction(function () use ($validated) {
 
-            // Update current status in patients table
-            Patient::whereIn('id', $request->patient_ids)
+            Patient::whereIn('id', $validated['patient_ids'])
                 ->update([
-                    'is_emergency' => $request->is_emergency,
+                    'is_emergency' => $validated['is_emergency'],
                 ]);
 
-            // Store history
-            foreach ($request->patient_ids as $patientId) {
+            foreach ($validated['patient_ids'] as $patientId) {
+
                 PatientEmergency::create([
-                    'patient_id'      => $patientId,
-                    'is_emergency'    => $request->is_emergency,
-                    'reason'          => $request->reason,
-                    'emergency_date'  => now(),
+                    'patient_id'     => $patientId,
+                    'is_emergency'   => $validated['is_emergency'],
+                    'reason'         => $validated['reason'],
+                    'emergency_date' => now(),
                 ]);
             }
         });
 
         return response()->json([
             'success' => true,
-            'message' => count($request->patient_ids) . ' patient(s) updated successfully.',
+            'message' => count($validated['patient_ids']) . ' patient(s) updated successfully.',
         ]);
     }
 

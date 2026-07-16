@@ -27,3 +27,52 @@
 #patientSummaryZoomImage:hover {
     transform: scale(1.02);
 }
+
+.emergency-progress-circle {
+    --progress: 0;
+
+    width: 130px;
+    height: 130px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    margin: auto;
+
+    position: relative;
+
+    font-size: 24px;
+    font-weight: 700;
+
+    background: conic-gradient(#dc3545 calc(var(--progress) * 1%), #ececec 0);
+}
+
+.emergency-progress-circle::before {
+    content: "";
+
+    position: absolute;
+
+    width: 102px;
+    height: 102px;
+
+    background: #fff;
+
+    border-radius: 50%;
+}
+
+.emergency-progress-circle span {
+    position: relative;
+
+    z-index: 2;
+
+    color: #dc3545;
+}
+
+#progressPatientIcon,
+#progressStatusIcon,
+#progressReasonIcon {
+    font-size: 18px;
+}

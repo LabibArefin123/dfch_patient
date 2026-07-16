@@ -68,6 +68,7 @@
     @include('backend.patient_management.modals.index_page.patient_summary_cancer_overlay')
     @include('backend.patient_management.modals.index_page.patient_view_modal')
     @include('backend.patient_management.modals.index_page.patient_view_modal_animation')
+    {{-- @include('backend.patient_management.modals.index_page.patient_emergency_progress') --}}
     @include('backend.patient_management.modals.index_page.patient_close_modal')
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_image.css') }}">
     <div class="card shadow-sm">
@@ -111,10 +112,10 @@
 @section('js')
     <script>
         /*
-        |--------------------------------------------------------------------------
-        | Global Routes
-        |--------------------------------------------------------------------------
-        */
+                    |--------------------------------------------------------------------------
+                    | Global Routes
+                    |--------------------------------------------------------------------------
+                    */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
@@ -131,7 +132,12 @@
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_emergency_ajax.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_emergency_form.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_emergency_validator.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_emergency_success.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_submit_animation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_pdf_file.js') }}"></script>
     {{-- ========================================================================= --}}
