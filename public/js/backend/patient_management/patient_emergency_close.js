@@ -61,7 +61,7 @@ $(document).on("click", "#btnEmergencyCancel", function (e) {
 });
 
 // Close icon (X)
-$(document).on(".click", ".btn-close", function (e) {
+$(document).on("click", ".btn-close", function (e) {
     e.preventDefault();
     e.stopPropagation();
 
