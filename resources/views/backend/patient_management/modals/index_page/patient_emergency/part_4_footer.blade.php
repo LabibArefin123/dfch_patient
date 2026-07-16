@@ -2,8 +2,7 @@
      Modal Footer
 ========================================== -->
 <div class="modal-footer">
-
-    <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">
+    <button type="button" class="btn btn-outline-secondary" id="btnEmergencyCancel">
 
         <i class="fas fa-times me-2"></i>
 

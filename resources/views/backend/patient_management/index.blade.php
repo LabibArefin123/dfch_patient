@@ -112,10 +112,10 @@
 @section('js')
     <script>
         /*
-                    |--------------------------------------------------------------------------
-                    | Global Routes
-                    |--------------------------------------------------------------------------
-                    */
+                            |--------------------------------------------------------------------------
+                            | Global Routes
+                            |--------------------------------------------------------------------------
+                            */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
@@ -137,7 +137,9 @@
     <script src="{{ asset('js/backend/patient_management/patient_emergency_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_emergency_validator.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_emergency_success.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_emergency_close.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_submit_animation.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_import_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_pdf_file.js') }}"></script>
     {{-- ========================================================================= --}}

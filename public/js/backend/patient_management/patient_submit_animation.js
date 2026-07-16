@@ -51,28 +51,23 @@ window.patientEmergencySubmit = {
 
         this.progress = 100;
 
-        $("#submitProgressBar").css("width", "100%").attr("aria-valuenow", 100);
-
+        $("#submitProgressBar").css("width", "100%");
         $("#submitProgressPercent").text("100%");
-
         $("#submitProgressText").text("Completed");
 
         setTimeout(() => {
-            bootstrap.Modal.getOrCreateInstance(
+            bootstrap.Modal.getInstance(
                 document.getElementById("submitProgressModal"),
-            ).hide();
-
-            bootstrap.Modal.getOrCreateInstance(
-                document.getElementById("patientEmergencyModal"),
-            ).hide();
-
-            $("#patientEmergencyForm")
-                .find("button[type='submit']")
-                .prop("disabled", false);
+            )?.hide();
 
             this.submitting = false;
 
-            if (typeof callback === "function") {
+            $("#patientEmergencyForm button[type='submit']").prop(
+                "disabled",
+                false,
+            );
+
+            if (callback) {
                 callback();
             }
         }, 500);

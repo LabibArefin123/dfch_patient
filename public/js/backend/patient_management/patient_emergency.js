@@ -69,3 +69,23 @@ $(document).on("click", "#btnEmergency", function () {
 
     window.patientEmergencyValidator.updateProgress();
 });
+
+$(document).on("hidden.bs.modal", "#patientEmergencyModal", function () {
+    window.selectedPatients = [];
+
+    $("#patientEmergencyForm")[0].reset();
+
+    $("#checkAll").prop("checked", false);
+
+    $(".row-checkbox").prop("checked", false);
+
+    updateSelectedPatients();
+
+    window.patientEmergencyValidator.updateProgress();
+
+    if (window.patientEmergencySubmit) {
+        clearInterval(window.patientEmergencySubmit.interval);
+
+        window.patientEmergencySubmit.submitting = false;
+    }
+});
