@@ -7,10 +7,12 @@ use App\Models\Patient;
 use Carbon\Carbon;
 use App\Models\PatientCancerPhoto;
 use App\Models\PatientDocument;
+use App\Models\PatientEmergency;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PatientController extends Controller
@@ -941,19 +943,34 @@ class PatientController extends Controller
     public function updateEmergency(Request $request)
     {
         $request->validate([
-            'patient_ids' => 'required|array',
+            'patient_ids' => 'required|array|min:1',
             'patient_ids.*' => 'exists:patients,id',
             'is_emergency' => 'required|boolean',
+            'reason' => 'nullable|string|max:1000',
         ]);
 
-        Patient::whereIn('id', $request->patient_ids)
-            ->update([
-                'is_emergency' => $request->is_emergency,
-            ]);
+        DB::transaction(function () use ($request) {
+
+            // Update current status in patients table
+            Patient::whereIn('id', $request->patient_ids)
+                ->update([
+                    'is_emergency' => $request->is_emergency,
+                ]);
+
+            // Store history
+            foreach ($request->patient_ids as $patientId) {
+                PatientEmergency::create([
+                    'patient_id'      => $patientId,
+                    'is_emergency'    => $request->is_emergency,
+                    'reason'          => $request->reason,
+                    'emergency_date'  => now(),
+                ]);
+            }
+        });
 
         return response()->json([
             'success' => true,
-            'message' => 'Emergency status updated successfully.',
+            'message' => count($request->patient_ids) . ' patient(s) updated successfully.',
         ]);
     }
 

@@ -111,14 +111,15 @@
 @section('js')
     <script>
         /*
-                                |--------------------------------------------------------------------------
-                                | Global Routes
-                                |--------------------------------------------------------------------------
-                                */
+        |--------------------------------------------------------------------------
+        | Global Routes
+        |--------------------------------------------------------------------------
+        */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };
 
+        const patientEmergencyUrl = "{{ route('patients.emergency') }}";
         const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
         const patientSummaryAnimationSearchUrl = "{{ url('patients/summary/animation') }}";
         const patientDocumentSearchUrl = "{{ route('patients.document.search') }}";
@@ -130,6 +131,7 @@
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_emergency_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_pdf_file.js') }}"></script>
     {{-- ========================================================================= --}}
