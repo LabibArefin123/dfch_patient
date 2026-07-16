@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Patient;
+use App\Models\PatientEmergency;
 use App\Models\PatientCancerPhoto;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
@@ -55,6 +56,19 @@ class DashboardController extends Controller
 
         /*
     |--------------------------------------------------------------------------
+    | Emergency Patient History Count
+    |--------------------------------------------------------------------------
+    */
+        $totalEmergencyPatientHistory = PatientEmergency::count();
+
+        $todayEmergencyPatientHistory = PatientEmergency::whereDate('created_at', $today)
+            ->count();
+
+        $monthlyEmergencyPatientHistory = PatientEmergency::whereMonth('created_at', $today->month)
+            ->whereYear('created_at', $today->year)
+            ->count();
+        /*
+    |--------------------------------------------------------------------------
     | Cancer Patient History Count
     |--------------------------------------------------------------------------
     */
@@ -67,7 +81,7 @@ class DashboardController extends Controller
             ->whereYear('created_at', $today->year)
             ->count();
 
-        return view('backend.dashboard', compact(
+        return view('backend.dashboard_page.dashboard', compact(
             'totalPatients',
             'todayPatients',
             'weeklyPatients',
@@ -76,6 +90,10 @@ class DashboardController extends Controller
             'totalRecommendedPatients',
             'todayRecommendedPatients',
             'monthlyRecommendedPatients',
+
+            'totalEmergencyPatientHistory',
+            'todayEmergencyPatientHistory',
+            'monthlyEmergencyPatientHistory',
 
             'totalCancerPatientHistory',
             'todayCancerPatientHistory',
