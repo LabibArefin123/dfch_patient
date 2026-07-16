@@ -67,24 +67,213 @@
 
                 {{-- Statistical Charts --}}
                 <div class="col-12">
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <div class="card shadow-sm">
-                                <div class="card-header">
-                                    <h6>Patient Registrations Distribution</h6>
-                                </div>
-                                <div class="card-body"><canvas id="patientsPieChartExt"></canvas></div>
-                            </div>
+
+                    {{-- =========================
+        Patient Overview
+    ========================== --}}
+                    <div class="d-flex align-items-center mb-3">
+
+                        <div>
+                            <h5 class="font-weight-bold mb-0">
+                                <i class="fas fa-chart-pie text-primary mr-2"></i>
+                                Patient Analytics
+                            </h5>
+
+                            <small class="text-muted">
+                                Overview of patient registrations and recommendations
+                            </small>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <div class="card shadow-sm">
-                                <div class="card-header">
-                                    <h6>Recommended Patients Trend</h6>
-                                </div>
-                                <div class="card-body"><canvas id="recommendedBarChartExt"></canvas></div>
-                            </div>
-                        </div>
+
                     </div>
+
+
+                    <div class="row">
+
+                        {{-- Patient Registrations --}}
+                        <div class="col-lg-6 mb-4">
+
+                            <div class="card shadow-sm h-100">
+
+                                <div class="card-header bg-white border-0">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="mr-3">
+                                            <i class="fas fa-user-plus text-primary fa-lg"></i>
+                                        </div>
+
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">
+                                                Patient Registrations
+                                            </h6>
+
+                                            <small class="text-muted">
+                                                Registration distribution by period
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height: 300px;">
+                                        <canvas id="patientsPieChartExt"></canvas>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {{-- Recommended Patients --}}
+                        <div class="col-lg-6 mb-4">
+
+                            <div class="card shadow-sm h-100">
+
+                                <div class="card-header bg-white border-0">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="mr-3">
+                                            <i class="fas fa-user-md text-success fa-lg"></i>
+                                        </div>
+
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">
+                                                Recommended Patients
+                                            </h6>
+
+                                            <small class="text-muted">
+                                                Patient recommendation activity
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height: 300px;">
+                                        <canvas id="recommendedBarChartExt"></canvas>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    {{-- =========================
+        Emergency & Cancer Analytics
+    ========================== --}}
+
+                    <div class="d-flex align-items-center mt-3 mb-3">
+
+                        <div>
+                            <h5 class="font-weight-bold mb-0">
+                                <i class="fas fa-chart-line text-danger mr-2"></i>
+                                Medical History Analytics
+                            </h5>
+
+                            <small class="text-muted">
+                                Emergency and cancer patient history overview
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row">
+
+                        {{-- Emergency History --}}
+                        <div class="col-lg-6 mb-4">
+
+                            <div class="card shadow-sm h-100">
+
+                                <div class="card-header bg-white border-0">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="mr-3">
+                                            <i class="fas fa-ambulance text-warning fa-lg"></i>
+                                        </div>
+
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">
+                                                Emergency Patient History
+                                            </h6>
+
+                                            <small class="text-muted">
+                                                Emergency history by period
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height: 300px;">
+                                        <canvas id="emergencyHistoryChartExt"></canvas>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        {{-- Cancer History --}}
+                        <div class="col-lg-6 mb-4">
+
+                            <div class="card shadow-sm h-100">
+
+                                <div class="card-header bg-white border-0">
+
+                                    <div class="d-flex align-items-center">
+
+                                        <div class="mr-3">
+                                            <i class="fas fa-ribbon text-danger fa-lg"></i>
+                                        </div>
+
+                                        <div>
+                                            <h6 class="font-weight-bold mb-0">
+                                                Cancer Patient History
+                                            </h6>
+
+                                            <small class="text-muted">
+                                                Cancer history by period
+                                            </small>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+
+                                <div class="card-body">
+
+                                    <div style="height: 300px;">
+                                        <canvas id="cancerHistoryChartExt"></canvas>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
                 </div>
 
             </div>
@@ -98,15 +287,21 @@
             todayPatients: {{ $todayPatients }},
             weeklyPatients: {{ $weeklyPatients }},
             monthlyPatients: {{ $monthlyPatients }},
-
             todayRecommendedPatients: {{ $todayRecommendedPatients }},
-
-            monthlyRecommendedPatients: {{ $monthlyRecommendedPatients }}
+            monthlyRecommendedPatients: {{ $monthlyRecommendedPatients }},
+            todayEmergencyPatientHistory: {{ $todayEmergencyPatientHistory }},
+            weeklyEmergencyPatientHistory: {{ $weeklyEmergencyPatientHistory }},
+            monthlyEmergencyPatientHistory: {{ $monthlyEmergencyPatientHistory }},
+            todayCancerPatientHistory: {{ $todayCancerPatientHistory }},
+            weeklyCancerPatientHistory: {{ $weeklyCancerPatientHistory }},
+            monthlyCancerPatientHistory: {{ $monthlyCancerPatientHistory }}
         };
     </script>
 
-    <script src="{{ asset('js/dashboard_page/dashboard_view_toggle.js') }}"></script>
-    <script src="{{ asset('js/dashboard_page/dashboard_charts.js') }}"></script>
-    <script src="{{ asset('js/dashboard_page/dashboard.js') }}"></script>
+    <script src="{{ asset('js/backend/dashboard_page/dashboard_view_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/dashboard_page/dashboard_cancer.js') }}"></script>
+    <script src="{{ asset('js/backend/dashboard_page/dashboard_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/dashboard_page/dashboard_charts.js') }}"></script>
+    <script src="{{ asset('js/backend/dashboard_page/dashboard.js') }}"></script>
 
 @stop

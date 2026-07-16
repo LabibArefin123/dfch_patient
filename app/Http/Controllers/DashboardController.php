@@ -25,82 +25,191 @@ class DashboardController extends Controller
 
         $today = Carbon::today();
 
+        /*
+    |--------------------------------------------------------------------------
+    | Patient Count
+    |--------------------------------------------------------------------------
+    */
+
         $totalPatients = Patient::count();
 
-        $todayPatients = Patient::whereDate('date_of_patient_added', $today)->count();
+        $todayPatients = Patient::whereDate(
+            'date_of_patient_added',
+            $today
+        )->count();
 
         $weeklyPatients = Patient::whereBetween(
             'date_of_patient_added',
-            [$today->copy()->startOfWeek(), $today->copy()->endOfWeek()]
+            [
+                $today->copy()->startOfWeek(),
+                $today->copy()->endOfWeek()
+            ]
         )->count();
 
-        $monthlyPatients = Patient::whereMonth('date_of_patient_added', $today->month)
-            ->whereYear('date_of_patient_added', $today->year)
+        $monthlyPatients = Patient::whereMonth(
+            'date_of_patient_added',
+            $today->month
+        )
+            ->whereYear(
+                'date_of_patient_added',
+                $today->year
+            )
             ->count();
+
 
         /*
     |--------------------------------------------------------------------------
     | Recommended Patients Count
     |--------------------------------------------------------------------------
     */
-        $totalRecommendedPatients = Patient::where('is_recommend', 1)->count();
 
-        $todayRecommendedPatients = Patient::where('is_recommend', 1)
-            ->whereDate('date_of_patient_added', $today)
+        $totalRecommendedPatients = Patient::where(
+            'is_recommend',
+            1
+        )->count();
+
+        $todayRecommendedPatients = Patient::where(
+            'is_recommend',
+            1
+        )
+            ->whereDate(
+                'date_of_patient_added',
+                $today
+            )
             ->count();
 
-        $monthlyRecommendedPatients = Patient::where('is_recommend', 1)
-            ->whereMonth('date_of_patient_added', $today->month)
-            ->whereYear('date_of_patient_added', $today->year)
+        $weeklyRecommendedPatients = Patient::where(
+            'is_recommend',
+            1
+        )
+            ->whereBetween(
+                'date_of_patient_added',
+                [
+                    $today->copy()->startOfWeek(),
+                    $today->copy()->endOfWeek()
+                ]
+            )
             ->count();
+
+        $monthlyRecommendedPatients = Patient::where(
+            'is_recommend',
+            1
+        )
+            ->whereMonth(
+                'date_of_patient_added',
+                $today->month
+            )
+            ->whereYear(
+                'date_of_patient_added',
+                $today->year
+            )
+            ->count();
+
 
         /*
     |--------------------------------------------------------------------------
     | Emergency Patient History Count
     |--------------------------------------------------------------------------
     */
-        $totalEmergencyPatientHistory = PatientEmergency::count();
 
-        $todayEmergencyPatientHistory = PatientEmergency::whereDate('created_at', $today)
+        $totalEmergencyPatientHistory =
+            PatientEmergency::count();
+
+        $todayEmergencyPatientHistory =
+            PatientEmergency::whereDate(
+                'created_at',
+                $today
+            )->count();
+
+        $weeklyEmergencyPatientHistory =
+            PatientEmergency::whereBetween(
+                'created_at',
+                [
+                    $today->copy()->startOfWeek(),
+                    $today->copy()->endOfWeek()
+                ]
+            )->count();
+
+        $monthlyEmergencyPatientHistory =
+            PatientEmergency::whereMonth(
+                'created_at',
+                $today->month
+            )
+            ->whereYear(
+                'created_at',
+                $today->year
+            )
             ->count();
 
-        $monthlyEmergencyPatientHistory = PatientEmergency::whereMonth('created_at', $today->month)
-            ->whereYear('created_at', $today->year)
-            ->count();
+
         /*
     |--------------------------------------------------------------------------
     | Cancer Patient History Count
     |--------------------------------------------------------------------------
     */
-        $totalCancerPatientHistory = PatientCancerPhoto::count();
 
-        $todayCancerPatientHistory = PatientCancerPhoto::whereDate('created_at', $today)
+        $totalCancerPatientHistory =
+            PatientCancerPhoto::count();
+
+        $todayCancerPatientHistory =
+            PatientCancerPhoto::whereDate(
+                'created_at',
+                $today
+            )->count();
+
+        $weeklyCancerPatientHistory =
+            PatientCancerPhoto::whereBetween(
+                'created_at',
+                [
+                    $today->copy()->startOfWeek(),
+                    $today->copy()->endOfWeek()
+                ]
+            )->count();
+
+        $monthlyCancerPatientHistory =
+            PatientCancerPhoto::whereMonth(
+                'created_at',
+                $today->month
+            )
+            ->whereYear(
+                'created_at',
+                $today->year
+            )
             ->count();
 
-        $monthlyCancerPatientHistory = PatientCancerPhoto::whereMonth('created_at', $today->month)
-            ->whereYear('created_at', $today->year)
-            ->count();
 
-        return view('backend.dashboard_page.dashboard', compact(
-            'totalPatients',
-            'todayPatients',
-            'weeklyPatients',
-            'monthlyPatients',
+        /*
+    |--------------------------------------------------------------------------
+    | Dashboard View
+    |--------------------------------------------------------------------------
+    */
 
-            'totalRecommendedPatients',
-            'todayRecommendedPatients',
-            'monthlyRecommendedPatients',
+        return view(
+            'backend.dashboard_page.dashboard',
+            compact(
 
-            'totalEmergencyPatientHistory',
-            'todayEmergencyPatientHistory',
-            'monthlyEmergencyPatientHistory',
+                'totalPatients',
+                'todayPatients',
+                'weeklyPatients',
+                'monthlyPatients',
 
-            'totalCancerPatientHistory',
-            'todayCancerPatientHistory',
-            'monthlyCancerPatientHistory'
-        ));
+                'totalRecommendedPatients',
+                'todayRecommendedPatients',
+                'weeklyRecommendedPatients',
+                'monthlyRecommendedPatients',
+
+                'totalEmergencyPatientHistory',
+                'todayEmergencyPatientHistory',
+                'weeklyEmergencyPatientHistory',
+                'monthlyEmergencyPatientHistory',
+
+                'totalCancerPatientHistory',
+                'todayCancerPatientHistory',
+                'weeklyCancerPatientHistory',
+                'monthlyCancerPatientHistory'
+            )
+        );
     }
-
 
     /**
      * Show the form for creating a new resource.

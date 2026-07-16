@@ -5,7 +5,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     /*
     |--------------------------------------------------------------------------
-    | Dashboard View Toggle
+    | View Toggle
     |--------------------------------------------------------------------------
     */
 
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Dashboard Charts
+    | Main Patient Charts
     |--------------------------------------------------------------------------
     */
 
@@ -32,6 +32,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
             monthlyRecommendedPatients:
                 window.dashboardData.monthlyRecommendedPatients,
+        });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Emergency Dashboard
+    |--------------------------------------------------------------------------
+    */
+
+    if (window.DashboardEmergency) {
+        DashboardEmergency.init({
+            todayEmergencyPatientHistory:
+                window.dashboardData.todayEmergencyPatientHistory,
+
+            weeklyEmergencyPatientHistory:
+                window.dashboardData.weeklyEmergencyPatientHistory,
+
+            monthlyEmergencyPatientHistory:
+                window.dashboardData.monthlyEmergencyPatientHistory,
+        });
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cancer Dashboard
+    |--------------------------------------------------------------------------
+    */
+
+    if (window.DashboardCancer) {
+        DashboardCancer.init({
+            todayCancerPatientHistory:
+                window.dashboardData.todayCancerPatientHistory,
+
+            weeklyCancerPatientHistory:
+                window.dashboardData.weeklyCancerPatientHistory,
+
+            monthlyCancerPatientHistory:
+                window.dashboardData.monthlyCancerPatientHistory,
         });
     }
 });
