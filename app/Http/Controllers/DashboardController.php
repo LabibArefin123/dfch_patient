@@ -259,9 +259,11 @@ class DashboardController extends Controller
         //
     }
 
+
     public function globalSearch(Request $request)
     {
         $term = trim($request->input('term'));
+
         Log::info('Global search term: ' . $term);
 
         if (!$term || strlen($term) < 2) {
@@ -270,21 +272,29 @@ class DashboardController extends Controller
 
         $results = [];
 
-        /* ==========================
-       Try to parse date
-    ========================== */
+        /*
+    |--------------------------------------------------------------------------
+    | Try to Parse Date
+    |--------------------------------------------------------------------------
+    */
+
         $parsedDate = null;
+
         try {
             $parsedDate = Carbon::parse($term)->format('Y-m-d');
         } catch (\Exception $e) {
-            // ignore
+            // Ignore invalid date
         }
 
-        /* ==========================
-       Patient Query
-    ========================== */
+        /*
+    |--------------------------------------------------------------------------
+    | Patient Search
+    |--------------------------------------------------------------------------
+    */
+
         $patients = Patient::query()
-            ->where(function ($q) use ($term) {
+            ->where(function ($q) use ($term, $parsedDate) {
+
                 $q->where('patient_name', 'like', "%{$term}%")
                     ->orWhere('patient_code', 'like', "%{$term}%")
                     ->orWhere('phone_1', 'like', "%{$term}%")
@@ -295,44 +305,136 @@ class DashboardController extends Controller
                     ->orWhere('patient_m_name', 'like', "%{$term}%")
                     ->orWhere('district', 'like', "%{$term}%")
                     ->orWhere('city', 'like', "%{$term}%");
-            })
-            ->when($parsedDate, function ($q) use ($parsedDate) {
-                $q->orWhereDate('date_of_patient_added', $parsedDate);
+
+                /*
+            |--------------------------------------------------------------------------
+            | Search Patient Added Date
+            |--------------------------------------------------------------------------
+            */
+
+                if ($parsedDate) {
+                    $q->orWhereDate(
+                        'date_of_patient_added',
+                        $parsedDate
+                    );
+                }
             })
             ->limit(15)
             ->get();
 
-        /* ==========================
-       Build Results
-    ========================== */
+        /*
+    |--------------------------------------------------------------------------
+    | Build Search Results
+    |--------------------------------------------------------------------------
+    */
+
         foreach ($patients as $patient) {
 
-            $name = $this->highlightMatch($patient->patient_name, $term);
-            $code = $this->highlightMatch($patient->patient_code, $term);
-            $fathers_name = $this->highlightMatch($patient->patient_f_name, $term);
-            $mothers_name = $this->highlightMatch($patient->patient_m_name, $term);
+            $name = $this->highlightMatch(
+                $patient->patient_name,
+                $term
+            );
+
+            $code = $this->highlightMatch(
+                $patient->patient_code,
+                $term
+            );
+
+            $fathersName = $this->highlightMatch(
+                $patient->patient_f_name,
+                $term
+            );
+
+            $mothersName = $this->highlightMatch(
+                $patient->patient_m_name,
+                $term
+            );
 
             $results[] = [
-                'label' => "{$name} ({$code}) [Father's Name - {$fathers_name}] [Mother's Name - {$mothers_name}]",
-                'url'   => route('patients.show', $patient->id),
+
+                /*
+            |--------------------------------------------------------------------------
+            | Patient Display Information
+            |--------------------------------------------------------------------------
+            */
+
+                'label' =>
+                "{$name} ({$code}) " .
+                    "[Father's Name - {$fathersName}] " .
+                    "[Mother's Name - {$mothersName}]",
+
+                /*
+            |--------------------------------------------------------------------------
+            | Patient URL
+            |--------------------------------------------------------------------------
+            */
+
+                'url' => route(
+                    'patients.show',
+                    $patient->id
+                ),
+
+                /*
+            |--------------------------------------------------------------------------
+            | Patient Statuses
+            |--------------------------------------------------------------------------
+            */
+
+                'is_recommend' => (bool) $patient->is_recommend,
+
+                'is_old_cancer' => (bool) $patient->is_old_cancer,
+
+                'is_emergency' => (bool) $patient->is_emergency,
             ];
         }
 
         return response()->json($results);
     }
 
-    protected function highlightMatch(string $text, string $term): string
-    {
-        if (!$term) {
+
+    protected function highlightMatch(
+        ?string $text,
+        string $term
+    ): string {
+        // Handle null or empty text
+        if (empty($text)) {
+            return '';
+        }
+
+        // If search term is empty, safely return escaped text
+        if (empty($term)) {
             return e($text);
         }
 
+        /*
+    |--------------------------------------------------------------------------
+    | Escape the full text first
+    |--------------------------------------------------------------------------
+    */
+
+        $escapedText = e($text);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Escape the search term
+    |--------------------------------------------------------------------------
+    */
+
+        $escapedTerm = e($term);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Highlight matched text
+    |--------------------------------------------------------------------------
+    */
+
         return preg_replace(
-            "/(" . preg_quote($term, '/') . ")/i",
-            '<span style="color:#ff6b6b;">$1</span>',
-            e($text)
+            '/' . preg_quote($escapedTerm, '/') . '/i',
+            '<span style="color:#ff6b6b; font-weight:700;">$0</span>',
+            $escapedText
         );
     }
+
 
     public function system_index()
     {

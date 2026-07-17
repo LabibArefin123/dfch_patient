@@ -90,7 +90,11 @@
     <script src="{{ asset('js/backend/global_js/notifications_part/flash-alerts.js') }}"></script>
     <script src="{{ asset('js/backend/global_js/notifications_part/limit-warning.js') }}"></script>
 
-    <script src="{{ asset('js/backend/global_js/ui_part/global-search.js') }}"></script>
+    <script src="{{ asset('js/backend/global_js/ui_part/global_search/global-search-init.js') }}"></script>
+    <script src="{{ asset('js/backend/global_js/ui_part/global_search/global-search-config.js') }}"></script>
+    <script src="{{ asset('js/backend/global_js/ui_part/global_search/global-search-fetch.js') }}"></script>
+    <script src="{{ asset('js/backend/global_js/ui_part/global_search/global-search-render.js') }}"></script>
+    <script src="{{ asset('js/backend/global_js/ui_part/global_search/global-search-ui.js') }}"></script>
     <script src="{{ asset('js/backend/global_js/ui_part/date-formatter.js') }}"></script>
     <script src="{{ asset('js/backend/global_js/ui_part/data-table-loader.js') }}"></script>
 

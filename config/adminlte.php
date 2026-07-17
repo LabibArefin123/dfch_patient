@@ -312,7 +312,7 @@ return [
         // Navbar items:
         [
             'type' => 'navbar-search',
-            'text' => 'Search tenders...',
+            'text' => 'Search patients...',
             'id' => 'globalTenderSearch',
             'topnav_right' => true,
             'method' => 'GET',
