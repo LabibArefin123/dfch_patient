@@ -31,7 +31,7 @@
         <div class="d-flex flex-wrap align-items-center">
 
             {{-- Sync Patients --}}
-            <button type="button" id="cancerPatientSyncModal" class="btn btn-outline-primary mr-2 mb-2 mb-md-0">
+            <button type="button" id="syncCancerPatientsBtn" class="btn btn-outline-primary mr-2 mb-2 mb-md-0">
 
                 <i class="fas fa-sync-alt mr-1"></i>
 
@@ -340,6 +340,19 @@
 
         });
     </script>
-
-    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync.js') }}"></script>
+    <script>
+        window.PatientCancerSync = {
+            syncUrl: @json(route('patient-cancer-photos.sync'))
+        };
+    </script>   
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_init.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_ui.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_request.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_animation.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_status.js') }}">
+    </script>
 @stop
