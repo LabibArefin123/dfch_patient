@@ -35,7 +35,7 @@
 
         <div class="card-body table-responsive p-0">
 
-            <table class="table table-hover table-bordered text-nowrap">
+            <table class="table table-hover table-bordered text-nowrap" id="dataTables">
 
                 <thead class="bg-primary text-center">
 

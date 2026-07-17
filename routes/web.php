@@ -9,6 +9,7 @@ use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\DashboardController;
 
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\PatientMeetingController;
 use App\Http\Controllers\PatientEmergencyController;
 use App\Http\Controllers\PatientCancerPhotoController;
 use App\Http\Controllers\ReportController;
@@ -99,6 +100,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::get('patients/{patient}/cancer-photos',[PatientCancerPhotoController::class, 'patientCancerPhotos'])->name('patients.cancer.photos');
     Route::post('patient-cancer-photos/sync',[PatientCancerPhotoController::class, 'patientsSync'])->name('patient-cancer-photos.sync');
     Route::resource('patient-cancer-photos',PatientCancerPhotoController::class);
+    Route::resource('patient_meetings',PatientMeetingController::class);
    
     //Report Module
     Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');

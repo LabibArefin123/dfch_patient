@@ -420,10 +420,18 @@ return [
                     'can'   => 'patients.recommend',
                     'icon'  => 'fas fa-list',
                 ],
+                
                 [
                     'text'  => 'Emergengy Patients',
                     'route' => 'patient_emergencies.index',
                     'can'   => 'patient_emergencies.index',
+                    'icon'  => 'fas fa-list',
+                ],
+
+                [
+                    'text'  => 'Patients Meeting',
+                    'route' => 'patient_meetings.index',
+                    'can'   => 'patient_meetings.index',
                     'icon'  => 'fas fa-list',
                 ],
 
