@@ -5,6 +5,8 @@
  */
 
 function initGlobalSearch(form, config) {
+    console.log("[GLOBAL SEARCH][CONFIG] Initializing search form:", form);
+
     const input =
         form.querySelector('input[name="term"]') ||
         form.querySelector('input[type="search"]') ||
@@ -34,6 +36,7 @@ function initGlobalSearch(form, config) {
     }
 
     parentGroup.style.position = "relative";
+
     parentGroup.style.overflow = "visible";
 
     parentGroup.appendChild(resultBox);
@@ -45,12 +48,23 @@ function initGlobalSearch(form, config) {
 
     let searchTimer = null;
 
-    // Prevent full-page form submit
+    /*
+    |--------------------------------------------------------------------------
+    | Prevent Full Page Submit
+    |--------------------------------------------------------------------------
+    */
+
     form.addEventListener("submit", function (e) {
         e.preventDefault();
 
         console.log("[GLOBAL SEARCH] Form submit prevented");
     });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Search Input
+    |--------------------------------------------------------------------------
+    */
 
     input.addEventListener("input", function () {
         const query = this.value.trim();
@@ -63,6 +77,7 @@ function initGlobalSearch(form, config) {
             console.log("[GLOBAL SEARCH][STEP 3] Query too short");
 
             resultBox.style.display = "none";
+
             resultBox.innerHTML = "";
 
             return;
@@ -73,12 +88,17 @@ function initGlobalSearch(form, config) {
             query,
         );
 
-        searchTimer = setTimeout(() => {
+        searchTimer = setTimeout(function () {
             searchPatients(query, config.searchUrl, resultBox);
         }, 300);
     });
 
-    // Hide dropdown outside click
+    /*
+    |--------------------------------------------------------------------------
+    | Hide Results When Clicking Outside
+    |--------------------------------------------------------------------------
+    */
+
     document.addEventListener("click", function (e) {
         if (!resultBox.contains(e.target) && e.target !== input) {
             resultBox.style.display = "none";

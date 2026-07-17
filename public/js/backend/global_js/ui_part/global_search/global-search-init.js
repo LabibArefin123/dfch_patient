@@ -5,19 +5,14 @@
  */
 
 document.addEventListener("DOMContentLoaded", function () {
-    console.log(
-        "%c[GLOBAL SEARCH][STEP 1] DOMContentLoaded fired",
-        "color: #0d6efd; font-weight: bold;",
-    );
+    console.log("[GLOBAL SEARCH][STEP 1] DOMContentLoaded fired");
 
     const config = window.Laravel || {};
 
     console.log("[GLOBAL SEARCH][STEP 1] Laravel config:", config);
 
     if (!config.searchUrl) {
-        console.error(
-            "[GLOBAL SEARCH][STEP 1 FAILED] searchUrl is missing from window.Laravel",
-        );
+        console.warn("[GLOBAL SEARCH][STEP 1 FAILED] Search URL not found");
 
         return;
     }
@@ -27,24 +22,54 @@ document.addEventListener("DOMContentLoaded", function () {
         config.searchUrl,
     );
 
-    // Get all search forms
-    const navbarForms = document.querySelectorAll(
-        ".navbar-search-block form, form.navbar-search, .navbar-nav form, .form-inline",
+    /*
+    |--------------------------------------------------------------------------
+    | Find Only Search Inputs
+    |--------------------------------------------------------------------------
+    */
+
+    const searchInputs = document.querySelectorAll(
+        'input[name="term"], input[type="search"]',
     );
 
-    console.log("[GLOBAL SEARCH][STEP 2] Forms found:", navbarForms.length);
+    console.log(
+        "[GLOBAL SEARCH][STEP 2] Search inputs found:",
+        searchInputs.length,
+    );
 
-    if (navbarForms.length === 0) {
-        console.error("[GLOBAL SEARCH][STEP 2 FAILED] No search forms found");
+    if (searchInputs.length === 0) {
+        console.warn("[GLOBAL SEARCH][STEP 2 FAILED] No search input found");
 
         return;
     }
 
-    navbarForms.forEach((form, index) => {
+    searchInputs.forEach(function (input, index) {
         console.log(
-            `[GLOBAL SEARCH][STEP 2] Processing form #${index + 1}`,
-            form,
+            `[GLOBAL SEARCH][STEP 2] Processing search input #${index + 1}`,
+            input,
         );
+
+        const form = input.closest("form");
+
+        if (!form) {
+            console.warn(
+                "[GLOBAL SEARCH][STEP 2 FAILED] Search input has no parent form",
+                input,
+            );
+
+            return;
+        }
+
+        console.log(
+            "[GLOBAL SEARCH][STEP 2 SUCCESS] Search input found:",
+            input,
+        );
+
+        /*
+        |--------------------------------------------------------------------------
+        | Correct Function Name
+        |--------------------------------------------------------------------------
+        */
 
         initGlobalSearch(form, config);
     });
