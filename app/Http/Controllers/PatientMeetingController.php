@@ -125,50 +125,13 @@ class PatientMeetingController extends Controller
     /**
      * Display the specified meeting.
      */
-    public function show(PatientMeeting $patientMeeting)
-    {
-        $patientMeeting->load([
-            'patient',
-            'specialist',
-        ]);
-
-        $patientHistory = collect();
-
-        $specialistHistory = collect();
-
-        if ($patientMeeting->patient_id) {
-
-            $patientHistory =
-                PatientMeeting::with('specialist')
-                ->where(
-                    'patient_id',
-                    $patientMeeting->patient_id
-                )
-                ->latest('meeting_date')
-                ->latest('start_time')
-                ->get();
-        }
-
-        if ($patientMeeting->specialist_id) {
-
-            $specialistHistory =
-                PatientMeeting::with('patient')
-                ->where(
-                    'specialist_id',
-                    $patientMeeting->specialist_id
-                )
-                ->latest('meeting_date')
-                ->latest('start_time')
-                ->get();
-        }
-
+    public function show(
+        PatientMeeting $patientMeeting
+    ) {
+        $patientMeeting->load(['patient', 'specialist',]);
         return view(
             'backend.patient_management.patient_meetings.show',
-            compact(
-                'patientMeeting',
-                'patientHistory',
-                'specialistHistory'
-            )
+            compact('patientMeeting')
         );
     }
 

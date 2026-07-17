@@ -33,6 +33,7 @@
     @include('backend.patient_management.patient_meetings.partial_pages.index_page.part_2')
 
     {{-- Schedule --}}
+    {{-- Schedule --}}
     <div class="card card-outline card-primary shadow meeting-dashboard">
 
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -228,9 +229,19 @@
                                 </td>
 
                                 <td class="text-center">
-
+                                    {{-- Patient Show Proflile but pass them to each patients part in hover show eye corner in top --}}
                                     <a href="{{ route('patient_meetings.show', $specialist->id) }}"
                                         class="btn btn-sm btn-outline-primary mb-2">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    {{-- Specialist Profile --}}
+                                    <a href="{{ route('specialists.show', $specialist->id) }}"
+                                        class="btn btn-sm btn-outline-warning mb-2">
+                                        <i class="fas fa-eye"></i>
+                                    </a>
+                                    {{-- Patient Week History part so that it will show patient in 3x2 card format and each patient will have patient_code, patient_name(	Recent	Yesterday	Day Before	This Week	This Month) --}}
+                                    <a href="{{ route('specialists.show', $specialist->id) }}"
+                                        class="btn btn-sm btn-outline-secondary  mb-2">
                                         <i class="fas fa-eye"></i>
                                     </a>
 
