@@ -18,6 +18,11 @@ class Specialist extends Model
         'is_active',
     ];
 
+    public function meetings()
+    {
+        return $this->hasMany(PatientMeeting::class,'specialist_id');
+    }
+
     protected static function boot()
     {
         parent::boot();

@@ -19,6 +19,10 @@ class PatientMeetingController extends Controller
         $status = $request->input('status');
         $meetingType = $request->input('meeting_type');
         $date = $request->input('date');
+        $specialists = Specialist::with([
+            'meetings.patient:id,patient_name,patient_code,patient_photo',
+        ])
+            ->paginate(6);
         $patientMeetings = PatientMeeting::with([
             'patient:id,patient_name,patient_code,patient_photo',
             'specialist:id,name,designation,photo',
@@ -62,7 +66,7 @@ class PatientMeetingController extends Controller
 
         return view(
             'backend.patient_management.patient_meetings.index',
-            compact('patientMeetings', 'search', 'status', 'meetingType', 'date')
+            compact('patientMeetings', 'search', 'status', 'meetingType', 'date', 'specialists')
         );
     }
 

@@ -1,0 +1,34 @@
+@media (max-width: 1600px) {
+    .meeting-grid {
+        min-width: 1900px;
+    }
+}
+
+@media (max-width: 992px) {
+    .specialist-box {
+        min-width: 180px;
+    }
+
+    .patient-card-wrapper {
+        min-width: 220px;
+    }
+}
+
+@media (max-width: 768px) {
+    .meeting-dashboard {
+        border-radius: 14px;
+    }
+
+    .meeting-grid {
+        min-width: 1600px;
+    }
+
+    .meeting-grid thead th,
+    .meeting-grid tbody td {
+        padding: 14px;
+    }
+
+    .patient-mini-card {
+        min-height: 80px;
+    }
+}

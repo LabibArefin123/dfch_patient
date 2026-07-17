@@ -60,6 +60,14 @@ class Patient extends Model
         return $this->hasMany(PatientDocument::class);
     }
 
+    public function meetings()
+    {
+        return $this->hasMany(
+            PatientMeeting::class,
+            'patient_id'
+        );
+    }
+
     public function getActivitylogOptions(): LogOptions
     {
         return LogOptions::defaults()

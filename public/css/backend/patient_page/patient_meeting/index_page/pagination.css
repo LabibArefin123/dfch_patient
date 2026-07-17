@@ -1,0 +1,28 @@
+.meeting-pagination {
+    border-top: 1px solid #eef2f7;
+    background: #fff;
+    padding: 1rem 1.5rem;
+}
+
+.pagination {
+    margin-bottom: 0;
+}
+
+.page-link {
+    border-radius: 12px !important;
+    margin: 0 4px;
+    border: 1px solid #e2e8f0;
+    color: #475569;
+    min-width: 42px;
+    text-align: center;
+}
+
+.page-link:hover {
+    background: #2563eb;
+    color: #fff;
+}
+
+.page-item.active .page-link {
+    background: #2563eb;
+    border-color: #2563eb;
+}

@@ -1,0 +1,32 @@
+.meeting-grid {
+    width: 100%;
+    min-width: 1800px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.meeting-grid thead th {
+    background: #f8fafc;
+    color: #475569;
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 18px;
+    border-bottom: 2px solid #e2e8f0;
+    white-space: nowrap;
+}
+
+.meeting-grid tbody td {
+    padding: 18px;
+    vertical-align: top;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.meeting-grid tbody tr {
+    transition: 0.25s;
+}
+
+.meeting-grid tbody tr:hover {
+    background: #fafcff;
+}

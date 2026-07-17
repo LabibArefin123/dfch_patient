@@ -1,0 +1,18 @@
+.meeting-dashboard {
+    border: none;
+    border-radius: 20px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 8px 35px rgba(15, 23, 42, 0.06);
+}
+
+.meeting-dashboard .card-header {
+    background: #fff;
+    border-bottom: 1px solid #eef2f7;
+    padding: 1.2rem 1.5rem;
+}
+
+.meeting-dashboard .card-header h5 {
+    font-weight: 700;
+    color: #1e293b;
+}
