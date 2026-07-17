@@ -23,11 +23,16 @@ class PatientCancerPhotoController extends Controller
         $patientCancerPhotos = PatientCancerPhoto::with('patient')
             ->when($search, function ($query) use ($search) {
 
-                $query->whereHas('patient', function ($q) use ($search) {
+                $query->where(function ($q) use ($search) {
 
-                    $q->where('patient_name', 'like', "%{$search}%")
-                        ->orWhere('patient_code', 'like', "%{$search}%");
-                })->orWhere('remarks', 'like', "%{$search}%");
+                    $q->whereHas('patient', function ($patientQuery) use ($search) {
+
+                        $patientQuery
+                            ->where('patient_name', 'like', "%{$search}%")
+                            ->orWhere('patient_code', 'like', "%{$search}%");
+                    })
+                        ->orWhere('remarks', 'like', "%{$search}%");
+                });
             })
             ->latest()
             ->paginate(10)
@@ -35,8 +40,100 @@ class PatientCancerPhotoController extends Controller
 
         return view(
             'backend.patient_management.patient_cancer.index',
-            compact('patientCancerPhotos', 'search')
+            compact(
+                'patientCancerPhotos',
+                'search'
+            )
         );
+    }
+
+    public function patientsSync()
+    {
+        /*
+    |--------------------------------------------------------------------------
+    | Find Patients Who Have Cancer Photos
+    |--------------------------------------------------------------------------
+    */
+
+        $patientsWithCancerPhotos = Patient::whereHas('cancerPhotos')
+            ->select('id', 'patient_name', 'patient_code', 'is_old_cancer')
+            ->get();
+
+        /*
+    |--------------------------------------------------------------------------
+    | Find Patients That Need Synchronization
+    |--------------------------------------------------------------------------
+    */
+
+        $patientsToSync = $patientsWithCancerPhotos
+            ->where('is_old_cancer', false);
+
+        /*
+    |--------------------------------------------------------------------------
+    | Already Synced Patients
+    |--------------------------------------------------------------------------
+    */
+
+        $alreadySynced = $patientsWithCancerPhotos
+            ->where('is_old_cancer', true)
+            ->count();
+
+        /*
+    |--------------------------------------------------------------------------
+    | If Everything Is Already Synced
+    |--------------------------------------------------------------------------
+    */
+
+        if ($patientsToSync->isEmpty()) {
+            return response()->json([
+                'success' => true,
+                'status' => 'already_synced',
+                'message' => 'All cancer photo patients are already synchronized.',
+                'total_patients' => $patientsWithCancerPhotos->count(),
+                'already_synced' => $alreadySynced,
+                'synced_now' => 0,
+                'remaining' => 0,
+            ]);
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | Synchronize Patients
+    |--------------------------------------------------------------------------
+    */
+
+        $syncedNow = 0;
+
+        DB::transaction(function () use (
+            $patientsToSync,
+            &$syncedNow
+        ) {
+
+            foreach ($patientsToSync as $patient) {
+
+                $patient->update([
+                    'is_old_cancer' => true,
+                ]);
+
+                $syncedNow++;
+            }
+        });
+
+        /*
+    |--------------------------------------------------------------------------
+    | Return Result
+    |--------------------------------------------------------------------------
+    */
+
+        return response()->json([
+            'success' => true,
+            'status' => 'synced',
+            'message' => 'Cancer photo patients synchronized successfully.',
+            'total_patients' => $patientsWithCancerPhotos->count(),
+            'already_synced' => $alreadySynced,
+            'synced_now' => $syncedNow,
+            'remaining' => 0,
+        ]);
     }
 
     public function patientCancerPhotos(Patient $patient)

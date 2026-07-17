@@ -1,0 +1,56 @@
+/*
+|--------------------------------------------------------------------------
+| Cancer Patient Sync Animation
+|--------------------------------------------------------------------------
+*/
+
+.sync-spinner {
+    width: 90px;
+    height: 90px;
+
+    margin: 0 auto;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background: #eff6ff;
+
+    color: #2563eb;
+
+    font-size: 38px;
+
+    animation:
+        syncPulse 1.5s infinite ease-in-out,
+        syncRotate 2s infinite linear;
+}
+
+@keyframes syncPulse {
+    0% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+
+    50% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(0.9);
+        opacity: 0.7;
+    }
+}
+
+@keyframes syncRotate {
+    from {
+        rotate: 0deg;
+    }
+
+    to {
+        rotate: 360deg;
+    }
+}
+    

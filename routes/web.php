@@ -97,7 +97,9 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::resource('patient_emergencies', PatientEmergencyController::class);
 
     Route::get('patients/{patient}/cancer-photos',[PatientCancerPhotoController::class, 'patientCancerPhotos'])->name('patients.cancer.photos');
+    Route::post('patient-cancer-photos/sync',[PatientCancerPhotoController::class, 'patientsSync'])->name('patient-cancer-photos.sync');
     Route::resource('patient-cancer-photos',PatientCancerPhotoController::class);
+   
     //Report Module
     Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');
     Route::get('daily_report/pdf', [ReportController::class, 'daily_report_pdf'])->name('report.daily.pdf');

@@ -133,7 +133,7 @@ function renderSearchResults(data, query, resultBox) {
                             line-height: 1.5;
                         "
                     >
-                        ${escapeHtml(item.label)}
+                       ${item.label}
                     </span>
 
                     <span
