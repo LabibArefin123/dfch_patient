@@ -33,7 +33,6 @@
     @include('backend.patient_management.patient_meetings.partial_pages.index_page.part_2')
 
     {{-- Schedule --}}
-    {{-- Schedule --}}
     <div class="card card-outline card-primary shadow meeting-dashboard">
 
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -136,7 +135,7 @@
                                 <td class="text-center align-middle">
 
                                     <strong>
-                                        {{ $specialists->firstItem() + $loop->index }}
+                                        {{ $loop->iteration }}
                                     </strong>
 
                                 </td>
@@ -145,26 +144,47 @@
 
                                     <div class="specialist-box">
 
+                                        @php
+                                            $doctorImage = $specialist->photo
+                                                ? asset('uploads/images/welcome_page/doctors/' . $specialist->photo)
+                                                : null;
+                                        @endphp
+
                                         <div class="specialist-avatar">
 
                                             @if ($specialist->photo)
-                                                <img src="{{ asset($specialist->photo) }}" class="img-fluid rounded-circle"
-                                                    width="50">
+                                                <img src="{{ $doctorImage }}" alt="{{ $specialist->name }}"
+                                                    class="specialist-image" loading="lazy">
                                             @else
-                                                {{ strtoupper(substr($specialist->name, 0, 1)) }}
+                                                <span>
+                                                    {{ strtoupper(substr($specialist->name, 0, 1)) }}
+                                                </span>
                                             @endif
 
                                         </div>
 
                                         <div class="specialist-info">
 
-                                            <h6>
+                                            <h6 class="mb-1">
+
+                                                Dr.
                                                 {{ $specialist->name }}
+
                                             </h6>
 
-                                            <p class="mb-0">
+                                            <p class="mb-1">
+
                                                 {{ $specialist->designation }}
+
                                             </p>
+
+                                            @if ($specialist->degree)
+                                                <small class="text-muted">
+
+                                                    {{ $specialist->degree }}
+
+                                                </small>
+                                            @endif
 
                                         </div>
 
@@ -209,7 +229,7 @@
 
                                 <td class="text-center">
 
-                                    <a href="{{ route('specialists.show', $specialist->id) }}"
+                                    <a href="{{ route('patient_meetings.show', $specialist->id) }}"
                                         class="btn btn-sm btn-outline-primary mb-2">
                                         <i class="fas fa-eye"></i>
                                     </a>
