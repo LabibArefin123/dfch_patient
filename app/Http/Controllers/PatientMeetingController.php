@@ -70,7 +70,17 @@ class PatientMeetingController extends Controller
         );
     }
 
+    public function patientsHistory(Specialist $specialist)
+    {
+        $specialist->load([
+            'meetings.patient'
+        ]);
 
+        return view(
+            'backend.patient_management.patient_meetings.patient_meetings',
+            compact('specialist')
+        );
+    }
     /**
      * Show the form for creating a new meeting.
      */

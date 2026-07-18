@@ -1,0 +1,483 @@
+/* =========================================================
+   PATIENT MEETING SUMMARY
+   ========================================================= */
+
+.summary-col {
+    width: 750px;
+}
+
+/* =========================================================
+   SLIDER
+   ========================================================= */
+
+.summary-slider {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.summary-page {
+    display: none;
+    animation: summaryPageFade 0.35s ease;
+}
+
+.summary-page.active {
+    display: block;
+}
+
+@keyframes summaryPageFade {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================================================
+   PATIENT CARD
+   ========================================================= */
+
+.patient-summary-card {
+    position: relative;
+
+    min-height: 145px;
+
+    padding: 18px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(139, 0, 0, 0.08);
+
+    border-radius: 18px;
+
+    background: linear-gradient(145deg, #ffffff 0%, #fffafa 100%);
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.06),
+        0 2px 6px rgba(139, 0, 0, 0.04);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+/* Left Accent */
+
+.patient-summary-card .card-accent {
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 4px;
+
+    height: 100%;
+
+    background: linear-gradient(180deg, #8b0000, #d93636);
+
+    border-radius: 18px 0 0 18px;
+}
+
+/* Hover */
+
+.patient-summary-card:hover {
+    transform: translateY(-5px);
+
+    border-color: rgba(139, 0, 0, 0.2);
+
+    box-shadow:
+        0 16px 32px rgba(0, 0, 0, 0.1),
+        0 4px 10px rgba(139, 0, 0, 0.08);
+}
+
+/* =========================================================
+   CONTENT
+   ========================================================= */
+
+.patient-summary-content {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+/* =========================================================
+   PATIENT PHOTO
+   ========================================================= */
+
+.patient-photo {
+    flex-shrink: 0;
+
+    position: relative;
+}
+
+.patient-photo img,
+.patient-avatar {
+    width: 62px;
+
+    height: 62px;
+
+    border-radius: 50%;
+}
+
+.patient-photo img {
+    display: block;
+
+    object-fit: cover;
+
+    border: 3px solid #ffffff;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.patient-avatar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #ffffff;
+
+    font-size: 23px;
+
+    font-weight: 700;
+
+    background: linear-gradient(135deg, #8b0000, #d93636);
+
+    border: 3px solid #ffffff;
+
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
+}
+
+/* =========================================================
+   PATIENT INFORMATION
+   ========================================================= */
+
+.patient-info {
+    min-width: 0;
+
+    padding-right: 25px;
+}
+
+.patient-name {
+    margin: 0 0 6px;
+
+    overflow: hidden;
+
+    color: #292929;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.patient-code,
+.meeting-date {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 4px;
+
+    color: #777;
+
+    font-size: 11px;
+}
+
+.patient-code i {
+    color: #8b0000;
+}
+
+.meeting-date i {
+    color: #6c757d;
+}
+
+/* =========================================================
+   VIEW BUTTON
+   ========================================================= */
+
+.summary-eye {
+    position: absolute;
+
+    top: 15px;
+
+    right: 15px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 30px;
+
+    height: 30px;
+
+    color: #8b0000;
+
+    text-decoration: none;
+
+    border: 1px solid rgba(139, 0, 0, 0.12);
+
+    border-radius: 9px;
+
+    background: rgba(139, 0, 0, 0.05);
+
+    transition: all 0.25s ease;
+}
+
+.summary-eye:hover {
+    color: #ffffff;
+
+    background: #8b0000;
+
+    border-color: #8b0000;
+
+    transform: scale(1.08);
+}
+
+.summary-eye i {
+    font-size: 12px;
+}
+
+/* =========================================================
+   MEETING STATUS
+   ========================================================= */
+
+.meeting-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 14px;
+
+    padding: 4px 9px;
+
+    color: #52705c;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    border-radius: 20px;
+
+    background: rgba(40, 167, 69, 0.08);
+}
+
+.status-dot {
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #28a745;
+
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.12);
+}
+
+/* =========================================================
+   PAGINATION
+   ========================================================= */
+
+.summary-pagination {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 15px;
+
+    margin-top: 18px;
+
+    padding: 10px 14px;
+
+    border: 1px solid rgba(139, 0, 0, 0.08);
+
+    border-radius: 12px;
+
+    background: #ffffff;
+}
+
+.pagination-label {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    color: #777;
+
+    font-size: 11px;
+
+    font-weight: 600;
+}
+
+.pagination-label i {
+    color: #8b0000;
+}
+
+.pagination-buttons {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.summary-dot {
+    min-width: 32px;
+
+    height: 30px;
+
+    padding: 0 8px;
+
+    color: #777;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    border: 1px solid #eeeeee;
+
+    border-radius: 8px;
+
+    background: #ffffff;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.summary-dot:hover {
+    color: #8b0000;
+
+    border-color: rgba(139, 0, 0, 0.25);
+
+    background: #fff8f8;
+}
+
+.summary-dot.active {
+    color: #ffffff;
+
+    border-color: #8b0000;
+
+    background: linear-gradient(135deg, #8b0000, #b22222);
+
+    box-shadow: 0 4px 10px rgba(139, 0, 0, 0.22);
+}
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-meeting-state {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    min-height: 180px;
+
+    padding: 25px;
+
+    text-align: center;
+
+    border: 1px dashed rgba(139, 0, 0, 0.18);
+
+    border-radius: 18px;
+
+    background: linear-gradient(145deg, #ffffff, #fffafa);
+}
+
+.empty-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 55px;
+
+    height: 55px;
+
+    margin-bottom: 12px;
+
+    color: #8b0000;
+
+    font-size: 22px;
+
+    border-radius: 50%;
+
+    background: rgba(139, 0, 0, 0.07);
+}
+
+.empty-meeting-state h6 {
+    margin: 0 0 5px;
+
+    color: #333;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.empty-meeting-state p {
+    margin: 0;
+
+    color: #999;
+
+    font-size: 11px;
+}
+
+/* =========================================================
+   RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .summary-col {
+        width: 100%;
+    }
+
+    .patient-summary-card {
+        min-height: auto;
+    }
+
+    .summary-pagination {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .pagination-buttons {
+        width: 100%;
+
+        overflow-x: auto;
+
+        padding-bottom: 2px;
+    }
+}

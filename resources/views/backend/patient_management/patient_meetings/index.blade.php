@@ -33,7 +33,6 @@
     @include('backend.patient_management.patient_meetings.partial_pages.index_page.part_2')
 
     {{-- Schedule --}}
-    {{-- Schedule --}}
     <div class="card card-outline card-primary shadow meeting-dashboard">
 
         <div class="card-header d-flex justify-content-between align-items-center">
@@ -49,11 +48,21 @@
                 </div>
             </div>
 
-            <span class="badge badge-primary px-3 py-2">
-                {{ $patientMeetings->total() }}
-                Meetings
-            </span>
+            <div class="d-flex align-items-center gap-2">
 
+                <button type="button" id="meetingViewToggle" class="btn btn-sm btn-outline-primary mr-2" data-view="date">
+
+                    <i class="fas fa-exchange-alt mr-1"></i>
+                    Summarized Table
+
+                </button>
+
+                <span class="badge badge-primary px-3 py-2">
+                    {{ $patientMeetings->total() }}
+                    Meetings
+                </span>
+
+            </div>
         </div>
 
         <div class="card-body p-0">
@@ -73,28 +82,31 @@
                             <th style="min-width:250px;">
                                 Specialist
                             </th>
+                            <th class="summary-col d-none" style="min-width:700px;">
+                                Recent Patients
+                            </th>
 
-                            <th style="min-width:280px;">
+                            <th style="min-width:280px;" class="date-wise-col">
                                 Recent
                             </th>
 
-                            <th style="min-width:280px;">
+                            <th style="min-width:280px;" class="date-wise-col">
                                 Yesterday
                             </th>
 
-                            <th style="min-width:280px;">
+                            <th style="min-width:280px;" class="date-wise-col">
                                 Day Before
                             </th>
 
-                            <th style="min-width:280px;">
+                            <th style="min-width:280px;" class="date-wise-col">
                                 This Week
                             </th>
 
-                            <th style="min-width:280px;">
+                            <th style="min-width:280px;" class="date-wise-col">
                                 This Month
                             </th>
 
-                            <th class="text-center" style="width:130px;">
+                            <th class="text-center" style="min-width:235px;">
                                 Action
                             </th>
 
@@ -129,6 +141,15 @@
                                     fn($m) => optional($m->meeting_date)->isCurrentMonth(),
                                 );
 
+                                $summaryMeetings = collect()
+                                    ->merge($recent)
+                                    ->merge($yesterday)
+                                    ->merge($dayBefore)
+                                    ->merge($week)
+                                    ->merge($month)
+                                    ->unique('id')
+                                    ->sortByDesc('meeting_date');
+
                             @endphp
 
                             <tr>
@@ -142,7 +163,6 @@
                                 </td>
 
                                 <td>
-
                                     <div class="specialist-box">
 
                                         @php
@@ -190,38 +210,47 @@
                                         </div>
 
                                     </div>
-
                                 </td>
 
-                                <td>
+                                <td class="summary-col d-none">
+
+                                    @include(
+                                        'backend.patient_management.patient_meetings.partial_pages.index_page.summary_patient_cards',
+                                        [
+                                            'meetings' => $summaryMeetings,
+                                            'specialist' => $specialist,
+                                        ]
+                                    )
+
+                                </td>
+                                <td class="date-wise-col">
                                     @include(
                                         'backend.patient_management.patient_meetings.partial_pages.index_page.patient_cards',
                                         ['meetings' => $recent]
                                     )
                                 </td>
 
-                                <td>
+                                <td class="date-wise-col">
                                     @include(
                                         'backend.patient_management.patient_meetings.partial_pages.index_page.patient_cards',
                                         ['meetings' => $yesterday]
                                     )
                                 </td>
-
-                                <td>
+                                <td class="date-wise-col">
                                     @include(
                                         'backend.patient_management.patient_meetings.partial_pages.index_page.patient_cards',
                                         ['meetings' => $dayBefore]
                                     )
                                 </td>
 
-                                <td>
+                                <td class="date-wise-col">
                                     @include(
                                         'backend.patient_management.patient_meetings.partial_pages.index_page.patient_cards',
                                         ['meetings' => $week]
                                     )
                                 </td>
 
-                                <td>
+                                <td class="date-wise-col">
                                     @include(
                                         'backend.patient_management.patient_meetings.partial_pages.index_page.patient_cards',
                                         ['meetings' => $month]
@@ -232,17 +261,21 @@
                                     {{-- Patient Show Proflile but pass them to each patients part in hover show eye corner in top --}}
                                     <a href="{{ route('patient_meetings.show', $specialist->id) }}"
                                         class="btn btn-sm btn-outline-primary mb-2">
-                                        <i class="fas fa-eye"></i>
+                                        <i class="fas fa-eye">Per Patient Detail</i>
                                     </a>
                                     {{-- Specialist Profile --}}
                                     <a href="{{ route('specialists.show', $specialist->id) }}"
                                         class="btn btn-sm btn-outline-warning mb-2">
-                                        <i class="fas fa-eye"></i>
+                                        <i class="fas fa-eye">Specialist Detail</i>
                                     </a>
                                     {{-- Patient Week History part so that it will show patient in 3x2 card format and each patient will have patient_code, patient_name(	Recent	Yesterday	Day Before	This Week	This Month) --}}
-                                    <a href="{{ route('specialists.show', $specialist->id) }}"
-                                        class="btn btn-sm btn-outline-secondary  mb-2">
-                                        <i class="fas fa-eye"></i>
+                                    <a href="{{ route('patient_meetings.history', $specialist->id) }}"
+                                        class="btn btn-sm btn-outline-secondary mb-2">
+
+                                        <i class="fas fa-users mr-1"></i>
+
+                                        Specialist Patients History
+
                                     </a>
 
                                 </td>
@@ -293,8 +326,14 @@
         href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_section.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_card.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/pagination.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/responsive.css') }}">
 @stop
+
+@section('js')
+    <script src="{{ asset('js/backend/patient_management/patient_meeting/index_page/meeting_table_toggle.js') }}"></script>
+@endsection

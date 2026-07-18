@@ -100,6 +100,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::get('patients/{patient}/cancer-photos',[PatientCancerPhotoController::class, 'patientCancerPhotos'])->name('patients.cancer.photos');
     Route::post('patient-cancer-photos/sync',[PatientCancerPhotoController::class, 'patientsSync'])->name('patient-cancer-photos.sync');
     Route::resource('patient-cancer-photos',PatientCancerPhotoController::class);
+    Route::get('patient_meetings/history/{specialist}',[PatientMeetingController::class, 'patientsHistory'])->name('patient_meetings.history');
     Route::resource('patient_meetings',PatientMeetingController::class);
    
     //Report Module
