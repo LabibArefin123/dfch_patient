@@ -1,0 +1,81 @@
+/* =========================================================
+   PATIENT MEETING SHOW - MEETING INFORMATION
+   ========================================================= */
+
+.premium-card-body {
+    padding: 8px 19px 17px;
+}
+
+.meeting-info-list {
+    display: flex;
+
+    flex-direction: column;
+}
+
+.meeting-info-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 0;
+
+    border-bottom: 1px solid #f3f3f3;
+}
+
+.meeting-info-item:last-child {
+    border-bottom: none;
+}
+
+.info-item-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 32px;
+
+    height: 32px;
+
+    flex-shrink: 0;
+
+    color: #8b0000;
+
+    font-size: 12px;
+
+    border-radius: 9px;
+
+    background: rgba(139, 0, 0, 0.06);
+}
+
+.meeting-info-item > div:last-child {
+    min-width: 0;
+}
+
+.info-label {
+    display: block;
+
+    margin-bottom: 3px;
+
+    color: #999;
+
+    font-size: 10px;
+}
+
+.meeting-info-item strong {
+    display: block;
+
+    overflow: hidden;
+
+    color: #333;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}

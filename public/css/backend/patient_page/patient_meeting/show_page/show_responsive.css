@@ -1,0 +1,149 @@
+/* =========================================================
+   PATIENT MEETING SHOW - RESPONSIVE
+   ========================================================= */
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 991px) {
+    .meeting-hero-content {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 20px;
+    }
+
+    .meeting-hero-status {
+        align-items: flex-start;
+
+        flex-direction: row;
+    }
+
+    .premium-notes-body {
+        grid-template-columns: 1fr;
+    }
+
+    .note-divider {
+        width: 100%;
+
+        height: 1px;
+    }
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .meeting-page-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .meeting-header-actions {
+        width: 100%;
+    }
+
+    .meeting-edit-btn {
+        width: 100%;
+
+        justify-content: center;
+    }
+
+    .meeting-page-title {
+        font-size: 21px;
+    }
+
+    .meeting-hero-content {
+        padding: 23px 20px;
+    }
+
+    .meeting-hero-main {
+        align-items: flex-start;
+    }
+
+    .meeting-calendar-icon {
+        width: 52px;
+
+        height: 52px;
+
+        font-size: 20px;
+
+        border-radius: 14px;
+    }
+
+    .meeting-hero-title {
+        font-size: 19px;
+    }
+
+    .meeting-hero-meta {
+        align-items: flex-start;
+
+        flex-direction: column;
+
+        gap: 5px;
+    }
+
+    .meta-divider {
+        display: none !important;
+    }
+
+    .meeting-hero-status {
+        width: 100%;
+
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .profile-card-body {
+        min-height: 235px;
+    }
+
+    .premium-notes-body {
+        padding: 17px;
+    }
+}
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 480px) {
+    .meeting-header-left {
+        align-items: flex-start;
+    }
+
+    .meeting-header-icon {
+        width: 44px;
+
+        height: 44px;
+
+        font-size: 17px;
+
+        border-radius: 12px;
+    }
+
+    .meeting-page-subtitle {
+        font-size: 11px;
+    }
+
+    .meeting-hero-main {
+        gap: 12px;
+    }
+
+    .meeting-overline {
+        font-size: 8px;
+    }
+
+    .meeting-hero-title {
+        font-size: 17px;
+    }
+
+    .meeting-status-badge {
+        font-size: 10px;
+    }
+}

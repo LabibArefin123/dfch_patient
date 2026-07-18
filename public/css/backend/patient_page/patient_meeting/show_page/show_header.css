@@ -1,0 +1,145 @@
+/* =========================================================
+   PATIENT MEETING SHOW - PAGE HEADER
+   ========================================================= */
+
+.meeting-page-header {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+
+    padding: 4px 0;
+}
+
+/* =========================================================
+   HEADER LEFT
+   ========================================================= */
+
+.meeting-header-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+/* =========================================================
+   HEADER ICON
+   ========================================================= */
+
+.meeting-header-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 52px;
+
+    height: 52px;
+
+    color: #ffffff;
+
+    font-size: 20px;
+
+    border-radius: 15px;
+
+    background: linear-gradient(135deg, #8b0000, #c62828);
+
+    box-shadow: 0 8px 18px rgba(139, 0, 0, 0.22);
+}
+
+/* =========================================================
+   BREADCRUMB
+   ========================================================= */
+
+.meeting-breadcrumb {
+    display: flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 3px;
+
+    color: #999;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.5px;
+}
+
+.meeting-breadcrumb i {
+    color: #c5c5c5;
+
+    font-size: 8px;
+}
+
+/* =========================================================
+   TITLE
+   ========================================================= */
+
+.meeting-page-title {
+    margin: 0;
+
+    color: #252525;
+
+    font-size: 25px;
+
+    font-weight: 700;
+}
+
+.meeting-page-subtitle {
+    margin: 3px 0 0;
+
+    color: #888;
+
+    font-size: 12px;
+}
+
+/* =========================================================
+   EDIT BUTTON
+   ========================================================= */
+
+.meeting-edit-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 10px 17px;
+
+    color: #ffffff;
+
+    font-size: 12px;
+
+    font-weight: 600;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, #8b0000, #b22222);
+
+    box-shadow: 0 6px 14px rgba(139, 0, 0, 0.18);
+
+    transition: all 0.25s ease;
+}
+
+.meeting-edit-btn:hover {
+    color: #ffffff;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 20px rgba(139, 0, 0, 0.25);
+}

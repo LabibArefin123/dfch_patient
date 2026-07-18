@@ -327,7 +327,7 @@ return [
             'topnav_right' => true,
         ],
 
-       
+
 
         [
             'type' => 'navbar-item',
@@ -420,18 +420,11 @@ return [
                     'can'   => 'patients.recommend',
                     'icon'  => 'fas fa-list',
                 ],
-                
+
                 [
                     'text'  => 'Emergengy Patients',
                     'route' => 'patient_emergencies.index',
                     'can'   => 'patient_emergencies.index',
-                    'icon'  => 'fas fa-list',
-                ],
-
-                [
-                    'text'  => 'Patients Meeting',
-                    'route' => 'patient_meetings.index',
-                    'can'   => 'patient_meetings.index',
                     'icon'  => 'fas fa-list',
                 ],
 
@@ -444,6 +437,40 @@ return [
 
             ],
         ],
+
+
+        [
+            'text'    => 'Consultations',
+            'icon'    => 'fas fa-calendar-check',
+            'submenu' => [
+
+                [
+                    'text'  => 'Meeting Dashboard',
+                    'route' => 'patient_meetings.index',
+                    'can'   => 'patient_meetings.index',
+                    'icon'  => 'fas fa-chart-line',
+                ],
+
+                [
+                    'text'  => 'All Meetings',
+                    'route' => 'patient_meetings.list',
+                    'can' => 'patient_meetings.list',
+                    'icon'  => 'fas fa-calendar-alt',
+                ],
+
+                [
+                    'text'  => 'Recent Meetings',
+                    'route' => 'patient_meetings.today',
+                    'can' => 'patient_meetings.today',
+                    'icon'  => 'fas fa-calendar-day',
+                ],
+
+
+            ],
+        ],
+
+
+
         [
             'text' => 'Report Management',
             'icon' => 'fas fa-file-alt',
@@ -555,7 +582,7 @@ return [
                             'icon' => 'fas fa-shield-alt',
                         ],
                     ],
-                    ],
+                ],
 
             ],
         ],

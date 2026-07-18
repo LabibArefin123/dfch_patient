@@ -81,6 +81,172 @@ class PatientMeetingController extends Controller
             compact('specialist')
         );
     }
+
+    public function list(Request $request)
+    {
+        $search = $request->input('search');
+        $status = $request->input('status');
+        $meetingType = $request->input('meeting_type');
+        $date = $request->input('date');
+
+        $patientMeetings = PatientMeeting::with([
+            'patient:id,patient_name,patient_code,patient_photo',
+            'specialist:id,name,designation,photo',
+        ])
+            ->when($search, function ($query) use ($search) {
+
+                $query->where(function ($q) use ($search) {
+
+                    $q->where('title', 'like', "%{$search}%")
+                        ->orWhere('description', 'like', "%{$search}%")
+                        ->orWhere('notes', 'like', "%{$search}%")
+
+                        ->orWhereHas('patient', function ($q2) use ($search) {
+
+                            $q2->where(
+                                'patient_name',
+                                'like',
+                                "%{$search}%"
+                            )
+                                ->orWhere(
+                                    'patient_code',
+                                    'like',
+                                    "%{$search}%"
+                                );
+                        })
+
+                        ->orWhereHas('specialist', function ($q2) use ($search) {
+
+                            $q2->where(
+                                'name',
+                                'like',
+                                "%{$search}%"
+                            );
+                        });
+                });
+            })
+
+            ->when($status, function ($query) use ($status) {
+                $query->where('status', $status);
+            })
+
+            ->when($meetingType, function ($query) use ($meetingType) {
+                $query->where('meeting_type', $meetingType);
+            })
+
+            ->when($date, function ($query) use ($date) {
+                $query->whereDate('meeting_date', $date);
+            })
+
+            ->latest('meeting_date')
+            ->latest('start_time')
+
+            ->get();
+            
+
+        return view(
+            'backend.patient_management.patient_meetings.patient_list',
+            compact(
+                'patientMeetings',
+                'search',
+                'status',
+                'meetingType',
+                'date'
+            )
+        );
+    }
+
+    public function today(Request $request)
+    {
+        $search = $request->input('search');
+        $status = $request->input('status');
+
+        $today = now()->toDateString();
+
+        $patientMeetings = PatientMeeting::with([
+            'patient:id,patient_name,patient_code,patient_photo',
+            'specialist:id,name,designation,photo',
+        ])
+
+            ->whereDate('meeting_date', $today)
+
+            ->when($search, function ($query) use ($search) {
+
+                $query->where(function ($q) use ($search) {
+
+                    $q->where('title', 'like', "%{$search}%")
+
+                        ->orWhereHas(
+                            'patient',
+                            fn($qq) =>
+                            $qq->where(
+                                'patient_name',
+                                'like',
+                                "%{$search}%"
+                            )
+                                ->orWhere(
+                                    'patient_code',
+                                    'like',
+                                    "%{$search}%"
+                                )
+                        )
+
+                        ->orWhereHas(
+                            'specialist',
+                            fn($qq) =>
+                            $qq->where(
+                                'name',
+                                'like',
+                                "%{$search}%"
+                            )
+                        );
+                });
+            })
+
+            ->when($status, function ($query) use ($status) {
+
+                $query->where('status', $status);
+            })
+
+            ->orderBy('start_time')
+
+            ->paginate(15)
+
+            ->withQueryString();
+
+        $completedCount = PatientMeeting::whereDate(
+            'meeting_date',
+            $today
+        )
+            ->where('status', 'completed')
+            ->count();
+
+        $pendingCount = PatientMeeting::whereDate(
+            'meeting_date',
+            $today
+        )
+            ->where('status', 'pending')
+            ->count();
+
+        $cancelledCount = PatientMeeting::whereDate(
+            'meeting_date',
+            $today
+        )
+            ->where('status', 'cancelled')
+            ->count();
+
+        return view(
+            'backend.patient_management.patient_meetings.patient_today',
+            compact(
+                'patientMeetings',
+                'search',
+                'status',
+                'completedCount',
+                'pendingCount',
+                'cancelledCount'
+            )
+        );
+    }
     /**
      * Show the form for creating a new meeting.
      */

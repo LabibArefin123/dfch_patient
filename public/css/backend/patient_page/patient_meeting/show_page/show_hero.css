@@ -1,0 +1,241 @@
+/* =========================================================
+   PATIENT MEETING SHOW - HERO
+   ========================================================= */
+
+.meeting-hero-card {
+    position: relative;
+
+    min-height: 150px;
+
+    margin-bottom: 24px;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    background: linear-gradient(120deg, #720000 0%, #8b0000 45%, #b22222 100%);
+
+    box-shadow: 0 14px 32px rgba(139, 0, 0, 0.18);
+}
+
+/* =========================================================
+   HERO PATTERN
+   ========================================================= */
+
+.meeting-hero-pattern {
+    position: absolute;
+
+    top: -100px;
+
+    right: -80px;
+
+    width: 330px;
+
+    height: 330px;
+
+    border: 45px solid rgba(255, 255, 255, 0.05);
+
+    border-radius: 50%;
+}
+
+.meeting-hero-pattern::after {
+    position: absolute;
+
+    top: 30px;
+
+    left: 30px;
+
+    width: 180px;
+
+    height: 180px;
+
+    border: 30px solid rgba(255, 255, 255, 0.04);
+
+    border-radius: 50%;
+
+    content: "";
+}
+
+/* =========================================================
+   HERO CONTENT
+   ========================================================= */
+
+.meeting-hero-content {
+    position: relative;
+
+    z-index: 2;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    min-height: 150px;
+
+    padding: 28px 32px;
+}
+
+.meeting-hero-main {
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+}
+
+/* =========================================================
+   CALENDAR ICON
+   ========================================================= */
+
+.meeting-calendar-icon {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 68px;
+
+    height: 68px;
+
+    color: #ffffff;
+
+    font-size: 27px;
+
+    border: 1px solid rgba(255, 255, 255, 0.25);
+
+    border-radius: 18px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+}
+
+/* =========================================================
+   HERO TEXT
+   ========================================================= */
+
+.meeting-overline {
+    display: block;
+
+    margin-bottom: 5px;
+
+    color: rgba(255, 255, 255, 0.68);
+
+    font-size: 10px;
+
+    font-weight: 700;
+
+    letter-spacing: 1.3px;
+}
+
+.meeting-hero-title {
+    margin: 0;
+
+    color: #ffffff;
+
+    font-size: 25px;
+
+    font-weight: 700;
+}
+
+/* =========================================================
+   HERO META
+   ========================================================= */
+
+.meeting-hero-meta {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    margin-top: 9px;
+
+    color: rgba(255, 255, 255, 0.78);
+
+    font-size: 11px;
+}
+
+.meeting-hero-meta span {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+}
+
+.meeting-hero-meta i {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.meta-divider {
+    width: 4px;
+
+    height: 4px;
+
+    border-radius: 50%;
+
+    background: rgba(255, 255, 255, 0.45);
+}
+
+/* =========================================================
+   HERO STATUS
+   ========================================================= */
+
+.meeting-hero-status {
+    display: flex;
+
+    align-items: flex-end;
+
+    flex-direction: column;
+
+    gap: 7px;
+}
+
+.status-label {
+    color: rgba(255, 255, 255, 0.55);
+
+    font-size: 9px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+}
+
+.meeting-status-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 7px;
+
+    padding: 7px 12px;
+
+    color: #ffffff;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    border: 1px solid rgba(255, 255, 255, 0.18);
+
+    border-radius: 20px;
+
+    background: rgba(255, 255, 255, 0.13);
+
+    backdrop-filter: blur(8px);
+}
+
+.status-indicator {
+    width: 7px;
+
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #76e39b;
+
+    box-shadow: 0 0 0 3px rgba(118, 227, 155, 0.18);
+}

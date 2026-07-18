@@ -4,114 +4,288 @@
 
 @section('content_header')
 
-    <div class="d-flex justify-content-between">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_header.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_hero.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_profile.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_notes.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_meeting_info.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_responsive.css') }}">
+    <div class="meeting-page-header">
 
-        <div>
+        <div class="meeting-header-left">
 
-            <h1>
-                <i class="fas fa-calendar-check text-primary mr-2"></i>
-                Meeting Details
-            </h1>
+            <div class="meeting-header-icon">
 
-            <small class="text-muted">
+                <i class="fas fa-calendar-check"></i>
 
-                View patient consultation information.
+            </div>
 
-            </small>
+            <div>
+
+                <div class="meeting-breadcrumb">
+
+                    <span>Patient Management</span>
+
+                    <i class="fas fa-chevron-right"></i>
+
+                    <span>Meetings</span>
+
+                </div>
+
+                <h1 class="meeting-page-title">
+
+                    Meeting Details
+
+                </h1>
+
+                <p class="meeting-page-subtitle">
+
+                    View complete consultation and appointment information.
+
+                </p>
+
+            </div>
 
         </div>
 
-        <div>
+        <div class="meeting-header-actions">
 
-            <a href="{{ route('patient_meetings.edit', $patientMeeting->id) }}" class="btn btn-primary">
+            <a href="{{ route('patient_meetings.edit', $patientMeeting->id) }}" class="btn meeting-edit-btn">
+
                 <i class="fas fa-edit mr-1"></i>
-                Edit
+
+                Edit Meeting
+
             </a>
 
         </div>
 
     </div>
 
+
 @stop
 
 @section('content')
+    @php
+        $meetingTitle = $patientMeeting->title ?? ucfirst(str_replace('_', ' ', $patientMeeting->meeting_type));
 
-    <div class="row">
+        $meetingStatus = ucfirst($patientMeeting->status);
 
-        {{-- Meeting --}}
-        <div class="col-lg-4">
+        $meetingType = ucfirst(str_replace('_', ' ', $patientMeeting->meeting_type));
 
-            <div class="card shadow-sm">
+        $patient = $patientMeeting->patient;
 
-                <div class="card-header">
+        $specialist = $patientMeeting->specialist;
 
-                    <h5 class="mb-0">
-                        Meeting Information
-                    </h5>
+        $patientImage =
+            $patient && $patient->patient_photo && file_exists(public_path($patient->patient_photo))
+                ? asset($patient->patient_photo)
+                : asset('uploads/images/default.jpg');
+
+    @endphp
+
+    {{--  MEETING HERO --}}
+    <div class="meeting-hero-card">
+
+        <div class="meeting-hero-pattern"></div>
+
+        <div class="meeting-hero-content">
+
+            <div class="meeting-hero-main">
+
+                <div class="meeting-calendar-icon">
+
+                    <i class="fas fa-calendar-alt"></i>
 
                 </div>
 
-                <div class="card-body">
+                <div>
 
-                    <table class="table table-sm">
+                    <span class="meeting-overline">
 
-                        <tr>
-                            <th>Title</th>
-                            <td>
+                        CONSULTATION MEETING
 
-                                {{ $patientMeeting->title ?? ucfirst(str_replace('_', ' ', $patientMeeting->meeting_type)) }}
+                    </span>
 
-                            </td>
-                        </tr>
+                    <h2 class="meeting-hero-title">
 
-                        <tr>
-                            <th>Date</th>
-                            <td>
+                        {{ $meetingTitle }}
 
-                                {{ $patientMeeting->meeting_date->format('d M Y') }}
+                    </h2>
 
-                            </td>
-                        </tr>
+                    <div class="meeting-hero-meta">
 
-                        <tr>
-                            <th>Time</th>
+                        <span>
 
-                            <td>
+                            <i class="far fa-calendar-alt"></i>
 
-                                {{ \Carbon\Carbon::parse($patientMeeting->start_time)->format('h:i A') }}
+                            {{ $patientMeeting->meeting_date?->format('d M Y') ?? 'Date unavailable' }}
 
+                        </span>
+
+                        <span class="meta-divider"></span>
+
+                        <span>
+
+                            <i class="far fa-clock"></i>
+
+                            {{ \Carbon\Carbon::parse($patientMeeting->start_time)->format('h:i A') }}
+
+                            @if ($patientMeeting->end_time)
                                 -
 
-                                {{ $patientMeeting->end_time ? \Carbon\Carbon::parse($patientMeeting->end_time)->format('h:i A') : '--' }}
+                                {{ \Carbon\Carbon::parse($patientMeeting->end_time)->format('h:i A') }}
+                            @endif
 
-                            </td>
-                        </tr>
+                        </span>
 
-                        <tr>
-                            <th>Status</th>
+                    </div>
 
-                            <td>
+                </div>
 
-                                <span class="badge badge-primary">
+            </div>
 
-                                    {{ ucfirst($patientMeeting->status) }}
+            <div class="meeting-hero-status">
 
-                                </span>
+                <span class="status-label">
 
-                            </td>
-                        </tr>
+                    STATUS
 
-                        <tr>
-                            <th>Type</th>
+                </span>
 
-                            <td>
+                <span class="meeting-status-badge status-{{ strtolower($patientMeeting->status) }}">
 
-                                {{ ucfirst(str_replace('_', ' ', $patientMeeting->meeting_type)) }}
+                    <span class="status-indicator"></span>
 
-                            </td>
-                        </tr>
+                    {{ $meetingStatus }}
 
-                    </table>
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    {{-- MAIN INFORMATION --}}
+    <div class="row meeting-main-row">
+        {{--  MEETING INFORMATION --}}
+        <div class="col-lg-4 mb-4">
+
+            <div class="premium-meeting-card">
+
+                <div class="premium-card-header">
+
+                    <div class="card-header-icon meeting-icon">
+
+                        <i class="fas fa-calendar-check"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>Meeting Information</h5>
+
+                        <span>Appointment overview</span>
+
+                    </div>
+
+                </div>
+
+                <div class="premium-card-body">
+
+                    <div class="meeting-info-list">
+
+                        <div class="meeting-info-item">
+
+                            <div class="info-item-icon">
+
+                                <i class="fas fa-heading"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span class="info-label">Title</span>
+
+                                <strong>{{ $meetingTitle }}</strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="meeting-info-item">
+
+                            <div class="info-item-icon">
+
+                                <i class="far fa-calendar"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span class="info-label">Meeting Date</span>
+
+                                <strong>
+
+                                    {{ $patientMeeting->meeting_date?->format('d M Y') ?? 'N/A' }}
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="meeting-info-item">
+
+                            <div class="info-item-icon">
+
+                                <i class="far fa-clock"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span class="info-label">Time</span>
+
+                                <strong>
+
+                                    {{ \Carbon\Carbon::parse($patientMeeting->start_time)->format('h:i A') }}
+
+                                    @if ($patientMeeting->end_time)
+                                        -
+
+                                        {{ \Carbon\Carbon::parse($patientMeeting->end_time)->format('h:i A') }}
+                                    @endif
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div class="meeting-info-item">
+
+                            <div class="info-item-icon">
+
+                                <i class="fas fa-layer-group"></i>
+
+                            </div>
+
+                            <div>
+
+                                <span class="info-label">Meeting Type</span>
+
+                                <strong>{{ $meetingType }}</strong>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
@@ -119,62 +293,71 @@
 
         </div>
 
-        {{-- Patient --}}
-        <div class="col-lg-4">
 
-            <div class="card shadow-sm">
+        {{--  PATIENT PROFILE --}}
+        <div class="col-lg-4 mb-4">
 
-                <div class="card-header">
+            <div class="premium-meeting-card profile-card">
 
-                    <h5 class="mb-0">
+                <div class="premium-card-header">
 
-                        Patient
+                    <div class="card-header-icon patient-icon">
 
-                    </h5>
+                        <i class="fas fa-user-injured"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>Patient</h5>
+
+                        <span>Meeting participant</span>
+
+                    </div>
 
                 </div>
 
-                <div class="card-body text-center">
+                <div class="profile-card-body">
 
-                    @if ($patientMeeting->patient)
-                        @php
-                            $patientImage =
-                                $patientMeeting->patient &&
-                                $patientMeeting->patient->patient_photo &&
-                                file_exists(public_path($patientMeeting->patient->patient_photo))
-                                    ? asset($patientMeeting->patient->patient_photo)
-                                    : asset('uploads/images/default.jpg');
-                        @endphp
+                    @if ($patient)
+                        <div class="profile-image-wrapper">
 
-                        <img src="{{ $patientImage }}" alt="{{ $patientMeeting->patient?->patient_name }}"
-                            class="img-thumbnail rounded-circle mb-3 zoomable"
-                            style="
-                                width:120px;
-                                height:120px;
-                                object-fit:cover;
-                                cursor:pointer;
-                                border:3px solid #f1f5f9;
-                                box-shadow:0 4px 12px rgba(0,0,0,.08);
-                            "
-                            data-action="zoom">
-                        <h5>
+                            <img src="{{ $patientImage }}" alt="{{ $patient->patient_name }}"
+                                class="profile-image zoomable" data-action="zoom">
 
-                            {{ $patientMeeting->patient->patient_name }}
+                            <span class="profile-online-indicator"></span>
 
-                        </h5>
+                        </div>
 
-                        <p class="text-muted">
+                        <h4 class="profile-name">
 
-                            {{ $patientMeeting->patient->patient_code }}
+                            {{ $patient->patient_name }}
 
-                        </p>
+                        </h4>
 
-                        <a href="{{ route('patients.show', $patientMeeting->patient->id) }}"
-                            class="btn btn-outline-primary btn-sm">
+                        <span class="profile-code">
+
+                            <i class="fas fa-id-card"></i>
+
+                            {{ $patient->patient_code }}
+
+                        </span>
+
+                        <a href="{{ route('patients.show', $patient->id) }}" class="profile-view-btn patient-btn">
+
+                            <i class="fas fa-user mr-1"></i>
 
                             View Patient
 
                         </a>
+                    @else
+                        <div class="profile-empty">
+
+                            <i class="fas fa-user-slash"></i>
+
+                            <span>Patient information unavailable</span>
+
+                        </div>
                     @endif
 
                 </div>
@@ -183,46 +366,68 @@
 
         </div>
 
-        {{-- Specialist --}}
-        <div class="col-lg-4">
 
-            <div class="card shadow-sm">
+        {{--  SPECIALIST PROFILE --}}
+        <div class="col-lg-4 mb-4">
 
-                <div class="card-header">
+            <div class="premium-meeting-card profile-card">
 
-                    <h5 class="mb-0">
+                <div class="premium-card-header">
 
-                        Specialist
+                    <div class="card-header-icon specialist-icon">
 
-                    </h5>
+                        <i class="fas fa-user-md"></i>
+
+                    </div>
+
+                    <div>
+
+                        <h5>Specialist</h5>
+
+                        <span>Consulting specialist</span>
+
+                    </div>
 
                 </div>
 
-                <div class="card-body text-center">
+                <div class="profile-card-body">
 
-                    @if ($patientMeeting->specialist)
-                        <img src="{{ asset('uploads/images/welcome_page/doctors/' . $patientMeeting->specialist->photo) }}"
-                            class="img-thumbnail rounded-circle mb-3" style="width:120px;height:120px;object-fit:cover;">
+                    @if ($specialist)
+                        <div class="profile-image-wrapper specialist-image-wrapper">
 
-                        <h5>
+                            <img src="{{ asset('uploads/images/welcome_page/doctors/' . $specialist->photo) }}"
+                                alt="{{ $specialist->name }}" class="profile-image specialist-image">
 
-                            Dr.
-                            {{ $patientMeeting->specialist->name }}
+                        </div>
 
-                        </h5>
+                        <h4 class="profile-name">
 
-                        <p class="text-muted">
+                            {{ $specialist->name }}
 
-                            {{ $patientMeeting->specialist->designation }}
+                        </h4>
 
-                        </p>
+                        <span class="profile-designation">
 
-                        <a href="{{ route('specialists.show', $patientMeeting->specialist->id) }}"
-                            class="btn btn-outline-primary btn-sm">
+                            {{ $specialist->designation }}
+
+                        </span>
+
+                        <a href="{{ route('specialists.show', $specialist->id) }}"
+                            class="profile-view-btn specialist-btn">
+
+                            <i class="fas fa-stethoscope mr-1"></i>
 
                             View Specialist
 
                         </a>
+                    @else
+                        <div class="profile-empty">
+
+                            <i class="fas fa-user-md"></i>
+
+                            <span>Specialist information unavailable</span>
+
+                        </div>
                     @endif
 
                 </div>
@@ -233,36 +438,71 @@
 
     </div>
 
-    <div class="card shadow-sm mt-4">
 
-        <div class="card-header">
+    {{-- DESCRIPTION & NOTES --}}
+    <div class="premium-notes-card">
 
-            Description & Notes
+        <div class="premium-notes-header">
+
+            <div class="notes-header-icon">
+
+                <i class="fas fa-notes-medical"></i>
+
+            </div>
+
+            <div>
+
+                <h5>Consultation Notes</h5>
+
+                <span>Additional meeting information</span>
+
+            </div>
 
         </div>
 
-        <div class="card-body">
+        <div class="premium-notes-body">
 
-            <h6>Description</h6>
+            <div class="note-section">
 
-            <p>
+                <div class="note-title">
 
-                {{ $patientMeeting->description ?? 'N/A' }}
+                    <i class="fas fa-align-left"></i>
 
-            </p>
+                    Description
 
-            <hr>
+                </div>
 
-            <h6>Notes</h6>
+                <div class="note-content">
 
-            <p>
+                    {!! nl2br(e($patientMeeting->description ?? 'No description has been added for this meeting.')) !!}
 
-                {{ $patientMeeting->notes ?? 'N/A' }}
+                </div>
 
-            </p>
+            </div>
+
+            <div class="note-divider"></div>
+
+            <div class="note-section">
+
+                <div class="note-title">
+
+                    <i class="fas fa-sticky-note"></i>
+
+                    Notes
+
+                </div>
+
+                <div class="note-content">
+
+                    {!! nl2br(e($patientMeeting->notes ?? 'No additional notes have been added.')) !!}
+
+                </div>
+
+            </div>
 
         </div>
 
     </div>
 
+    <div style="height: 30px;"></div>
 @stop

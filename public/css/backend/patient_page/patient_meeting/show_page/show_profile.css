@@ -1,0 +1,220 @@
+/* =========================================================
+   PATIENT MEETING SHOW - PROFILE
+   ========================================================= */
+
+.profile-card-body {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    min-height: 255px;
+
+    padding: 22px 20px;
+
+    text-align: center;
+}
+
+/* =========================================================
+   PROFILE IMAGE
+   ========================================================= */
+
+.profile-image-wrapper {
+    position: relative;
+
+    margin-bottom: 12px;
+}
+
+.profile-image {
+    width: 105px;
+
+    height: 105px;
+
+    object-fit: cover;
+
+    border: 4px solid #ffffff;
+
+    border-radius: 50%;
+
+    box-shadow: 0 7px 20px rgba(0, 0, 0, 0.13);
+
+    cursor: pointer;
+}
+
+.specialist-image {
+    object-fit: contain;
+
+    padding: 5px;
+
+    background: #ffffff;
+}
+
+/* =========================================================
+   ONLINE INDICATOR
+   ========================================================= */
+
+.profile-online-indicator {
+    position: absolute;
+
+    right: 5px;
+
+    bottom: 7px;
+
+    width: 13px;
+
+    height: 13px;
+
+    border: 3px solid #ffffff;
+
+    border-radius: 50%;
+
+    background: #28a745;
+}
+
+/* =========================================================
+   PROFILE TEXT
+   ========================================================= */
+
+.profile-name {
+    max-width: 100%;
+
+    margin: 0;
+
+    overflow: hidden;
+
+    color: #292929;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.profile-code,
+.profile-designation {
+    display: block;
+
+    margin-top: 5px;
+
+    color: #888;
+
+    font-size: 11px;
+}
+
+.profile-code {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 5px;
+}
+
+.profile-code i {
+    color: #1769aa;
+}
+
+/* =========================================================
+   PROFILE BUTTON
+   ========================================================= */
+
+.profile-view-btn {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    margin-top: 15px;
+
+    padding: 8px 15px;
+
+    font-size: 11px;
+
+    font-weight: 600;
+
+    text-decoration: none;
+
+    border-radius: 8px;
+
+    transition: all 0.25s ease;
+}
+
+.patient-btn {
+    color: #1769aa;
+
+    border: 1px solid rgba(23, 105, 170, 0.18);
+
+    background: rgba(23, 105, 170, 0.06);
+}
+
+.patient-btn:hover {
+    color: #ffffff;
+
+    background: #1769aa;
+
+    border-color: #1769aa;
+}
+
+.specialist-btn {
+    color: #52705c;
+
+    border: 1px solid rgba(40, 167, 69, 0.18);
+
+    background: rgba(40, 167, 69, 0.06);
+}
+
+.specialist-btn:hover {
+    color: #ffffff;
+
+    background: #52705c;
+
+    border-color: #52705c;
+}
+
+/* =========================================================
+   EMPTY PROFILE
+   ========================================================= */
+
+.profile-empty {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    min-height: 180px;
+
+    color: #aaa;
+
+    font-size: 11px;
+}
+
+.profile-empty i {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    width: 55px;
+
+    height: 55px;
+
+    color: #b8b8b8;
+
+    font-size: 22px;
+
+    border-radius: 50%;
+
+    background: #f6f6f6;
+}
