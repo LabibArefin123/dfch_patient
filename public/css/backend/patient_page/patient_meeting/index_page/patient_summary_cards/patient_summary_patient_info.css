@@ -1,0 +1,119 @@
+/* =========================================================
+   PATIENT SUMMARY CONTENT
+   ========================================================= */
+
+.patient-summary-content {
+    display: flex;
+
+    align-items: center;
+
+    gap: 14px;
+}
+
+/* =========================================================
+   PATIENT PHOTO
+   ========================================================= */
+
+.patient-photo {
+    position: relative;
+
+    flex-shrink: 0;
+}
+
+.patient-photo img,
+.patient-avatar {
+    width: 62px;
+
+    height: 62px;
+
+    border-radius: 50%;
+}
+
+/* =========================================================
+   PATIENT IMAGE
+   ========================================================= */
+
+.patient-photo img {
+    display: block;
+
+    object-fit: cover;
+
+    border: 3px solid #ffffff;
+
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* =========================================================
+   PATIENT AVATAR
+   ========================================================= */
+
+.patient-avatar {
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    color: #ffffff;
+
+    font-size: 23px;
+
+    font-weight: 700;
+
+    background: linear-gradient(135deg, #8b0000, #d93636);
+
+    border: 3px solid #ffffff;
+
+    box-shadow: 0 4px 12px rgba(139, 0, 0, 0.25);
+}
+
+/* =========================================================
+   PATIENT INFORMATION
+   ========================================================= */
+
+.patient-info {
+    min-width: 0;
+
+    padding-right: 25px;
+}
+
+.patient-name {
+    margin: 0 0 6px;
+
+    overflow: hidden;
+
+    color: #292929;
+
+    font-size: 15px;
+
+    font-weight: 700;
+
+    line-height: 1.3;
+
+    white-space: nowrap;
+
+    text-overflow: ellipsis;
+}
+
+.patient-code,
+.meeting-date {
+    display: flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 4px;
+
+    color: #777;
+
+    font-size: 11px;
+}
+
+.patient-code i {
+    color: #8b0000;
+}
+
+.meeting-date i {
+    color: #6c757d;
+}

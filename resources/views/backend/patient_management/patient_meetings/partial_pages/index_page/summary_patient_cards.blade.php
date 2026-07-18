@@ -29,7 +29,7 @@
                                 <a href="{{ route('patient_meetings.show', $meeting->id) }}" class="summary-eye"
                                     title="View Meeting">
 
-                                    <i class="fas fa-arrow-up-right-from-square"></i>
+                                    <i class="fas fa-eye"></i>
 
                                 </a>
 

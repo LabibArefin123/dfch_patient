@@ -95,7 +95,7 @@
                             </th>
 
                             <th style="min-width:280px;" class="date-wise-col">
-                                Day Before
+                                Day Before Yesterday
                             </th>
 
                             <th style="min-width:280px;" class="date-wise-col">
@@ -322,16 +322,27 @@
 
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_grid.css') }}">
 
-    <link rel="stylesheet"
-        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_section.css') }}">
-
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_card.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards.css') }}">
+    <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_section.css') }}">
+    <link
+        rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/pagination.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/responsive.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_layout.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_summary.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_card.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_patient_info.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_actions.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_status.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_pagination.css') }}">
 @stop
 
 @section('js')

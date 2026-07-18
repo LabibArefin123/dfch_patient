@@ -1,0 +1,43 @@
+/* =========================================================
+   PATIENT SUMMARY SLIDER
+   ========================================================= */
+
+.summary-slider {
+    position: relative;
+
+    width: 100%;
+
+    overflow: hidden;
+}
+
+/* =========================================================
+   SUMMARY PAGE
+   ========================================================= */
+
+.summary-page {
+    display: none;
+
+    animation: summaryPageFade 0.35s ease;
+}
+
+.summary-page.active {
+    display: block;
+}
+
+/* =========================================================
+   PAGE ANIMATION
+   ========================================================= */
+
+@keyframes summaryPageFade {
+    from {
+        opacity: 0;
+
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+
+        transform: translateY(0);
+    }
+}

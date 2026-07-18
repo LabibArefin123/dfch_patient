@@ -1,0 +1,43 @@
+/* =========================================================
+   MEETING STATUS
+   ========================================================= */
+
+.meeting-status {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 6px;
+
+    margin-top: 14px;
+
+    padding: 4px 9px;
+
+    color: #52705c;
+
+    font-size: 10px;
+
+    font-weight: 600;
+
+    letter-spacing: 0.2px;
+
+    border-radius: 20px;
+
+    background: rgba(40, 167, 69, 0.08);
+}
+
+/* =========================================================
+   STATUS DOT
+   ========================================================= */
+
+.status-dot {
+    width: 6px;
+
+    height: 6px;
+
+    border-radius: 50%;
+
+    background: #28a745;
+
+    box-shadow: 0 0 0 3px rgba(40, 167, 69, 0.12);
+}

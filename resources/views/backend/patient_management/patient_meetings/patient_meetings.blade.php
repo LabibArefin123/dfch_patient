@@ -135,7 +135,7 @@
     @foreach ([
             'Recent' => $recent,
             'Yesterday' => $yesterday,
-            'Day Before' => $dayBefore,
+            'Day Before Yesterday' => $dayBefore,
             'This Week' => $week,
             'This Month' => $month,
         ] as $title => $meetings)

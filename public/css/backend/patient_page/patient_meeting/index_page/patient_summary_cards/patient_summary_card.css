@@ -1,0 +1,58 @@
+/* =========================================================
+   PATIENT SUMMARY CARD
+   ========================================================= */
+
+.patient-summary-card {
+    position: relative;
+
+    min-height: 145px;
+
+    padding: 18px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(139, 0, 0, 0.08);
+
+    border-radius: 18px;
+
+    background: linear-gradient(145deg, #ffffff 0%, #fffafa 100%);
+
+    box-shadow:
+        0 8px 24px rgba(0, 0, 0, 0.06),
+        0 2px 6px rgba(139, 0, 0, 0.04);
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        border-color 0.3s ease;
+}
+
+/* =========================================================
+   LEFT ACCENT
+   ========================================================= */
+
+.patient-summary-card .card-accent {
+    position: absolute;
+
+    top: 0;
+
+    left: 0;
+
+    width: 4px;
+
+    height: 100%;
+
+    background: linear-gradient(180deg, #8b0000, #d93636);
+
+    border-radius: 18px 0 0 18px;
+}
+
+/* =========================================================
+   MOBILE CARD
+   ========================================================= */
+
+@media (max-width: 767px) {
+    .patient-summary-card {
+        min-height: auto;
+    }
+}
