@@ -27,10 +27,11 @@ class DailyController extends Controller
 
             $query = Patient::query();
             $parent->applyDailyFilters($query, $request);
-
-            return DataTables::of($query)
-                ->addIndexColumn()
-                ->make(true);
+            return $this->dataTableService
+                ->response(
+                    $query,
+                    'date_of_patient_added'
+                );
         }
 
         return view('backend.report_management.patient.daily_report');

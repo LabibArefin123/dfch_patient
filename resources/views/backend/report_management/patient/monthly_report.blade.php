@@ -19,7 +19,7 @@
         ['data' => 'phone_m_1'],
         ['data' => 'location'],
         ['data' => 'is_recommend'],
-        ['data' => 'date'],
+        ['data' => 'date_of_patient_added'],
         ['data' => 'action', 'orderable' => false, 'searchable' => false],
     ]);
 @endphp

@@ -374,7 +374,7 @@ return [
         ],
 
         [
-            'text'    => 'Specialists',
+            'text'    => 'Specialists Menu',
             'icon'    => 'fas fa-user-md',
             'submenu' => [
 
@@ -440,7 +440,7 @@ return [
 
 
         [
-            'text'    => 'Consultations',
+            'text'    => 'Consultation Menu',
             'icon'    => 'fas fa-calendar-check',
             'submenu' => [
 

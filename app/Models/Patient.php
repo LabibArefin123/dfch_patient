@@ -54,6 +54,46 @@ class Patient extends Model
         'date_of_patient_added' => 'date',
     ];
 
+    public function getFullLocationAttribute()
+    {
+        if ($this->location_type == 1) {
+
+            return $this->location_simple;
+        }
+
+        if ($this->location_type == 2) {
+
+            return collect([
+
+                $this->house_address,
+                $this->city,
+                $this->district,
+                $this->post_code,
+
+            ])
+                ->filter()
+                ->implode(', ');
+        }
+
+        if ($this->location_type == 3) {
+
+            return collect([
+
+                $this->country,
+
+                $this->passport_no
+                    ? 'Passport: ' .
+                    $this->passport_no
+                    : null,
+
+            ])
+                ->filter()
+                ->implode(', ');
+        }
+
+        return 'N/A';
+    }
+
     // Relationships (future-ready)
     public function documents()
     {
