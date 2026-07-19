@@ -1,0 +1,23 @@
+.patient-card-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: #343a40;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.patient-card-code {
+    font-size: 12px;
+    font-weight: 600;
+    color: #007bff;
+}
+
+.patient-card-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    font-size: 13px;
+    color: #6c757d;
+}

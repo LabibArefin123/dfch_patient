@@ -1,0 +1,21 @@
+.patient-total-badge {
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 12px 22px;
+
+    border-radius: 14px;
+
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+
+    color: #fff;
+
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.28);
+}

@@ -91,6 +91,8 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::post('patients/import-excel', [PatientController::class, 'importExcel'])->name('patients.import.excel');
     Route::post('patients/import-word', [PatientController::class, 'importWord'])->name('patients.import.word');
     Route::get('patients/{id}/print-card', [PatientController::class, 'printCard'])->name('patients.print_card');
+    Route::get('patients/card-list',[PatientController::class,'patientCardList',])->name('patients.card.list.index');
+    Route::get('patients/card-list/search',[PatientController::class,'patientCardListSearch',])->name('patients.card.list.search');
     Route::post('patients/delete-selected', [PatientController::class, 'deleteSelected'])->name('patients.delete_selected');
     Route::get('patients/{patient}/document-contents',[PatientController::class, 'patientDocumentContents'])->name('patients.document.contents');
     Route::get('patients/{patient}/cancer-photo-contents',[PatientController::class, 'patientCancerPhotoContents'])->name('patients.cancer.photo.contents');

@@ -1,0 +1,47 @@
+.patient-search-box {
+    position: relative;
+}
+
+.patient-search-box input {
+    height: 52px;
+
+    border-radius: 14px;
+
+    border: 1px solid #e5e7eb;
+
+    padding-left: 52px;
+
+    padding-right: 50px;
+
+    font-size: 15px;
+
+    transition: 0.25s;
+}
+
+.patient-search-box input:focus {
+    border-color: #3b82f6;
+
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.12);
+}
+
+.search-icon {
+    position: absolute;
+
+    left: 18px;
+
+    top: 18px;
+
+    color: #94a3b8;
+
+    z-index: 2;
+}
+
+.btn-clear-search {
+    position: absolute;
+
+    right: 8px;
+
+    top: 8px;
+
+    border-radius: 10px;
+}

@@ -1,0 +1,11 @@
+.patient-loading {
+    text-align: center;
+
+    padding: 80px 0;
+}
+
+.patient-loading .spinner-border {
+    width: 3.2rem;
+
+    height: 3.2rem;
+}

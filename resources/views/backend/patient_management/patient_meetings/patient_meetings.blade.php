@@ -78,7 +78,7 @@
                     style="
                         width:120px;
                         height:120px;
-                        object-fit:cover;
+                        object-fit:contain;
                         border:5px solid #fff;
                     ">
 
@@ -86,7 +86,7 @@
 
                     <h3 class="mb-1">
 
-                        Dr. {{ $specialist->name }}
+                        {{ $specialist->name }}
 
                     </h3>
 

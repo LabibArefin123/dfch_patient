@@ -1,0 +1,5 @@
+.patient-card-container > .card-header {
+    border-bottom: 1px solid #edf2f7;
+
+    background: linear-gradient(180deg, #ffffff, #fafbfc);
+}

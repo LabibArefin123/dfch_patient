@@ -45,6 +45,17 @@
 
                     <div class="dropdown-divider"></div>
 
+
+                    {{-- PATIENT CARD LIST --}}
+                    <a href="{{ route('patients.card.list.index') }}" class="dropdown-item">
+
+                        <i class="fas fa-id-card text-primary"></i>
+
+                        Patient Card List
+
+                    </a>
+
+
                     <a href="#" class="dropdown-item" data-toggle="modal" data-target="#patientEmergencyModal">
 
                         <i class="fas fa-ambulance text-danger"></i>
@@ -112,10 +123,10 @@
 @section('js')
     <script>
         /*
-                            |--------------------------------------------------------------------------
-                            | Global Routes
-                            |--------------------------------------------------------------------------
-                            */
+                                |--------------------------------------------------------------------------
+                                | Global Routes
+                                |--------------------------------------------------------------------------
+                                */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };

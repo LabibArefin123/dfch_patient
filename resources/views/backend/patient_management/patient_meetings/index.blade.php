@@ -181,30 +181,14 @@
                                         </div>
 
                                         <div class="specialist-info">
-
-                                            <h6 class="mb-1">
-
-                                                Dr.
-                                                {{ $specialist->name }}
-
-                                            </h6>
-
-                                            <p class="mb-1">
-
-                                                {{ $specialist->designation }}
-
-                                            </p>
-
+                                            <h6 class="mb-1">{{ $specialist->name }}</h6>
+                                            <p class="mb-1">{{ $specialist->designation }}</p>
                                             @if ($specialist->degree)
                                                 <small class="text-muted">
-
                                                     {{ $specialist->degree }}
-
                                                 </small>
                                             @endif
-
                                         </div>
-
                                     </div>
                                 </td>
 

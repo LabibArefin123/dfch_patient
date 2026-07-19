@@ -1,0 +1,39 @@
+.patient-empty-state {
+    text-align: center;
+
+    padding: 90px 20px;
+}
+
+.patient-empty-state .empty-icon {
+    width: 120px;
+
+    height: 120px;
+
+    margin: auto;
+
+    border-radius: 50%;
+
+    background: #f8fafc;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+}
+
+.patient-empty-state .empty-icon i {
+    font-size: 48px;
+
+    color: #94a3b8;
+}
+
+.patient-empty-state h4 {
+    margin-top: 25px;
+
+    font-weight: 700;
+}
+
+.patient-empty-state p {
+    color: #6b7280;
+}

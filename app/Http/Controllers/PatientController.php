@@ -1524,6 +1524,77 @@ class PatientController extends Controller
         );
     }
 
+    public function patientCardList()
+    {
+        return view(
+            'backend.patient_management.patient_card_list'
+        );
+    }
+
+    public function patientCardListSearch(Request $request)
+    {
+        $search = $request->input('search');
+
+        $patients = Patient::query()
+
+            ->when($search, function ($query) use ($search) {
+
+                $query->where(function ($query) use ($search) {
+
+                    $query
+                        ->where(
+                            'patient_name',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'patient_code',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'phone_1',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'phone_2',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'patient_f_name',
+                            'like',
+                            "%{$search}%"
+                        )
+                        ->orWhere(
+                            'patient_m_name',
+                            'like',
+                            "%{$search}%"
+                        );
+                });
+            })
+
+            ->orderBy('patient_name', 'asc')
+
+            ->paginate(20);
+
+        return response()->json([
+
+            'html' => view(
+                'backend.patient_management.patient_card_items',
+                compact('patients')
+            )->render(),
+
+            'pagination' => $patients
+                ->links('pagination::bootstrap-5')
+                ->render(),
+
+            'total' => $patients->total(),
+
+        ]);
+    }
+
     public function printCard($id, PatientService $service)
     {
         return $service->printCard($id);
