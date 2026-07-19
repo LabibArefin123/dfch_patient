@@ -1,18 +1,14 @@
-$(document).on("click", "#patientCardPagination a", function (event) {
-    event.preventDefault();
+$(document).on("click", "#patientCardPagination a", function (e) {
+    e.preventDefault();
 
-    const url = new URL($(this).attr("href"));
+    const page = new URL($(this).attr("href")).searchParams.get("page");
 
-    const page = url.searchParams.get("page");
-
-    const search = $("#patientCardSearch").val();
-
-    loadPatientCards(page, search);
+    loadPatientCards(page, window.patientCard.search);
 
     $("html, body").animate(
         {
-            scrollTop: $("#patientCardGrid").offset().top - 100,
+            scrollTop: $(".patient-card-container").offset().top - 80,
         },
-        300,
+        250,
     );
 });

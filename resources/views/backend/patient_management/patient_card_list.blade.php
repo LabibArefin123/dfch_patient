@@ -4,7 +4,7 @@
 
 @section('content_header')
 
-    <div class="d-flex justify-content-between align-items-center">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
 
         <div>
 
@@ -12,26 +12,29 @@
 
                 <i class="fas fa-id-card text-primary mr-2"></i>
 
-                Patient Card List
+                Patient Card Directory
 
             </h1>
 
-            <p class="text-muted mb-0">
+            <small class="text-muted">
 
-                Search and view patient identification cards
+                Search, browse and manage patient identification cards.
 
-            </p>
+            </small>
 
         </div>
 
+        <div class="mt-3 mt-md-0">
 
-        <a href="{{ route('patients.index') }}" class="btn btn-outline-secondary">
+            <a href="{{ route('patients.index') }}" class="btn btn-outline-secondary">
 
-            <i class="fas fa-arrow-left mr-1"></i>
+                <i class="fas fa-arrow-left mr-1"></i>
 
-            Back to Patients
+                Back To Patients
 
-        </a>
+            </a>
+
+        </div>
 
     </div>
 
@@ -42,6 +45,7 @@
 
     <div class="card patient-card-container">
 
+        {{-- HEADER --}}
         <div class="card-header border-0">
 
             <div class="row align-items-center">
@@ -71,7 +75,8 @@
 
                         <i class="fas fa-users mr-2"></i>
 
-                        Loading...
+                        Loading Patients...
+
                     </div>
 
                 </div>
@@ -80,24 +85,37 @@
 
         </div>
 
+
+        {{-- BODY --}}
         <div class="card-body">
 
+            {{-- Loading --}}
             <div id="patientCardLoading" class="patient-loading d-none">
 
                 <div class="spinner-border text-primary"></div>
 
-                <h6 class="mt-4 mb-1">
-                    Loading Patients
+                <h6 class="mt-4">
+
+                    Loading Patients...
+
                 </h6>
 
-                <p class="text-muted">
-                    Please wait a moment...
+                <p class="text-muted mb-0">
+
+                    Please wait while patient cards are being prepared.
+
                 </p>
 
             </div>
 
-            <div id="patientCardGrid" class="row"></div>
 
+            {{-- Cards --}}
+            <div id="patientCardGrid" class="row">
+
+            </div>
+
+
+            {{-- Empty --}}
             <div id="patientCardEmpty" class="patient-empty-state d-none">
 
                 <div class="empty-icon">
@@ -107,23 +125,33 @@
                 </div>
 
                 <h4>
+
                     No Patients Found
+
                 </h4>
 
                 <p>
-                    Try searching with another keyword.
+
+                    Try another search keyword.
+
                 </p>
 
             </div>
+
         </div>
-        <div class="card-footer bg-white border-0 pt-0">
+
+
+        {{-- FOOTER --}}
+        <div class="card-footer bg-white border-top-0">
 
             <div id="patientCardPagination" class="patient-pagination-wrapper">
 
             </div>
 
         </div>
+
     </div>
+
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_search.css') }}">
@@ -133,9 +161,10 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_effects.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_loading.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_empty.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_medical_style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_pagination.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_card/patient_card_responsive.css') }}">
-@stop
+@endsection
 
 @section('js')
     <script>

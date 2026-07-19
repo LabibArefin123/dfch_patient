@@ -1,107 +1,171 @@
-@forelse ($patients as $patient)
+@foreach ($patients as $patient)
     <div class="patient-card-column">
 
         <div class="patient-card-item">
 
-            {{-- PHOTO --}}
-            <div class="patient-card-photo-wrapper">
+            {{-- ORGANIZATION HEADER --}}
+            <div class="patient-card-header">
 
-                @if ($patient->patient_photo && file_exists(public_path($patient->patient_photo)))
-                    <img src="{{ asset($patient->patient_photo) }}" alt="{{ $patient->patient_name }}"
-                        class="patient-card-photo" loading="lazy">
-                @else
-                    <div class="patient-card-placeholder">
+                <div class="patient-card-brand">
 
-                        <i class="fas fa-user"></i>
+                    @if ($organizationLogo)
+                        <img src="{{ $organizationLogo }}" alt="Hospital Logo" class="organization-logo">
+                    @else
+                        <div class="hospital-brand">
 
-                    </div>
-                @endif
+                            <i class="fas fa-hospital"></i>
+
+                            <span>Hospital</span>
+
+                        </div>
+                    @endif
+
+                </div>
+
+
+                <div class="patient-card-contact">
+
+                    @if ($organization?->organization_location)
+                        <div>
+
+                            <i class="fas fa-map-marker-alt"></i>
+
+                            {!! collect(explode(' ', $organization->organization_location))->chunk(3)->map(function ($words) {
+                                    return implode(' ', $words->toArray());
+                                })->implode('<br>') !!}
+
+                        </div>
+                    @endif
+
+
+                    @if ($organization?->phone_1)
+                        <div>
+
+                            <i class="fas fa-phone-alt"></i>
+
+                            {{ $organization->phone_1 }}
+
+                        </div>
+                    @endif
+
+                </div>
 
             </div>
 
 
-            {{-- CONTENT --}}
-            <div class="patient-card-body">
+            {{-- PATIENT PHOTO --}}
+            <div class="patient-card-photo-wrapper">
 
-                <div class="patient-card-name" title="{{ $patient->patient_name }}">
+                <img src="{{ $patient->patient_photo && file_exists(public_path($patient->patient_photo))
+                    ? asset($patient->patient_photo)
+                    : asset('uploads/images/default.jpg') }}"
+                    alt="{{ $patient->patient_name }}" class="patient-card-photo zoomable" data-action="zoom">
 
-                    {{ $patient->patient_name }}
+                {{-- Patient Code Floating Badge --}}
+                <span class="patient-code-badge">
 
-                </div>
-
-
-                <div class="patient-card-code">
-
-                    <i class="fas fa-id-badge mr-1"></i>
+                    <i class="fas fa-id-card mr-1"></i>
 
                     {{ $patient->patient_code }}
 
-                </div>
+                </span>
+
+            </div>
 
 
-                <div class="patient-card-info">
+            {{-- PATIENT BASIC INFO --}}
+            <div class="patient-card-body">
 
-                    <i class="fas fa-user"></i>
+                <h5 class="patient-name">
+
+                    {{ $patient->patient_name }}
+
+                </h5>
+
+
+                <div class="patient-meta">
 
                     <span>
 
-                        {{ $patient->age ?? 'N/A' }}
-
-                        years
-
-                    </span>
-
-                    <span>•</span>
-
-                    <span>
+                        <i class="fas fa-venus-mars"></i>
 
                         {{ ucfirst($patient->gender ?? 'N/A') }}
 
                     </span>
 
+
+                    <span>
+
+                        <i class="fas fa-birthday-cake"></i>
+
+                        {{ $patient->age ?? 'N/A' }}
+
+                        yrs
+
+                    </span>
+
                 </div>
 
 
-                @if ($patient->phone_1)
-                    <div class="patient-card-info">
+                {{-- DETAILS --}}
+                <div class="patient-details">
 
-                        <i class="fas fa-phone"></i>
+                    <div class="patient-detail-item">
 
                         <span>
 
-                            {{ $patient->phone_1 }}
+                            <i class="fas fa-user-friends"></i>
+
+                            Father
 
                         </span>
 
+                        <strong>
+
+                            {{ $patient->patient_f_name ?? 'N/A' }}
+
+                        </strong>
+
                     </div>
-                @endif
 
 
-                {{-- ACTIONS --}}
-                <div class="patient-card-actions">
+                    <div class="patient-detail-item">
 
-                    <a href="{{ route('patients.show', $patient->id) }}" class="btn btn-sm btn-outline-primary">
+                        <span>
 
-                        <i class="fas fa-eye"></i>
+                            <i class="fas fa-phone-alt"></i>
 
-                    </a>
+                            Phone
 
+                        </span>
 
-                    <a href="{{ route('patients.edit', $patient->id) }}" class="btn btn-sm btn-outline-warning">
+                        <strong>
 
-                        <i class="fas fa-edit"></i>
+                            {{ $patient->phone_1 ?? 'N/A' }}
 
-                    </a>
+                        </strong>
+
+                    </div>
 
                 </div>
+
+            </div>
+
+
+            {{-- ACTION --}}
+            <div class="patient-card-actions">
+
+                <a href="{{ route('patients.show', $patient->id) }}" class="btn btn-primary btn-sm">
+
+                    <i class="fas fa-eye mr-1"></i>
+
+                    View Patient
+
+                </a>
 
             </div>
 
         </div>
 
     </div>
-
-@empty
-
-    {{-- Empty handled by AJAX response --}}
-@endforelse
+@endforeach

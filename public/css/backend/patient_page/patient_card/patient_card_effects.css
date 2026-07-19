@@ -6,17 +6,13 @@
 }
 
 .patient-card-item:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
 
-    border-color: #dbeafe;
+    border-color: #b9dff2;
 
-    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
 }
 
 .patient-card-item:hover .patient-card-photo {
-    transform: scale(1.05);
-}
-
-.patient-card-photo {
-    transition: transform 0.35s ease;
+    transform: scale(1.04);
 }

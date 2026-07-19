@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Patient\PatientService;
+use App\Models\Organization;
 use App\Models\Patient;
 use Carbon\Carbon;
 use App\Models\PatientCancerPhoto;
@@ -1526,8 +1527,11 @@ class PatientController extends Controller
 
     public function patientCardList()
     {
+        $organization = Organization::first();
+
         return view(
-            'backend.patient_management.patient_card_list'
+            'backend.patient_management.patient_card_list',
+            compact('organization')
         );
     }
 
@@ -1535,38 +1539,48 @@ class PatientController extends Controller
     {
         $search = $request->input('search');
 
+        $organization = Organization::first();
+
+        $organizationLogo = $this->getOrganizationLogo(
+            $organization
+        );
+
         $patients = Patient::query()
 
             ->when($search, function ($query) use ($search) {
 
-                $query->where(function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
 
-                    $query
-                        ->where(
-                            'patient_name',
-                            'like',
-                            "%{$search}%"
-                        )
+                    $q->where(
+                        'patient_name',
+                        'like',
+                        "%{$search}%"
+                    )
+
                         ->orWhere(
                             'patient_code',
                             'like',
                             "%{$search}%"
                         )
+
                         ->orWhere(
                             'phone_1',
                             'like',
                             "%{$search}%"
                         )
+
                         ->orWhere(
                             'phone_2',
                             'like',
                             "%{$search}%"
                         )
+
                         ->orWhere(
                             'patient_f_name',
                             'like',
                             "%{$search}%"
                         )
+
                         ->orWhere(
                             'patient_m_name',
                             'like',
@@ -1575,24 +1589,97 @@ class PatientController extends Controller
                 });
             })
 
-            ->orderBy('patient_name', 'asc')
+            ->orderByRaw(
+                'LOWER(patient_name) ASC'
+            )
 
             ->paginate(20);
 
         return response()->json([
 
             'html' => view(
+
                 'backend.patient_management.patient_card_items',
-                compact('patients')
+
+                [
+
+                    'patients' => $patients,
+
+                    'organization' => $organization,
+
+                    'organizationLogo' => $organizationLogo,
+
+                ]
+
             )->render(),
 
+
             'pagination' => $patients
-                ->links('pagination::bootstrap-5')
+
+                ->links(
+                    'pagination::bootstrap-5'
+                )
+
                 ->render(),
+
 
             'total' => $patients->total(),
 
         ]);
+    }
+
+    private function getOrganizationLogo(
+        ?Organization $organization
+    ): ?string {
+
+        if (
+            !$organization ||
+            !$organization->organization_picture
+        ) {
+
+            return null;
+        }
+
+
+        $basePath =
+            'uploads/images/backend/organization/';
+
+
+        $extensions = [
+            'jpg',
+            'jpeg',
+            'png',
+            'webp',
+        ];
+
+
+        foreach (
+            $extensions as $extension
+        ) {
+
+            $relativePath =
+                $basePath .
+                $organization->organization_picture .
+                '.' .
+                $extension;
+
+
+            if (
+                file_exists(
+                    public_path(
+                        $relativePath
+                    )
+                )
+            ) {
+
+                return asset(
+                    $relativePath
+                );
+            }
+        }
+
+
+        return null;
     }
 
     public function printCard($id, PatientService $service)

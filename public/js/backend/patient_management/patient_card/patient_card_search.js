@@ -1,9 +1,9 @@
 $(document).on("keyup", "#patientCardSearch", function () {
-    clearTimeout(window.patientCard.searchTimer);
+    clearTimeout(window.patientCard.timer);
 
     const search = $(this).val();
 
-    window.patientCard.searchTimer = setTimeout(function () {
+    window.patientCard.timer = setTimeout(function () {
         loadPatientCards(1, search);
-    }, 350);
+    }, 300);
 });

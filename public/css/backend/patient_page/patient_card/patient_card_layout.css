@@ -1,36 +1,84 @@
+/* =========================================================
+   PATIENT CARD GRID
+========================================================= */
+
 .patient-card-container {
+
     border: none;
+
     border-radius: 18px;
-    background: #fff;
-    overflow: hidden;
-    box-shadow: 0 10px 35px rgba(15, 23, 42, 0.06);
+
+    background: transparent;
+
 }
+
+
+/* Bootstrap row spacing */
+
+.patient-card-grid {
+
+    margin-right: -10px;
+
+    margin-left: -10px;
+
+}
+
 
 .patient-card-column {
-    margin-bottom: 24px;
+
+    padding-right: 10px;
+
+    padding-left: 10px;
+
+    margin-bottom: 20px;
+
 }
 
-.patient-card-item {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    background: #fff;
-    border: 1px solid #edf2f7;
-    border-radius: 16px;
-    overflow: hidden;
+
+/* Desktop: 3 cards per row */
+
+@media (min-width: 992px) {
+
+    .patient-card-column {
+
+        flex: 0 0 33.333333%;
+
+        max-width: 33.333333%;
+
+    }
+
 }
 
-.patient-card-body {
-    padding: 18px;
-    flex: 1;
+
+/* Tablet: 2 cards per row */
+
+@media (
+    min-width: 576px
+) and (
+    max-width: 991px
+) {
+
+    .patient-card-column {
+
+        flex: 0 0 50%;
+
+        max-width: 50%;
+
+    }
+
 }
 
-.patient-card-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 18px;
-}
 
-.patient-card-actions .btn {
-    flex: 1;
+/* Mobile: 1 card per row */
+
+@media (max-width: 575px) {
+
+    .patient-card-column {
+
+        flex: 0 0 100%;
+
+        max-width: 100%;
+
+    }
+
 }
