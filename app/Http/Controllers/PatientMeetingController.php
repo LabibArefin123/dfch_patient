@@ -28,24 +28,6 @@ class PatientMeetingController extends Controller
             'specialist:id,name,designation,photo',
         ])
 
-            ->when($search, function ($query) use ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'like', "%{$search}%")
-                        ->orWhere('description', 'like', "%{$search}%")
-                        ->orWhere('notes', 'like', "%{$search}%")
-                        ->orWhereHas('patient', function ($patientQuery) use ($search) {
-                            $patientQuery
-                                ->where('patient_name', 'like', "%{$search}%")
-                                ->orWhere('patient_code', 'like', "%{$search}%");
-                        })
-
-                        ->orWhereHas('specialist', function ($specialistQuery) use ($search) {
-                            $specialistQuery
-                                ->where('name', 'like', "%{$search}%");
-                        });
-                });
-            })
-
             ->when($status, function ($query) use ($status) {
                 $query->where('status', $status);
             })
@@ -142,7 +124,7 @@ class PatientMeetingController extends Controller
             ->latest('start_time')
 
             ->get();
-            
+
 
         return view(
             'backend.patient_management.patient_meetings.patient_list',
@@ -301,14 +283,53 @@ class PatientMeetingController extends Controller
     /**
      * Display the specified meeting.
      */
-    public function show(
-        PatientMeeting $patientMeeting
-    ) {
-        $patientMeeting->load(['patient', 'specialist',]);
+    public function show(PatientMeeting $patientMeeting)
+    {
+        $patientMeeting->load([
+            'patient',
+            'specialist',
+        ]);
+
+        $viewData = $this->prepareMeetingViewData($patientMeeting);
+
         return view(
             'backend.patient_management.patient_meetings.show',
-            compact('patientMeeting')
+            $viewData
         );
+    }
+
+    /**
+     * Prepare data for meeting show page.
+     */
+    private function prepareMeetingViewData(PatientMeeting $patientMeeting): array
+    {
+        $patient = $patientMeeting->patient;
+        $specialist = $patientMeeting->specialist;
+
+        return [
+            'patientMeeting' => $patientMeeting,
+
+            'meetingTitle' => $patientMeeting->title
+                ?? ucfirst(str_replace('_', ' ', $patientMeeting->meeting_type)),
+
+            'meetingStatus' => ucfirst($patientMeeting->status),
+
+            'meetingType' => ucfirst(
+                str_replace('_', ' ', $patientMeeting->meeting_type)
+            ),
+
+            'patient' => $patient,
+
+            'specialist' => $specialist,
+
+            'patientImage' => (
+                $patient &&
+                $patient->patient_photo &&
+                file_exists(public_path($patient->patient_photo))
+            )
+                ? asset($patient->patient_photo)
+                : asset('uploads/images/default.jpg'),
+        ];
     }
 
     /**

@@ -12,80 +12,38 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_notes.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_meeting_info.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/show_page/show_responsive.css') }}">
+
     <div class="meeting-page-header">
-
         <div class="meeting-header-left">
-
             <div class="meeting-header-icon">
-
                 <i class="fas fa-calendar-check"></i>
-
             </div>
 
             <div>
 
                 <div class="meeting-breadcrumb">
-
                     <span>Patient Management</span>
-
                     <i class="fas fa-chevron-right"></i>
-
                     <span>Meetings</span>
-
                 </div>
-
-                <h1 class="meeting-page-title">
-
-                    Meeting Details
-
-                </h1>
+                <h1 class="meeting-page-title">Meeting Details </h1>
 
                 <p class="meeting-page-subtitle">
-
                     View complete consultation and appointment information.
-
                 </p>
-
             </div>
-
         </div>
 
         <div class="meeting-header-actions">
-
             <a href="{{ route('patient_meetings.edit', $patientMeeting->id) }}" class="btn meeting-edit-btn">
-
                 <i class="fas fa-edit mr-1"></i>
-
                 Edit Meeting
-
             </a>
-
         </div>
-
     </div>
-
-
 @stop
 
 @section('content')
-    @php
-        $meetingTitle = $patientMeeting->title ?? ucfirst(str_replace('_', ' ', $patientMeeting->meeting_type));
-
-        $meetingStatus = ucfirst($patientMeeting->status);
-
-        $meetingType = ucfirst(str_replace('_', ' ', $patientMeeting->meeting_type));
-
-        $patient = $patientMeeting->patient;
-
-        $specialist = $patientMeeting->specialist;
-
-        $patientImage =
-            $patient && $patient->patient_photo && file_exists(public_path($patient->patient_photo))
-                ? asset($patient->patient_photo)
-                : asset('uploads/images/default.jpg');
-
-    @endphp
-
     {{--  MEETING HERO --}}
     <div class="meeting-hero-card">
 

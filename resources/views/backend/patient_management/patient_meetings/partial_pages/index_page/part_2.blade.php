@@ -9,24 +9,6 @@
      <div class="card-body">
          <form method="GET" action="{{ route('patient_meetings.index') }}">
              <div class="row">
-                 {{-- Search --}}
-                 <div class="col-lg-4 col-md-6 mb-3 mb-lg-0">
-                     <label>
-                         <i class="fas fa-search mr-1"></i>
-                         Search
-                     </label>
-
-                     <div class="input-group">
-                         <input type="text" name="search" value="{{ request('search') }}" class="form-control"
-                             placeholder="Patient, code, specialist, title...">
-                         <div class="input-group-append">
-                             <button class="btn btn-primary">
-                                 <i class="fas fa-search"></i>
-                             </button>
-                         </div>
-                     </div>
-                 </div>
-
                  {{-- Date --}}
                  <div class="col-lg-2 col-md-6 mb-3 mb-lg-0">
                      <label>
@@ -35,7 +17,6 @@
                      </label>
                      <input type="date" name="date" value="{{ request('date') }}" class="form-control">
                  </div>
-
 
                  {{-- Status --}}
                  <div class="col-lg-2 col-md-6 mb-3 mb-lg-0">

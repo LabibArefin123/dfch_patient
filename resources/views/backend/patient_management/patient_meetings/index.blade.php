@@ -49,11 +49,12 @@
             </div>
 
             <div class="d-flex align-items-center gap-2">
+                <button type="button" id="meetingViewToggle" class="btn btn-sm btn-outline-primary mr-2"
+                    data-view="summary">
 
-                <button type="button" id="meetingViewToggle" class="btn btn-sm btn-outline-primary mr-2" data-view="date">
+                    <i class="fas fa-table mr-1"></i>
 
-                    <i class="fas fa-exchange-alt mr-1"></i>
-                    Summarized Table
+                    Date Wise
 
                 </button>
 
@@ -66,15 +67,10 @@
         </div>
 
         <div class="card-body p-0">
-
             <div class="table-responsive dashboard-table-wrapper">
-
                 <table class="table table-bordered table-hover meeting-grid mb-0">
-
                     <thead>
-
                         <tr>
-
                             <th class="text-center" style="width:80px;">
                                 SL
                             </th>
@@ -319,15 +315,10 @@
     </div>
     <div style="height: 50px;"></div>
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_layout.css') }}">
-
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_grid.css') }}">
-
     <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_section.css') }}">
-    <link
-        rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards.css') }}">
-
+    <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_card.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/pagination.css') }}">
-
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/responsive.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_layout.css') }}">
