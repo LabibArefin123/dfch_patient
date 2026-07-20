@@ -1,11 +1,44 @@
-<div class="form-control mb-3" style="height:auto;">
-    {!! $patient->patient_problem_description ?? '-' !!}
-</div>
-<h6 class="text-muted">Drug Information</h6>
-<div class="form-control mb-3" style="height:auto;">
-    {!! $patient->patient_drug_description ?? '-' !!}
-</div>
-<h6 class="text-muted">Remarks</h6>
-<div class="form-control mb-3" style="height:auto;">
-    {!! $patient->remarks ?? '-' !!}
-</div>
+@php
+
+    $medicalSections = [
+        [
+            'title' => 'Patient Problem',
+            'icon' => 'fa-heartbeat',
+            'content' => $patient->patient_problem_description,
+        ],
+
+        [
+            'title' => 'Drug Information',
+            'icon' => 'fa-pills',
+            'content' => $patient->patient_drug_description,
+        ],
+
+        [
+            'title' => 'Remarks',
+            'icon' => 'fa-comment-medical',
+            'content' => $patient->remarks,
+        ],
+    ];
+
+@endphp
+
+
+@foreach ($medicalSections as $section)
+    <div class="medical-information-block">
+
+        <div class="medical-information-title">
+
+            <i class="fas {{ $section['icon'] }} mr-2"></i>
+
+            {{ $section['title'] }}
+
+        </div>
+
+        <div class="medical-information-content">
+
+            {!! $section['content'] ?: '<span class="text-muted">No information provided</span>' !!}
+
+        </div>
+
+    </div>
+@endforeach

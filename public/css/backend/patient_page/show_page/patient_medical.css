@@ -1,0 +1,37 @@
+/*
+|--------------------------------------------------------------------------
+| Medical Information
+|--------------------------------------------------------------------------
+*/
+
+.medical-information-block {
+    margin-bottom: 18px;
+}
+
+.medical-information-block:last-child {
+    margin-bottom: 0;
+}
+
+.medical-information-title {
+    display: flex;
+    align-items: center;
+    color: #495057;
+    font-size: 0.86rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.medical-information-title i {
+    color: #dc3545;
+}
+
+.medical-information-content {
+    min-height: 60px;
+    padding: 14px 16px;
+    border: 1px solid #edf0f3;
+    border-radius: 10px;
+    background: #fbfcfd;
+    color: #495057;
+    line-height: 1.7;
+    overflow-wrap: anywhere;
+}

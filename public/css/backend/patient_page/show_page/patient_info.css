@@ -1,0 +1,36 @@
+/*
+|--------------------------------------------------------------------------
+| Patient Information
+|--------------------------------------------------------------------------
+*/
+
+.patient-info-item {
+    min-height: 78px;
+    padding: 14px 16px;
+    border: 1px solid #edf0f3;
+    border-radius: 10px;
+    background: #fbfcfd;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.patient-info-item:hover {
+    border-color: #cfe2ff;
+    background: #f8fbff;
+    transform: translateY(-1px);
+}
+
+.patient-info-label {
+    display: block;
+    color: #8a94a6;
+    font-size: 0.76rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.patient-info-item strong {
+    color: #343a40;
+    font-size: 0.95rem;
+}

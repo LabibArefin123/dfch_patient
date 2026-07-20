@@ -121,7 +121,7 @@
                 <th>Father</th>
                 <th>Mother</th>
                 <th>Location</th>
-                <th>Recommended</th>
+                <th>Referred Patient</th>
                 <th>Date Added</th>
             </tr>
         </thead>

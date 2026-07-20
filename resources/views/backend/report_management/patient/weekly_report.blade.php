@@ -109,7 +109,7 @@
         <th>Father</th>
         <th>Mother</th>
         <th>Location</th>
-        <th>Recommended</th>
+        <th>Referred Patient</th>
         <th>Date Added</th>
         <th>Action</th>
     </tr>
@@ -125,5 +125,4 @@
     <script src="{{ asset('js/backend/report_management/weekly-report/weekly-selection.js') }}"></script>
     <script src="{{ asset('js/backend/report_management/weekly-report/weekly-export.js') }}"></script>
     <script src="{{ asset('js/backend/report_management/weekly-report/weekly-report.js') }}"></script>
-    
 @endpush

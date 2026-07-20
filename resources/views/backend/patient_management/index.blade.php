@@ -99,7 +99,7 @@
                         <th>Gender</th>
                         <th>Phone</th>
                         <th>Location</th>
-                        <th>Recommended</th>
+                        <th>Referred Patient</th>
                         <th>Old Cancer</th>
                         <th>Cancer Report</th>
                         <th>Date Added</th>
@@ -123,10 +123,10 @@
 @section('js')
     <script>
         /*
-                                |--------------------------------------------------------------------------
-                                | Global Routes
-                                |--------------------------------------------------------------------------
-                                */
+                                    |--------------------------------------------------------------------------
+                                    | Global Routes
+                                    |--------------------------------------------------------------------------
+                                    */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };

@@ -119,7 +119,7 @@
                 <th>Gender</th>
                 <th>Phone</th>
                 <th>Location</th>
-                <th>Recommended</th>
+                <th>Referred Patient</th>
                 <th>Date Added</th>
             </tr>
         </thead>

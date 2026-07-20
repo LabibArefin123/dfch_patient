@@ -96,10 +96,10 @@
                 <tr>
                     <td style="text-align:left; border:none;">
                         <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
-                        <strong>Total Records:</strong> {{ $totalRecords }} 
+                        <strong>Total Records:</strong> {{ $totalRecords }}
                     </td>
 
-                   
+
                 </tr>
             </table>
 
@@ -119,7 +119,7 @@
                 <th>Father</th>
                 <th>Mother</th>
                 <th>Location</th>
-                <th>Recommended</th>
+                <th>Referred Patient</th>
                 <th>Date Added</th>
             </tr>
         </thead>

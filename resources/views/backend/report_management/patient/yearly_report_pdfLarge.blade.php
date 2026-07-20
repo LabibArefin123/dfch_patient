@@ -88,7 +88,7 @@
             (All Years)
         @endif
     </h3>
-    
+
     <table width="100%" style="margin-top:10px;">
         <tr>
             {{-- Page Info Section --}}
@@ -115,7 +115,7 @@
                 <th>Father</th>
                 <th>Mother</th>
                 <th>Location</th>
-                <th>Recommended</th>
+                <th>Referred Patient</th>
                 <th>Date Added</th>
             </tr>
         </thead>

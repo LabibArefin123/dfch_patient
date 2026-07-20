@@ -3,6 +3,14 @@
 @inject('layoutHelper', 'JeroenNoten\LaravelAdminLte\Helpers\LayoutHelper')
 @inject('preloaderHelper', 'JeroenNoten\LaravelAdminLte\Helpers\PreloaderHelper')
 
+{{-- @section('adminlte_css')
+
+    @stack('css')
+
+    @yield('css')
+
+@stop --}}
+
 <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
 <link rel="stylesheet" href="{{ asset('css/custom_backend.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />

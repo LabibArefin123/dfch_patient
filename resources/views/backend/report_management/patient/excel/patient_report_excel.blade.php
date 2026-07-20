@@ -14,7 +14,7 @@
             <th>Father Phone</th>
             <th>Mother Phone</th>
             <th>Location</th>
-            <th>Recommended</th>
+            <th>Referred Patient</th>
             <th>Date Added</th>
         </tr>
     </thead>

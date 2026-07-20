@@ -1,0 +1,33 @@
+/*
+|--------------------------------------------------------------------------
+| Patient Location
+|--------------------------------------------------------------------------
+*/
+
+.location-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 16px;
+    border-radius: 10px;
+    background: #fffaf4;
+    border: 1px solid #ffe5c2;
+}
+
+.location-icon {
+    width: 40px;
+    height: 40px;
+    min-width: 40px;
+    border-radius: 10px;
+    background: #fff0dc;
+    color: #fd7e14;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.location-card strong {
+    color: #343a40;
+    line-height: 1.6;
+    font-size: 0.95rem;
+}

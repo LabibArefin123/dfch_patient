@@ -1,0 +1,125 @@
+/*
+|--------------------------------------------------------------------------
+| Doctor Recommendation
+|--------------------------------------------------------------------------
+*/
+
+.recommendation-card {
+    border-color: #ddd2f4;
+}
+
+.recommendation-header {
+    background: linear-gradient(135deg, #fbf9ff, #ffffff);
+}
+
+.recommendation-detail {
+    min-height: 76px;
+    padding: 14px 16px;
+    border: 1px solid #eee9f8;
+    border-radius: 10px;
+    background: #fcfbff;
+}
+
+.recommendation-detail span {
+    display: block;
+    color: #8a94a6;
+    font-size: 0.76rem;
+    margin-bottom: 5px;
+}
+
+.recommendation-detail strong {
+    color: #343a40;
+    font-size: 0.95rem;
+}
+
+.medical-note-box {
+    border: 1px solid #e8def8;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.medical-note-title {
+    padding: 10px 14px;
+    background: #f7f3ff;
+    color: #6f42c1;
+    font-weight: 700;
+    font-size: 0.85rem;
+}
+
+.medical-note-content {
+    padding: 15px;
+    min-height: 90px;
+    color: #495057;
+    line-height: 1.7;
+}
+
+.documents-title {
+    color: #495057;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.recommendation-documents {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.document-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 11px 13px;
+    border: 1px solid #edf0f3;
+    border-radius: 9px;
+    background: #ffffff;
+}
+
+.document-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.document-info span {
+    color: #495057;
+    font-weight: 600;
+    word-break: break-word;
+}
+
+.document-icon {
+    width: 34px;
+    height: 34px;
+    min-width: 34px;
+    border-radius: 8px;
+    background: #eaf3ff;
+    color: #007bff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    padding: 25px;
+    color: #8a94a6;
+    text-align: center;
+}
+
+.empty-state i {
+    font-size: 28px;
+    opacity: 0.55;
+}
+
+@media (max-width: 576px) {
+    .document-item {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}

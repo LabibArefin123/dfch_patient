@@ -89,7 +89,7 @@
         <th>Father's Phone</th>
         <th>Mother's Phone</th>
         <th>Location</th>
-        <th>Recommended</th>
+        <th>Referred Patient</th>
         <th>Date Added</th>
         <th>Actions</th>
     </tr>
@@ -98,7 +98,7 @@
 @push('js')
     <script>
         window.dailyReportRoutes = {
-    pdf: @json($pdfRoute),
+            pdf: @json($pdfRoute),
             excel: @json($excelRoute)
         };
     </script>

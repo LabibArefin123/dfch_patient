@@ -106,8 +106,8 @@
                 <tr>
                     <td style="text-align:left; border:none;">
                         <strong>Page:</strong> {{ $page }} of {{ $totalPages }} |
-                        <strong>Total Records:</strong> {{ $totalRecords }} 
-                    {{-- </td>
+                        <strong>Total Records:</strong> {{ $totalRecords }}
+                        {{-- </td>
 
                     <td style="text-align:right; border:none;">
                         @if ($totalPages > 1)
@@ -146,7 +146,7 @@
                 <th>Father</th>
                 <th>Mother</th>
                 <th>Location</th>
-                <th>Recommended</th>
+                <th>Referred Patient</th>
                 <th>Date Added</th>
             </tr>
         </thead>
