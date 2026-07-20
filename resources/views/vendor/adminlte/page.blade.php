@@ -12,7 +12,29 @@
 @stop --}}
 
 <link rel="icon" type="image/png" href="{{ asset('uploads/images/icon.png') }}">
-<link rel="stylesheet" href="{{ asset('css/custom_backend.css') }}">
+ {{-- Global Backend Layout --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/global_css/01-layout.css') }}">
+
+    {{-- Navbar --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/global_css/02-navbar.css') }}">
+
+    {{-- Global Components --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/global_css/03-components.css') }}">
+
+    {{-- DataTables --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/global_css/04-datatables.css') }}">
+
+    {{-- Global Search --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/global_css/05-global-search.css') }}">
+
+    {{-- Animations --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/global_css/06-animations.css') }}">
 <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet"> --}}

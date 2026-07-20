@@ -1,0 +1,75 @@
+/*
+|--------------------------------------------------------------------------
+| GLOBAL SEARCH RESULTS
+|--------------------------------------------------------------------------
+*/
+
+.global-search-results {
+    position: absolute;
+    z-index: 4000;
+
+    width: 100%;
+    max-height: 250px;
+
+    overflow-y: auto;
+    display: none;
+
+    padding: 0;
+    margin-top: 0.25rem;
+
+    background-color: #fff;
+
+    border: 1px solid #dee2e6;
+    border-radius: 0.375rem;
+
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/*
+|--------------------------------------------------------------------------
+| SHOW SEARCH RESULTS
+|--------------------------------------------------------------------------
+*/
+
+.global-search-results.show {
+    display: block;
+}
+
+/*
+|--------------------------------------------------------------------------
+| SEARCH RESULT ITEM
+|--------------------------------------------------------------------------
+*/
+
+.global-search-results .list-group-item {
+    font-size: 0.875rem;
+    cursor: pointer;
+    padding: 0.5rem 1rem;
+
+    transition: background-color 0.15s ease;
+}
+
+/*
+|--------------------------------------------------------------------------
+| SEARCH RESULT HOVER / FOCUS
+|--------------------------------------------------------------------------
+*/
+
+.global-search-results .list-group-item:hover,
+.global-search-results .list-group-item:focus {
+    background-color: #f0f0f0;
+    color: #ff6b6b;
+    outline: none;
+}
+
+/*
+|--------------------------------------------------------------------------
+| SEARCH EMPTY TEXT
+|--------------------------------------------------------------------------
+*/
+
+.global-search-results .text-muted {
+    font-style: italic;
+    font-size: 0.85rem;
+    color: #6c757d !important;
+}
