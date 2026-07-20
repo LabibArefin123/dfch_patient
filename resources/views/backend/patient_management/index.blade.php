@@ -92,7 +92,7 @@
                         </th>
                         <th>#</th>
                         <th>Photo</th>
-                        <th width="90">Emergency </th>
+                        <th width="90">Status </th>
                         <th>Patient Code</th>
                         <th>Name</th>
                         <th>Age</th>
