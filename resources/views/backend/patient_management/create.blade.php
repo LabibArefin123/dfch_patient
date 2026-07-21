@@ -32,15 +32,17 @@
                     @include('backend.patient_management.partial_pages.create_page.part_1')
                     @include('backend.patient_management.partial_pages.create_page.part_2')
                     @include('backend.patient_management.partial_pages.create_page.part_3')
-
+                    
                     {{-- Date --}}
                     <div class="form-group col-md-6">
                         <label>Date of Registration</label>
                         <input type="date" name="date_of_patient_added" class="form-control" value="{{ date('Y-m-d') }}">
                     </div>
-
+                    
                     <div class="w-100"></div>
                     @include('backend.patient_management.partial_pages.create_page.part_4')
+                    @include('backend.patient_management.partial_pages.create_page.part_5')
+                    @include('backend.patient_management.partial_pages.create_page.part_6')
                 </div>
 
                 <button class="btn btn-primary mt-2">Submit</button>

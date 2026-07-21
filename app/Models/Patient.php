@@ -45,13 +45,36 @@ class Patient extends Model
         'is_old_cancer',
         'patient_photo',
         'photo_hash',
+
+        // Treatment
+        'is_treatment',
+        'treatment_information',
+        'treatment_images',
+        'treatment_type',
+
+        // Investigation
+        'is_investigated',
+        'investigation_information',
+        'investigation_images',
     ];
 
     protected $casts = [
+
         'is_recommend' => 'boolean',
         'is_old_cancer' => 'boolean',
         'is_emergency' => 'boolean',
+
+        'is_treatment' => 'boolean',
+        'is_investigated' => 'boolean',
+
         'date_of_patient_added' => 'date',
+
+        'treatment_information' => 'array',
+        'treatment_images' => 'array',
+        'treatment_type' => 'array',
+
+        'investigation_information' => 'array',
+        'investigation_images' => 'array',
     ];
 
     public function getFullLocationAttribute()
