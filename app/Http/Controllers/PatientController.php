@@ -981,47 +981,197 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'patient_name'                 => 'required|string|max:255',
-            'patient_f_name'               => 'required|string|max:255',
-            'patient_m_name'               => 'required|string|max:255',
 
-            'phone_1'                      => 'required|string|max:20',
-            'phone_2'                      => 'nullable|string|max:20',
-            'phone_f_1'                    => 'nullable|string|max:20',
-            'phone_m_1'                    => 'nullable|string|max:20',
+            /*
+        |--------------------------------------------------------------------------
+        | Patient Identity
+        |--------------------------------------------------------------------------
+        */
 
-            'age'                          => 'required|integer|min:0|max:100',
-            'gender'                       => 'required|string',
+            'patient_name' => 'required|string|max:255',
+            'patient_f_name' => 'required|string|max:255',
+            'patient_m_name' => 'required|string|max:255',
 
-            'location_type'                => 'required|in:1,2,3',
+            'age' => 'required|integer|min:0|max:100',
+            'gender' => 'required|in:male,female,other',
 
-            'patient_problem_description'  => 'nullable|string|max:255',
-            'patient_drug_description'     => 'nullable|string|max:255',
-            'remarks'                      => 'nullable|string|max:255',
+            /*
+        |--------------------------------------------------------------------------
+        | Contact
+        |--------------------------------------------------------------------------
+        */
 
-            'date_of_patient_added'        => 'required|date',
+            'phone_1' => 'required|string|max:20',
+            'phone_2' => 'nullable|string|max:20',
+            'phone_f_1' => 'nullable|string|max:20',
+            'phone_m_1' => 'nullable|string|max:20',
 
-            'documents.*'                  => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'images.*'                     => 'nullable|image|mimes:jpg,jpeg,png,webp|max:5120',
+            /*
+        |--------------------------------------------------------------------------
+        | Location
+        |--------------------------------------------------------------------------
+        */
+
+            'location_type' => 'required|in:1,2,3',
+
+            'location_simple' => 'nullable|string',
+            'house_address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'district' => 'nullable|string|max:255',
+            'post_code' => 'nullable|string|max:20',
+            'country' => 'nullable|string|max:255',
+            'passport_no' => 'nullable|string|max:100',
+
+            /*
+        |--------------------------------------------------------------------------
+        | Patient Information
+        |--------------------------------------------------------------------------
+        */
+
+            'patient_problem_description' => 'nullable|string',
+            'patient_drug_description' => 'nullable|string',
+            'remarks' => 'nullable|string',
+
+            /*
+        |--------------------------------------------------------------------------
+        | Recommendation
+        |--------------------------------------------------------------------------
+        */
+
+            'recommend_doctor_name' => 'nullable|string|max:255',
+            'recommend_note' => 'nullable|string',
+
+            /*
+        |--------------------------------------------------------------------------
+        | Treatment
+        |--------------------------------------------------------------------------
+        */
+
+            'treatment_information' => 'nullable|string',
+
+            'treatment_type' => [
+                'nullable',
+                'in:OPD,OT',
+            ],
+
+            'treatment_images.*' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
+            ],
+
+            /*
+        |--------------------------------------------------------------------------
+        | Investigation
+        |--------------------------------------------------------------------------
+        */
+
+            'investigation_information' => 'nullable|string',
+
+            'investigation_type' => [
+                'nullable',
+                'in:OPD,OT',
+            ],
+
+            'investigation_images.*' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
+            ],
+
+            /*
+        |--------------------------------------------------------------------------
+        | Hospital
+        |--------------------------------------------------------------------------
+        */
+
+            'date_of_patient_added' => 'required|date',
+
+            /*
+        |--------------------------------------------------------------------------
+        | Documents
+        |--------------------------------------------------------------------------
+        */
+
+            'documents.*' => [
+                'nullable',
+                'file',
+                'mimes:pdf,jpg,jpeg,png',
+                'max:10240',
+            ],
+
+            /*
+        |--------------------------------------------------------------------------
+        | Patient Cancer Images
+        |--------------------------------------------------------------------------
+        */
+
+            'images.*' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
+            ],
         ]);
 
         /*
     |--------------------------------------------------------------------------
-    | Boolean
+    | Boolean Values
     |--------------------------------------------------------------------------
     */
+
         $validated['is_recommend'] = $request->boolean('is_recommend');
+
+        $validated['is_emergency'] = $request->boolean('is_emergency');
+
+        $validated['is_old_cancer'] = $request->boolean('is_old_cancer');
+
+        $validated['is_treatment'] = $request->boolean('is_treatment');
+
+        $validated['is_investigated'] = $request->boolean('is_investigated');
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Treatment Cleanup
+    |--------------------------------------------------------------------------
+    */
+
+        if (!$validated['is_treatment']) {
+
+            $validated['treatment_information'] = null;
+            $validated['treatment_type'] = null;
+        }
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Investigation Cleanup
+    |--------------------------------------------------------------------------
+    */
+
+        if (!$validated['is_investigated']) {
+
+            $validated['investigation_information'] = null;
+            $validated['investigation_type'] = null;
+        }
+
 
         /*
     |--------------------------------------------------------------------------
     | Location Cleanup
     |--------------------------------------------------------------------------
     */
+
         if ($request->location_type != 1) {
+
             $validated['location_simple'] = null;
         }
 
         if ($request->location_type != 2) {
+
             $validated['house_address'] = null;
             $validated['city'] = null;
             $validated['district'] = null;
@@ -1029,108 +1179,262 @@ class PatientController extends Controller
         }
 
         if ($request->location_type != 3) {
+
             $validated['country'] = null;
             $validated['passport_no'] = null;
         }
+
 
         /*
     |--------------------------------------------------------------------------
     | Create Patient
     |--------------------------------------------------------------------------
     */
-        $patient = Patient::create(
-            array_merge(
-                $validated,
-                $request->except([
-                    'documents',
-                    'images',
-                ])
-            )
-        );
+
+        $patient = Patient::create($validated);
+
 
         /*
     |--------------------------------------------------------------------------
     | Generate Patient Code
     |--------------------------------------------------------------------------
     */
+
         $patient->update([
-            'patient_code' => 'DFCH-' . now()->format('Y') . '-' . str_pad(
-                $patient->id,
-                9,
-                '0',
-                STR_PAD_LEFT
-            ),
+
+            'patient_code' => 'DFCH-' .
+                now()->format('Y') .
+                '-' .
+                str_pad(
+                    $patient->id,
+                    9,
+                    '0',
+                    STR_PAD_LEFT
+                ),
         ]);
 
+
         /*
     |--------------------------------------------------------------------------
-    | Folder Names
+    | Patient Folder
     |--------------------------------------------------------------------------
     */
-        $patientFolder = Str::slug($patient->patient_name . '-' . $patient->id);
 
-        $imagePath = public_path("uploads/images/patients/{$patientFolder}/image");
-        $documentPath = public_path("uploads/documents/{$patientFolder}/recommend_doc");
+        $patientFolder = Str::slug(
+            $patient->patient_name . '-' . $patient->id
+        );
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Folder Paths
+    |--------------------------------------------------------------------------
+    */
+
+        $imagePath = public_path(
+            "uploads/images/patients/{$patientFolder}/image"
+        );
+
+        $documentPath = public_path(
+            "uploads/documents/{$patientFolder}/recommend_doc"
+        );
+
+        $treatmentPath = public_path(
+            "uploads/images/patients/{$patientFolder}/treatment"
+        );
+
+        $investigationPath = public_path(
+            "uploads/images/patients/{$patientFolder}/investigation"
+        );
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Create Directories
+    |--------------------------------------------------------------------------
+    */
 
         File::ensureDirectoryExists($imagePath);
+
         File::ensureDirectoryExists($documentPath);
+
+        File::ensureDirectoryExists($treatmentPath);
+
+        File::ensureDirectoryExists($investigationPath);
+
 
         /*
     |--------------------------------------------------------------------------
-    | Upload Patient Images
+    | Upload Cancer Images
     |--------------------------------------------------------------------------
     */
+
         if ($request->hasFile('images')) {
 
             foreach ($request->file('images') as $index => $image) {
 
                 $extension = $image->getClientOriginalExtension();
 
-                $filename = 'patient_' .
+                $filename =
+                    'patient_' .
                     now()->format('YmdHis') .
-                    '_' . ($index + 1) .
-                    '.' . $extension;
+                    '_' .
+                    ($index + 1) .
+                    '.' .
+                    $extension;
 
                 $image->move($imagePath, $filename);
 
                 PatientCancerPhoto::create([
+
                     'patient_id' => $patient->id,
-                    'image' => "uploads/images/patients/{$patientFolder}/image/{$filename}",
+
+                    'image' =>
+                    "uploads/images/patients/{$patientFolder}/image/{$filename}",
                 ]);
             }
         }
+
 
         /*
     |--------------------------------------------------------------------------
     | Upload Recommendation Documents
     |--------------------------------------------------------------------------
     */
+
         if ($request->hasFile('documents')) {
 
             foreach ($request->file('documents') as $index => $file) {
 
                 $extension = $file->getClientOriginalExtension();
 
-                $filename = 'recommend_doc_' .
+                $filename =
+                    'recommend_doc_' .
                     now()->format('YmdHis') .
-                    '_' . ($index + 1) .
-                    '.' . $extension;
+                    '_' .
+                    ($index + 1) .
+                    '.' .
+                    $extension;
+
+                $fileHash = hash_file(
+                    'sha256',
+                    $file->getRealPath()
+                );
 
                 $file->move($documentPath, $filename);
-                $fileHash = hash_file('sha256', $file->getRealPath());
+
                 PatientDocument::create([
-                    'patient_id'    => $patient->id,
-                    'document_name' => $file->getClientOriginalName(),
-                    'file_path'     => "uploads/documents/{$patientFolder}/recommend_doc/{$filename}",
+
+                    'patient_id' => $patient->id,
+
+                    'document_name' =>
+                    $file->getClientOriginalName(),
+
+                    'file_path' =>
+                    "uploads/documents/{$patientFolder}/recommend_doc/{$filename}",
+
                     'document_type' => 'recommendation',
-                    'file_hash'     => $fileHash,
+
+                    'file_hash' => $fileHash,
                 ]);
             }
         }
 
+
+        /*
+    |--------------------------------------------------------------------------
+    | Upload Treatment Images
+    |--------------------------------------------------------------------------
+    */
+
+        if (
+            $validated['is_treatment'] &&
+            $request->hasFile('treatment_images')
+        ) {
+
+            $treatmentImages = [];
+
+            foreach (
+                $request->file('treatment_images')
+                as $index => $image
+            ) {
+
+                $extension = $image->getClientOriginalExtension();
+
+                $filename =
+                    'treatment_' .
+                    now()->format('YmdHis') .
+                    '_' .
+                    ($index + 1) .
+                    '.' .
+                    $extension;
+
+                $image->move($treatmentPath, $filename);
+
+                $treatmentImages[] =
+                    "uploads/images/patients/{$patientFolder}/treatment/{$filename}";
+            }
+
+            $patient->update([
+
+                'treatment_images' => $treatmentImages,
+
+            ]);
+        }
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Upload Investigation Images
+    |--------------------------------------------------------------------------
+    */
+
+        if (
+            $validated['is_investigated'] &&
+            $request->hasFile('investigation_images')
+        ) {
+
+            $investigationImages = [];
+
+            foreach (
+                $request->file('investigation_images')
+                as $index => $image
+            ) {
+
+                $extension = $image->getClientOriginalExtension();
+
+                $filename =
+                    'investigation_' .
+                    now()->format('YmdHis') .
+                    '_' .
+                    ($index + 1) .
+                    '.' .
+                    $extension;
+
+                $image->move(
+                    $investigationPath,
+                    $filename
+                );
+
+                $investigationImages[] =
+                    "uploads/images/patients/{$patientFolder}/investigation/{$filename}";
+            }
+
+            $patient->update([
+
+                'investigation_images' => $investigationImages,
+
+            ]);
+        }
+
+
+        /* Redirect*/
         return redirect()
             ->route('patients.index')
-            ->with('success', 'Patient registered successfully.');
+            ->with(
+                'success',
+                'Patient registered successfully.'
+            );
     }
 
     public function show($id)
@@ -1342,42 +1646,100 @@ class PatientController extends Controller
     public function update(Request $request, Patient $patient)
     {
         $validated = $request->validate([
-            'patient_name'                 => 'required|string|max:255',
-            'patient_f_name'               => 'required|string|max:255',
-            'patient_m_name'               => 'required|string|max:255',
+            /* Patient Identity*/
+            'patient_name' => 'required|string|max:255',
+            'patient_f_name' => 'required|string|max:255',
+            'patient_m_name' => 'required|string|max:255',
+            'age' => 'required|integer|min:0|max:100',
 
-            'phone_1'                      => 'required|string|max:20',
-            'phone_2'                      => 'nullable|string|max:20',
-            'phone_f_1'                    => 'nullable|string|max:20',
-            'phone_m_1'                    => 'nullable|string|max:20',
+            'gender' => ['required','in:male,female',],
+            /* Contact  */
+            'phone_1' => 'required|string|max:20',
+            'phone_2' => 'nullable|string|max:20',
+            'phone_f_1' => 'nullable|string|max:20',
+            'phone_m_1' => 'nullable|string|max:20',
 
-            'age'                          => 'required|integer|min:0|max:100',
-            'gender'                       => 'required|string',
+            /* Location */
+            'location_type' => 'required|in:1,2,3',
 
-            'location_type'                => 'required|in:1,2,3',
+            'location_simple' => 'nullable|string',
 
-            'patient_problem_description'  => 'nullable|string|max:255',
-            'patient_drug_description'     => 'nullable|string|max:255',
-            'remarks'                      => 'nullable|string|max:255',
+            'house_address' => 'nullable|string|max:255',
+            'city' => 'nullable|string|max:255',
+            'district' => 'nullable|string|max:255',
+            'post_code' => 'nullable|string|max:20',
 
-            'date_of_patient_added'        => 'required|date',
+            'country' => 'nullable|string|max:255',
+            'passport_no' => 'nullable|string|max:100',
 
-            'documents.*'                  => 'nullable|file|mimes:pdf,jpg,jpeg,png',
-            'patient_photo'                => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
+            /* Patient Information*/
+            'patient_problem_description' => 'nullable|string',
+            'patient_drug_description' => 'nullable|string',
+            'remarks' => 'nullable|string',
+
+            /*Recommendation */
+            'recommend_doctor_name' => 'nullable|string|max:255',
+            'recommend_note' => 'nullable|string',
+
+            /* Treatment   */
+            'treatment_information' => 'nullable|string',
+            'treatment_type' => ['nullable',],
+            'treatment_images.*' => ['nullable','image','mimes:jpg,jpeg,png,webp','max:5120',],
+
+            /* Investigation   */
+            'investigation_information' => 'nullable|string',
+
+            'investigation_images.*' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:5120',
+            ],
+
+            /* Hospital  */
+            'date_of_patient_added' => 'required|date',
+
+            /* Recommendation Documents  */
+            'documents.*' => [
+                'nullable',
+                'file',
+                'mimes:pdf,jpg,jpeg,png',
+                'max:10240',
+            ],
+
+            /* Patient Profile Photo */
+            'patient_photo' => [
+                'nullable',
+                'image',
+                'mimes:jpg,jpeg,png,webp',
+                'max:2048',
+            ],
         ]);
 
-        /*
-    |--------------------------------------------------------------------------
-    | Boolean
-    |--------------------------------------------------------------------------
-    */
-        $validated['is_recommend'] = $request->boolean('is_recommend');
+        /* Boolean Values */
+        $validated['is_recommend'] =$request->boolean('is_recommend');
+        $validated['is_emergency'] =$request->boolean('is_emergency');
+        $validated['is_old_cancer'] =$request->boolean('is_old_cancer');
+        $validated['is_treatment'] =$request->boolean('is_treatment');
+        $validated['is_investigated'] =$request->boolean('is_investigated');
 
-        /*
-    |--------------------------------------------------------------------------
-    | Location Cleanup
-    |--------------------------------------------------------------------------
-    */
+        /*Treatment Cleanup */
+        if (!$validated['is_treatment']) {
+            $validated['treatment_information'] = null;
+            $validated['treatment_type'] = null;
+            $validated['treatment_images'] = null;
+        }
+
+
+        /*Investigation Cleanup  */
+        if (!$validated['is_investigated']) {
+            $validated['investigation_information'] = null;
+            $validated['investigation_type'] = null;
+            $validated['investigation_images'] = null;
+        }
+
+
+        /* Location Cleanup  */
         if ($request->location_type != 1) {
             $validated['location_simple'] = null;
         }
@@ -1394,84 +1756,126 @@ class PatientController extends Controller
             $validated['passport_no'] = null;
         }
 
-        /*
-    |--------------------------------------------------------------------------
-    | Update Patient
-    |--------------------------------------------------------------------------
-    */
-        $patient->update(
-            array_merge(
-                $validated,
-                $request->except([
-                    'documents',
-                    'patient_photo',
-                ])
-            )
+        /* Remove Uploaded File Fields Before Update */
+        unset(
+            $validated['documents'],
+            $validated['patient_photo'],
+            $validated['treatment_images'],
+            $validated['investigation_images']
         );
 
-        /*
-    |--------------------------------------------------------------------------
-    | Patient Folder
-    |--------------------------------------------------------------------------
-    */
+        /* Update Patient */
+        $patient->update($validated);
+        /* Patient Folder */
         $patientFolder = Str::slug($patient->patient_name . '-' . $patient->id);
 
+        /*Folder Paths*/
         $documentPath = public_path("uploads/documents/{$patientFolder}/recommend_doc");
-        $profilePath  = public_path("uploads/images/patients/{$patientFolder}/profile");
+        $profilePath = public_path("uploads/images/patients/{$patientFolder}/profile");
+        $treatmentPath = public_path("uploads/images/patients/{$patientFolder}/treatment");
+        $investigationPath = public_path("uploads/images/patients/{$patientFolder}/investigation");
 
+        /*Ensure Directories*/
         File::ensureDirectoryExists($documentPath);
         File::ensureDirectoryExists($profilePath);
+        File::ensureDirectoryExists($treatmentPath);
+        File::ensureDirectoryExists($investigationPath);
 
-        /*
-    |--------------------------------------------------------------------------
-    | Upload Recommendation Documents
-    |--------------------------------------------------------------------------
-    */
+        /* Upload Recommendation Documents */
         if ($request->hasFile('documents')) {
-
             foreach ($request->file('documents') as $index => $file) {
-
                 $extension = $file->getClientOriginalExtension();
-
-                $filename = 'recommend_doc_' .
-                    now()->format('YmdHis') .
-                    '_' . ($index + 1) .
-                    '.' . $extension;
-
+                $filename = 'recommend_doc_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                $fileHash = hash_file('sha256', $file->getRealPath());
                 $file->move($documentPath, $filename);
 
                 PatientDocument::create([
-                    'patient_id'    => $patient->id,
+                    'patient_id' => $patient->id,
                     'document_name' => $file->getClientOriginalName(),
-                    'file_path'     => "uploads/documents/{$patientFolder}/recommend_doc/{$filename}",
+                    'file_path' => "uploads/documents/{$patientFolder}/recommend_doc/{$filename}",
                     'document_type' => 'recommendation',
+                    'file_hash' => $fileHash,
                 ]);
             }
         }
 
-        /*
-    |--------------------------------------------------------------------------
-    | Update Patient Profile Photo
-    |--------------------------------------------------------------------------
-    */
-        if ($request->hasFile('patient_photo')) {
 
-            // Delete old profile photo
+        /* Upload Treatment Images*/
+        if ($validated['is_treatment'] && $request->hasFile('treatment_images')) {
+            $treatmentImages = $patient->treatment_images ?? [];
+
+            foreach (
+                $request->file('treatment_images')
+                as $index => $image
+            ) {
+
+                $extension = $image->getClientOriginalExtension();
+                $filename = 'treatment_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                $image->move($treatmentPath, $filename);
+                $treatmentImages[] = "uploads/images/patients/{$patientFolder}/treatment/{$filename}";
+            }
+
+            $patient->update([
+                'treatment_images' => $treatmentImages,
+            ]);
+        }
+
+        /*Upload Investigation Images*/
+        if (
+            $validated['is_investigated'] &&
+            $request->hasFile('investigation_images')
+        ) {
+            $investigationImages =
+                $patient->investigation_images ?? [];
+
+            foreach (
+                $request->file('investigation_images')
+                as $index => $image
+            ) {
+
+                $extension =
+                    $image->getClientOriginalExtension();
+
+                $filename =
+                    'investigation_' .
+                    now()->format('YmdHis') .
+                    '_' .
+                    ($index + 1) .
+                    '.' .
+                    $extension;
+
+                $image->move(
+                    $investigationPath,
+                    $filename
+                );
+
+                $investigationImages[] =
+                    "uploads/images/patients/{$patientFolder}/investigation/{$filename}";
+            }
+
+            $patient->update([
+                'investigation_images' =>
+                $investigationImages,
+
+            ]);
+        }
+
+        /* Update Patient Profile Photo  */
+        if ($request->hasFile('patient_photo')) {
             if (
                 $patient->patient_photo &&
-                file_exists(public_path($patient->patient_photo))
+                file_exists(
+                    public_path($patient->patient_photo)
+                )
             ) {
-                unlink(public_path($patient->patient_photo));
+                unlink(
+                    public_path($patient->patient_photo)
+                );
             }
 
             $file = $request->file('patient_photo');
-
             $extension = $file->getClientOriginalExtension();
-
-            $filename = 'patient_profile_' .
-                now()->format('YmdHis') .
-                '.' . $extension;
-
+            $filename = 'patient_profile_' . now()->format('YmdHis') . '.' . $extension;
             $file->move($profilePath, $filename);
 
             $patient->update([
@@ -1479,9 +1883,14 @@ class PatientController extends Controller
             ]);
         }
 
+
+        /*Redirect */
         return redirect()
             ->route('patients.index')
-            ->with('success', 'Patient updated successfully.');
+            ->with(
+                'success',
+                'Patient updated successfully.'
+            );
     }
 
     public function destroy(Patient $patient)

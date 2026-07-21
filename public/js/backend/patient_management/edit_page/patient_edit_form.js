@@ -2,6 +2,8 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeEditors();
     initializeLocationToggle();
     initializeRecommendToggle();
+    initializeTreatmentToggle();
+    initializeInvestigationToggle();
 });
 
 /*
@@ -16,6 +18,9 @@ function initializeEditors() {
         "#edit_recommend_note",
         "#edit_patient_problem_description",
         "#edit_patient_drug_description",
+
+        "#edit_treatment_information",
+        "#edit_investigation_information",
     ];
 
     editors.forEach(function (selector) {
@@ -38,7 +43,9 @@ function initializeEditors() {
                 "undo",
                 "redo",
             ],
-        }).catch((error) => console.error(error));
+        }).catch(function (error) {
+            console.error(error);
+        });
     });
 }
 
@@ -50,11 +57,13 @@ function initializeEditors() {
 
 function toggleLocation() {
     $(".location").hide();
+
     $(".location-" + $("#location_type").val()).show();
 }
 
 function initializeLocationToggle() {
     toggleLocation();
+
     $("#location_type").on("change", toggleLocation);
 }
 
@@ -65,14 +74,55 @@ function initializeLocationToggle() {
 */
 
 function toggleRecommend() {
-    if ($("#is_recommend").val() == 1) {
-        $(".recommend-section").show();
+    if ($("#is_recommend").val() == "1") {
+        $(".recommend-section").slideDown(250);
     } else {
-        $(".recommend-section").hide();
+        $(".recommend-section").slideUp(250);
     }
 }
 
 function initializeRecommendToggle() {
     toggleRecommend();
+
     $("#is_recommend").on("change", toggleRecommend);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Treatment
+|--------------------------------------------------------------------------
+*/
+
+function toggleTreatment() {
+    if ($("#is_treatment").val() == "1") {
+        $(".treatment-section").stop(true, true).slideDown(250);
+    } else {
+        $(".treatment-section").stop(true, true).slideUp(250);
+    }
+}
+
+function initializeTreatmentToggle() {
+    toggleTreatment();
+
+    $("#is_treatment").on("change", toggleTreatment);
+}
+
+/*
+|--------------------------------------------------------------------------
+| Investigation
+|--------------------------------------------------------------------------
+*/
+
+function toggleInvestigation() {
+    if ($("#is_investigated").val() == "1") {
+        $(".investigation-section").stop(true, true).slideDown(250);
+    } else {
+        $(".investigation-section").stop(true, true).slideUp(250);
+    }
+}
+
+function initializeInvestigationToggle() {
+    toggleInvestigation();
+
+    $("#is_investigated").on("change", toggleInvestigation);
 }

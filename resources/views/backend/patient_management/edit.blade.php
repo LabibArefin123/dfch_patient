@@ -36,6 +36,8 @@
                     @include('backend.patient_management.partial_pages.edit_page.part_3')
                     @include('backend.patient_management.partial_pages.edit_page.part_4')
                     @include('backend.patient_management.partial_pages.edit_page.part_5')
+                    @include('backend.patient_management.partial_pages.edit_page.part_6')
+                    @include('backend.patient_management.partial_pages.edit_page.part_7')
                     @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
                 </div>
 

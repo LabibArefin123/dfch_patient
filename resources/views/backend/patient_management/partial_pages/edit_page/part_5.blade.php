@@ -1,50 +1,79 @@
-<div class="form-group col-md-12">
-    <label>Remarks</label>
-    <textarea name="remarks" id="edit_remarks" class="form-control">{!! $patient->remarks !!}</textarea>
+<div class="form-group col-md-6">
+    <label>Is Investigated?</label>
+    <select name="is_investigated" id="is_investigated" class="form-control">
+        <option value="0" {{ !$patient->is_investigated ? 'selected' : '' }}>No</option>
+        <option value="1" {{ $patient->is_investigated ? 'selected' : '' }}>Yes</option>
+    </select>
 </div>
+<div class="investigation-section">
 
-<div class="form-group col-md-12">
-    <label>Patient's Problem</label>
-    <textarea name="patient_problem_description" id="edit_patient_problem_description" class="form-control">{!! $patient->patient_problem_description !!}</textarea>
-</div>
+    <div class="form-group col-md-6">
 
-<div class="form-group col-md-12">
-    <label>Patient's Drug Description</label>
-    <textarea name="patient_drug_description" id="edit_patient_drug_description" class="form-control">{!! $patient->patient_drug_description !!}</textarea>
-</div>
-<div class="form-group col-md-12">
-    <style>
-        .progress-circle {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin: auto;
-            background: conic-gradient(#28a745 0%, #e9ecef 0%);
-            transition: 0.4s ease;
-        }
-    </style>
+        <label>Investigation Information</label>
 
-    <label class="font-weight-bold">Patient Photo</label>
+        <textarea name="investigation_information" id="edit_investigation_information" class="form-control">{{ old('investigation_information', $patient->investigation_information) }}</textarea>
 
-    <div class="card shadow-sm p-3 text-center">
+    </div>
 
-        <!-- Image Preview -->
-        <div class="mb-3">
-            <img id="mainPreview"
-                src="{{ $patient->patient_photo ? asset($patient->patient_photo) : 'https://via.placeholder.com/150' }}"
-                class="rounded-circle shadow" style="width:140px;height:140px;object-fit:cover;border:3px solid #eee;">
+    {{-- Existing Images --}}
+    <div class="form-group col-md-12">
+
+        <label>Investigation Images</label>
+
+        <div class="card shadow-sm border-0">
+
+            <div class="card-body">
+
+                @if (!empty($patient->investigation_images))
+
+                    <div class="row">
+
+                        @foreach ($patient->investigation_images as $image)
+                            <div class="col-md-4 col-lg-3 mb-3">
+
+                                <div class="card h-100 shadow-sm border">
+
+                                    <img src="{{ asset($image) }}" class="img-fluid rounded-top"
+                                        style="height:180px;width:100%;object-fit:cover;">
+
+                                    <div class="card-body text-center">
+
+                                        <a href="{{ asset($image) }}" target="_blank" class="btn btn-sm btn-primary">
+
+                                            View
+
+                                        </a>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        @endforeach
+
+                    </div>
+                @else
+                    <div class="text-center text-muted py-4">
+
+                        No investigation images available
+
+                    </div>
+
+                @endif
+
+            </div>
+
         </div>
 
-        <!-- Hidden REAL input (IMPORTANT) -->
-        <input type="file" name="patient_photo" id="hiddenPhotoInput" hidden>
-
-        <!-- Action Button -->
-        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#photoModal">
-            <i class="fa fa-upload"></i> Change Photo
-        </button>
     </div>
+
+    {{-- Upload More --}}
+    <div class="form-group col-md-6">
+
+        <label>Add More Investigation Images</label>
+
+        <input type="file" name="investigation_images[]" multiple class="form-control">
+
+    </div>
+
 </div>

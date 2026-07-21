@@ -1,169 +1,145 @@
-<div class="patient-section-card cancer-reports-section">
+@if ($patient->is_investigated)
 
-    <div class="patient-section-header cancer-header">
+    <div class="patient-section-card recommendation-card">
 
-        <div class="section-icon danger">
+        <div class="patient-section-header recommendation-header">
 
-            <i class="fas fa-x-ray"></i>
+            <div class="section-icon info">
 
-        </div>
+                <i class="fas fa-microscope"></i>
 
-        <div>
+            </div>
 
-            <h5 class="mb-0">
+            <div>
 
-                Cancer Reports
+                <h5 class="mb-0">
+                    Investigation Information
+                </h5>
 
-                <span class="badge badge-danger ml-2">
+                <small>
+                    Diagnostic reports and investigation records
+                </small>
 
-                    {{ $patient->cancerPhotos->count() }}
-
-                </span>
-
-            </h5>
-
-            <small>
-                Cancer imaging reports and related findings
-            </small>
+            </div>
 
         </div>
 
-    </div>
+        <div class="patient-section-body">
 
+            <div class="row">
 
-    <div class="patient-section-body">
+                <div class="col-md-6 mb-3">
 
-        @forelse ($patient->cancerPhotos as $report)
+                    <div class="recommendation-detail">
 
-            <div class="cancer-report-card">
+                        <span>
 
-                <div class="cancer-report-header">
+                            <i class="fas fa-vial mr-1"></i>
 
-                    <div>
+                            Investigation Type
 
-                        <span class="report-label">
-                            Cancer Report
                         </span>
 
-                        <h6 class="mb-0">
+                        <strong>
 
-                            Report #{{ $loop->iteration }}
+                            {{ $patient->investigation_type ?: 'N/A' }}
 
-                        </h6>
-
-                    </div>
-
-                    <span class="report-date">
-
-                        <i class="far fa-calendar-alt mr-1"></i>
-
-                        {{ optional($report->created_at)->format('d M Y') }}
-
-                    </span>
-
-                </div>
-
-
-                <div class="row mb-4">
-
-                    <div class="col-md-4 mb-3 mb-md-0">
-
-                        <div class="cancer-stat-card">
-
-                            <span>
-                                Total Cancer
-                            </span>
-
-                            <strong>
-                                {{ $report->total_cancer }}
-                            </strong>
-
-                        </div>
-
-                    </div>
-
-
-                    <div class="col-md-8">
-
-                        <div class="report-remarks">
-
-                            <span>
-                                Remarks
-                            </span>
-
-                            <p class="mb-0">
-
-                                {{ $report->remarks ?: 'No remarks available' }}
-
-                            </p>
-
-                        </div>
+                        </strong>
 
                     </div>
 
                 </div>
 
+                <div class="col-md-6 mb-3">
 
-                @if (!empty($report->xray_photo))
-                    <div class="cancer-image-grid">
+                    <div class="recommendation-detail">
 
-                        @foreach ($report->xray_photo as $index => $photo)
-                            <div class="cancer-image-card">
+                        <span>
 
-                                <a href="{{ asset($photo) }}" target="_blank" class="cancer-image-link">
+                            <i class="fas fa-check-circle mr-1"></i>
 
-                                    <img src="{{ asset($photo) }}" alt="Cancer Report Image"
-                                        class="cancer-report-image">
+                            Status
 
-                                    <div class="image-overlay">
+                        </span>
 
-                                        <i class="fas fa-search-plus"></i>
+                        <strong class="text-success">
 
-                                    </div>
+                            Investigation Available
+
+                        </strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="medical-note-box mb-4">
+
+                <div class="medical-note-title">
+
+                    <i class="fas fa-file-medical-alt mr-1"></i>
+
+                    Investigation Information
+
+                </div>
+
+                <div class="medical-note-content">
+
+                    {!! $patient->investigation_information ?:
+                        '<span class="text-muted">No investigation information available.</span>' !!}
+
+                </div>
+
+            </div>
+
+            <div>
+
+                <div class="documents-title mb-3">
+
+                    <i class="fas fa-images mr-1"></i>
+
+                    Investigation Images
+
+                </div>
+
+                @if (!empty($patient->investigation_images))
+
+                    <div class="row">
+
+                        @foreach ($patient->investigation_images as $image)
+                            <div class="col-lg-3 col-md-4 col-6 mb-3">
+
+                                <a href="{{ asset($image) }}" target="_blank">
+
+                                    <img src="{{ asset($image) }}" class="img-fluid rounded shadow border"
+                                        style="height:180px;width:100%;object-fit:cover;">
 
                                 </a>
-
-
-                                <div class="cancer-image-description">
-
-                                    <small>
-                                        Image Description
-                                    </small>
-
-                                    <p class="mb-0">
-
-                                        {{ $report->xray_description[$index] ?? 'N/A' }}
-
-                                    </p>
-
-                                </div>
 
                             </div>
                         @endforeach
 
                     </div>
+                @else
+                    <div class="empty-state">
+
+                        <i class="fas fa-image"></i>
+
+                        <span>
+
+                            No investigation images available
+
+                        </span>
+
+                    </div>
+
                 @endif
 
             </div>
 
-        @empty
-
-            <div class="empty-state cancer-empty-state">
-
-                <i class="fas fa-file-medical-alt"></i>
-
-                <strong>
-                    No cancer reports found
-                </strong>
-
-                <span>
-                    This patient currently has no cancer imaging records.
-                </span>
-
-            </div>
-
-        @endforelse
+        </div>
 
     </div>
 
-</div>
+@endif

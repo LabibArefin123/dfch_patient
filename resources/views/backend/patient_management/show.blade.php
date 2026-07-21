@@ -286,32 +286,29 @@
 
                 {{-- RECOMMENDATION --}}
                 @include('backend.patient_management.partial_pages.show_page.part_4')
+                @include('backend.patient_management.partial_pages.show_page.part_5')
+                @include('backend.patient_management.partial_pages.show_page.part_6')
 
 
                 {{-- MEDICAL INFORMATION --}}
                 <div class="patient-section-card">
-
                     <div class="patient-section-header">
-
                         <div class="section-icon red">
                             <i class="fas fa-notes-medical"></i>
                         </div>
-
                         <div>
                             <h5 class="mb-0">
                                 Medical Information
                             </h5>
-
                             <small>
                                 Patient condition, medication and remarks
                             </small>
                         </div>
-
                     </div>
 
                     <div class="patient-section-body">
 
-                        @include('backend.patient_management.partial_pages.show_page.part_5')
+                        @include('backend.patient_management.partial_pages.show_page.part_7')
 
                     </div>
 
@@ -319,8 +316,7 @@
 
             </div>
 
-            {{-- RIGHT PATIENT PHOTO --}}
-            @include('backend.patient_management.partial_pages.show_page.part_6')
+            @include('backend.patient_management.partial_pages.show_page.part_8')
 
         </div>
 
