@@ -172,7 +172,7 @@
 
 
                                     <div class="card-footer bg-white text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-danger previewImageBtn"
+                                        <button type="button" class="btn btn-sm btn-outline-danger magnify-img"
                                             data-bs-toggle="modal" data-bs-target="#imagePreviewModal"
                                             data-image="{{ asset($photo) }}">
                                             <i class="fas fa-eye"></i> View Full Image

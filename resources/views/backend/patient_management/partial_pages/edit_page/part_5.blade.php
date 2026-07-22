@@ -34,13 +34,15 @@
                                 <div class="card h-100 shadow-sm border">
 
                                     <img src="{{ asset($image) }}" class="img-fluid rounded-top"
-                                        style="height:180px;width:100%;object-fit:cover;">
+                                        style="height:180px;width:100%;object-fit:cover;cursor:zoom-in;">
 
                                     <div class="card-body text-center">
 
-                                        <a href="{{ asset($image) }}" target="_blank" class="btn btn-sm btn-primary">
+                                        <a href="{{ asset($image) }}" class="btn btn-sm btn-primary previewImageBtn">
 
-                                            View
+                                            <i class="fas fa-search-plus mr-1"></i>
+
+                                            Magnify
 
                                         </a>
 

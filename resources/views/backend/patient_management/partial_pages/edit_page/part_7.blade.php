@@ -35,7 +35,9 @@
         <!-- Image Preview -->
         <div class="mb-3">
             <img id="mainPreview"
-                src="{{ $patient->patient_photo ? asset($patient->patient_photo) : 'https://via.placeholder.com/150' }}"
+                src="{{ $patient->patient_photo && file_exists(public_path($patient->patient_photo))
+                    ? asset($patient->patient_photo)
+                    : asset('uploads/images/default.jpg') }}"
                 class="rounded-circle shadow" style="width:140px;height:140px;object-fit:cover;border:3px solid #eee;">
         </div>
 
