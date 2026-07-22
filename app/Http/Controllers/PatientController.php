@@ -235,6 +235,38 @@ class PatientController extends Controller
                     </span>';
                 })
 
+                ->addColumn('treatment', function ($p) {
+
+                    if (!$p->is_treatment) {
+                        return '<span class="badge badge-secondary">
+                            No
+                        </span>';
+                    }
+
+                    return '
+                        <a href="' . route('patients.show', $p) . '" class="hover-box">
+                            <span class="badge badge-success">
+                                <i class="fas fa-procedures"></i> Yes
+                            </span>
+                        </a>';
+                })
+
+                ->addColumn('investigation', function ($p) {
+
+                    if (!$p->is_investigated) {
+                        return '<span class="badge badge-secondary">
+                            No
+                        </span>';
+                    }
+
+                return '
+                    <a href="' . route('patients.show', $p) . '" class="hover-box">
+                        <span class="badge badge-info">
+                            <i class="fas fa-microscope"></i> Yes
+                        </span>
+                    </a>';
+                })
+
                 ->addColumn('date', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' .
                         \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y') .
@@ -286,6 +318,8 @@ class PatientController extends Controller
                     'does_old_cancer',
                     'total_cancer_photos',
                     'emergency',
+                    'treatment',
+                    'investigation',
                     'date',
                     'checkbox',
                     'action'
@@ -1652,7 +1686,7 @@ class PatientController extends Controller
             'patient_m_name' => 'required|string|max:255',
             'age' => 'required|integer|min:0|max:100',
 
-            'gender' => ['required','in:male,female',],
+            'gender' => ['required', 'in:male,female',],
             /* Contact  */
             'phone_1' => 'required|string|max:20',
             'phone_2' => 'nullable|string|max:20',
@@ -1684,7 +1718,7 @@ class PatientController extends Controller
             /* Treatment   */
             'treatment_information' => 'nullable|string',
             'treatment_type' => ['nullable',],
-            'treatment_images.*' => ['nullable','image','mimes:jpg,jpeg,png,webp','max:5120',],
+            'treatment_images.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120',],
 
             /* Investigation   */
             'investigation_information' => 'nullable|string',
@@ -1717,11 +1751,11 @@ class PatientController extends Controller
         ]);
 
         /* Boolean Values */
-        $validated['is_recommend'] =$request->boolean('is_recommend');
-        $validated['is_emergency'] =$request->boolean('is_emergency');
-        $validated['is_old_cancer'] =$request->boolean('is_old_cancer');
-        $validated['is_treatment'] =$request->boolean('is_treatment');
-        $validated['is_investigated'] =$request->boolean('is_investigated');
+        $validated['is_recommend'] = $request->boolean('is_recommend');
+        $validated['is_emergency'] = $request->boolean('is_emergency');
+        $validated['is_old_cancer'] = $request->boolean('is_old_cancer');
+        $validated['is_treatment'] = $request->boolean('is_treatment');
+        $validated['is_investigated'] = $request->boolean('is_investigated');
 
         /*Treatment Cleanup */
         if (!$validated['is_treatment']) {

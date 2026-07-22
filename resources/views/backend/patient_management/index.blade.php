@@ -92,14 +92,16 @@
                         </th>
                         <th>#</th>
                         <th>Photo</th>
-                        <th width="90">Status </th>
+                        <th width="90">Status</th>
                         <th>Patient Code</th>
                         <th>Name</th>
                         <th>Age</th>
                         <th>Gender</th>
                         <th>Phone</th>
                         <th>Location</th>
-                        <th>Referred Patient</th>
+                        <th>Referred</th>
+                        <th>Treatment</th>
+                        <th>Investigation</th>
                         <th>Old Cancer</th>
                         <th>Cancer Report</th>
                         <th>Date Added</th>
@@ -123,10 +125,10 @@
 @section('js')
     <script>
         /*
-                                    |--------------------------------------------------------------------------
-                                    | Global Routes
-                                    |--------------------------------------------------------------------------
-                                    */
+                                        |--------------------------------------------------------------------------
+                                        | Global Routes
+                                        |--------------------------------------------------------------------------
+                                        */
         window.patientRoutes = {
             index: "{{ route('patients.index') }}"
         };

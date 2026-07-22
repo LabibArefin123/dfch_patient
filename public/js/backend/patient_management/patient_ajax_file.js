@@ -60,6 +60,13 @@ $(function () {
             },
             { data: "is_recommend" },
             {
+                data: "treatment",
+            },
+            {
+                data: "investigation",
+                
+            },
+            {
                 data: "does_old_cancer",
                 orderable: false,
                 searchable: false,
