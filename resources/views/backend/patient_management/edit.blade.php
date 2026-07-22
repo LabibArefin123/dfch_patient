@@ -33,28 +33,20 @@
     @endif
 
     @include('backend.patient_management.modals.edit_page.patient_image_info')
-    <div class="card">
-        <div class="card-body">
-            <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data"
-                data-confirm="edit">
-                @csrf
-                @method('PUT')
-                <div class="row">
-                    @include('backend.patient_management.partial_pages.edit_page.part_1')
-                    @include('backend.patient_management.partial_pages.edit_page.part_2')
-                    @include('backend.patient_management.partial_pages.edit_page.part_3')
-                    @include('backend.patient_management.partial_pages.edit_page.part_4')
-                    @include('backend.patient_management.partial_pages.edit_page.part_5')
-                    @include('backend.patient_management.partial_pages.edit_page.part_6')
-                    @include('backend.patient_management.partial_pages.edit_page.part_7')
-                    @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
-                </div>
-
-                <button class="btn btn-primary mt-2">Update</button>
-            </form>
-
-        </div>
-    </div>
+    <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data"
+        data-confirm="edit">
+        @csrf
+        @method('PUT')
+        @include('backend.patient_management.partial_pages.edit_page.part_1')
+        @include('backend.patient_management.partial_pages.edit_page.part_2')
+        @include('backend.patient_management.partial_pages.edit_page.part_3')
+        @include('backend.patient_management.partial_pages.edit_page.part_4')
+        @include('backend.patient_management.partial_pages.edit_page.part_5')
+        @include('backend.patient_management.partial_pages.edit_page.part_6')
+        @include('backend.patient_management.partial_pages.edit_page.part_7')
+        @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
+        <button class="btn btn-primary mt-2">Update</button>
+    </form> 
     <div style="height: 50px;"></div>
 @stop
 
