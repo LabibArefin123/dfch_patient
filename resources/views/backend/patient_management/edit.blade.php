@@ -46,11 +46,16 @@
 
         </div>
     </div>
-      <div style="height: 50px;"></div>
+    <div style="height: 50px;"></div>
 @stop
 
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_editor.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_location_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_recommend_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_investigation_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_treatment_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_edit_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_photo_edit_modal.js') }}"></script>
 @stop
