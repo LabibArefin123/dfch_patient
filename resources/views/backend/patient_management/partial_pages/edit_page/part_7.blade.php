@@ -1,52 +1,84 @@
-<div class="form-group col-md-12">
-    <label>Remarks</label>
-    <textarea name="remarks" id="edit_remarks" class="form-control">{!! $patient->remarks !!}</textarea>
-</div>
+<div class="col-12">
 
-<div class="form-group col-md-12">
-    <label>Patient's Problem</label>
-    <textarea name="patient_problem_description" id="edit_patient_problem_description" class="form-control">{!! $patient->patient_problem_description !!}</textarea>
-</div>
+    <div class="patient-section-card patient-photo-card">
 
-<div class="form-group col-md-12">
-    <label>Patient's Drug Description</label>
-    <textarea name="patient_drug_description" id="edit_patient_drug_description" class="form-control">{!! $patient->patient_drug_description !!}</textarea>
-</div>
-<div class="form-group col-md-12">
-    <style>
-        .progress-circle {
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 600;
-            margin: auto;
-            background: conic-gradient(#28a745 0%, #e9ecef 0%);
-            transition: 0.4s ease;
-        }
-    </style>
+        <div class="section-header">
 
-    <label class="font-weight-bold">Patient Photo</label>
+            <div>
 
-    <div class="card shadow-sm p-3 text-center">
+                <h5>
+                    <i class="fas fa-camera text-info"></i>
+                    Patient Profile Photo
+                </h5>
 
-        <!-- Image Preview -->
-        <div class="mb-3">
-            <img id="mainPreview"
-                src="{{ $patient->patient_photo && file_exists(public_path($patient->patient_photo))
-                    ? asset($patient->patient_photo)
-                    : asset('uploads/images/default.jpg') }}"
-                class="rounded-circle shadow" style="width:140px;height:140px;object-fit:cover;border:3px solid #eee;">
+                <span>
+                    Upload and manage patient profile image
+                </span>
+
+            </div>
+
+            <span class="section-badge photo-badge">
+                Profile
+            </span>
+
         </div>
 
-        <!-- Hidden REAL input (IMPORTANT) -->
-        <input type="file" name="patient_photo" id="hiddenPhotoInput" hidden>
+        <div class="row align-items-center">
 
-        <!-- Action Button -->
-        <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#photoModal">
-            <i class="fa fa-upload"></i> Change Photo
-        </button>
+            <div class="col-lg-5 text-center">
+
+                <div class="patient-avatar-wrapper">
+
+                    <img id="mainPreview"
+                        src="{{ $patient->patient_photo && file_exists(public_path($patient->patient_photo))
+                            ? asset($patient->patient_photo)
+                            : asset('uploads/images/default.jpg') }}"
+                        class="patient-main-avatar">
+
+                </div>
+
+            </div>
+
+            <div class="col-lg-7">
+
+                <div class="photo-info-box">
+
+                    <h5>
+                        {{ $patient->patient_name }}
+                    </h5>
+
+                    <p>
+                        Update patient photo and view detailed image information.
+                    </p>
+
+                    <div class="mt-4">
+
+                        <input type="file" name="patient_photo" id="hiddenPhotoInput" hidden>
+
+                        <button type="button" class="btn btn-primary mr-2" data-toggle="modal"
+                            data-target="#photoModal">
+
+                            <i class="fas fa-upload mr-1"></i>
+                            Change Photo
+
+                        </button>
+
+                        <button type="button" class="btn btn-info" data-toggle="modal"
+                            data-target="#patientPhotoInfoModal">
+
+                            <i class="fas fa-search mr-1"></i>
+                            View Details
+
+                        </button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
+
 </div>

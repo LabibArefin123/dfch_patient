@@ -12,6 +12,15 @@
 @stop
 
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_edit.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_field.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_location.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_recommend.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_treatment.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_investigation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_field.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_remarks.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_photo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_preview.css') }}">
     @if ($errors->any())
         <div class="alert alert-danger">

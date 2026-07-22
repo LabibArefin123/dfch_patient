@@ -1,0 +1,52 @@
+.investigation-card {
+    border-top: 5px solid #2563eb;
+}
+
+.investigation-badge {
+    background: #eff6ff;
+    color: #2563eb;
+}
+
+.investigation-section {
+    margin-top: 20px;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(135deg, #f8fbff, #eef4ff);
+
+    border: 1px solid #dbeafe;
+}
+
+.investigation-image-card {
+    border-radius: 18px;
+    overflow: hidden;
+
+    transition: 0.35s;
+}
+
+.investigation-image-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.1);
+}
+
+.investigation-gallery-image {
+    height: 220px;
+    width: 100%;
+
+    object-fit: cover;
+
+    cursor: zoom-in;
+
+    transition: 0.35s;
+}
+
+.investigation-gallery-image:hover {
+    transform: scale(1.05);
+}
+
+.investigation-section textarea {
+    min-height: 180px;
+}

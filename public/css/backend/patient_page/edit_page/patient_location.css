@@ -1,0 +1,12 @@
+.location .form-control {
+    background: #fbfcfd;
+}
+
+.location-2,
+.location-3 {
+    margin-top: 10px;
+    padding: 20px;
+    border-radius: 15px;
+    background: #f8fafc;
+    border: 1px dashed #d6dde5;
+}

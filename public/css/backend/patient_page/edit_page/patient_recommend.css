@@ -1,0 +1,126 @@
+.recommend-card {
+    border-top: 5px solid #16a34a;
+}
+
+.recommend-badge {
+    background: #ecfdf5;
+    color: #15803d;
+}
+
+.recommend-section {
+    margin-top: 20px;
+
+    padding: 30px;
+
+    border-radius: 20px;
+
+    background: linear-gradient(135deg, #f8fffb, #eefdf5);
+
+    border: 1px solid #d1fae5;
+}
+
+.recommendation-document-card {
+    border-radius: 18px;
+    overflow: hidden;
+
+    transition: 0.35s;
+}
+
+.recommendation-document-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.1);
+}
+
+.document-preview-3x2 {
+    height: 190px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    overflow: hidden;
+
+    background: #f8fafc;
+}
+
+.document-preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.document-file-placeholder {
+    width: 100%;
+    height: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.document-file-placeholder-inner {
+    text-align: center;
+}
+
+.document-file-icon {
+    font-size: 50px;
+    color: #94a3b8;
+
+    margin-bottom: 10px;
+}
+
+.document-file-ext {
+    display: block;
+
+    font-weight: 700;
+    color: #475569;
+}
+
+.document-title {
+    font-weight: 600;
+    color: #1e293b;
+
+    margin-bottom: 10px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.document-meta-line {
+    display: block;
+
+    font-size: 13px;
+    color: #64748b;
+}
+
+.document-actions {
+    margin-top: 15px;
+
+    display: flex;
+    gap: 8px;
+}
+
+.empty-document-box {
+    text-align: center;
+    padding: 60px 20px;
+}
+
+.empty-document-box i {
+    font-size: 55px;
+
+    color: #cbd5e1;
+
+    margin-bottom: 15px;
+}
+
+.empty-document-box h6 {
+    font-weight: 700;
+    color: #334155;
+}
+
+.empty-document-box p {
+    color: #94a3b8;
+    margin-bottom: 0;
+}
