@@ -46,7 +46,7 @@
 
         <div class="treatment-section">
             <div class="row">
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
 
                     <label>Treatment Type</label>
 
@@ -100,7 +100,7 @@
                                                         style="
                                                     height:180px;
                                                     width:100%;
-                                                    object-fit:cover;
+                                                    object-fit:contain;
                                                     cursor:zoom-in;
                                                     transition:transform .2s ease, box-shadow .2s ease;
                                                 ">
@@ -112,10 +112,7 @@
                                                     <a href="#" class="btn btn-sm btn-primary"
                                                         data-bs-toggle="modal" data-bs-target="#imageZoomModal"
                                                         data-bs-img-src="{{ asset($image) }}">
-
-                                                        <i class="fas fa-search-plus mr-1"></i>
-
-                                                        Magnify
+                                                        View Image
 
                                                     </a>
 

@@ -23,6 +23,7 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_photo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_preview.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -65,4 +66,14 @@
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_progress.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_preview.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_manager.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_card.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_validation.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_progress.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_preview.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_manager.js') }}">
+    </script>
 @stop

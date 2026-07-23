@@ -120,16 +120,14 @@
                     </div>
 
                 </div>
-
                 {{-- Upload More --}}
                 <div class="form-group col-md-6">
 
                     <label>Add More Investigation Images</label>
-
-                    <input type="file" name="investigation_images[]" multiple class="form-control">
-
+                
+                    <input type="file" name="investigation_images[]" multiple accept="image/*" class="form-control">
                 </div>
-
+                <div class="investigation-preview-container mt-3"></div>
             </div>
 
         </div>
