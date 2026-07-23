@@ -1,0 +1,254 @@
+/* ==========================================================
+   Patient Progress
+========================================================== */
+
+.patient-progress-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px 35px;
+    margin-bottom: 30px;
+    border: 1px solid #e8edf3;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    overflow-x: auto;
+}
+
+.progress-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    min-width: 120px;
+    flex-shrink: 0;
+    transition: 0.3s ease;
+}
+
+.progress-item .step {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #f4f6f9;
+    border: 2px solid #dbe4ea;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #8c99a5;
+    font-size: 22px;
+    transition: 0.3s;
+}
+
+.progress-item span {
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #7a8693;
+    white-space: nowrap;
+    transition: 0.3s;
+}
+
+/* Line */
+
+.progress-line {
+    flex: 1;
+    height: 4px;
+    min-width: 60px;
+    background: #e8edf3;
+    border-radius: 20px;
+    margin: 0 12px;
+    position: relative;
+    top: -18px;
+}
+
+/* =====================================
+   Active
+===================================== */
+
+.progress-item.active .step {
+    background: linear-gradient(135deg, #8b0000, #b30000);
+
+    border-color: #8b0000;
+
+    color: #fff;
+
+    box-shadow: 0 8px 20px rgba(139, 0, 0, 0.35);
+
+    transform: scale(1.08);
+}
+
+.progress-item.active span {
+    color: #8b0000;
+
+    font-weight: 700;
+}
+
+/* =====================================
+   Completed
+===================================== */
+
+.progress-item.completed .step {
+    background: #28a745;
+
+    border-color: #28a745;
+
+    color: #fff;
+}
+
+.progress-item.completed span {
+    color: #28a745;
+}
+
+.progress-item.completed + .progress-line {
+    background: #28a745;
+}
+
+/* =====================================
+   Hover
+===================================== */
+
+.progress-item:hover .step {
+    transform: translateY(-4px);
+
+    border-color: #8b0000;
+
+    color: #8b0000;
+}
+
+.progress-item:hover span {
+    color: #8b0000;
+}
+
+/* =====================================
+   Animation
+===================================== */
+
+.progress-item.active .step {
+    animation: pulseStep 2s infinite;
+}
+
+@keyframes pulseStep {
+    0% {
+        box-shadow: 0 0 0 0 rgba(139, 0, 0, 0.35);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(139, 0, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(139, 0, 0, 0);
+    }
+}
+
+/* =====================================
+   Responsive
+===================================== */
+
+@media (max-width: 1200px) {
+    .patient-progress-card {
+        padding: 20px;
+    }
+
+    .progress-item {
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 992px) {
+    .patient-progress-card {
+        justify-content: flex-start;
+
+        overflow-x: auto;
+
+        scrollbar-width: thin;
+
+        gap: 0;
+    }
+
+    .progress-line {
+        min-width: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .patient-progress-card {
+        padding: 18px;
+    }
+
+    .progress-item {
+        min-width: 90px;
+    }
+
+    .progress-item .step {
+        width: 50px;
+
+        height: 50px;
+
+        font-size: 18px;
+    }
+
+    .progress-item span {
+        font-size: 12px;
+
+        margin-top: 8px;
+    }
+
+    .progress-line {
+        height: 3px;
+
+        min-width: 40px;
+
+        top: -15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .patient-progress-card {
+        padding: 15px;
+    }
+
+    .progress-item {
+        min-width: 80px;
+    }
+
+    .progress-item .step {
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 16px;
+    }
+
+    .progress-item span {
+        font-size: 11px;
+    }
+
+    .progress-line {
+        min-width: 30px;
+    }
+}
+
+/* =====================================
+   Scrollbar
+===================================== */
+
+.patient-progress-card::-webkit-scrollbar {
+    height: 6px;
+}
+
+.patient-progress-card::-webkit-scrollbar-track {
+    background: #f2f2f2;
+
+    border-radius: 20px;
+}
+
+.patient-progress-card::-webkit-scrollbar-thumb {
+    background: #8b0000;
+
+    border-radius: 20px;
+}
+
+.patient-progress-card::-webkit-scrollbar-thumb:hover {
+    background: #6e0000;
+}

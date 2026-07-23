@@ -1,0 +1,1000 @@
+/* ==========================================================================
+   PATIENT CARD
+   File : patient_card.css
+   Section : Card + Header + Theme Variants
+   ========================================================================== */
+
+/* ==========================================================================
+   Card
+   ========================================================================== */
+
+.patient-section-card {
+    position: relative;
+    margin-bottom: 32px;
+    background: #ffffff;
+    border: 1px solid #e8edf3;
+    border-radius: 18px;
+    overflow: hidden;
+    box-shadow:
+        0 8px 24px rgba(15, 23, 42, 0.04),
+        0 16px 40px rgba(15, 23, 42, 0.05);
+    transition: all 0.3s ease;
+}
+
+.patient-section-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    border: 1px solid rgba(255, 255, 255, 0.65);
+}
+
+.patient-section-card:hover {
+    transform: translateY(-4px);
+    box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.08),
+        0 28px 60px rgba(15, 23, 42, 0.1);
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.section-header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 28px 32px;
+    overflow: hidden;
+    border-bottom: 1px solid #edf2f7;
+}
+
+/* Left Accent */
+
+.section-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 6px;
+    height: 100%;
+    border-radius: 0 10px 10px 0;
+}
+
+/* Decorative Circle */
+
+.section-header::after {
+    content: "";
+    position: absolute;
+    width: 220px;
+    height: 220px;
+    right: -95px;
+    top: -110px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.35);
+    pointer-events: none;
+}
+
+/* ==========================================================================
+   Header Variants
+   ========================================================================== */
+
+/* ---------- Primary ---------- */
+
+.section-header.primary {
+    background: linear-gradient(135deg, #ffffff 0%, #fff8f8 100%);
+}
+
+.section-header.primary::before {
+    background: #8b0000;
+}
+
+/* ---------- Info ---------- */
+
+.section-header.info {
+    background: linear-gradient(135deg, #ffffff 0%, #f2fbff 100%);
+}
+
+.section-header.info::before {
+    background: #0ea5e9;
+}
+
+/* ---------- Success ---------- */
+
+.section-header.success {
+    background: linear-gradient(135deg, #ffffff 0%, #f5fff8 100%);
+}
+
+.section-header.success::before {
+    background: #16a34a;
+}
+
+/* ---------- Warning ---------- */
+
+.section-header.warning {
+    background: linear-gradient(135deg, #ffffff 0%, #fffdf5 100%);
+}
+
+.section-header.warning::before {
+    background: #f59e0b;
+}
+
+/* ---------- Danger ---------- */
+
+.section-header.danger {
+    background: linear-gradient(135deg, #ffffff 0%, #fff6f6 100%);
+}
+
+.section-header.danger::before {
+    background: #dc2626;
+}
+
+/* ==========================================================================
+   Icon Box
+   ========================================================================== */
+
+.section-icon {
+    position: relative;
+    z-index: 2;
+
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    border-radius: 18px;
+
+    transition: all 0.3s ease;
+}
+
+/* Soft Glow */
+
+.section-icon::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    opacity: 0;
+    transition: 0.3s;
+}
+
+/* ==========================================================================
+   Icon Themes
+   ========================================================================== */
+
+.section-header.primary .section-icon {
+    background: linear-gradient(135deg, #8b0000, #b71c1c);
+}
+
+.section-header.primary .section-icon::after {
+    background: rgba(139, 0, 0, 0.15);
+}
+
+.section-header.info .section-icon {
+    background: linear-gradient(135deg, #0ea5e9, #0284c7);
+}
+
+.section-header.info .section-icon::after {
+    background: rgba(14, 165, 233, 0.18);
+}
+
+.section-header.success .section-icon {
+    background: linear-gradient(135deg, #16a34a, #15803d);
+}
+
+.section-header.success .section-icon::after {
+    background: rgba(22, 163, 74, 0.18);
+}
+
+.section-header.warning .section-icon {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.section-header.warning .section-icon::after {
+    background: rgba(245, 158, 11, 0.18);
+}
+
+.section-header.danger .section-icon {
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+}
+
+.section-header.danger .section-icon::after {
+    background: rgba(220, 38, 38, 0.18);
+}
+
+/* ==========================================================================
+   Icon
+   ========================================================================== */
+
+.section-icon i {
+    position: relative;
+    z-index: 3;
+
+    color: #ffffff;
+    font-size: 30px;
+    transition: 0.3s;
+}
+
+/* ==========================================================================
+   Hover Effect
+   ========================================================================== */
+
+.patient-section-card:hover .section-icon {
+    transform: rotate(-8deg) scale(1.08);
+}
+
+.patient-section-card:hover .section-icon::after {
+    opacity: 1;
+}
+
+.patient-section-card:hover .section-icon i {
+    transform: scale(1.08);
+}
+
+/* ==========================================================================
+   Header Content
+   ========================================================================== */
+
+.section-content {
+    position: relative;
+    z-index: 2;
+    flex: 1;
+}
+
+.section-content h3 {
+    margin: 0;
+
+    color: #1f2937;
+
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.2px;
+}
+
+.section-content p {
+    margin: 8px 0 0;
+
+    color: #6b7280;
+
+    font-size: 14px;
+    line-height: 1.7;
+    font-weight: 400;
+
+    max-width: 650px;
+}
+
+/* ==========================================================================
+   Optional Header Badge
+   ========================================================================== */
+
+.section-header-badge {
+    margin-left: auto;
+
+    padding: 7px 14px;
+
+    border-radius: 50px;
+
+    background: #ffffff;
+
+    border: 1px solid #e8edf3;
+
+    color: #6b7280;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.04);
+
+    z-index: 2;
+}
+
+/* ==========================================================================
+   Section Body
+   ========================================================================== */
+
+.section-body {
+    position: relative;
+    padding: 32px;
+    background: #ffffff;
+}
+
+.section-body > *:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Section Subtitle
+   ========================================================================== */
+
+.section-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+}
+
+.section-subtitle span {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    font-size: 15px;
+    font-weight: 700;
+    color: #2d3748;
+    letter-spacing: 0.2px;
+}
+
+.section-subtitle span i {
+    width: 32px;
+    height: 32px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff5f5;
+    color: #8b0000;
+    font-size: 14px;
+}
+
+.section-subtitle hr {
+    flex: 1;
+    margin: 0;
+    border: 0;
+    height: 1px;
+    background: linear-gradient(to right, #e2e8f0, #f8fafc);
+}
+
+/* ==========================================================================
+   Divider
+   ========================================================================== */
+
+.section-divider {
+    position: relative;
+    margin: 34px 0;
+    border: 0;
+    border-top: 1px dashed #d7dee7;
+}
+
+.section-divider::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -4px;
+    width: 8px;
+    height: 8px;
+    transform: translateX(-50%);
+    border-radius: 50%;
+    background: #8b0000;
+}
+
+/* ==========================================================================
+   Section Note
+   ========================================================================== */
+
+.section-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 18px;
+    margin-bottom: 28px;
+    padding: 18px 20px;
+    background: #fbfcfd;
+    border: 1px solid #e8edf3;
+    border-radius: 16px;
+    transition: 0.3s;
+}
+
+.section-note:hover {
+    border-color: #d8e0ea;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.05);
+}
+
+.section-note-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #fff5f5;
+}
+
+.section-note-icon i {
+    font-size: 20px;
+    color: #8b0000;
+}
+
+.section-note-content {
+    flex: 1;
+}
+
+.section-note-content strong {
+    display: block;
+    margin-bottom: 6px;
+    color: #1f2937;
+    font-size: 15px;
+    font-weight: 700;
+}
+
+.section-note-content p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+    line-height: 1.7;
+}
+
+/* ==========================================================================
+   Section Alert Variants
+   ========================================================================== */
+
+.section-note.primary {
+    border-left: 4px solid #8b0000;
+}
+
+.section-note.info {
+    border-left: 4px solid #0ea5e9;
+}
+
+.section-note.success {
+    border-left: 4px solid #16a34a;
+}
+
+.section-note.warning {
+    border-left: 4px solid #f59e0b;
+}
+
+.section-note.danger {
+    border-left: 4px solid #dc2626;
+}
+
+.section-note.info .section-note-icon {
+    background: #eef9ff;
+}
+
+.section-note.info .section-note-icon i {
+    color: #0ea5e9;
+}
+
+.section-note.success .section-note-icon {
+    background: #effcf4;
+}
+
+.section-note.success .section-note-icon i {
+    color: #16a34a;
+}
+
+.section-note.warning .section-note-icon {
+    background: #fff9eb;
+}
+
+.section-note.warning .section-note-icon i {
+    color: #f59e0b;
+}
+
+.section-note.danger .section-note-icon {
+    background: #fff4f4;
+}
+
+.section-note.danger .section-note-icon i {
+    color: #dc2626;
+}
+
+/* ==========================================================================
+   Empty State
+   ========================================================================== */
+
+.section-empty {
+    text-align: center;
+    padding: 45px 20px;
+}
+
+.section-empty i {
+    width: 70px;
+    height: 70px;
+    margin: auto;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    background: #f8fafc;
+    color: #94a3b8;
+    font-size: 28px;
+}
+
+.section-empty h5 {
+    margin-bottom: 8px;
+    color: #374151;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.section-empty p {
+    margin: 0;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.section-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 20px 32px;
+    border-top: 1px solid #edf2f7;
+    background: #fbfcfd;
+}
+
+.section-footer-left,
+.section-footer-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.section-footer small {
+    color: #6b7280;
+    font-size: 13px;
+}
+
+.section-footer .btn {
+    border-radius: 12px;
+}
+
+/* ==========================================================================
+   Utility Classes
+   ========================================================================== */
+
+.section-spacing-sm {
+    margin-bottom: 18px;
+}
+
+.section-spacing {
+    margin-bottom: 28px;
+}
+
+.section-spacing-lg {
+    margin-bottom: 40px;
+}
+
+.section-shadow {
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.05);
+}
+
+.section-rounded {
+    border-radius: 16px;
+}
+
+.section-border {
+    border: 1px solid #e8edf3;
+}
+
+.section-bg-light {
+    background: #f8fafc;
+}
+
+.section-bg-white {
+    background: #ffffff;
+}
+
+.section-text-muted {
+    color: #6b7280;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.section-description {
+    font-size: 14px;
+    line-height: 1.7;
+    color: #6b7280;
+}
+
+/* ==========================================================================
+   PATIENT CARD
+   Part 3 : Animation + Responsive + Print
+   ========================================================================== */
+
+/* ==========================================================================
+   Card Animation
+   ========================================================================== */
+
+.patient-section-card {
+    animation: patientCardFade 0.35s ease;
+}
+
+@keyframes patientCardFade {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==========================================================================
+   Header Animation
+   ========================================================================== */
+
+.section-header {
+    transition: all 0.3s ease;
+}
+
+.patient-section-card:hover .section-header {
+    background-position: right center;
+}
+
+/* ==========================================================================
+   Icon Animation
+   ========================================================================== */
+
+.section-icon {
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease;
+}
+
+.patient-section-card:hover .section-icon {
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+}
+
+.section-icon i {
+    transition: transform 0.3s ease;
+}
+
+.patient-section-card:hover .section-icon i {
+    transform: scale(1.08);
+}
+
+/* ==========================================================================
+   Body Animation
+   ========================================================================== */
+
+.section-body {
+    transition: background 0.3s ease;
+}
+
+.patient-section-card:hover .section-body {
+    background: #ffffff;
+}
+
+/* ==========================================================================
+   Subtitle Animation
+   ========================================================================== */
+
+.section-subtitle span {
+    transition: 0.25s;
+}
+
+.section-subtitle span i {
+    transition: 0.3s;
+}
+
+.patient-section-card:hover .section-subtitle span i {
+    transform: rotate(-10deg) scale(1.08);
+}
+
+/* ==========================================================================
+   Footer Animation
+   ========================================================================== */
+
+.section-footer {
+    transition: 0.3s;
+}
+
+.patient-section-card:hover .section-footer {
+    background: #f8fafc;
+}
+
+/* ==========================================================================
+   Smooth Elements
+   ========================================================================== */
+
+.section-content h3,
+.section-content p,
+.section-note,
+.section-divider,
+.section-subtitle,
+.section-footer {
+    transition: 0.3s ease;
+}
+
+/* ==========================================================================
+   Focus Within
+   ========================================================================== */
+
+.patient-section-card:focus-within {
+    box-shadow:
+        0 0 0 4px rgba(139, 0, 0, 0.06),
+        0 18px 45px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   Reduced Motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .patient-section-card,
+    .section-header,
+    .section-icon,
+    .section-content,
+    .section-note,
+    .section-footer {
+        animation: none !important;
+        transition: none !important;
+    }
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+    .section-body {
+        padding: 28px;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 992px) {
+    .patient-section-card {
+        border-radius: 16px;
+    }
+
+    .section-header {
+        padding: 24px;
+        gap: 18px;
+    }
+
+    .section-icon {
+        width: 64px;
+        height: 64px;
+        border-radius: 16px;
+    }
+
+    .section-icon i {
+        font-size: 26px;
+    }
+
+    .section-content h3 {
+        font-size: 22px;
+    }
+
+    .section-content p {
+        font-size: 14px;
+    }
+
+    .section-body {
+        padding: 24px;
+    }
+
+    .section-footer {
+        padding: 18px 24px;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 768px) {
+    .patient-section-card {
+        border-radius: 15px;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        padding: 22px;
+        gap: 16px;
+    }
+
+    .section-header::after {
+        display: none;
+    }
+
+    .section-icon {
+        width: 58px;
+        height: 58px;
+        border-radius: 14px;
+    }
+
+    .section-icon i {
+        font-size: 24px;
+    }
+
+    .section-content {
+        width: 100%;
+    }
+
+    .section-content h3 {
+        font-size: 20px;
+    }
+
+    .section-content p {
+        margin-top: 6px;
+        font-size: 13px;
+    }
+
+    .section-body {
+        padding: 22px;
+    }
+
+    .section-subtitle {
+        gap: 10px;
+        margin-bottom: 22px;
+    }
+
+    .section-subtitle span {
+        font-size: 14px;
+    }
+
+    .section-subtitle span i {
+        width: 30px;
+        height: 30px;
+        font-size: 13px;
+    }
+
+    .section-note {
+        flex-direction: column;
+        gap: 14px;
+    }
+
+    .section-note-icon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .section-footer {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .section-footer-left,
+    .section-footer-right {
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 576px) {
+    .patient-section-card {
+        border-radius: 14px;
+        margin-bottom: 24px;
+    }
+
+    .section-header {
+        padding: 18px;
+    }
+
+    .section-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 12px;
+    }
+
+    .section-icon i {
+        font-size: 21px;
+    }
+
+    .section-content h3 {
+        font-size: 18px;
+    }
+
+    .section-content p {
+        font-size: 12px;
+        line-height: 1.6;
+    }
+
+    .section-body {
+        padding: 18px;
+    }
+
+    .section-subtitle {
+        margin-bottom: 18px;
+    }
+
+    .section-subtitle span {
+        font-size: 13px;
+    }
+
+    .section-subtitle span i {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+    }
+
+    .section-divider {
+        margin: 24px 0;
+    }
+
+    .section-note {
+        padding: 16px;
+    }
+
+    .section-note-content strong {
+        font-size: 14px;
+    }
+
+    .section-note-content p {
+        font-size: 13px;
+    }
+
+    .section-footer {
+        padding: 16px 18px;
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+
+@media (max-width: 400px) {
+    .section-header {
+        padding: 16px;
+    }
+
+    .section-body {
+        padding: 16px;
+    }
+
+    .section-footer {
+        padding: 16px;
+    }
+
+    .section-content h3 {
+        font-size: 17px;
+    }
+}
+
+/* ==========================================================================
+   Print
+   ========================================================================== */
+
+@media print {
+    .patient-section-card {
+        box-shadow: none !important;
+        border: 1px solid #d1d5db;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    .patient-section-card:hover {
+        transform: none;
+        box-shadow: none;
+    }
+
+    .section-header {
+        background: #ffffff !important;
+    }
+
+    .section-header::after {
+        display: none;
+    }
+
+    .section-icon {
+        box-shadow: none !important;
+    }
+
+    .section-footer {
+        background: #ffffff;
+    }
+}
