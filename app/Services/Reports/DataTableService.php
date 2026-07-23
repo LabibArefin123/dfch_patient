@@ -52,6 +52,33 @@ class DataTableService
                         : 'No';
                 }
             )
+            ->editColumn(
+                'is_emergency',
+                function ($row) {
+
+                    return $row->is_emergency
+                        ? 'Yes'
+                        : 'No';
+                }
+            )
+            ->editColumn(
+                'is_treatment',
+                function ($row) {
+
+                    return $row->is_treatment
+                        ? 'Yes'
+                        : 'No';
+                }
+            )
+            ->editColumn(
+                'is_investigated',
+                function ($row) {
+
+                    return $row->is_investigated
+                        ? 'Yes'
+                        : 'No';
+                }
+            )
 
             /*
             |--------------------------------------------------------------------------

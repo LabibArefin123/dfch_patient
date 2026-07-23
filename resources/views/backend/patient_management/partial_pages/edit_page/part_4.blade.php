@@ -68,7 +68,7 @@
 
                 </div>
 
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
 
                     <label>Treatment Information</label>
 
@@ -98,12 +98,12 @@
                                                     <img src="{{ asset($image) }}"
                                                         class="img-fluid rounded-top magnify-img" alt="Treatment Image"
                                                         style="
-                                    height:180px;
-                                    width:100%;
-                                    object-fit:cover;
-                                    cursor:zoom-in;
-                                    transition:transform .2s ease, box-shadow .2s ease;
-                                ">
+                                                    height:180px;
+                                                    width:100%;
+                                                    object-fit:cover;
+                                                    cursor:zoom-in;
+                                                    transition:transform .2s ease, box-shadow .2s ease;
+                                                ">
 
                                                 </a>
 
@@ -146,8 +146,8 @@
                     <label>Add More Treatment Images</label>
 
                     <input type="file" name="treatment_images[]" multiple class="form-control">
-
                 </div>
+                <div id="treatmentPreviewContainer" class="treatment-preview-grid mt-3"></div>
 
             </div>
         </div>

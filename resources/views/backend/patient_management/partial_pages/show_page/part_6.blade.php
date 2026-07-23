@@ -110,10 +110,11 @@
                         @foreach ($patient->investigation_images as $image)
                             <div class="col-lg-3 col-md-4 col-6 mb-3">
 
-                                <a href="{{ asset($image) }}" target="_blank">
+                                  <a href="#" data-bs-toggle="modal" data-bs-target="#imageZoomModal"
+                                    data-bs-img-src="{{ asset($image) }}" class="text-decoration-none">
 
-                                    <img src="{{ asset($image) }}" class="img-fluid rounded shadow border"
-                                        style="height:180px;width:100%;object-fit:cover;">
+                                    <img src="{{ asset($image) }}" class="img-fluid rounded shadow border magnify-image"
+                                        style="height:180px;width:100%;object-fit:contain;">
 
                                 </a>
 

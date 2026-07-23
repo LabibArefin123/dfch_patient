@@ -422,7 +422,7 @@ return [
                 ],
 
                 [
-                    'text'  => 'Emergengy Patients',
+                    'text'  => 'Emergency Patients',
                     'route' => 'patient_emergencies.index',
                     'can'   => 'patient_emergencies.index',
                     'icon'  => 'fas fa-list',

@@ -19,6 +19,9 @@
         ['data' => 'phone_m_1'],
         ['data' => 'location'],
         ['data' => 'is_recommend'],
+        ['data' => 'is_emergency'],
+        ['data' => 'is_treatment'],
+        ['data' => 'is_investigated'],
         ['data' => 'date_of_patient_added'],
         ['data' => 'action', 'orderable' => false, 'searchable' => false],
     ]);
@@ -65,8 +68,32 @@
         </div>
 
         <div class="col-md-3">
-            <label>Recommended</label>
+            <label>Recommended Patient</label>
             <select name="is_recommend" class="form-control">
+                <option value="">All</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Emergency Patient</label>
+            <select name="is_emergency" class="form-control">
+                <option value="">All</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Treatment Patient</label>
+            <select name="is_treatment" class="form-control">
+                <option value="">All</option>
+                <option value="1">Yes</option>
+                <option value="0">No</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label>Patient Investigated</label>
+            <select name="is_investigated" class="form-control">
                 <option value="">All</option>
                 <option value="1">Yes</option>
                 <option value="0">No</option>
@@ -110,6 +137,9 @@
         <th>Mother</th>
         <th>Location</th>
         <th>Referred Patient</th>
+        <th>Emergency Patient</th>
+        <th>Is Treatment?</th>
+        <th>Is Investigated?</th>
         <th>Date Added</th>
         <th>Action</th>
     </tr>
