@@ -49,17 +49,17 @@ function setupTreatmentInput(input, index) {
  * Create Preview Container Automatically
  */
 function createPreviewContainer(input, index) {
-    let container = input.parentElement.querySelector(
-        ".treatment-preview-container",
-    );
+    let container = document.getElementById("treatmentPreviewContainer");
 
-    if (container) return container;
+    if (container) {
+        return container;
+    }
 
     container = document.createElement("div");
-    container.className = "treatment-preview-container";
     container.id = "treatment-preview-" + index;
+    container.className = "treatment-preview-container";
 
-    input.parentElement.appendChild(container);
+    input.closest(".form-group").appendChild(container);
 
     return container;
 }

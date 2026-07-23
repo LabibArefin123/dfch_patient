@@ -35,7 +35,7 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_card.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_upload.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_stepper.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
 
     <div class="patient-create-wrapper">
@@ -171,7 +171,7 @@
     <script src="{{ asset('js/backend/patient_management/create_page/patient_create_form.js') }}"></script>
 
     <script src="{{ asset('js/backend/patient_management/create_page/create_editor.js') }}"></script>
-
+    
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_validation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_progress.js') }}"></script>

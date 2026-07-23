@@ -117,9 +117,10 @@
                         <p>Drag & drop images or click to browse.</p>
                     </div>
                 </div>
-                <div id="treatmentPreviewContainer" class="treatment-preview-grid mt-3"></div>
+
             </div>
         </div>
+        <div id="treatmentPreviewContainer" class="treatment-preview-container mt-3"></div>
 
         {{-- Information --}}
         <div class="form-group col-12">
@@ -129,7 +130,5 @@
         </div>
 
     </div>
-
-</div>
 
 </div>

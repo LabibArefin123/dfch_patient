@@ -45,6 +45,7 @@
                     <input type="file" class="form-control" name="investigation_images[]" multiple accept="image/*">
 
                 </div>
+                <div class="investigation-preview-container mt-3"></div>
 
                 <div class="form-group col-md-12">
 
