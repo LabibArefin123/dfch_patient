@@ -106,33 +106,50 @@
                 </div>
                 <span>Basic</span>
             </div>
+
             <div class="progress-line"></div>
+
             <div class="progress-item">
                 <div class="step">
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
                 <span>Address</span>
             </div>
+
             <div class="progress-line"></div>
+
             <div class="progress-item">
                 <div class="step">
                     <i class="fas fa-notes-medical"></i>
                 </div>
                 <span>Medical</span>
             </div>
+
             <div class="progress-line"></div>
+
             <div class="progress-item">
                 <div class="step">
                     <i class="fas fa-procedures"></i>
                 </div>
                 <span>Treatment</span>
             </div>
+
             <div class="progress-line"></div>
+
             <div class="progress-item">
                 <div class="step">
                     <i class="fas fa-microscope"></i>
                 </div>
                 <span>Investigation</span>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-item">
+                <div class="step">
+                    <i class="fas fa-ambulance"></i>
+                </div>
+                <span>Emergency</span>
             </div>
         </div>
 
@@ -261,6 +278,8 @@
 @section('js')
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_1_basic.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_2_address.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_format.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_validate.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_location_toggle.js') }}"></script>
