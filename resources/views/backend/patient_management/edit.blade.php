@@ -1,17 +1,31 @@
 @extends('adminlte::page')
 
-@section('title', 'Edit Patient')
+@section('title', 'Edit Patient Information')
 
 @section('content_header')
-    <div class="d-flex justify-content-between">
-        <h1>Edit Patient</h1>
-        <a href="{{ route('patients.index') }}" class="btn btn-sm btn-warning d-flex align-items-center gap-1">
-            <i class="fas fa-arrow-left"></i> Go Back
-        </a>
+    <div class="patient-page-header">
+        <div class="patient-header-left">
+            <div>
+                <h1 class="mb-1">Edit Patient</h1>
+                <p class="mb-0">
+                    Update the patient's information and save your changes.
+                </p>
+            </div>
+        </div>
+
+        <div class="patient-header-right">
+            <a href="{{ route('patients.index') }}" class="btn btn-outline-secondary">
+                <i class="fas fa-arrow-left mr-2"></i>
+                Back to Patients
+            </a>
+        </div>
     </div>
+
 @stop
 
+
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_progress_stepper.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_edit.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_field.css') }}">
@@ -23,6 +37,7 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_remarks.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_photo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
     @if ($errors->any())
@@ -99,6 +114,11 @@
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_treatment_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_edit_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_photo_edit_modal.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_card.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_validation.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_progress.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_preview.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_manager.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_validation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_progress.js') }}"></script>

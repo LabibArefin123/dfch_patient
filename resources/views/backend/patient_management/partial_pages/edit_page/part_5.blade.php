@@ -93,8 +93,7 @@
                                                         data-bs-toggle="modal" data-bs-target="#imageZoomModal"
                                                         data-bs-img-src="{{ asset($image) }}">
 
-                                                        <i class="fas fa-search-plus mr-1"></i>
-                                                        Magnify
+                                                       View Image
 
                                                     </a>
 

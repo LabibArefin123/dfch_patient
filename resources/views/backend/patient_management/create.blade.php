@@ -160,17 +160,11 @@
 @section('js')
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-
     <script src="{{ asset('js/backend/patient_management/create_page/patient_location_toggle.js') }}"></script>
-
     <script src="{{ asset('js/backend/patient_management/create_page/patient_recommend_toggle.js') }}"></script>
-
     <script src="{{ asset('js/backend/patient_management/create_page/patient_treatment_toggle.js') }}"></script>
-
     <script src="{{ asset('js/backend/patient_management/create_page/patient_investigation_toggle.js') }}"></script>
-
     <script src="{{ asset('js/backend/patient_management/create_page/patient_create_form.js') }}"></script>
-
     <script src="{{ asset('js/backend/patient_management/create_page/create_editor.js') }}"></script>
 
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_card.js') }}"></script>
