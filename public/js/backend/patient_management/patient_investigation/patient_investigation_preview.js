@@ -1,6 +1,6 @@
 /**
  * ==========================================================================
- * Patient Treatment Preview
+ * Patient Investigate Preview
  * ==========================================================================
  * Main Initializer
  *
@@ -17,10 +17,10 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-    initializeTreatmentPreview();
+    initializeInvestigatePreview();
 });
 
-function initializeTreatmentPreview() {
+function initializeInvestigatePreview() {
     const fileInputs = document.querySelectorAll(
         'input[name="investigation_images[]"]',
     );
@@ -28,27 +28,27 @@ function initializeTreatmentPreview() {
     if (!fileInputs.length) return;
 
     fileInputs.forEach((input, index) => {
-        setupTreatmentInput(input, index);
+        setupInvestigateInput(input, index);
     });
 }
 
 /**
  * Initialize Single Input
  */
-function setupTreatmentInput(input, index) {
-    const previewContainer = createPreviewContainer(input, index);
+function setupInvestigateInput(input, index) {
+    const previewContainer = createInvestigateContainer(input, index);
 
     input.dataset.previewContainer = previewContainer.id;
 
     input.addEventListener("change", (e) => {
-        handleTreatmentFiles(e.target, previewContainer);
+        handleInvestigateFiles(e.target, previewContainer);
     });
 }
 
 /**
  * Create Preview Container Automatically
  */
-function createPreviewContainer(input, index) {
+function createInvestigateContainer(input, index) {
     let container = input.parentElement.querySelector(
         ".investigation-preview-container",
     );
@@ -67,7 +67,7 @@ function createPreviewContainer(input, index) {
 /**
  * Main Handler
  */
-function handleTreatmentFiles(input, previewContainer) {
+function handleInvestigateFiles(input, previewContainer) {
     if (!input.files.length) {
         previewContainer.innerHTML = "";
         return;
@@ -81,10 +81,10 @@ function handleTreatmentFiles(input, previewContainer) {
         /**
          * Validate
          */
-        const validation = validateTreatmentImage(file);
+        const validation = validateInvestigateImage(file);
 
         if (!validation.valid) {
-            const errorCard = createTreatmentErrorCard(
+            const errorCard = createInvestigateErrorCard(
                 file,
                 validation.message,
             );
@@ -102,7 +102,7 @@ function handleTreatmentFiles(input, previewContainer) {
         /**
          * Create Card
          */
-        const card = createTreatmentPreviewCard(file);
+        const card = createInvestigatePreviewCard(file);
 
         previewContainer.appendChild(card);
 
@@ -121,7 +121,7 @@ function handleTreatmentFiles(input, previewContainer) {
             /**
              * Start Progress Animation
              */
-            animateTreatmentProgress(card);
+            animateInvestigateProgress(card);
         };
 
         reader.readAsDataURL(file);
@@ -135,5 +135,5 @@ function handleTreatmentFiles(input, previewContainer) {
     /**
      * Activate Remove Button
      */
-    initializeTreatmentRemoveButtons(input, previewContainer);
+    initializeInvestigateRemoveButtons(input, previewContainer);
 }

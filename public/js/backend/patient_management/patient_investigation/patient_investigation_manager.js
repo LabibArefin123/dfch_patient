@@ -1,6 +1,6 @@
 /**
  * ==========================================================================
- * Patient Treatment Manager
+ * Patient Investigate Manager
  * ==========================================================================
  * File:
  * patient_investigation_manager.js
@@ -20,7 +20,7 @@
  * @param {HTMLInputElement} input
  * @param {HTMLElement} previewContainer
  */
-function initializeTreatmentRemoveButtons(input, previewContainer) {
+function initializeInvestigateRemoveButtons(input, previewContainer) {
     if (!input || !previewContainer) return;
 
     previewContainer
@@ -34,7 +34,7 @@ function initializeTreatmentRemoveButtons(input, previewContainer) {
 
                 if (!card) return;
 
-                removeTreatmentImage(card, input, previewContainer);
+                removeInvestigateImage(card, input, previewContainer);
             };
         });
 }
@@ -42,7 +42,7 @@ function initializeTreatmentRemoveButtons(input, previewContainer) {
 /**
  * Remove One Image
  */
-function removeTreatmentImage(card, input, previewContainer) {
+function removeInvestigateImage(card, input, previewContainer) {
     const fileName = card.dataset.filename;
 
     if (!fileName) {
@@ -67,7 +67,7 @@ function removeTreatmentImage(card, input, previewContainer) {
     setTimeout(() => {
         card.remove();
 
-        refreshTreatmentGrid(previewContainer);
+        refreshInvestigateGrid(previewContainer);
 
         if (input.files.length === 0) {
             previewContainer.innerHTML = "";
@@ -78,7 +78,7 @@ function removeTreatmentImage(card, input, previewContainer) {
 /**
  * Refresh Grid Numbering
  */
-function refreshTreatmentGrid(previewContainer) {
+function refreshInvestigateGrid(previewContainer) {
     const cards = previewContainer.querySelectorAll(".investigation-card");
 
     cards.forEach((card, index) => {
@@ -89,7 +89,7 @@ function refreshTreatmentGrid(previewContainer) {
 /**
  * Remove All Images
  */
-function clearTreatmentImages(input, previewContainer) {
+function clearInvestigateImages(input, previewContainer) {
     if (!input || !previewContainer) return;
 
     input.value = "";
@@ -99,21 +99,21 @@ function clearTreatmentImages(input, previewContainer) {
 /**
  * Get Valid Files
  */
-function getTreatmentFiles(input) {
+function getInvestigateFiles(input) {
     return Array.from(input.files);
 }
 
 /**
  * Count Files
  */
-function getTreatmentFileCount(input) {
+function getInvestigateFileCount(input) {
     return input.files.length;
 }
 
 /**
  * Check if Empty
  */
-function hasTreatmentImages(input) {
+function hasInvestigateImages(input) {
     return input.files.length > 0;
 }
 
@@ -122,7 +122,7 @@ function hasTreatmentImages(input) {
  *
  * Optional helper for future drag & drop support.
  */
-function appendTreatmentFiles(input, files) {
+function appendInvestigateFiles(input, files) {
     const dataTransfer = new DataTransfer();
 
     Array.from(input.files).forEach((file) => {
@@ -130,7 +130,7 @@ function appendTreatmentFiles(input, files) {
     });
 
     Array.from(files).forEach((file) => {
-        const validation = validateTreatmentImage(file);
+        const validation = validateInvestigateImage(file);
 
         if (validation.valid) {
             dataTransfer.items.add(file);
@@ -145,11 +145,11 @@ function appendTreatmentFiles(input, files) {
  *
  * Optional helper.
  */
-function rebuildTreatmentPreview(input, previewContainer) {
+function rebuildInvestigatePreview(input, previewContainer) {
     previewContainer.innerHTML = "";
 
     Array.from(input.files).forEach((file) => {
-        const card = createTreatmentPreviewCard(file);
+        const card = createInvestigatePreviewCard(file);
 
         previewContainer.appendChild(card);
 
@@ -162,11 +162,11 @@ function rebuildTreatmentPreview(input, previewContainer) {
                 image.src = e.target.result;
             }
 
-            completeTreatmentProgress(card);
+            completeInvestigateProgress(card);
         };
 
         reader.readAsDataURL(file);
     });
 
-    initializeTreatmentRemoveButtons(input, previewContainer);
+    initializeInvestigateRemoveButtons(input, previewContainer);
 }

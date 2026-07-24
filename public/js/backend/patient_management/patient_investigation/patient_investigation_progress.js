@@ -1,6 +1,6 @@
 /**
  * ==========================================================================
- * Patient Treatment Progress
+ * Patient Investigate Progress
  * ==========================================================================
  * File:
  * patient_investigation_progress.js
@@ -19,12 +19,12 @@
  *
  * @param {HTMLElement} card
  */
-function animateTreatmentProgress(card) {
+function animateInvestigateProgress(card) {
     if (!card) return;
 
     let progress = 0;
 
-    setTreatmentCardStatus(card, "Preparing...", "badge-secondary");
+    setInvestigateCardStatus(card, "Preparing...", "badge-secondary");
 
     const timer = setInterval(() => {
         /**
@@ -36,23 +36,23 @@ function animateTreatmentProgress(card) {
             progress = 100;
         }
 
-        updateTreatmentCardProgress(card, progress);
+        updateInvestigateCardProgress(card, progress);
 
         /**
          * Update Status
          */
         if (progress < 25) {
-            setTreatmentCardStatus(card, "Reading...", "badge-secondary");
+            setInvestigateCardStatus(card, "Reading...", "badge-secondary");
         } else if (progress < 50) {
-            setTreatmentCardStatus(card, "Validating...", "badge-info");
+            setInvestigateCardStatus(card, "Validating...", "badge-info");
         } else if (progress < 75) {
-            setTreatmentCardStatus(
+            setInvestigateCardStatus(
                 card,
                 "Generating Preview...",
                 "badge-warning",
             );
         } else if (progress < 100) {
-            setTreatmentCardStatus(card, "Almost Ready...", "badge-primary");
+            setInvestigateCardStatus(card, "Almost Ready...", "badge-primary");
         }
 
         /**
@@ -61,7 +61,7 @@ function animateTreatmentProgress(card) {
         if (progress === 100) {
             clearInterval(timer);
 
-            updateTreatmentCardProgress(card, 100);
+            updateInvestigateCardProgress(card, 100);
 
             card.classList.add("investigation-ready");
 
@@ -94,8 +94,8 @@ function animateTreatmentProgress(card) {
  *
  * Optional helper
  */
-function completeTreatmentProgress(card) {
-    updateTreatmentCardProgress(card, 100);
+function completeInvestigateProgress(card) {
+    updateInvestigateCardProgress(card, 100);
 
     card.classList.add("investigation-ready");
 }
@@ -105,7 +105,7 @@ function completeTreatmentProgress(card) {
  *
  * Optional helper
  */
-function resetTreatmentProgress(card) {
+function resetInvestigateProgress(card) {
     const circle = card.querySelector(".progress-bar");
     const text = card.querySelector(".progress-text");
 
@@ -119,7 +119,7 @@ function resetTreatmentProgress(card) {
 
     text.textContent = "0%";
 
-    setTreatmentCardStatus(card, "Waiting...", "badge-secondary");
+    setInvestigateCardStatus(card, "Waiting...", "badge-secondary");
 
     card.classList.remove("investigation-ready");
 }
@@ -129,8 +129,8 @@ function resetTreatmentProgress(card) {
  *
  * Optional helper
  */
-function failTreatmentProgress(card, message = "Upload Failed") {
-    markTreatmentCardError(card, message);
+function failInvestigateProgress(card, message = "Upload Failed") {
+    markInvestigateCardError(card, message);
 
     const circle = card.querySelector(".progress-bar");
     const text = card.querySelector(".progress-text");

@@ -1,6 +1,6 @@
 /**
  * ==========================================================================
- * Patient Treatment Card
+ * Patient Investigate Card
  * ==========================================================================
  * File:
  * patient_investigation_card.js
@@ -19,8 +19,8 @@
  * @param {File} file
  * @returns {HTMLElement}
  */
-function createTreatmentPreviewCard(file) {
-    const info = getTreatmentImageInfo(file);
+function createInvestigatePreviewCard(file) {
+    const info = getInvestigateImageInfo(file);
 
     const card = document.createElement("div");
     card.className = "investigation-card";
@@ -107,8 +107,8 @@ function createTreatmentPreviewCard(file) {
  * @param {String} message
  * @returns {HTMLElement}
  */
-function createTreatmentErrorCard(file, message) {
-    const size = formatTreatmentFileSize(file.size);
+function createInvestigateErrorCard(file, message) {
+    const size = formatInvestigateFileSize(file.size);
 
     const card = document.createElement("div");
 
@@ -150,7 +150,7 @@ function createTreatmentErrorCard(file, message) {
  * @param {HTMLElement} card
  * @param {Number} percent
  */
-function updateTreatmentCardProgress(card, percent) {
+function updateInvestigateCardProgress(card, percent) {
     const circle = card.querySelector(".progress-bar");
     const text = card.querySelector(".progress-text");
     const status = card.querySelector(".investigation-status");
@@ -183,7 +183,7 @@ function updateTreatmentCardProgress(card, percent) {
  * @param {HTMLElement} card
  * @param {String} message
  */
-function markTreatmentCardError(card, message) {
+function markInvestigateCardError(card, message) {
     const status = card.querySelector(".investigation-status");
 
     if (!status) return;
@@ -210,7 +210,7 @@ function markTreatmentCardError(card, message) {
  * @param {String} text
  * @param {String} badgeClass
  */
-function setTreatmentCardStatus(card, text, badgeClass = "badge-info") {
+function setInvestigateCardStatus(card, text, badgeClass = "badge-info") {
     const status = card.querySelector(".investigation-status");
 
     if (!status) return;

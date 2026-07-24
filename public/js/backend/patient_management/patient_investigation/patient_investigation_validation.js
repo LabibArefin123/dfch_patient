@@ -1,6 +1,6 @@
 /**
  * ==========================================================================
- * Patient Treatment Validation
+ * Patient Investigate Validation
  * ==========================================================================
  * File:
  * patient_investigation_validation.js
@@ -27,12 +27,12 @@ const INVESTIGATION_ALLOWED_TYPES = [
 ];
 
 /**
- * Validate Treatment Image
+ * Validate Investigate Image
  *
  * @param {File} file
  * @returns {Object}
  */
-function validateTreatmentImage(file) {
+function validateInvestigateImage(file) {
     if (!file) {
         return {
             valid: false,
@@ -57,7 +57,7 @@ function validateTreatmentImage(file) {
     if (file.size > INVESTIGATION_MAX_FILE_SIZE) {
         return {
             valid: false,
-            message: `File exceeds 10 MB (${formatTreatmentFileSize(file.size)}).`,
+            message: `File exceeds 10 MB (${formatInvestigateFileSize(file.size)}).`,
         };
     }
 
@@ -74,7 +74,7 @@ function validateTreatmentImage(file) {
  * 1200 -> 1.17 KB
  * 2500000 -> 2.38 MB
  */
-function formatTreatmentFileSize(bytes) {
+function formatInvestigateFileSize(bytes) {
     if (bytes === 0) return "0 Bytes";
 
     const units = ["Bytes", "KB", "MB", "GB"];
@@ -90,7 +90,7 @@ function formatTreatmentFileSize(bytes) {
  * @param {File} file
  * @returns {Boolean}
  */
-function isTreatmentImage(file) {
+function isInvestigateImage(file) {
     return !!file && INVESTIGATION_ALLOWED_TYPES.includes(file.type);
 }
 
@@ -100,7 +100,7 @@ function isTreatmentImage(file) {
  * @param {File} file
  * @returns {Boolean}
  */
-function isTreatmentFileSizeValid(file) {
+function isInvestigateFileSizeValid(file) {
     return !!file && file.size <= INVESTIGATION_MAX_FILE_SIZE;
 }
 
@@ -110,7 +110,7 @@ function isTreatmentFileSizeValid(file) {
  * @param {File} file
  * @returns {String}
  */
-function getTreatmentExtension(file) {
+function getInvestigateExtension(file) {
     if (!file || !file.name) return "";
 
     const parts = file.name.split(".");
@@ -124,12 +124,12 @@ function getTreatmentExtension(file) {
  * @param {File} file
  * @returns {Object}
  */
-function getTreatmentImageInfo(file) {
+function getInvestigateImageInfo(file) {
     return {
         name: file.name,
-        size: formatTreatmentFileSize(file.size),
+        size: formatInvestigateFileSize(file.size),
         bytes: file.size,
-        extension: getTreatmentExtension(file),
+        extension: getInvestigateExtension(file),
         type: file.type,
     };
 }
