@@ -1,0 +1,23 @@
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width: 768px) {
+    .treatment-preview-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .treatment-preview-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .upload-placeholder {
+        padding: 28px 16px;
+    }
+
+    .upload-placeholder i {
+        font-size: 34px;
+    }
+}

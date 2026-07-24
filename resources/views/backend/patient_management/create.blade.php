@@ -26,20 +26,59 @@
 
 
 @section('content')
+    {{-- ========================= Variables ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_variables.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_variables.css') }}">
+
+    {{-- ========================= Header ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_header.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_inputs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_section_header.css') }}">
+
+    {{-- ========================= Layout ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_responsive.css') }}">
+
+    {{-- ========================= Form ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_group.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_inputs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_controls.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_validation.css') }}">
+
+    {{-- ========================= Input Components ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_input_group.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_input_helpers.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_input_states.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_inputs_focus.css') }}">
+
+    {{-- ========================= Location ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_location.css') }}">
+
+    {{-- ========================= Patient Cards ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_card.css') }}">
+
+    {{-- ========================= Treatment ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_upload.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_preview_grid.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
+
+    {{-- ========================= Investigation ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
+
+    {{-- ========================= Cancer ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_cancer_form.css') }}">
+
+    {{-- ========================= Refer Documents ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
+
+    {{-- ========================= Progress ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_stepper.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_animate.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_responsive.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_footer.css') }}">
 
+    {{-- ========================= Footer ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_footer.css') }}">
     <div class="patient-create-wrapper">
         {{-- Validation --}}
         @if ($errors->any())
@@ -140,6 +179,7 @@
             @include('backend.patient_management.partial_pages.create_page.part_5')
             {{-- Investigation Part --}}
             @include('backend.patient_management.partial_pages.create_page.part_6')
+            @include('backend.patient_management.partial_pages.create_page.part_7')
             {{-- Footer Actions --}}
             <div class="patient-form-footer">
                 <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg">
@@ -165,6 +205,7 @@
     <script src="{{ asset('js/backend/patient_management/create_page/patient_recommend_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_treatment_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_investigation_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/patient_cancer_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_create_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/create_editor.js') }}"></script>
 
@@ -178,6 +219,7 @@
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_progress.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_preview.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_manager.js') }}"></script>
+
     <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_card.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_validation.js') }}">
@@ -188,4 +230,10 @@
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_manager.js') }}">
     </script>
+
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_card.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_validation.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_progress.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_preview.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_manager.js') }}"></script>
 @stop

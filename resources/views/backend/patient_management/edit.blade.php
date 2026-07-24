@@ -26,6 +26,8 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_header.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_progress_stepper.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_progress_animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_progress_responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_edit.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_field.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_location.css') }}">

@@ -1,0 +1,60 @@
+/* ==========================================================================
+   PATIENT SECTION HEADER
+   ========================================================================== */
+
+.section-header {
+    display: flex;
+    align-items: center;
+    padding: 22px 28px;
+    border-left: 6px solid var(--primary);
+    background: linear-gradient(135deg, #fff, #fafafa);
+}
+
+.section-header.primary {
+    border-left-color: var(--primary);
+}
+
+.section-header.info {
+    border-left-color: #0ea5e9;
+}
+
+.section-header.success {
+    border-left-color: #16a34a;
+}
+
+.section-header.warning {
+    border-left-color: #f59e0b;
+}
+
+.section-header.danger {
+    border-left-color: #dc2626;
+}
+
+.section-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.section-icon i {
+    font-size: 26px;
+    color: var(--primary);
+}
+
+.section-content h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.section-content p {
+    color: #7c8794;
+    margin: 0;
+}

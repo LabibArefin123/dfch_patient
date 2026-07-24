@@ -1,0 +1,35 @@
+/* ==========================================================
+   Responsive
+========================================================== */
+
+@media (max-width: 992px) {
+    .section-header {
+        padding: 18px;
+    }
+
+    .section-body {
+        padding: 20px;
+    }
+
+    .section-icon {
+        width: 55px;
+
+        height: 55px;
+    }
+
+    .section-content h3 {
+        font-size: 19px;
+    }
+}
+
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+
+        align-items: flex-start;
+    }
+
+    .section-icon {
+        margin-bottom: 15px;
+    }
+}

@@ -1,0 +1,53 @@
+/* ==========================================================================
+   PATIENT FORM CONTROLS
+   ========================================================================== */
+
+.modern-input .form-control,
+.modern-input select,
+.modern-input textarea {
+    min-height: 52px;
+    border: 1px solid #dbe4ea;
+    border-left: none;
+    border-radius: 0 14px 14px 0;
+    background: #fff;
+    color: #2d3748;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 0.75rem 1rem;
+    box-shadow: none;
+    transition: all 0.25s ease;
+}
+
+.modern-input textarea {
+    min-height: 130px;
+    padding-top: 14px;
+    resize: vertical;
+}
+
+.form-control {
+    min-height: 52px;
+    border-radius: 14px;
+    border: 1px solid #dbe4ea;
+    background: #fff;
+    color: #2d3748;
+    padding: 0.75rem 1rem;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s ease;
+    box-shadow: none;
+}
+
+textarea.form-control {
+    min-height: 130px;
+    resize: vertical;
+}
+
+select.form-control {
+    cursor: pointer;
+}
+
+.form-control::placeholder,
+textarea::placeholder {
+    color: #9ca3af;
+    font-weight: 400;
+}

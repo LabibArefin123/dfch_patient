@@ -1,0 +1,37 @@
+/* ==========================================================================
+   PATIENT LAYOUT
+   ========================================================================== */
+
+/* Section Card */
+
+.patient-section-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* Section Body */
+
+.section-body {
+    padding: 30px;
+}
+
+/* Subtitle */
+
+.section-subtitle {
+    margin-bottom: 25px;
+}
+
+.section-subtitle span {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4a5568;
+}
+
+.section-subtitle hr {
+    margin-top: 12px;
+    border-top: 1px solid #edf2f7;
+}

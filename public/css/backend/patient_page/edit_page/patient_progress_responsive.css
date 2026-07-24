@@ -1,0 +1,87 @@
+/* =====================================
+   Responsive
+===================================== */
+
+@media (max-width: 1200px) {
+    .patient-progress-card {
+        padding: 20px;
+    }
+
+    .progress-item {
+        min-width: 100px;
+    }
+}
+
+@media (max-width: 992px) {
+    .patient-progress-card {
+        justify-content: flex-start;
+
+        overflow-x: auto;
+
+        scrollbar-width: thin;
+
+        gap: 0;
+    }
+
+    .progress-line {
+        min-width: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .patient-progress-card {
+        padding: 18px;
+    }
+
+    .progress-item {
+        min-width: 90px;
+    }
+
+    .progress-item .step {
+        width: 50px;
+
+        height: 50px;
+
+        font-size: 18px;
+    }
+
+    .progress-item span {
+        font-size: 12px;
+
+        margin-top: 8px;
+    }
+
+    .progress-line {
+        height: 3px;
+
+        min-width: 40px;
+
+        top: -15px;
+    }
+}
+
+@media (max-width: 576px) {
+    .patient-progress-card {
+        padding: 15px;
+    }
+
+    .progress-item {
+        min-width: 80px;
+    }
+
+    .progress-item .step {
+        width: 45px;
+
+        height: 45px;
+
+        font-size: 16px;
+    }
+
+    .progress-item span {
+        font-size: 11px;
+    }
+
+    .progress-line {
+        min-width: 30px;
+    }
+}

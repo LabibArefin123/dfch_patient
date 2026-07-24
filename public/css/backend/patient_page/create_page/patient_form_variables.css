@@ -1,0 +1,24 @@
+/* ==========================================================================
+   PATIENT VARIABLES
+   ========================================================================== */
+
+:root {
+    --primary: #8b0000;
+    --primary-light: #fff5f5;
+
+    --secondary: #6c757d;
+
+    --border: #e8ecef;
+
+    --background: #f7f9fc;
+
+    --white: #ffffff;
+
+    --text: #2d3748;
+
+    --muted: #718096;
+
+    --radius: 14px;
+
+    --transition: 0.25s ease;
+}

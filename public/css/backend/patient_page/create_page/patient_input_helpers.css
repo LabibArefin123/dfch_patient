@@ -1,0 +1,11 @@
+/* ==========================================================================
+   PATIENT INPUT HELPERS
+   ========================================================================== */
+
+.form-group small.text-muted {
+    display: block;
+    margin-top: 7px;
+    color: #8a94a6 !important;
+    font-size: 12px;
+    line-height: 1.5;
+}

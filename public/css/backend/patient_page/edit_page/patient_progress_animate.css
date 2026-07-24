@@ -1,0 +1,21 @@
+/* =====================================
+   Animation
+===================================== */
+
+.progress-item.active .step {
+    animation: pulseStep 2s infinite;
+}
+
+@keyframes pulseStep {
+    0% {
+        box-shadow: 0 0 0 0 rgba(139, 0, 0, 0.35);
+    }
+
+    70% {
+        box-shadow: 0 0 0 12px rgba(139, 0, 0, 0);
+    }
+
+    100% {
+        box-shadow: 0 0 0 0 rgba(139, 0, 0, 0);
+    }
+}
