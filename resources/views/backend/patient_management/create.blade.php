@@ -1,8 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Register Patient')
-
-@section('plugins.BootstrapSwitch', true)
+@section('title', 'Register Patient Information')
 
 @section('content_header')
     <div class="patient-page-header">
@@ -35,9 +33,12 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_card.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_upload.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_stepper.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_animate.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_footer.css') }}">
 
     <div class="patient-create-wrapper">
         {{-- Validation --}}
@@ -58,7 +59,7 @@
 
         {{-- Progress --}}
         <div class="patient-progress-card">
-            <div class="progress-item active">
+            <div class="progress-item">
                 <div class="step">
                     <i class="fas fa-user"></i>
                 </div>

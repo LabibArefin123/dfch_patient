@@ -20,7 +20,6 @@
             </a>
         </div>
     </div>
-
 @stop
 
 
@@ -51,7 +50,7 @@
     @endif
 
     <div class="patient-progress-card">
-        <div class="progress-item active">
+        <div class="progress-item">
             <div class="step">
                 <i class="fas fa-user"></i>
             </div>
