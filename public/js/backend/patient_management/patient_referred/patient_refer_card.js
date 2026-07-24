@@ -20,7 +20,7 @@
  * @returns {HTMLElement}
  */
 function createReferPreviewCard(file) {
-    const info = getReferImageInfo(file);
+    const info = getReferFileInfo(file);
 
     const card = document.createElement("div");
     card.className = "refer-card";

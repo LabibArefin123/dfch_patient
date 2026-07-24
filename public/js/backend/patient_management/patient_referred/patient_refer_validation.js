@@ -124,6 +124,7 @@ function getReferExtension(file) {
  * @param {File} file
  * @returns {Object}
  */
+
 function getReferFileInfo(file) {
     return {
         name: file.name,

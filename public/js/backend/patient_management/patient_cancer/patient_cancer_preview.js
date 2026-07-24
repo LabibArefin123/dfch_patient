@@ -21,9 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initializeCancerPreview() {
-    const fileInputs = document.querySelectorAll(
-        'input[name="cancer_images[]"]',
-    );
+    const fileInputs = document.querySelectorAll('input[name="xray_photo[]"]');
 
     if (!fileInputs.length) return;
 
