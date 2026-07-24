@@ -8,7 +8,7 @@
 
                 <h5>
                     <i class="fas fa-user-md text-success"></i>
-                    Recommendation Information
+                    Reffered Information
                 </h5>
 
                 <span>
@@ -27,7 +27,7 @@
 
             <div class="form-group col-md-6">
 
-                <label>Recommended?</label>
+                <label>Is Patient Referred?</label>
 
                 <select name="is_recommend" id="is_recommend" class="form-control">
 
@@ -52,7 +52,7 @@
                 {{-- Doctor Name --}}
                 <div class="form-group col-md-6">
 
-                    <label>Doctor Name</label>
+                    <label>Referred Doctor Name</label>
 
                     <input type="text" name="recommend_doctor_name" class="form-control"
                         value="{{ old('recommend_doctor_name', $patient->recommend_doctor_name) }}">
@@ -62,7 +62,7 @@
                 {{-- Doctor Note --}}
                 <div class="form-group col-md-6">
 
-                    <label>Doctor's Note</label>
+                    <label>Referred Doctor's Note</label>
 
                     <textarea name="recommend_note" id="edit_recommend_note" class="form-control">{!! old('recommend_note', $patient->recommend_note) !!}</textarea>
 
@@ -176,7 +176,7 @@
                                     <h6>No Documents Available</h6>
 
                                     <p>
-                                        Patient recommendation files have not been uploaded.
+                                        Patient referred files have not been uploaded.
                                     </p>
 
                                 </div>

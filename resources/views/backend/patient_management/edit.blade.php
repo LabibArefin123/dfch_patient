@@ -12,6 +12,7 @@
 @stop
 
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_progress_stepper.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_edit.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_field.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_location.css') }}">
@@ -34,6 +35,43 @@
         </div>
     @endif
 
+    <div class="patient-progress-card">
+        <div class="progress-item active">
+            <div class="step">
+                <i class="fas fa-user"></i>
+            </div>
+            <span>Basic</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-item">
+            <div class="step">
+                <i class="fas fa-map-marker-alt"></i>
+            </div>
+            <span>Address</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-item">
+            <div class="step">
+                <i class="fas fa-notes-medical"></i>
+            </div>
+            <span>Medical</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-item">
+            <div class="step">
+                <i class="fas fa-procedures"></i>
+            </div>
+            <span>Treatment</span>
+        </div>
+        <div class="progress-line"></div>
+        <div class="progress-item">
+            <div class="step">
+                <i class="fas fa-microscope"></i>
+            </div>
+            <span>Investigation</span>
+        </div>
+    </div>
+
     @include('backend.patient_management.modals.edit_page.patient_image_info')
     <form action="{{ route('patients.update', $patient->id) }}" method="POST" enctype="multipart/form-data"
         data-confirm="edit">
@@ -42,9 +80,9 @@
         @include('backend.patient_management.partial_pages.edit_page.part_1')
         @include('backend.patient_management.partial_pages.edit_page.part_2')
         @include('backend.patient_management.partial_pages.edit_page.part_3')
+        @include('backend.patient_management.partial_pages.edit_page.part_6')
         @include('backend.patient_management.partial_pages.edit_page.part_4')
         @include('backend.patient_management.partial_pages.edit_page.part_5')
-        @include('backend.patient_management.partial_pages.edit_page.part_6')
         @include('backend.patient_management.partial_pages.edit_page.part_7')
         @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
         <button class="btn btn-primary mt-2">Update</button>

@@ -36,6 +36,7 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_upload.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_stepper.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
 
     <div class="patient-create-wrapper">
@@ -74,7 +75,7 @@
             <div class="progress-item">
                 <div class="step">
                     <i class="fas fa-notes-medical"></i>
-                </div>3
+                </div>
                 <span>Medical</span>
             </div>
             <div class="progress-line"></div>
@@ -104,7 +105,7 @@
                 <div class="section-header blue">
                     <div>
                         <h3><i class="fas fa-calendar-check mr-2"></i> Registration </h3>
-                        <p> Registration and recommendation details.</p>
+                        <p> Registration and referred details.</p>
                     </div>
                 </div>
 
@@ -171,7 +172,12 @@
     <script src="{{ asset('js/backend/patient_management/create_page/patient_create_form.js') }}"></script>
 
     <script src="{{ asset('js/backend/patient_management/create_page/create_editor.js') }}"></script>
-    
+
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_card.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_validation.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_progress.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_preview.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_manager.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_validation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_progress.js') }}"></script>
