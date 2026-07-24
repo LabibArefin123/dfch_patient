@@ -1,0 +1,55 @@
+/* ==========================================================
+   Help Box
+========================================================== */
+
+.location-help-box {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 15px;
+
+    background: #eef7ff;
+
+    border-left: 4px solid #0ea5e9;
+
+    border-radius: 12px;
+
+    padding: 18px;
+}
+
+.location-help-box i {
+    font-size: 22px;
+
+    color: #0ea5e9;
+}
+
+.location-help-box strong {
+    display: block;
+
+    margin-bottom: 5px;
+}
+
+/* ==========================================================
+   Address Block
+========================================================== */
+
+.address-block {
+    border: 1px dashed #d7dee6;
+
+    border-radius: 14px;
+
+    padding: 25px;
+
+    background: #fcfcfd;
+}
+
+.address-title {
+    font-size: 17px;
+
+    font-weight: 700;
+
+    color: #374151;
+
+    margin-bottom: 20px;
+}

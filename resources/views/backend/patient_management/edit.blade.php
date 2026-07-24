@@ -37,10 +37,30 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_field.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_remarks.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_photo.css') }}">
+    {{-- ========================= Layout ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_form_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_form_responsive.css') }}">
+
+    {{-- ========================= Form ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_form_group.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_form_inputs.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_form_controls.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_form_validation.css') }}">
+
+    {{-- ========================= Input Components ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_input_group.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_input_helpers.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_input_states.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_inputs_focus.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_preview.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
+
+    {{-- ========================= Cancer ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_cancer_form.css') }}">
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -100,6 +120,7 @@
         @include('backend.patient_management.partial_pages.edit_page.part_4')
         @include('backend.patient_management.partial_pages.edit_page.part_5')
         @include('backend.patient_management.partial_pages.edit_page.part_7')
+        @include('backend.patient_management.partial_pages.edit_page.part_8')
         @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
         <button class="btn btn-primary mt-2">Update</button>
     </form>
@@ -113,6 +134,7 @@
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_recommend_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_investigation_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_treatment_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_cancer_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_edit_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_photo_edit_modal.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_card.js') }}"></script>

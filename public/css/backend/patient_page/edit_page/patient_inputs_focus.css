@@ -1,0 +1,32 @@
+/* ==========================================================================
+   Focus
+   ========================================================================== */
+
+.form-control:focus,
+textarea.form-control:focus,
+select.form-control:focus {
+    outline: none;
+    border-color: #8b0000;
+    box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.08);
+}
+
+.modern-input:focus-within {
+    transform: translateY(-2px);
+}
+
+.modern-input:focus-within .input-group-text {
+    background: linear-gradient(135deg, #8b0000, #b71c1c);
+    border-color: #8b0000;
+    color: #ffffff;
+}
+
+.modern-input:focus-within .input-group-text i {
+    transform: scale(1.08);
+}
+
+.modern-input:focus-within .form-control,
+.modern-input:focus-within textarea,
+.modern-input:focus-within select {
+    border-color: #8b0000;
+    box-shadow: 0 0 0 4px rgba(139, 0, 0, 0.08);
+}

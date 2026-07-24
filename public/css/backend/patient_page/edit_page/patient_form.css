@@ -1,0 +1,136 @@
+/* ==========================================================
+   Patient Form
+========================================================== */
+
+:root {
+    --primary: #8b0000;
+    --primary-light: #fff5f5;
+    --secondary: #6c757d;
+    --border: #e8ecef;
+    --background: #f7f9fc;
+    --white: #ffffff;
+    --text: #2d3748;
+    --muted: #718096;
+    --radius: 14px;
+    --transition: 0.25s ease;
+}
+
+/* ==========================================================
+   Section Card
+========================================================== */
+
+.patient-section-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 30px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+}
+
+/* ==========================================================
+   Header
+========================================================== */
+
+.section-header {
+    display: flex;
+    align-items: center;
+    padding: 22px 28px;
+    border-left: 6px solid var(--primary);
+    background: linear-gradient(135deg, #ffffff, #fafafa);
+}
+
+.section-header.primary {
+    border-left-color: var(--primary);
+}
+
+.section-header.info {
+    border-left-color: #0ea5e9;
+}
+
+.section-header.success {
+    border-left-color: #16a34a;
+}
+
+.section-header.warning {
+    border-left-color: #f59e0b;
+}
+
+.section-header.danger {
+    border-left-color: #dc2626;
+}
+
+.section-icon {
+    width: 65px;
+    height: 65px;
+    border-radius: 16px;
+    background: var(--primary-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    flex-shrink: 0;
+}
+
+.section-icon i {
+    font-size: 26px;
+    color: var(--primary);
+}
+
+.section-content h3 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 4px;
+}
+
+.section-content p {
+    color: #7c8794;
+    margin: 0;
+}
+
+/* ==========================================================
+   Body
+========================================================== */
+
+.section-body {
+    padding: 30px;
+}
+
+/* ==========================================================
+   Subtitle
+========================================================== */
+
+.section-subtitle {
+    margin-bottom: 25px;
+}
+
+.section-subtitle span {
+    font-size: 15px;
+    font-weight: 700;
+    color: #4a5568;
+}
+
+.section-subtitle hr {
+    margin-top: 12px;
+    border-top: 1px solid #edf2f7;
+}
+
+
+/* ==========================================================
+   Validation
+========================================================== */
+
+.invalid-feedback {
+    display: block;
+
+    margin-top: 6px;
+
+    font-size: 13px;
+}
+
+.is-invalid {
+    border-color: #dc3545 !important;
+}
+
+

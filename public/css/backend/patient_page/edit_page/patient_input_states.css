@@ -1,0 +1,27 @@
+/* ==========================================================================
+   PATIENT INPUT STATES
+   ========================================================================== */
+
+.form-control:hover,
+.modern-input .form-control:hover,
+.modern-input textarea:hover,
+.modern-input select:hover {
+    border-color: #cbd5e1;
+}
+
+.modern-input:hover .input-group-text {
+    border-color: #cbd5e1;
+    background: #fff;
+}
+
+.form-control,
+.input-group-text,
+textarea,
+select {
+    transition:
+        border-color 0.25s ease,
+        background 0.25s ease,
+        color 0.25s ease,
+        box-shadow 0.25s ease,
+        transform 0.25s ease;
+}

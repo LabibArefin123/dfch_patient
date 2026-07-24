@@ -4,4 +4,5 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeRecommendToggle();
     initializeTreatmentToggle();
     initializeInvestigationToggle();
+    initializeCancerToggle();
 });

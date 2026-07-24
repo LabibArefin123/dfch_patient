@@ -1,0 +1,51 @@
+/* ==========================================================================
+   PATIENT INPUT GROUP
+   ========================================================================== */
+
+.modern-input {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    transition: all 0.25s ease;
+}
+
+.modern-input:hover {
+    transform: translateY(-1px);
+}
+
+.modern-input .input-group-prepend {
+    display: flex;
+}
+
+.modern-input .input-group-text {
+    width: 54px;
+    min-width: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f8fafc;
+    border: 1px solid #dbe4ea;
+    border-right: none;
+    border-radius: 14px 0 0 14px;
+    color: #8b0000;
+    transition: all 0.25s ease;
+}
+
+.modern-input .input-group-text i {
+    font-size: 15px;
+    transition: all 0.25s ease;
+}
+
+.modern-input > .form-control:first-child {
+    border-radius: 14px;
+    border-left: 1px solid #dbe4ea;
+}
+
+.modern-input > .form-control:last-child {
+    border-radius: 0 14px 14px 0;
+}
+
+.modern-input > .input-group-prepend + .form-control {
+    border-left: none;
+}

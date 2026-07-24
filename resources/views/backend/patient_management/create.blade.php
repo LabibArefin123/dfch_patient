@@ -26,6 +26,8 @@
 
 
 @section('content')
+    {{-- ========================= Date ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_added_date.css') }}">
     {{-- ========================= Variables ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_variables.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_form_variables.css') }}">
@@ -148,16 +150,74 @@
                         <p> Registration and referred details.</p>
                     </div>
                 </div>
-
                 <div class="section-body">
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label>Date of Registration</label>
-                            <input type="date" name="date_of_patient_added" class="form-control"
-                                value="{{ old('date_of_patient_added', date('Y-m-d')) }}">
+                    <div class="registration-wrapper">
+                        {{-- Left Side --}}
+                        <div class="registration-form">
+
+                            <div class="form-group mb-0">
+
+                                <label>
+                                    <i class="fas fa-calendar-plus mr-2 text-danger"></i>
+                                    Date of Registration
+                                </label>
+
+                                <input type="date" id="date_of_patient_added" name="date_of_patient_added"
+                                    class="form-control registration-date-input"
+                                    value="{{ old('date_of_patient_added') }}">
+
+                                <small class="text-muted mt-2 d-block">
+                                    Select the official patient registration date.
+                                </small>
+
+                            </div>
+
                         </div>
-                        @include('backend.patient_management.partial_pages.create_page.part_3')
+
+                        {{-- Right Side --}}
+                        <div class="registration-preview">
+
+                            <div class="registration-preview-header">
+
+                                <div class="registration-preview-icon">
+                                    <i class="fas fa-calendar-check"></i>
+                                </div>
+
+                                <div>
+
+                                    <h5>Registration Summary</h5>
+
+                                    <p class="mb-0">
+                                        Live overview of the selected date.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                            <div class="registration-preview-body" id="patientAddedDateInfo">
+
+                                <div class="registration-empty">
+
+                                    <i class="far fa-calendar-alt"></i>
+
+                                    <h6>No Date Selected</h6>
+
+                                    <p>
+                                        Choose a registration date to view
+                                        the formatted calendar information.
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
                     </div>
+
+                    @include('backend.patient_management.partial_pages.create_page.part_3')
+
                 </div>
             </div>
             {{-- MEDICAL --}}
@@ -180,6 +240,7 @@
             {{-- Investigation Part --}}
             @include('backend.patient_management.partial_pages.create_page.part_6')
             @include('backend.patient_management.partial_pages.create_page.part_7')
+            @include('backend.patient_management.modals.index_page.patient_future_date_modal')
             {{-- Footer Actions --}}
             <div class="patient-form-footer">
                 <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg">
@@ -197,10 +258,11 @@
     <div style="height:80px"></div>
 @stop
 
-
 @section('js')
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_format.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_validate.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_location_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_recommend_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_treatment_toggle.js') }}"></script>
