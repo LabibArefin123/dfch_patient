@@ -22,8 +22,6 @@
 @stop
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_search.css') }}">
-
     <div class="container-fluid">
 
         {{-- Top Summary --}}
@@ -172,9 +170,10 @@
 
 
                                     <div class="card-footer bg-white text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-danger magnify-img"
-                                            data-bs-toggle="modal" data-bs-target="#imagePreviewModal"
-                                            data-image="{{ asset($photo) }}">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal"
+                                data-bs-target="#imageZoomModal" 
+                                            data-bs-img-src="{{ asset($photo) }}">
                                             <i class="fas fa-eye"></i> View Full Image
                                         </button>
                                     </div>
