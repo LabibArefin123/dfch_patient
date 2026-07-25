@@ -1,0 +1,47 @@
+.refer-card {
+    position: relative;
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 14px;
+    overflow: hidden;
+    min-height: 340px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    transition: 0.3s;
+}
+
+.refer-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.16);
+}
+
+.refer-card-body {
+    padding: 12px;
+    text-align: center;
+}
+
+.refer-file-name {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.refer-file-size {
+    font-size: 12px;
+    color: #6c757d;
+    margin-bottom: 12px;
+}
+
+.refer-card .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 6px 10px;
+    border-radius: 20px;
+}
+
+.refer-card .alert {
+    font-size: 11px;
+    border-radius: 8px;
+}

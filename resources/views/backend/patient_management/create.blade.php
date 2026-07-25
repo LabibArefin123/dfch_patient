@@ -76,7 +76,12 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_cancer_form.css') }}">
 
     {{-- ========================= Refer Documents ========================= --}}
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_animation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_progress.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_status.css') }}">
 
     {{-- ========================= Progress ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_progress_stepper.css') }}">

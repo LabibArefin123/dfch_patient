@@ -1,0 +1,53 @@
+.refer-status{
+    display:inline-block;
+    font-size:11px;
+    padding:5px 10px;
+    border-radius:30px;
+}
+
+.refer-ready{
+    border-color:#28a745;
+    box-shadow:
+        0 0 0 3px rgba(40,167,69,.12),
+        0 10px 20px rgba(40,167,69,.12);
+}
+
+.refer-ready::after{
+    transform:scaleX(1);
+}
+
+.refer-card::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    bottom:0;
+    height:3px;
+    background:linear-gradient(90deg,#28a745,#20c997);
+    transform:scaleX(0);
+    transform-origin:left;
+    transition:.3s;
+}
+
+.refer-error-card{
+    border-color:#dc3545;
+    background:#fff5f5;
+}
+
+.refer-error-image{
+    background:#fff5f5;
+    color:#dc3545;
+}
+
+.refer-error-card .refer-file-name{
+    color:#dc3545;
+}
+
+.refer-card .fa-check-circle,
+.refer-card .fa-times-circle{
+    color:#fff;
+}
+
+.refer-card .fa-times{
+    font-size:12px;
+}

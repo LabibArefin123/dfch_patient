@@ -1,0 +1,25 @@
+.refer-card.loading{
+    animation:referPulse 1s infinite;
+}
+
+@keyframes referPulse{
+
+    0%{
+        transform:scale(1);
+    }
+
+    50%{
+        transform:scale(.98);
+    }
+
+    100%{
+        transform:scale(1);
+    }
+
+}
+
+.refer-card.removing{
+    opacity:0;
+    transform:scale(.85);
+    transition:.25s;
+}

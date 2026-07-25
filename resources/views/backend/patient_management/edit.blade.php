@@ -53,9 +53,16 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_input_states.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_inputs_focus.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_preview.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
+
+    {{-- ========================= Patient Refer ========================= --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_animation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_progress.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer_status.css') }}">
     
-    {{-- ========================= Treatment ========================= --}}
+    {{-- ========================= Patient Treatment ========================= --}}
      <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_card.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_preview.css') }}">

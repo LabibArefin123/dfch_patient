@@ -1,0 +1,47 @@
+.refer-progress-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 12px 0;
+}
+
+.refer-progress-circle {
+    transform: rotate(-90deg);
+}
+
+.progress-bg {
+    fill: none;
+    stroke: #e9ecef;
+    stroke-width: 6;
+}
+
+.progress-bar {
+    fill: none;
+    stroke: #28a745;
+    stroke-width: 6;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.3s linear;
+}
+
+.progress-error {
+    stroke: #dc3545 !important;
+}
+
+.progress-text {
+    font-size: 12px;
+    font-weight: 700;
+    fill: #343a40;
+    transform: rotate(90deg);
+    transform-origin: center;
+}
+
+.refer-progress-circle text {
+    dominant-baseline: middle;
+}
+
+.progress-bar,
+.progress-bg {
+    cx: 35;
+    cy: 35;
+    r: 28;
+}
