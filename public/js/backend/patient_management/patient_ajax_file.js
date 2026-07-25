@@ -8,14 +8,20 @@ $(function () {
             url: window.patientRoutes.index,
 
             data: function (d) {
-                d.gender = $("select[name=gender]").val();
-                d.is_recommend = $("select[name=is_recommend]").val();
-                d.location_type = $("select[name=location_type]").val();
-                d.location_value = $("input[name=location_value]").val();
-                d.date_filter = $("select[name=date_filter]").val();
-                d.from_date = $("input[name=from_date]").val();
-                d.to_date = $("input[name=to_date]").val();
-                d.is_old_cancer = $("select[name=is_old_cancer]").val();
+                d.gender = $("select[name='gender']").val();
+
+                d.location_type = $("select[name='location_type']").val();
+                d.location_value = $("input[name='location_value']").val();
+
+                d.is_recommend = $("select[name='is_recommend']").val();
+                d.is_emergency = $("select[name='is_emergency']").val();
+                d.is_treatment = $("select[name='is_treatment']").val();
+                d.is_investigated = $("select[name='is_investigated']").val();
+                d.is_old_cancer = $("select[name='is_old_cancer']").val();
+
+                d.date_filter = $("select[name='date_filter']").val();
+                d.from_date = $("input[name='from_date']").val();
+                d.to_date = $("input[name='to_date']").val();
             },
 
             dataSrc: function (json) {
@@ -64,7 +70,6 @@ $(function () {
             },
             {
                 data: "investigation",
-                
             },
             {
                 data: "does_old_cancer",

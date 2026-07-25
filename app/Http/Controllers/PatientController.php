@@ -30,9 +30,21 @@ class PatientController extends Controller
                 $q->where('gender', $request->gender);
             })
 
-            // Recommendation Filter
+            // Refer Filter
             ->when($request->filled('is_recommend'), function ($q) use ($request) {
                 $q->where('is_recommend', (int) $request->is_recommend);
+            })
+            // Emergency Filter
+            ->when($request->filled('is_emergency'), function ($q) use ($request) {
+                $q->where('is_emergency', (int) $request->is_emergency);
+            })
+            // Treatment Filter
+            ->when($request->filled('is_treatment'), function ($q) use ($request) {
+                $q->where('is_treatment', (int) $request->is_treatment);
+            })
+            // Investigation Patient Filter
+            ->when($request->filled('is_investigated'), function ($q) use ($request) {
+                $q->where('is_investigated', (int) $request->is_investigated);
             })
             // Old Cancer Filter
             ->when($request->filled('is_old_cancer'), function ($q) use ($request) {
