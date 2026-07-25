@@ -1,0 +1,53 @@
+.investigation-status {
+    display: inline-block;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 30px;
+}
+
+.investigation-ready {
+    border-color: #28a745;
+    box-shadow:
+        0 0 0 3px rgba(40, 167, 69, 0.12),
+        0 10px 20px rgba(40, 167, 69, 0.12);
+}
+
+.investigation-ready::after {
+    transform: scaleX(1);
+}
+
+.investigation-card::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #28a745, #20c997);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: 0.3s;
+}
+
+.investigation-error-card {
+    border-color: #dc3545;
+    background: #fff5f5;
+}
+
+.investigation-error-image {
+    background: #fff5f5;
+    color: #dc3545;
+}
+
+.investigation-error-card .investigation-file-name {
+    color: #dc3545;
+}
+
+.investigation-card .fa-check-circle,
+.investigation-card .fa-times-circle {
+    color: #fff;
+}
+
+.investigation-card .fa-times {
+    font-size: 12px;
+}

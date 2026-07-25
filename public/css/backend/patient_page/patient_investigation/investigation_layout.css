@@ -1,0 +1,34 @@
+.investigation-preview-container{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(250px,1fr));
+    gap:20px;
+    margin-top:20px;
+}
+
+.investigation-preview-container:empty{
+    display:none;
+}
+
+@media (max-width:1400px){
+    .investigation-preview-container{
+        grid-template-columns:repeat(4,1fr);
+    }
+}
+
+@media (max-width:1200px){
+    .investigation-preview-container{
+        grid-template-columns:repeat(3,1fr);
+    }
+}
+
+@media (max-width:768px){
+    .investigation-preview-container{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media (max-width:576px){
+    .investigation-preview-container{
+        grid-template-columns:1fr;
+    }
+}

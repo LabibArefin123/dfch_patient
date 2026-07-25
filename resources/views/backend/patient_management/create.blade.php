@@ -69,10 +69,20 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_status.css') }}">
 
     {{-- ========================= Investigation ========================= --}}
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_progress.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_animation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_status.css') }}">
 
     {{-- ========================= Cancer ========================= --}}
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer_animation.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer_responsive.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer_progress.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer_status.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_cancer_form.css') }}">
 
     {{-- ========================= Refer Documents ========================= --}}

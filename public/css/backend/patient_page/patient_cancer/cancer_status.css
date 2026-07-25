@@ -1,0 +1,36 @@
+.cancer-status {
+    display: inline-block;
+    font-size: 11px;
+    padding: 5px 10px;
+    border-radius: 30px;
+}
+
+.cancer-ready {
+    border-color: #28a745;
+    box-shadow:
+        0 0 0 3px rgba(40, 167, 69, 0.12),
+        0 10px 20px rgba(40, 167, 69, 0.12);
+}
+
+.cancer-error-card {
+    border-color: #dc3545;
+    background: #fff5f5;
+}
+
+.cancer-error-image {
+    background: #fff5f5;
+    color: #dc3545;
+}
+
+.cancer-error-card .cancer-file-name {
+    color: #dc3545;
+}
+
+.cancer-card .fa-check-circle,
+.cancer-card .fa-times-circle {
+    color: #fff;
+}
+
+.cancer-card .fa-times {
+    font-size: 12px;
+}
