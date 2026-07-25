@@ -21,9 +21,7 @@ class MonthlyController extends Controller
     {
         if ($request->ajax()) {
 
-            if (!$parent->hasMonthlyFilters($request)) {
-                return DataTables::of(collect())->make(true);
-            }
+           
 
             $query = Patient::query();
             $parent->applyMonthlyFilters($query, $request);

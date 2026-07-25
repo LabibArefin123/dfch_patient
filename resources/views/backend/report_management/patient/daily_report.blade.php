@@ -19,58 +19,216 @@
         ['data' => 'phone_m_1'],
         ['data' => 'location'],
         ['data' => 'is_recommend'],
+        ['data' => 'is_emergency'],
+        ['data' => 'is_treatment'],
+        ['data' => 'is_investigated'],
         ['data' => 'date_of_patient_added'],
         ['data' => 'action', 'orderable' => false, 'searchable' => false],
     ]);
 @endphp
-
 @section('filters')
     <div class="row">
 
-        {{-- Day Filter --}}
-        <div class="col-md-3">
-            <label>Day Filter</label>
-            <select name="day_filter" id="day_filter" class="form-control">
-                <option value="today">Current Day</option>
-                <option value="past_1_day">Past 1 Day</option>
-                <option value="past_2_days">Past 2 Days</option>
-                <option value="past_3_days">Past 3 Days</option>
-                <option value="custom">Custom Date</option>
-            </select>
+        {{-- =========================================
+            Daily Date Filter
+        ========================================== --}}
+        <div class="col-12 mb-3">
+
+            <div class="card card-outline card-success shadow-sm">
+
+                <div class="card-header py-2">
+
+                    <h3 class="card-title">
+                        <i class="fas fa-calendar-day text-success mr-2"></i>
+                        Daily Date Filter
+                    </h3>
+
+                    <div class="card-tools">
+                        <span class="badge badge-success">
+                            Report Period
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="card-body pb-2">
+
+                    <div class="row">
+
+                        <div class="col-lg-4 col-md-6 mb-3">
+
+                            <label class="font-weight-bold">
+                                <i class="fas fa-filter text-success mr-1"></i>
+                                Day Range
+                            </label>
+
+                            <select name="day_filter" id="day_filter" class="form-control">
+
+                                <option value="today" selected>
+                                    Current Day
+                                </option>
+
+                                <option value="past_1_day">
+                                    Previous Day
+                                </option>
+
+                                <option value="past_2_days">
+                                    Last 2 Days
+                                </option>
+
+                                <option value="past_3_days">
+                                    Last 3 Days
+                                </option>
+
+                                <option value="custom">
+                                    Custom Date Range
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <div id="daily_custom_range" class="col-lg-8 d-none">
+
+                            <div class="row">
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="font-weight-bold">
+                                        <i class="far fa-calendar-alt text-primary mr-1"></i>
+                                        From Date
+                                    </label>
+
+                                    <input type="date" name="from_date" id="daily_from_date" class="form-control">
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label class="font-weight-bold">
+                                        <i class="far fa-calendar-check text-danger mr-1"></i>
+                                        To Date
+                                    </label>
+
+                                    <input type="date" name="to_date" id="daily_to_date" class="form-control">
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
 
-        {{-- Custom Date Range (Hidden Initially) --}}
-        <div id="daily_custom_range" class="col-md-6 d-none">
-            <div class="row">
-                <div class="col-md-6">
-                    <label>From Date</label>
-                    <input type="date" name="from_date" id="daily_from_date" class="form-control">
+        {{-- =========================================
+            Patient Filters
+        ========================================== --}}
+        <div class="col-12">
+
+            <div class="card card-outline card-info shadow-sm">
+
+                <div class="card-header py-2">
+
+                    <h3 class="card-title">
+                        <i class="fas fa-user-injured text-info mr-2"></i>
+                        Patient Filters
+                    </h3>
+
+                    <div class="card-tools">
+                        <span class="badge badge-info">
+                            Advanced Search
+                        </span>
+                    </div>
+
                 </div>
-                <div class="col-md-6">
-                    <label>To Date</label>
-                    <input type="date" name="to_date" id="daily_to_date" class="form-control">
+
+                <div class="card-body pb-2">
+
+                    <div class="row">
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+
+                            <label class="font-weight-bold">
+                                <i class="fas fa-venus-mars text-primary mr-1"></i>
+                                Gender
+                            </label>
+
+                            <select name="gender" class="form-control">
+                                <option value="">All Patients</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+
+                            <label class="font-weight-bold">
+                                <i class="fas fa-thumbs-up text-success mr-1"></i>
+                                Referred Patients
+                            </label>
+
+                            <select name="is_recommend" class="form-control">
+                                <option value="">All</option>
+                                <option value="1">Referred</option>
+                                <option value="0">Not Referred</option>
+                            </select>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+
+                            <label class="font-weight-bold">
+                                <i class="fas fa-ambulance text-danger mr-1"></i>
+                                Emergency
+                            </label>
+
+                            <select name="is_emergency" class="form-control">
+                                <option value="">All</option>
+                                <option value="1">Emergency</option>
+                                <option value="0">Normal</option>
+                            </select>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+
+                            <label class="font-weight-bold">
+                                <i class="fas fa-procedures text-warning mr-1"></i>
+                                Treatment
+                            </label>
+
+                            <select name="is_treatment" class="form-control">
+                                <option value="">All</option>
+                                <option value="1">Under Treatment</option>
+                                <option value="0">Not Under Treatment</option>
+                            </select>
+
+                        </div>
+
+                        <div class="col-lg-3 col-md-6 mb-3">
+
+                            <label class="font-weight-bold">
+                                <i class="fas fa-microscope text-secondary mr-1"></i>
+                                Investigation
+                            </label>
+
+                            <select name="is_investigated" class="form-control">
+                                <option value="">All</option>
+                                <option value="1">Investigated</option>
+                                <option value="0">Not Investigated</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="col-md-3">
-            <label>Gender</label>
-            <select name="gender" class="form-control">
-                <option value="">All</option>
-                <option value="Male">Male</option>
-                <option value="Female">Female</option>
-            </select>
-        </div>
-
-        <div class="col-md-3">
-            <label>Recommended</label>
-            <select name="is_recommend" class="form-control">
-                <option value="">All</option>
-                <option value="1">Yes</option>
-                <option value="0">No</option>
-            </select>
-        </div>
-
     </div>
 @endsection
 
@@ -90,6 +248,9 @@
         <th>Mother's Phone</th>
         <th>Location</th>
         <th>Referred Patient</th>
+        <th>Emergency Patient</th>
+        <th>Is Treatment?</th>
+        <th>Is Investigated?</th>
         <th>Date Added</th>
         <th>Actions</th>
     </tr>

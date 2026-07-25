@@ -18,7 +18,10 @@
         ['data' => 'phone_m_1'],
         ['data' => 'location'],
         ['data' => 'is_recommend'],
-        ['data' => 'date'],
+        ['data' => 'is_emergency'],
+        ['data' => 'is_treatment'],
+        ['data' => 'is_investigated'],
+        ['data' => 'date_of_patient_added'],
         ['data' => 'action', 'orderable' => false, 'searchable' => false],
     ]);
 @endphp
@@ -72,6 +75,9 @@
         <th>Mother</th>
         <th>Location</th>
         <th>Referred Patient</th>
+        <th>Emergency Patient</th>
+        <th>Is Treatment?</th>
+        <th>Is Investigated?</th>
         <th>Date Added</th>
         <th>Action</th>
     </tr>

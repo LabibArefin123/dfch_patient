@@ -110,11 +110,14 @@ class ReportController extends Controller
     /* Start of Filter Logic  */
     public function hasDailyFilters(Request $request)
     {
-        return $request->has('day_filter')
+        return $request->filled('day_filter')
+            || ($request->filled('from_date') && $request->filled('to_date'))
             || $request->filled('gender')
             || $request->filled('is_recommend')
-            || ($request->filled('location_type') && $request->filled('location_value'))
-            || ($request->filled('from_date') && $request->filled('to_date'));
+            || $request->filled('is_emergency')
+            || $request->filled('is_treatment')
+            || $request->filled('is_investigated')
+            || ($request->filled('location_type') && $request->filled('location_value'));
     }
 
     public function hasWeeklyFilters(Request $request)
@@ -122,24 +125,32 @@ class ReportController extends Controller
         return $request->filled('week_filter')
             || ($request->filled('from_date') && $request->filled('to_date'))
             || $request->filled('gender')
-            || $request->filled('is_recommend');
+            || $request->filled('is_recommend')
+            || $request->filled('is_emergency')
+            || $request->filled('is_treatment')
+            || $request->filled('is_investigated');
     }
-    
+
     public function hasMonthlyFilters(Request $request)
     {
         return $request->filled('year')
             || $request->filled('month')
             || $request->filled('gender')
-            || $request->filled('is_recommend');
+            || $request->filled('is_recommend')
+            || $request->filled('is_emergency')
+            || $request->filled('is_treatment')
+            || $request->filled('is_investigated');
     }
 
     public function hasYearlyFilters(Request $request)
     {
         return $request->filled('year')
             || $request->filled('gender')
-            || $request->filled('is_recommend');
+            || $request->filled('is_recommend')
+            || $request->filled('is_emergency')
+            || $request->filled('is_treatment')
+            || $request->filled('is_investigated');
     }
-
 
     public function applyDailyFilters($query, Request $request)
     {
@@ -279,6 +290,18 @@ class ReportController extends Controller
 
         if ($request->filled('is_recommend')) {
             $query->where('is_recommend', $request->is_recommend);
+        }
+
+        if ($request->filled('is_emergency')) {
+            $query->where('is_emergency', $request->is_emergency);
+        }
+
+        if ($request->filled('is_treatment')) {
+            $query->where('is_treatment', $request->is_treatment);
+        }
+
+        if ($request->filled('is_investigated')) {
+            $query->where('is_investigated', $request->is_investigated);
         }
     }
     /* End of Filter Logic  */
