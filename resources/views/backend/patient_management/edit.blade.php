@@ -54,7 +54,14 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_inputs_focus.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_preview.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_refer/refer.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
+    
+    {{-- ========================= Treatment ========================= --}}
+     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_progress.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_status.css') }}">
+
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
 
     {{-- ========================= Cancer ========================= --}}

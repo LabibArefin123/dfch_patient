@@ -62,7 +62,11 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_upload.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_preview_grid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/create_page/patient_treatment_responsive.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_preview.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_progress.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_treatment/treatment_status.css') }}">
 
     {{-- ========================= Investigation ========================= --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation.css') }}">
