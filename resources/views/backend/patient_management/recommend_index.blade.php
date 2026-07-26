@@ -98,6 +98,8 @@
             recommend: "{{ route('patients.recommend') }}"
         };
     </script>
+    <script src="{{ asset('js/backend/patient_management/patient_shared_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ref_ajax_file.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_ref_ajax_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
 @stop

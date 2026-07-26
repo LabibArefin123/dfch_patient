@@ -1,17 +1,4 @@
-$(document).ready(function () {
-    // ==========================================
-    // Read date_filter from URL
-    // ==========================================
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlDateFilter = urlParams.get("date_filter");
-
-    if (urlDateFilter) {
-        $("select[name='date_filter']").val(urlDateFilter);
-    }
-
-    // ==========================================
-    // Initialize DataTable
-    // ==========================================
+$(function () {
     const table = $("#patientsRefTable").DataTable({
         processing: true,
         serverSide: true,
@@ -23,24 +10,20 @@ $(document).ready(function () {
             data: function (d) {
                 /* Basic Filters */
                 d.gender = $("select[name='gender']").val();
-
                 d.location_type = $("select[name='location_type']").val();
                 d.location_value = $("input[name='location_value']").val();
 
-                /* Patient Status Filters */
+                /* Patient Status */
                 d.is_recommend = $("select[name='is_recommend']").val();
                 d.is_emergency = $("select[name='is_emergency']").val();
                 d.is_treatment = $("select[name='is_treatment']").val();
                 d.is_investigated = $("select[name='is_investigated']").val();
                 d.is_old_cancer = $("select[name='is_old_cancer']").val();
 
-                /* Date Filters */
+                /* Date */
+                d.date_filter = $("select[name='date_filter']").val();
                 d.from_date = $("input[name='from_date']").val();
                 d.to_date = $("input[name='to_date']").val();
-
-                // Respect dropdown first, otherwise URL parameter
-                d.date_filter =
-                    $("select[name='date_filter']").val() || urlDateFilter;
             },
 
             dataSrc: function (json) {
@@ -104,9 +87,13 @@ $(document).ready(function () {
             },
             {
                 data: "treatment",
+                orderable: false,
+                searchable: false,
             },
             {
                 data: "investigation",
+                orderable: false,
+                searchable: false,
             },
             {
                 data: "does_old_cancer",
@@ -130,11 +117,5 @@ $(document).ready(function () {
         ],
     });
 
-    // ==========================================
-    // Filter Submit
-    // ==========================================
-    $("#patientFilterForm").on("submit", function (e) {
-        e.preventDefault();
-        table.ajax.reload();
-    });
+    window.recommendTable = table;
 });

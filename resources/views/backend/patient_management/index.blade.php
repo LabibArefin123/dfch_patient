@@ -141,6 +141,7 @@
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_filter.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_shared_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_import_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>

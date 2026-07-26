@@ -366,7 +366,8 @@ class PatientController extends Controller
 
         // Base Query
         $baseQuery = Patient::query()
-            ->where('is_recommend', 1) // 🔥 ALWAYS recommended patients
+            ->with('cancerPhotos')
+            ->where('is_recommend', 1)
 
             ->when($request->filled('gender'), function ($q) use ($request) {
                 $q->where('gender', $request->gender);
@@ -377,24 +378,63 @@ class PatientController extends Controller
                 $q->where('location_type', $request->location_type);
 
                 if ($request->filled('location_value')) {
+
                     if ($request->location_type == 1) {
+
                         $q->where('location_simple', 'like', "%{$request->location_value}%");
                     } elseif ($request->location_type == 2) {
+
                         $q->where(function ($sub) use ($request) {
                             $sub->where('city', 'like', "%{$request->location_value}%")
                                 ->orWhere('district', 'like', "%{$request->location_value}%");
                         });
                     } elseif ($request->location_type == 3) {
+
                         $q->where('country', 'like', "%{$request->location_value}%");
                     }
                 }
             })
 
+            ->when($request->filled('is_emergency'), function ($q) use ($request) {
+                $q->where('is_emergency', (int) $request->is_emergency);
+            })
+
+            ->when($request->filled('is_treatment'), function ($q) use ($request) {
+                $q->where('is_treatment', (int) $request->is_treatment);
+            })
+
+            ->when($request->filled('is_investigated'), function ($q) use ($request) {
+                $q->where('is_investigated', (int) $request->is_investigated);
+            })
+
+            ->when($request->filled('is_old_cancer'), function ($q) use ($request) {
+                $q->where('is_old_cancer', (int) $request->is_old_cancer);
+            })
+
             ->when($request->filled('date_filter'), function ($q) use ($request) {
+
                 switch ($request->date_filter) {
 
                     case 'today':
-                        $q->whereDate('date_of_patient_added', now()->toDateString());
+                        $q->whereDate('date_of_patient_added', today());
+                        break;
+
+                    case 'yesterday':
+                        $q->whereDate('date_of_patient_added', today()->subDay());
+                        break;
+
+                    case 'last_7_days':
+                        $q->whereBetween('date_of_patient_added', [
+                            now()->subDays(6)->toDateString(),
+                            now()->toDateString()
+                        ]);
+                        break;
+
+                    case 'last_30_days':
+                        $q->whereBetween('date_of_patient_added', [
+                            now()->subDays(29)->toDateString(),
+                            now()->toDateString()
+                        ]);
                         break;
 
                     case 'this_month':
@@ -405,8 +445,12 @@ class PatientController extends Controller
                         break;
 
                     case 'last_month':
-                        $q->whereMonth('date_of_patient_added', now()->subMonth()->month)
-                            ->whereYear('date_of_patient_added', now()->subMonth()->year);
+
+                        $lastMonth = now()->subMonth();
+
+                        $q->whereMonth('date_of_patient_added', $lastMonth->month)
+                            ->whereYear('date_of_patient_added', $lastMonth->year);
+
                         break;
 
                     case 'this_year':
@@ -414,12 +458,15 @@ class PatientController extends Controller
                         break;
 
                     case 'custom':
-                        if ($request->filled(['from_date', 'to_date'])) {
+
+                        if ($request->filled('from_date') && $request->filled('to_date')) {
+
                             $q->whereBetween('date_of_patient_added', [
                                 $request->from_date,
                                 $request->to_date
                             ]);
                         }
+
                         break;
                 }
             });
