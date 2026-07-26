@@ -73,7 +73,8 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_card.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_progress.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_preview.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_animation.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_investigation/investigation_animation.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_investigation/investigation_status.css') }}">
 
     {{-- ========================= Cancer ========================= --}}
@@ -169,10 +170,21 @@
                     <i class="fas fa-ambulance"></i>
                 </div>
                 <span>Emergency</span>
+
             </div>
+            <div class="progress-line"></div>
+
+            <div class="progress-item">
+                <div class="step">
+                    <i class="fas fa-ribbon"></i>
+                </div>
+                <span>Cancer</span>
+            </div>
+
         </div>
 
-        <form action="{{ route('patients.store') }}" method="POST" enctype="multipart/form-data" id="patientCreateForm">
+        <form action="{{ route('patients.store') }}" method="POST" enctype="multipart/form-data"
+            id="patientCreateForm">
             @csrf
             {{-- BASIC INFORMATION --}}
             @include('backend.patient_management.partial_pages.create_page.part_1')
@@ -276,6 +288,7 @@
             {{-- Investigation Part --}}
             @include('backend.patient_management.partial_pages.create_page.part_6')
             @include('backend.patient_management.partial_pages.create_page.part_7')
+            @include('backend.patient_management.partial_pages.create_page.part_8')
             @include('backend.patient_management.modals.index_page.patient_future_date_modal')
             {{-- Footer Actions --}}
             <div class="patient-form-footer">
@@ -302,12 +315,15 @@
     <script src="{{ asset('js/backend/patient_management/create_page/progress_3_medical.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_4_treatment.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_5_investigate.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_6_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_7_cancer.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_format.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_validate.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_location_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_recommend_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_treatment_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_investigation_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/patient_emergency_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_cancer_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_create_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/create_editor.js') }}"></script>
