@@ -40,8 +40,7 @@
 
     <div class="card-body">
 
-        <form method="GET" action="{{ route('patients.index') }}">
-
+        <form id="patientFilterForm" onsubmit="return false;">
             <div class="row">
 
                 {{-- Location --}}
@@ -270,36 +269,11 @@
             <hr>
 
             <div class="d-flex justify-content-between align-items-center flex-wrap">
-
                 <small class="text-muted">
                     <i class="fas fa-info-circle mr-1"></i>
                     Multiple filters can be combined for more accurate results.
                 </small>
-
-                <div>
-
-                    <a href="{{ route('patients.index') }}" class="btn btn-outline-secondary">
-
-                        <i class="fas fa-redo mr-1"></i>
-
-                        Reset
-
-                    </a>
-
-                    <button class="btn btn-primary ml-2">
-
-                        <i class="fas fa-search mr-1"></i>
-
-                        Apply Filters
-
-                    </button>
-
-                </div>
-
             </div>
-
         </form>
-
     </div>
-
 </div>

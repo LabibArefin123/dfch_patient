@@ -140,18 +140,19 @@
 
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_ajax_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/patient_submit_animation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_import_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_pdf_file.js') }}"></script>
-
+    
     {{-- Patient Emergency Core --}}
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency_ajax.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency_validator.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency_success.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency_close.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_submit_animation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency.js') }}"></script>
    
     {{-- Patient Summary Core --}}

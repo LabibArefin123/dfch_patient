@@ -91,10 +91,4 @@ $(function () {
     });
 
     window.patientTable = table;
-
-    $("#patientFilterForm").on("submit", function (e) {
-        e.preventDefault();
-
-        table.ajax.reload();
-    });
 });
