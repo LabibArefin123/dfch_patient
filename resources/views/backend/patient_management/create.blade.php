@@ -301,6 +301,7 @@
     <script src="{{ asset('js/backend/patient_management/create_page/progress_2_address.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_3_medical.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_4_treatment.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_5_investigate.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_format.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_validate.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_location_toggle.js') }}"></script>
