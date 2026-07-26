@@ -247,5 +247,10 @@
     <script
         src="{{ asset('js/backend/patient_management/patient_cancer/edit_page/patient-cancer-edit-image-preview.js') }}">
     </script>
-    <script src="{{ asset('js/backend/patient_management/patient_select_search.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_init.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_events.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_dropdown.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_helpers.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_filter.js') }}"></script>
 @endsection

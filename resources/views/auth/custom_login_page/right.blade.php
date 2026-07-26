@@ -68,7 +68,7 @@
                       <a href="{{ route('welcome') }}" class="btn btn-outline-secondary w-100 rounded-pill">
 
                           <i class="fas fa-home me-1"></i>
-                          Guest Access
+                          Home Page
 
                       </a>
 

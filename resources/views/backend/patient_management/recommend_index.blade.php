@@ -1,15 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'Recommended Patients')
+@section('title', 'Referred Patients')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center flex-wrap">
         <div>
             <h1 class="mb-0 text-success">
-                <i class="fas fa-star"></i> Recommended Patients
+                <i class="fas fa-star"></i> Referred Patients
             </h1>
             <small class="text-muted">
-                Patients marked as recommended
+                Patients marked as referred
             </small>
         </div>
 
@@ -30,7 +30,6 @@
         </div>
     </div>
 @stop
-
 
 @section('content')
 
@@ -55,11 +54,11 @@
     {{-- Table --}}
     <div class="card shadow-sm border-success">
         <div class="card-header bg-success text-white">
-            <strong>Recommended Patients List</strong>
+            <strong>Referred Patients List</strong>
         </div>
 
         <div class="card-body table-responsive">
-            <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
+            <table class="table table-striped table-hover text-nowrap w-100" id="patientsRefTable">
                 <thead class="table-dark">
                     <tr>
                         <th width="30">
@@ -74,6 +73,11 @@
                         <th>Phone</th>
                         <th>Location</th>
                         <th>Status</th>
+                        <th>Is Emergency?</th>
+                        <th>Is Treatment?</th>
+                        <th>Is Investigated?</th>
+                        <th>Is Cancer?</th>
+                        <th>Total Cancer</th>
                         <th>Date Added</th>
                         <th>Actions</th>
                     </tr>
@@ -94,6 +98,6 @@
             recommend: "{{ route('patients.recommend') }}"
         };
     </script>
-    <script src="{{ asset('js/backend/patient_management/recommendAjax.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/selectFile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_ref_ajax_file.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
 @stop

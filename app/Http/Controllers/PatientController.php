@@ -252,8 +252,8 @@ class PatientController extends Controller
                     <a href="' . route('patients.show', $p) . '" class="hover-box">
                         <span class="badge badge-' . ($p->is_treatment ? 'success' : 'secondary') . '">
                             <i class="fas ' . ($p->is_treatment
-                                    ? 'fa-procedures'
-                                    : 'fa-times-circle') . '"></i>
+                        ? 'fa-procedures'
+                        : 'fa-times-circle') . '"></i>
                             ' . ($p->is_treatment ? 'Yes' : 'No') . '
                         </span>
                     </a>';
@@ -265,8 +265,8 @@ class PatientController extends Controller
                     <a href="' . route('patients.show', $p) . '" class="hover-box">
                         <span class="badge badge-' . ($p->is_investigated ? 'info' : 'secondary') . '">
                             <i class="fas ' . ($p->is_investigated
-                                    ? 'fa-microscope'
-                                    : 'fa-times-circle') . '"></i>
+                        ? 'fa-microscope'
+                        : 'fa-times-circle') . '"></i>
                             ' . ($p->is_investigated ? 'Yes' : 'No') . '
                         </span>
                     </a>';
@@ -456,6 +456,74 @@ class PatientController extends Controller
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $loc . '</a>';
                 })
                 ->addColumn('is_recommend', fn() => '<span class="badge badge-success">Recommended</span>')
+                ->addColumn('does_old_cancer', function ($p) {
+
+                    return '
+                    <a href="' . route('patients.show', $p) . '" class="hover-box">
+                        <span class="badge badge-' . ($p->cancerPhotos->isNotEmpty() ? 'danger' : 'success') . '">
+                            <i class="fas ' . ($p->cancerPhotos->isNotEmpty()
+                        ? 'fa-radiation'
+                        : 'fa-check-circle') . '"></i>
+                            ' . ($p->cancerPhotos->isNotEmpty() ? 'Yes' : 'No') . '
+                        </span>
+                    </a>';
+                })
+
+                ->addColumn('total_cancer_photos', function ($p) {
+                    $reports = $p->cancerPhotos->count();
+                    $totalCancer = $p->cancerPhotos->sum('total_cancer');
+
+                    return '
+                    <a href="' . route('patients.show', $p) . '" class="hover-box">
+                        <span class="badge badge-primary">
+                            Reports : ' . $reports . '
+                        </span>
+
+                        <br>
+
+                        <span class="badge badge-danger">
+                            Cancer : ' . $totalCancer . '
+                        </span>
+                    </a>';
+                })
+
+                ->addColumn('emergency', function ($p) {
+                    return '
+                    <a href="' . route('patients.show', $p) . '" class="hover-box">
+                        <span class="badge badge-' . ($p->is_emergency ? 'danger' : 'success') . '">
+                            <i class="fas ' . ($p->is_emergency
+                        ? 'fa-ambulance'
+                        : 'fa-check-circle') . '"></i>
+                            ' . ($p->is_emergency ? 'Emergency' : 'Normal') . '
+                        </span>
+                    </a>';
+                })
+
+                ->addColumn('treatment', function ($p) {
+
+                    return '
+                    <a href="' . route('patients.show', $p) . '" class="hover-box">
+                        <span class="badge badge-' . ($p->is_treatment ? 'success' : 'secondary') . '">
+                            <i class="fas ' . ($p->is_treatment
+                        ? 'fa-procedures'
+                        : 'fa-times-circle') . '"></i>
+                            ' . ($p->is_treatment ? 'Yes' : 'No') . '
+                        </span>
+                    </a>';
+                })
+
+                ->addColumn('investigation', function ($p) {
+
+                    return '
+                    <a href="' . route('patients.show', $p) . '" class="hover-box">
+                        <span class="badge badge-' . ($p->is_investigated ? 'info' : 'secondary') . '">
+                            <i class="fas ' . ($p->is_investigated
+                        ? 'fa-microscope'
+                        : 'fa-times-circle') . '"></i>
+                            ' . ($p->is_investigated ? 'Yes' : 'No') . '
+                        </span>
+                    </a>';
+                })
                 ->addColumn('date', fn($p) => \Carbon\Carbon::parse($p->date_of_patient_added)->format('d M Y'))
                 ->addColumn('checkbox', function ($row) {
                     return '<input type="checkbox" class="row-checkbox" value="' . $row->id . '">';
@@ -490,7 +558,23 @@ class PatientController extends Controller
                 ';
                 })
 
-                ->rawColumns(['photo', 'patient_code', 'name', 'age', 'gender', 'phone', 'location', 'is_recommend', 'checkbox', 'action'])
+                ->rawColumns([
+                    'photo',
+                    'patient_code',
+                    'name',
+                    'age',
+                    'gender',
+                    'phone',
+                    'location',
+                    'is_recommend',
+                    'does_old_cancer',
+                    'total_cancer_photos',
+                    'emergency',
+                    'treatment',
+                    'investigation',
+                    'checkbox',
+                    'action'
+                ])
                 ->with([
                     'childPatients'  => $childPatients,
                     'adultPatients'  => $adultPatients,
