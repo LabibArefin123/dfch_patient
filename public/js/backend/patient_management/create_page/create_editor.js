@@ -21,8 +21,12 @@ function initializeEditors() {
             return;
         }
 
-        ClassicEditor.create(element).catch(function (error) {
-            console.error("CKEditor Error (" + selector + "):", error);
-        });
+        ClassicEditor.create(element)
+            .then((editor) => {
+                element.ckeditorInstance = editor;
+            })
+            .catch((error) => {
+                console.error(error);
+            });
     });
 }

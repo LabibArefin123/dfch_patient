@@ -38,13 +38,16 @@ function initializeTreatmentPreview() {
 function setupTreatmentInput(input, index) {
     const previewContainer = createPreviewContainer(input, index);
 
-    input.dataset.previewContainer = previewContainer.id;
+    if (input.dataset.previewInitialized === "1") {
+        return;
+    }
 
-    input.addEventListener("change", (e) => {
-        handleTreatmentFiles(e.target, previewContainer);
+    input.dataset.previewInitialized = "1";
+
+    input.addEventListener("change", function () {
+        handleTreatmentFiles(this, previewContainer);
     });
 }
-
 /**
  * Create Preview Container Automatically
  */

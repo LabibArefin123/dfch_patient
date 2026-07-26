@@ -10,18 +10,57 @@ document.addEventListener("DOMContentLoaded", () => {
 
     injectAddressWaterCSS();
 
-    const sectionCards = document.querySelectorAll(".patient-section-card");
-    if (sectionCards.length < 2) return;
+    const addressSection = document.querySelector(
+        ".patient-section-card:nth-of-type(2)",
+    );
+    if (!addressSection) return;
 
-    const addressSection = sectionCards[1];
+    const locationType = document.getElementById("location_type");
 
-    const fields = Array.from(
-        addressSection.querySelectorAll(
-            'input:not([type="hidden"]):not([type="file"]), select, textarea',
-        ),
-    ).filter((field) => !field.disabled);
+    function getVisibleFields() {
+        const type = locationType.value;
+
+        switch (type) {
+            // ===========================
+            // Simple Address
+            // ===========================
+            case "1":
+                return [
+                    addressSection.querySelector(
+                        "textarea[name='location_simple']",
+                    ),
+                ].filter(Boolean);
+
+            // ===========================
+            // Bangladesh Address
+            // ===========================
+            case "2":
+                return [
+                    addressSection.querySelector("input[name='house_address']"),
+                    addressSection.querySelector("input[name='city']"),
+                    addressSection.querySelector("input[name='district']"),
+                    addressSection.querySelector("input[name='post_code']"),
+                ].filter(Boolean);
+
+            // ===========================
+            // Foreign Address
+            // ===========================
+            case "3":
+                return [
+                    addressSection.querySelector("input[name='country']"),
+                    addressSection.querySelector("input[name='passport_no']"),
+                ].filter(Boolean);
+
+            default:
+                return [];
+        }
+    }
 
     function isFilled(field) {
+        if (!field) return false;
+
+        if (field.disabled) return false;
+
         if (field.type === "checkbox" || field.type === "radio") {
             return field.checked;
         }
@@ -30,6 +69,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateAddressProgress() {
+        const fields = getVisibleFields();
+
+        if (fields.length === 0) {
+            step.style.setProperty("--fill", "0%");
+            addressItem.classList.remove("completed");
+            return;
+        }
+
         let filled = 0;
 
         fields.forEach((field) => {
@@ -42,16 +89,22 @@ document.addEventListener("DOMContentLoaded", () => {
 
         step.style.setProperty("--fill", percent + "%");
 
-        if (percent >= 100) {
+        if (percent === 100) {
             addressItem.classList.add("completed");
         } else {
             addressItem.classList.remove("completed");
         }
     }
 
-    fields.forEach((field) => {
-        field.addEventListener("input", updateAddressProgress);
-        field.addEventListener("change", updateAddressProgress);
+    // ===========================================
+    // Listen for all address inputs
+    // ===========================================
+
+    addressSection.addEventListener("input", updateAddressProgress);
+    addressSection.addEventListener("change", updateAddressProgress);
+
+    locationType.addEventListener("change", function () {
+        setTimeout(updateAddressProgress, 50);
     });
 
     updateAddressProgress();
@@ -65,13 +118,12 @@ function injectAddressWaterCSS() {
     style.id = "address-progress-style";
 
     style.innerHTML = `
-
-.patient-progress-card .progress-item:nth-child(3) .step{
+.patient-progress-card .progress-item:nth-child(2) .step{
     position:relative;
     overflow:hidden;
 }
 
-.patient-progress-card .progress-item:nth-child(3) .step::before{
+.patient-progress-card .progress-item:nth-child(2) .step::before{
     content:"";
     position:absolute;
     left:0;
@@ -83,7 +135,7 @@ function injectAddressWaterCSS() {
     z-index:0;
 }
 
-.patient-progress-card .progress-item:nth-child(3) .step::after{
+.patient-progress-card .progress-item:nth-child(2) .step::after{
     content:"";
     position:absolute;
     left:-50%;
@@ -96,7 +148,7 @@ function injectAddressWaterCSS() {
     z-index:1;
 }
 
-.patient-progress-card .progress-item:nth-child(3) .step i{
+.patient-progress-card .progress-item:nth-child(2) .step i{
     position:relative;
     z-index:2;
 }
@@ -109,7 +161,6 @@ function injectAddressWaterCSS() {
         transform:translateX(50%);
     }
 }
-
 `;
 
     document.head.appendChild(style);

@@ -64,7 +64,7 @@ class PatientService
             $organization = Organization::first();
 
             return Pdf::loadView(
-                'backend.patient_management.pdf',
+                'backend.patient_management.patient_card_pdf',
                 compact('patients', 'organization')
             )->stream('patients.pdf');
         } catch (\Throwable $e) {

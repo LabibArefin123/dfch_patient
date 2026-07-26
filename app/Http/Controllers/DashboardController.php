@@ -385,6 +385,10 @@ class DashboardController extends Controller
                 'is_old_cancer' => (bool) $patient->is_old_cancer,
 
                 'is_emergency' => (bool) $patient->is_emergency,
+
+                'is_treatment'    => (bool) $patient->is_treatment,
+
+                'is_investigated' => (bool) $patient->is_investigated,
             ];
         }
 

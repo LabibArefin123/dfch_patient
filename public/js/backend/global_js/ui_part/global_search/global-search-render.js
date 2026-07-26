@@ -42,69 +42,118 @@ function renderSearchResults(data, query, resultBox) {
         .map((item) => {
             let statusBadges = "";
 
-            // 🟠 Recommended Patient
+            /* Recommended*/
+
             if (item.is_recommend) {
                 statusBadges += `
                     <span
                         style="
-                            font-size: 11px;
-                            font-weight: 600;
-                            color: #c2410c;
-                            background: #ffedd5;
-                            border: 1px solid #fdba74;
-                            padding: 4px 8px;
-                            border-radius: 5px;
-                            margin-left: 6px;
-                            white-space: nowrap;
+                            font-size:11px;
+                            font-weight:600;
+                            color:#c2410c;
+                            background:#ffedd5;
+                            border:1px solid #fdba74;
+                            padding:4px 8px;
+                            border-radius:5px;
+                            margin-left:6px;
+                            white-space:nowrap;
                         "
                     >
-                        Recommended Patient
+                        <i class="fas fa-user-md mr-1"></i>
+                        Recommended
                     </span>
                 `;
             }
 
-            // 🔵 Old Cancer History
-            if (item.is_old_cancer) {
-                statusBadges += `
-                    <span
-                        style="
-                            font-size: 11px;
-                            font-weight: 600;
-                            color: #1d4ed8;
-                            background: #dbeafe;
-                            border: 1px solid #93c5fd;
-                            padding: 4px 8px;
-                            border-radius: 5px;
-                            margin-left: 6px;
-                            white-space: nowrap;
-                        "
-                    >
-                        Old Cancer History
-                    </span>
-                `;
-            }
+            /* Emergency*/
 
-            // 🔴 Emergency Patient
             if (item.is_emergency) {
                 statusBadges += `
+                        <span
+                            style="
+                                font-size:11px;
+                                font-weight:700;
+                                color:#dc2626;
+                                background:#fee2e2;
+                                border:1px solid #fca5a5;
+                                padding:4px 8px;
+                                border-radius:5px;
+                                margin-left:6px;
+                                white-space:nowrap;
+                            "
+                        >
+                            <i class="fas fa-ambulance mr-1"></i>
+                            Emergency
+                        </span>
+                    `;
+            }
+
+            /*  Treatment*/
+            if (item.is_treatment) {
+                statusBadges += `
+                <span
+                    style="
+                        font-size:11px;
+                        font-weight:600;
+                        color:#1d4ed8;
+                        background:#dbeafe;
+                        border:1px solid #93c5fd;
+                        padding:4px 8px;
+                        border-radius:5px;
+                        margin-left:6px;
+                        white-space:nowrap;
+                    "
+                >
+                    <i class="fas fa-procedures mr-1"></i>
+                    Treatment
+                </span>
+            `;
+            }
+
+            /*  Investigation*/
+
+            if (item.is_investigated) {
+                statusBadges += `
                     <span
                         style="
-                            font-size: 11px;
-                            font-weight: 700;
-                            color: #dc2626;
-                            background: #fee2e2;
-                            border: 1px solid #fca5a5;
-                            padding: 4px 8px;
-                            border-radius: 5px;
-                            margin-left: 6px;
-                            white-space: nowrap;
+                            font-size:11px;
+                            font-weight:600;
+                            color:#0f766e;
+                            background:#ccfbf1;
+                            border:1px solid #5eead4;
+                            padding:4px 8px;
+                            border-radius:5px;
+                            margin-left:6px;
+                            white-space:nowrap;
                         "
                     >
-                        Emergency Patient
+                        <i class="fas fa-microscope mr-1"></i>
+                        Investigation
                     </span>
                 `;
             }
 
+            /*  Cancer */
+            if (item.is_old_cancer) {
+                statusBadges += `
+                <span
+                    style="
+                        font-size:11px;
+                        font-weight:600;
+                        color:#b45309;
+                        background:#fef3c7;
+                        border:1px solid #fcd34d;
+                        padding:4px 8px;
+                        border-radius:5px;
+                        margin-left:6px;
+                        white-space:nowrap;
+                    "
+                >
+                    <i class="fas fa-radiation mr-1"></i>
+                    Cancer History
+                </span>
+            `;
+            }
             return `
                 <div
                     class="search-item"
