@@ -3,5 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeRecommendToggle();
     initializeTreatmentToggle();
     initializeInvestigationToggle();
+    initializeEmergencyToggle();
     initializeCancerToggle();
 });

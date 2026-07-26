@@ -37,18 +37,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
         return emergencyDetails.value.trim().length;
     }
+
     function updateEmergencyProgress() {
         if (!emergencyField) return;
 
         let percent = 0;
 
-        if (emergencyField.value === "1") {
+        if (emergencyField.value === "0") {
+            // No emergency → section completed
+            percent = 100;
+        } else {
             const hasDetails = getEmergencyDetailsLength() > 0;
 
             percent = hasDetails ? 100 : 50;
-        } else {
-            // Not an emergency
-            percent = 0;
         }
 
         step.style.setProperty("--fill", percent + "%");
