@@ -175,6 +175,7 @@
         @include('backend.patient_management.partial_pages.edit_page.part_5')
         @include('backend.patient_management.partial_pages.edit_page.part_7')
         @include('backend.patient_management.partial_pages.edit_page.part_8')
+        @include('backend.patient_management.partial_pages.edit_page.part_9')
         @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
         <button class="btn btn-primary mt-2">Update</button>
     </form>
