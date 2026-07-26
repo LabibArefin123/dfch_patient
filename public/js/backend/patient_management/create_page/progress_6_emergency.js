@@ -1,11 +1,11 @@
 /**
- * ==========================================================================
- * Progress 6 - Emergency
- * ==========================================================================
- * ✔ Emergency Progress
- * ✔ Water Animation
- * ==========================================================================
- */
+|--------------------------------------------------------------------------
+| Progress 6 - Emergency
+|--------------------------------------------------------------------------
+| ✔ Emergency Progress
+| ✔ Water Animation
+|--------------------------------------------------------------------------
+*/
 
 document.addEventListener("DOMContentLoaded", () => {
     const progressCard = document.querySelector(".patient-progress-card");
@@ -17,17 +17,40 @@ document.addEventListener("DOMContentLoaded", () => {
     if (progressItems.length < 6) return;
 
     const emergencyItem = progressItems[5];
-
     const step = emergencyItem.querySelector(".step");
 
     injectEmergencyWaterCSS();
 
     const emergencyField = document.getElementById("is_emergency");
+    const emergencyDetails = document.getElementById("emergency_details");
+
+    function getEmergencyDetailsLength() {
+        if (!emergencyDetails) {
+            return 0;
+        }
+
+        if (emergencyDetails.ckeditorInstance) {
+            const html = emergencyDetails.ckeditorInstance.getData();
+
+            return html.replace(/<[^>]*>/g, "").trim().length;
+        }
+
+        return emergencyDetails.value.trim().length;
+    }
 
     function updateEmergencyProgress() {
         if (!emergencyField) return;
 
-        const percent = emergencyField.value === "1" ? 100 : 0;
+        let percent = 0;
+
+        if (emergencyField.value === "0") {
+            // No emergency → section completed
+            percent = 100;
+        } else {
+            const hasDetails = getEmergencyDetailsLength() > 0;
+
+            percent = hasDetails ? 100 : 50;
+        }
 
         step.style.setProperty("--fill", percent + "%");
 
@@ -35,6 +58,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     emergencyField.addEventListener("change", updateEmergencyProgress);
+
+    if (emergencyDetails) {
+        emergencyDetails.addEventListener("input", updateEmergencyProgress);
+
+        const waitForEditor = setInterval(() => {
+            if (emergencyDetails.ckeditorInstance) {
+                emergencyDetails.ckeditorInstance.model.document.on(
+                    "change:data",
+                    updateEmergencyProgress,
+                );
+
+                clearInterval(waitForEditor);
+            }
+        }, 300);
+    }
 
     updateEmergencyProgress();
 });
@@ -47,6 +85,7 @@ function injectEmergencyWaterCSS() {
     style.id = "emergency-progress-style";
 
     style.innerHTML = `
+
 .patient-progress-card .progress-item:nth-child(11) .step{
     position:relative;
     overflow:hidden;
@@ -93,6 +132,7 @@ function injectEmergencyWaterCSS() {
     }
 
 }
+
 `;
 
     document.head.appendChild(style);

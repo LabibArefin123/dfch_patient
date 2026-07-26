@@ -37,6 +37,7 @@ class Patient extends Model
         
         'is_recommend',
         'is_emergency',
+        'emergency_details',
         'recommend_doctor_name',
         'recommend_note',
         
@@ -63,6 +64,7 @@ class Patient extends Model
         'is_recommend' => 'boolean',
         'is_old_cancer' => 'boolean',
         'is_emergency' => 'boolean',
+        'emergency_details' => 'array',
 
         'is_treatment' => 'boolean',
         'is_investigated' => 'boolean',

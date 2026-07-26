@@ -4,8 +4,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function initializeEditors() {
     const editors = [
+        // Patient
         "#patient_problem_description",
         "#patient_drug_description",
+
+        // Emergency
+        "#emergency_details",
 
         // Treatment
         "#treatment_information",

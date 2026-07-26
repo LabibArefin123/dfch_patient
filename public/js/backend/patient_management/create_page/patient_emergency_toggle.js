@@ -1,11 +1,22 @@
 /**
- * ==========================================================================
- * Patient Emergency Toggle
- * ==========================================================================
- */
+|--------------------------------------------------------------------------
+| Patient Emergency Toggle
+|--------------------------------------------------------------------------
+*/
 
 function toggleEmergency() {
-    // Reserved for future emergency fields.
+    if ($("#is_emergency").val() == "1") {
+        $("#emergencyDetailsSection")
+            .stop(true, true)
+            .slideDown(250)
+            .removeClass("d-none");
+    } else {
+        $("#emergencyDetailsSection")
+            .stop(true, true)
+            .slideUp(250, function () {
+                $(this).addClass("d-none");
+            });
+    }
 }
 
 function initializeEmergencyToggle() {

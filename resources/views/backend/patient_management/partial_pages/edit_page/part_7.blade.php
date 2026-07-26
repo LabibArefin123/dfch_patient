@@ -1,26 +1,24 @@
 {{-- ===========================================================
 CANCER INFORMATION (EDIT)
 =========================================================== --}}
+<div class="patient-section-card cancer-card">
+    <div class="section-header">
+        <div>
+            <h5>
+                <i class="fas fa-ribbon text-danger"></i>
+                Cancer Information
+            </h5>
 
-<div class="patient-section-card">
+            <span>
+                Cancer history & diagnostic image archive
+            </span>
 
-
-    <div class="section-header danger">
-
-        <div class="section-icon">
-            <i class="fas fa-ribbon"></i>
         </div>
 
-        <div class="section-content">
-            <h3>Cancer Information</h3>
-            <p class="mb-0">
-                Update the patient's previous cancer history, diagnostic images,
-                cancer reports and medical findings.
-            </p>
-        </div>
-
+        <span class="section-badge badge-danger">
+            Cancer Record
+        </span>
     </div>
-
     <div class="section-body">
 
         {{-- Cancer Status --}}

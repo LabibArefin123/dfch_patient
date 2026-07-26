@@ -51,14 +51,12 @@ return new class extends Migration {
             /* Recommendation  */
             $table->boolean('is_recommend')->default(false);
             $table->boolean('is_emergency')->default(false);
+            $table->longText('emergency_details')->nullable();
             $table->string('recommend_doctor_name')->nullable();
             $table->longText('recommend_note')->nullable();
 
             /* Treatment*/
-            $table->boolean('is_treatment')
-                ->default(false)
-                ->comment('0=No, 1=Yes');
-
+            $table->boolean('is_treatment')->default(false)->comment('0=No, 1=Yes');
             // Smart editor HTML
             $table->longText('treatment_information')->nullable();
             // ["OPD","OT"]
