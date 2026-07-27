@@ -124,7 +124,7 @@
 
             <label>Referral Documents</label>
 
-            <div class="treatment-upload-box">
+            <div class="global-upload-box">
 
                 <input type="file" name="documents[]" class="form-control-file" accept=".pdf,image/*" multiple>
 

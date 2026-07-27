@@ -109,7 +109,7 @@
                 {{-- Images --}}
                 <div class="form-group col-lg-6">
                     <label> Treatment Images </label>
-                    <div class="treatment-upload-box">
+                    <div class="global-upload-box">
                         <input type="file" name="treatment_images[]" class="form-control-file" accept="image/*"
                             multiple>
 

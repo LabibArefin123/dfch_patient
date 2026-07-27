@@ -100,7 +100,7 @@
 
                 </div>
 
-                {{-- Recommendation Documents --}}
+                {{-- Referred Documents --}}
                 <div id="patientAnimationDocumentContainer">
 
                 </div>

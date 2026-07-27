@@ -2,7 +2,7 @@
 |--------------------------------------------------------------------------
 | Patient Document Content
 |--------------------------------------------------------------------------
-| Load and display patient recommendation documents.
+| Load and display patient referred documents.
 |--------------------------------------------------------------------------
 */
 
@@ -48,9 +48,9 @@ $(document).on("click", ".patient-summary-documents", function (e) {
                 body.html(`
                     <div class="alert alert-warning text-center">
                         <i class="fas fa-folder-open fa-2x mb-3"></i>
-                        <h5>No Recommendation Documents</h5>
+                        <h5>No Referred Documents</h5>
                         <p class="mb-0 text-muted">
-                            No uploaded recommendation documents found.
+                            No uploaded referred documents found.
                         </p>
                     </div>
                 `);

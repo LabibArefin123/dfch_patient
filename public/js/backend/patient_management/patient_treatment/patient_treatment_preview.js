@@ -36,7 +36,7 @@ function initializeTreatmentPreview() {
  * Initialize Single Input
  */
 function setupTreatmentInput(input, index) {
-    const previewContainer = createPreviewContainer(input, index);
+    const previewContainer = createTreatmentPreviewContainer(input, index);
 
     if (input.dataset.previewInitialized === "1") {
         return;
@@ -51,7 +51,7 @@ function setupTreatmentInput(input, index) {
 /**
  * Create Preview Container Automatically
  */
-function createPreviewContainer(input, index) {
+function createTreatmentPreviewContainer(input, index) {
     let container = document.getElementById("treatmentPreviewContainer");
 
     if (container) {

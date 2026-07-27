@@ -163,8 +163,7 @@
    Upload Box
    ========================================================================== */
 
-
-.treatment-upload-box {
+.cancer-upload-box {
     position: relative;
     border: 2px dashed #d8e2ec;
     border-radius: 16px;
@@ -173,12 +172,12 @@
     transition: 0.3s;
 }
 
-.treatment-upload-box:hover {
+.cancer-upload-box:hover {
     border-color: #16a34a;
     background: #f8fffa;
 }
 
-.treatment-upload-box input[type="file"] {
+.cancer-upload-box input[type="file"] {
     position: absolute;
     inset: 0;
     width: 100%;
@@ -187,7 +186,6 @@
     cursor: pointer;
     z-index: 2;
 }
-
 
 .upload-placeholder {
     padding: 42px 20px;

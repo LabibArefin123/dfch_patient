@@ -34,7 +34,7 @@ function initializeCancerPreview() {
  * Initialize Single Input
  */
 function setupCancerInput(input, index) {
-    const previewContainer = createPreviewContainer(input, index);
+    const previewContainer = createCancerPreviewContainer(input, index);
 
     input.dataset.previewContainer = previewContainer.id;
 
@@ -46,7 +46,7 @@ function setupCancerInput(input, index) {
 /**
  * Create Preview Container Automatically
  */
-function createPreviewContainer(input, index) {
+function createCancerPreviewContainer(input, index) {
     let container = document.getElementById("cancerPreviewContainer");
 
     if (container) {

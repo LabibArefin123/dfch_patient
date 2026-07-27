@@ -125,7 +125,7 @@
 
                     <label>Investigation Images</label>
 
-                    <div class="treatment-upload-box">
+                    <div class="global-upload-box">
 
                         <input type="file" name="investigation_images[]" class="form-control-file" accept="image/*"
                             multiple>

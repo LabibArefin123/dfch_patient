@@ -142,7 +142,7 @@
                         <i class="fas fa-folder-open"></i>
 
                         <span>
-                            No recommendation documents available
+                            No refered documents available
                         </span>
 
                     </div>

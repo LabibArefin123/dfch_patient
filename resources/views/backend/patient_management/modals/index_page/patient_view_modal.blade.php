@@ -39,11 +39,11 @@
                     </div>
                 </div>
 
-                <!-- Section 2: Recommendation Documents -->
+                <!-- Section 2: Referred Documents -->
                 <div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; overflow: hidden;">
                     <div class="card-header bg-white border-0 py-3">
                         <h6 class="mb-0 text-success font-weight-bold">
-                            <i class="fas fa-file-medical mr-2"></i> Recommendation Documents
+                            <i class="fas fa-file-medical mr-2"></i> Referred Documents
                         </h6>
                     </div>
                     <div class="card-body bg-white pt-0">

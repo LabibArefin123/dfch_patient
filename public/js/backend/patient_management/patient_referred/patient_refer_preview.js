@@ -34,7 +34,7 @@ function initializeReferPreview() {
  * Initialize Single Input
  */
 function setupReferInput(input, index) {
-    const previewContainer = createPreviewContainer(input, index);
+    const previewContainer = createReferPreviewContainer(input, index);
     input.dataset.previewContainer = previewContainer.id;
 
     input.addEventListener("change", (e) => {
@@ -43,7 +43,7 @@ function setupReferInput(input, index) {
 }
 
 /**Create Preview Container Automatically*/
-function createPreviewContainer(input) {
+function createReferPreviewContainer(input) {
     let container = document.getElementById("referPreviewContainer");
 
     if (!container) {

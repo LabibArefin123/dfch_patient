@@ -31,7 +31,7 @@
                 dots++;
 
                 target.text(
-                    "Analyzing Recommendation Documents" + ".".repeat(dots % 4),
+                    "Analyzing Referred Documents" + ".".repeat(dots % 4),
                 );
             }, 400);
 

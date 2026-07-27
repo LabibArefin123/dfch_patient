@@ -135,7 +135,7 @@ function populatePatientViewModal(patient) {
     });
     infoContainer.html(infoHtml);
 
-    // 3. Recommendation Documents
+    // 3. Referred Documents
     const docsContainer = $("#viewPatientDocsContainer");
     docsContainer.empty();
 
@@ -158,7 +158,7 @@ function populatePatientViewModal(patient) {
             `);
         });
     } else {
-        docsContainer.html('<div class="col-12 text-muted p-2">No recommendation documents uploaded.</div>');
+        docsContainer.html('<div class="col-12 text-muted p-2">No referred documents uploaded.</div>');
     }
 
     // 4. Cancer & X-Ray Reports list (eager loaded via relation: cancerPhotos)
@@ -170,7 +170,7 @@ function populatePatientViewModal(patient) {
     if (reports.length > 0) {
         reports.forEach((report) => {
             const totalCancer = report.total_cancer ?? 0;
-            const remarks = report.remarks || 'N/A';
+            const remarks = report.cancer_remarks || 'N/A';
             const xrayPhotos = report.xray_photo || [];
             const xrayDescriptions = report.xray_description || [];
 
