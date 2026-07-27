@@ -50,7 +50,7 @@
 
                     <label>Treatment Type</label>
 
-                    <select name="treatment_type" class="form-control">
+                    <select name="treatment_type" id="treatment_type" class="form-control">
 
                         <option value="">Select Treatment Type</option>
 

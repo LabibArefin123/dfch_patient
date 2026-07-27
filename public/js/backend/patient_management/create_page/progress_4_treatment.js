@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const imageField = document.querySelector(
         "input[name='treatment_images[]']",
     );
-    const summaryField = document.getElementById("treatment_information");
+    const summaryField = document.getElementById("edit_treatment_information");
 
     function getEditorValue(textarea) {
         if (!textarea) return "";
