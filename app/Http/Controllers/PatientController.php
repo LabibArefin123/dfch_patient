@@ -1151,7 +1151,6 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-
             /* Patient Identity*/
             'patient_name' => 'required|string|max:255',
             'patient_f_name' => 'required|string|max:255',
@@ -1201,7 +1200,17 @@ class PatientController extends Controller
             'documents.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120',],
 
             /* Patient Cancer Images */
-            'images.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120',],
+            // 'images.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120',],
+            /* Cancer */
+            'total_cancer' => 'nullable|integer|min:1',
+            'xray_photo.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'xray_description' => 'nullable|array',
+            'xray_description.*' => 'nullable|string',
+            'cancer_remarks' => 'nullable|string',
+
+            /* Emergency */
+            'reason' => 'nullable|string|max:500',
+            'emergency_date' => 'nullable|date',
         ]);
 
         /* Boolean Values */
@@ -1224,6 +1233,16 @@ class PatientController extends Controller
             $validated['investigation_type'] = null;
         }
 
+        /* Cancer Cleanup */
+        if (!$validated['is_old_cancer']) {
+            $validated['total_cancer'] = null;
+        }
+
+        /* Emergency Cleanup */
+        if (!$validated['is_emergency']) {
+            $validated['emergency_details'] = null;
+        }
+
         /*Location Cleanup*/
         if ($request->location_type != 1) {
             $validated['location_simple'] = null;
@@ -1241,6 +1260,13 @@ class PatientController extends Controller
             $validated['passport_no'] = null;
         }
 
+        if ($validated['is_emergency']) {
+            PatientEmergency::create([
+                'is_emergency' => true,
+                'reason' => $request->reason,
+                'emergency_date' => $request->emergency_date,
+            ]);
+        }
 
         /*Create Patient*/
         $patient = Patient::create($validated);
@@ -1257,24 +1283,34 @@ class PatientController extends Controller
         $documentPath = public_path("uploads/documents/{$patientFolder}/recommend_doc");
         $treatmentPath = public_path("uploads/images/patients/{$patientFolder}/treatment");
         $investigationPath = public_path("uploads/images/patients/{$patientFolder}/investigation");
+        $cancerPath = public_path("uploads/images/patients/{$patientFolder}/cancer");
 
         /* Create Directories */
         File::ensureDirectoryExists($imagePath);
         File::ensureDirectoryExists($documentPath);
         File::ensureDirectoryExists($treatmentPath);
         File::ensureDirectoryExists($investigationPath);
+        File::ensureDirectoryExists($cancerPath);
 
         /* Upload Cancer Images*/
-        if ($request->hasFile('images')) {
-            foreach ($request->file('images') as $index => $image) {
-                $extension = $image->getClientOriginalExtension();
-                $filename = 'patient_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
-                $image->move($imagePath, $filename);
-                PatientCancerPhoto::create([
-                    'patient_id' => $patient->id,
-                    'image' => "uploads/images/patients/{$patientFolder}/image/{$filename}",
-                ]);
+        if ($validated['is_old_cancer']) {
+            $xrayPhotos = [];
+            if ($request->hasFile('xray_photo')) {
+                foreach ($request->file('xray_photo') as $index => $image) {
+                    $extension = $image->getClientOriginalExtension();
+                    $filename = 'cancer_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                    $image->move($cancerPath, $filename);
+                    $xrayPhotos[] = "uploads/images/patients/{$patientFolder}/cancer/{$filename}";
+                }
             }
+
+            PatientCancerPhoto::create([
+                'patient_id' => $patient->id,
+                'total_cancer' => $request->total_cancer,
+                'xray_photo' => $xrayPhotos,
+                'xray_description' => $request->xray_description,
+                'cancer_remarks' => $request->cancer_remarks,
+            ]);
         }
 
         /* Upload Referred Documents*/

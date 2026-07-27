@@ -78,49 +78,68 @@
         </div>
 
         {{-- Emergency Details --}}
+        {{-- Emergency Details --}}
         <div id="emergencyDetailsSection" class="d-none">
 
             <div class="section-subtitle mt-4">
-
                 <span>
                     <i class="fas fa-notes-medical"></i>
-                    Emergency Details
+                    Emergency Information
                 </span>
-
                 <hr>
-
             </div>
 
             <div class="section-note warning">
 
                 <div class="section-note-icon">
-                    <i class="fas fa-file-medical-alt"></i>
+                    <i class="fas fa-first-aid"></i>
                 </div>
 
                 <div class="section-note-content">
-
-                    <strong>Emergency Notes</strong>
-
+                    <strong>Emergency Admission Details</strong>
                     <p>
-                        Record the patient's emergency condition, arrival status, first aid, triage, and any immediate
-                        observations.
+                        Record the reason for emergency admission and the date/time the patient arrived.
                     </p>
-
                 </div>
 
             </div>
 
             <div class="row">
 
-                <div class="form-group col-md-12">
+                {{-- Emergency Date --}}
+                <div class="form-group col-lg-6">
 
-                    <label>Emergency Details</label>
+                    <label>Emergency Date & Time</label>
 
-                    <textarea id="emergency_details" name="emergency_details[notes]" class="form-control" rows="8"
-                        placeholder="Enter complete emergency details..."></textarea>
+                    <div class="input-group modern-input">
+
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">
+                                <i class="fas fa-calendar-alt"></i>
+                            </span>
+                        </div>
+
+                        <input type="datetime-local" name="emergency_date" id="emergency_date" class="form-control"
+                            value="{{ old('emergency_date') }}">
+
+                    </div>
 
                     <small class="text-muted">
-                        This field supports rich text formatting through the editor.
+                        Select the patient's emergency admission date and time.
+                    </small>
+
+                </div>
+
+                {{-- Emergency Reason --}}
+                <div class="form-group col-lg-6">
+
+                    <label>Emergency Reason</label>
+
+                    <textarea name="reason" id="reason" rows="5" class="form-control"
+                        placeholder="Describe the emergency condition, symptoms, accident, trauma, bleeding, severe pain, etc.">{{ old('reason') }}</textarea>
+
+                    <small class="text-muted">
+                        Briefly describe why the patient required emergency treatment.
                     </small>
 
                 </div>
