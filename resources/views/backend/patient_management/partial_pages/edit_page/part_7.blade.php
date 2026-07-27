@@ -32,7 +32,7 @@
                     Remarks
                 </label>
 
-                <textarea name="remarks" id="edit_remarks" class="form-control">{!! old('remarks', $patient->remarks) !!}</textarea>
+                <textarea name="remarks" id="remarks" class="form-control">{!! old('remarks', $patient->remarks) !!}</textarea>
 
             </div>
 

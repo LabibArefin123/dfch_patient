@@ -9,23 +9,24 @@ document.addEventListener("DOMContentLoaded", () => {
     const step = medicalItem.querySelector(".step");
 
     injectMedicalWaterCSS();
-
-    const problemField = document.querySelector("#patient_problem_description");
-    const drugField = document.querySelector("#patient_drug_description");
+    const problemField = document.querySelector(
+        "#edit_patient_problem_description",
+    );
+    const drugField = document.querySelector("#edit_patient_drug_description");
     const remarksField = document.querySelector("textarea[name='remarks']");
 
     function getEditorValue(textarea) {
         if (!textarea) return "";
 
-        // CKEditor 5 instance
         if (textarea.ckeditorInstance) {
             return textarea.ckeditorInstance
                 .getData()
                 .replace(/<[^>]*>/g, "")
+                .replace(/&nbsp;/g, "")
                 .trim();
         }
 
-        return textarea.value.trim();
+        return $.trim(textarea.value);
     }
 
     function updateMedicalProgress() {

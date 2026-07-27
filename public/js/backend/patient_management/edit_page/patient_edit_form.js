@@ -6,4 +6,9 @@ document.addEventListener("DOMContentLoaded", function () {
     initializeInvestigationToggle();
     initializeEmergencyToggle();
     initializeCancerToggle();
+
+    // wait for all animations
+    setTimeout(function () {
+        document.dispatchEvent(new CustomEvent("patient-form-ready"));
+    }, 350);
 });

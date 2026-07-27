@@ -15,9 +15,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     injectWaterCSS();
 
-    const fields = section.querySelectorAll(
-        'input:not([type="hidden"]):not([type="file"]), select, textarea',
-    );
+   const fields = [
+       document.querySelector('input[name="patient_name"]'),
+       document.querySelector('input[name="patient_f_name"]'),
+       document.querySelector('input[name="patient_m_name"]'),
+       document.querySelector('input[name="age"]'),
+       document.querySelector('select[name="gender"]'),
+       document.querySelector('input[name="phone_1"]'),
+   ].filter(Boolean);
 
     function getFilledPercent() {
         let total = 0;

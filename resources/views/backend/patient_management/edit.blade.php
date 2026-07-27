@@ -184,13 +184,6 @@
 
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_1_basic.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_2_address.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_3_medical.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_4_treatment.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_5_investigate.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_6_emergency.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_7_cancer.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_editor.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_location_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_recommend_toggle.js') }}"></script>
@@ -198,6 +191,13 @@
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_treatment_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_cancer_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_edit_form.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_1_basic.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_2_address.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_3_medical.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_4_treatment.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_5_investigate.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_6_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_7_cancer.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_photo_edit_modal.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_validation.js') }}"></script>

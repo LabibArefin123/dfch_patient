@@ -1,8 +1,5 @@
 <div class="patient-section-card emergency-card">
-
     <div class="section-header danger">
-
-
         <div>
 
             <h5>
@@ -21,9 +18,7 @@
     </div>
 
     <div class="section-body">
-
         <div class="section-subtitle">
-
             <span>
                 <i class="fas fa-exclamation-triangle"></i>
                 Emergency Status
@@ -34,15 +29,11 @@
         </div>
 
         <div class="section-note danger">
-
             <div class="section-note-icon">
                 <i class="fas fa-ambulance"></i>
             </div>
-
             <div class="section-note-content">
-
                 <strong>Emergency Patient</strong>
-
                 <p>
                     Select whether the patient arrived as an emergency case.
                 </p>
@@ -52,13 +43,9 @@
         </div>
 
         <div class="row">
-
             <div class="form-group col-lg-6">
-
                 <label>Emergency Patient?</label>
-
                 <div class="input-group modern-input">
-
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="fas fa-ambulance"></i>

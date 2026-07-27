@@ -6,11 +6,20 @@
 
 function initializeEditors() {
     const editors = [
-        "#edit_remarks",
-        "#edit_recommend_note",
+        // Basic Information
         "#edit_patient_problem_description",
         "#edit_patient_drug_description",
+
+        // Recommendation
+        "#edit_recommend_note",
+
+        // Emergency
+        "#edit_emergency_details",
+
+        // Treatment
         "#edit_treatment_information",
+
+        // Investigation
         "#edit_investigation_information",
     ];
 
@@ -27,15 +36,24 @@ function initializeEditors() {
                 "|",
                 "bold",
                 "italic",
+                "underline",
                 "|",
                 "bulletedList",
                 "numberedList",
                 "|",
+                "link",
+                "blockQuote",
+                "|",
                 "undo",
                 "redo",
             ],
-        }).catch(function (error) {
-            console.error(error);
-        });
+        })
+            .then(function (editor) {
+                // Store editor instance for later use
+                element.ckeditorInstance = editor;
+            })
+            .catch(function (error) {
+                console.error(error);
+            });
     });
 }
