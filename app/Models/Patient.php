@@ -37,7 +37,6 @@ class Patient extends Model
         
         'is_recommend',
         'is_emergency',
-        'emergency_details',
         'recommend_doctor_name',
         'recommend_note',
         
