@@ -1152,36 +1152,20 @@ class PatientController extends Controller
     {
         $validated = $request->validate([
 
-            /*
-        |--------------------------------------------------------------------------
-        | Patient Identity
-        |--------------------------------------------------------------------------
-        */
-
+            /* Patient Identity*/
             'patient_name' => 'required|string|max:255',
             'patient_f_name' => 'required|string|max:255',
             'patient_m_name' => 'required|string|max:255',
-
             'age' => 'required|integer|min:0|max:100',
             'gender' => 'required|in:male,female,other',
 
-            /*
-        |--------------------------------------------------------------------------
-        | Contact
-        |--------------------------------------------------------------------------
-        */
-
+            /* Contact*/
             'phone_1' => 'required|string|max:20',
             'phone_2' => 'nullable|string|max:20',
             'phone_f_1' => 'nullable|string|max:20',
             'phone_m_1' => 'nullable|string|max:20',
 
-            /*
-        |--------------------------------------------------------------------------
-        | Location
-        |--------------------------------------------------------------------------
-        */
-
+            /* Location*/
             'location_type' => 'required|in:1,2,3',
 
             'location_simple' => 'nullable|string',
@@ -1192,88 +1176,31 @@ class PatientController extends Controller
             'country' => 'nullable|string|max:255',
             'passport_no' => 'nullable|string|max:100',
 
-            /*
-        |--------------------------------------------------------------------------
-        | Patient Information
-        |--------------------------------------------------------------------------
-        */
-
+            /*Patient Information*/
             'patient_problem_description' => 'nullable|string',
             'patient_drug_description' => 'nullable|string',
             'remarks' => 'nullable|string',
 
-            /*
-        |--------------------------------------------------------------------------
-        | Recommendation
-        |--------------------------------------------------------------------------
-        */
-
+            /* Referred    */
             'recommend_doctor_name' => 'nullable|string|max:255',
             'recommend_note' => 'nullable|string',
 
-            /*
-        |--------------------------------------------------------------------------
-        | Treatment
-        |--------------------------------------------------------------------------
-        */
-
+            /* Treatment */
             'treatment_information' => 'nullable|string',
+            'treatment_type' => ['nullable', 'in:OPD,OT',],
+            'treatment_images.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120',],
 
-            'treatment_type' => [
-                'nullable',
-                'in:OPD,OT',
-            ],
-
-            'treatment_images.*' => [
-                'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
-                'max:5120',
-            ],
-
-            /*
-        |--------------------------------------------------------------------------
-        | Investigation
-        |--------------------------------------------------------------------------
-        */
-
+            /*Investigation  */
             'investigation_information' => 'nullable|string',
+            'investigation_images.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120',],
 
-            'investigation_type' => [
-                'nullable',
-                'in:OPD,OT',
-            ],
-
-            'investigation_images.*' => [
-                'nullable',
-                'image',
-                'mimes:jpg,jpeg,png,webp',
-                'max:5120',
-            ],
-
-            /*
-        |--------------------------------------------------------------------------
-        | Hospital
-        |--------------------------------------------------------------------------
-        */
-
+            /* Hospital */
             'date_of_patient_added' => 'required|date',
 
-            /*
-        |--------------------------------------------------------------------------
-        | Documents
-        |--------------------------------------------------------------------------
-        */
-
-            'documents.*' => [
-                'nullable',
-                'file',
-                'mimes:pdf,jpg,jpeg,png',
-                'max:10240',
-            ],
+            /* Documents*/
+            'documents.*' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120',],
 
             /* Patient Cancer Images */
-
             'images.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120',],
         ]);
 

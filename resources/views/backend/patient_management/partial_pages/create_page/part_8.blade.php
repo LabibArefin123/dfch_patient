@@ -104,7 +104,7 @@
                 {{-- Upload Images --}}
                 <div class="form-group col-lg-6">
                     <label>Cancer Images</label>
-                    <div class="cancer-upload-box">
+                    <div class="global-upload-box">
                         <input type="file" name="xray_photo[]" class="form-control-file" accept="image/*" multiple>
                         <div class="upload-placeholder">
                             <i class="fas fa-cloud-upload-alt"></i>
