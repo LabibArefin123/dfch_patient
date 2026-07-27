@@ -172,7 +172,7 @@
 
             <div class="form-group">
                 <label>Doctor's Remarks</label>
-                <textarea name="remarks" class="form-control ckeditor" rows="5"></textarea>
+                <textarea name="cancer_remarks" class="form-control ckeditor" rows="5"></textarea>
                 <small class="text-muted">
                     Enter diagnosis, recommendations, follow-up schedule and additional observations.
                 </small>

@@ -204,7 +204,7 @@
 
                                 </td>
 
-                                <td>{{ $report->remarks ?? '-' }}</td>
+                                <td>{{ $report->cancer_remarks ?? '-' }}</td>
                                 <td class="text-center">
                                     <a href="{{ route('patient-cancer-photos.show', $report->id) }}"
                                         class="btn btn-info btn-sm">

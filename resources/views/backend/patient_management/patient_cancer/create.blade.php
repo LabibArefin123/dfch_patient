@@ -101,7 +101,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Remarks</label>
-                                <textarea name="remarks" rows="3" class="form-control">{{ old('remarks') }}</textarea>
+                                <textarea name="cancer_remarks" rows="3" class="form-control">{{ old('cancer_remarks') }}</textarea>
                             </div>
                         </div>
 

@@ -31,7 +31,7 @@ class PatientCancerPhotoController extends Controller
                             ->where('patient_name', 'like', "%{$search}%")
                             ->orWhere('patient_code', 'like', "%{$search}%");
                     })
-                        ->orWhere('remarks', 'like', "%{$search}%");
+                        ->orWhere('cancer_remarks', 'like', "%{$search}%");
                 });
             })
             ->latest()
@@ -166,7 +166,7 @@ class PatientCancerPhotoController extends Controller
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
             'total_cancer' => 'required|integer|min:0',
-            'remarks' => 'nullable|string',
+            'cancer_remarks' => 'nullable|string',
             'xray_photo' => 'required|array',
             'xray_photo.*' => 'image|mimes:jpg,jpeg,png,webp|max:12288',
             'xray_description' => 'nullable|array',
@@ -226,7 +226,7 @@ class PatientCancerPhotoController extends Controller
             PatientCancerPhoto::create([
                 'patient_id' => $request->patient_id,
                 'total_cancer' => $request->total_cancer,
-                'remarks' => $request->remarks,
+                'cancer_remarks' => $request->cancer_remarks,
                 'xray_photo' => $photos,
                 'xray_description' => $request->xray_description,
             ]);
@@ -293,7 +293,7 @@ class PatientCancerPhotoController extends Controller
         $request->validate([
             'patient_id' => 'required|exists:patients,id',
             'total_cancer' => 'required|integer|min:0',
-            'remarks' => 'nullable|string',
+            'cancer_remarks' => 'nullable|string',
             'xray_photo.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:12288',
             'xray_description' => 'nullable|array',
             'xray_description.*' => 'nullable|string|max:1000',
@@ -401,7 +401,7 @@ class PatientCancerPhotoController extends Controller
             $patientCancerPhoto->update([
                 'patient_id' => $request->patient_id,
                 'total_cancer' => $request->total_cancer,
-                'remarks' => $request->remarks,
+                'cancer_remarks' => $request->cancer_remarks,
                 'xray_photo' => $photos,
                 'xray_description' => $request->xray_description,
             ]);

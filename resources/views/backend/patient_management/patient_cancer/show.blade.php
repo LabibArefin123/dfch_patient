@@ -90,9 +90,9 @@
                     </div>
 
                     <div class="card-body">
-                        @if (!empty($patientCancerPhoto->remarks))
+                        @if (!empty($patientCancerPhoto->cancer_remarks))
                             <div class="p-3 rounded bg-light border" style="min-height: 120px; white-space: pre-line;">
-                                {{ $patientCancerPhoto->remarks }}
+                                {{ $patientCancerPhoto->cancer_remarks }}
                             </div>
                         @else
                             <div class="alert alert-light border mb-0">

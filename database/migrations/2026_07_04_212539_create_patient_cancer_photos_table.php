@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedInteger('total_cancer')->default(0);
             // Description for each X-ray
             $table->json('xray_description')->nullable();
-            // Doctor remarks
-            $table->text('remarks')->nullable();
+            // Doctor cancer_remarks
+            $table->text('cancer_remarks')->nullable();
             $table->timestamps();
         });
     }

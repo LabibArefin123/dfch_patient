@@ -233,7 +233,7 @@ CANCER INFORMATION (EDIT)
 
                 <label>Remarks</label>
 
-                <textarea name="remarks" class="form-control ckeditor" rows="5">{{ $patient->remarks }}</textarea>
+                <textarea name="cancer_remarks" class="form-control ckeditor" rows="5">{{ $patient->cancer_remarks }}</textarea>
 
                 <small class="text-muted">
                     Additional observations, diagnosis or recommendations.

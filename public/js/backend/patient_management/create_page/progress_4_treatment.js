@@ -9,14 +9,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const step = treatmentItem.querySelector(".step");
 
     injectTreatmentWaterCSS();
-
     const statusField = document.getElementById("is_treatment");
-    const typeField = document.getElementById("treatment_type");
+
+    const typeField = document.querySelector("select[name='treatment_type']");
+
     const imageField = document.querySelector(
         "input[name='treatment_images[]']",
     );
-    const summaryField = document.getElementById("edit_treatment_information");
 
+    const summaryField = document.getElementById("edit_treatment_information");
     function getEditorValue(textarea) {
         if (!textarea) return "";
 
@@ -31,28 +32,52 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateTreatmentProgress() {
-        let percent = 0;
-
-        // If treatment is disabled
+        // No Treatment
         if (!statusField || statusField.value !== "1") {
             step.style.setProperty("--fill", "0%");
             treatmentItem.classList.remove("completed");
             return;
         }
 
-        // 30%
-        if (typeField && typeField.value !== "") {
+        let percent = 0;
+
+        // ==========================
+        // Treatment Type (30%)
+        // ==========================
+
+        if (typeField && $.trim(typeField.value) !== "") {
             percent += 30;
         }
 
-        // 30%
-        if (imageField && imageField.files && imageField.files.length > 0) {
-            percent += 30;
-        }
+        // ==========================
+        // Treatment Information (40%)
+        // ==========================
 
-        // 40%
         if (getEditorValue(summaryField) !== "") {
             percent += 40;
+        }
+
+        // ==========================
+        // Images (30%)
+        // ==========================
+
+        let hasImages = false;
+
+        // Newly uploaded
+        if (imageField && imageField.files && imageField.files.length > 0) {
+            hasImages = true;
+        }
+
+        // Existing images (Edit Page)
+        if (
+            document.querySelectorAll(".treatment-card img.magnify-img")
+                .length > 0
+        ) {
+            hasImages = true;
+        }
+
+        if (hasImages) {
+            percent += 30;
         }
 
         step.style.setProperty("--fill", percent + "%");
