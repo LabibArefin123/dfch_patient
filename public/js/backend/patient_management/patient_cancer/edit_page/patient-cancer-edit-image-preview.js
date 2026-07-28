@@ -1,43 +1,23 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const xrayPhotoInput = document.getElementById("xray_photo");
-    const previewContainer = document.getElementById("previewContainer");
+    const input = document.getElementById("xray_photo");
+    const preview = document.getElementById("previewContainer");
 
-    if (!xrayPhotoInput || !previewContainer) {
+    if (!input || !preview) {
         return;
     }
 
-    function escapeHtml(text) {
-        const div = document.createElement("div");
-        div.textContent = text || "";
-        return div.innerHTML;
-    }
+    let selectedFiles = [];
 
-    function buildPreviewCard(imageSrc, fileName) {
-        return `
-            <div class="col-md-3 mb-3">
-                <div class="card h-100 shadow-sm border-0">
-                    <img
-                        src="${imageSrc}"
-                        class="card-img-top"
-                        style="height:220px; object-fit:cover;"
-                        alt="${escapeHtml(fileName)}"
-                    >
-                    <div class="card-footer text-center bg-white">
-                        <small class="text-muted">${escapeHtml(fileName)}</small>
-                    </div>
-                </div>
-            </div>
-        `;
-    }
+    input.addEventListener("change", function () {
+        selectedFiles = Array.from(this.files);
 
-    function renderImagePreviews(files) {
-        previewContainer.innerHTML = "";
+        renderPreview();
+    });
 
-        if (!files || !files.length) {
-            return;
-        }
+    function renderPreview() {
+        preview.innerHTML = "";
 
-        Array.from(files).forEach(function (file) {
+        selectedFiles.forEach((file, index) => {
             if (!file.type.startsWith("image/")) {
                 return;
             }
@@ -45,17 +25,69 @@ document.addEventListener("DOMContentLoaded", function () {
             const reader = new FileReader();
 
             reader.onload = function (e) {
-                previewContainer.insertAdjacentHTML(
+                preview.insertAdjacentHTML(
                     "beforeend",
-                    buildPreviewCard(e.target.result, file.name),
+                    createCard(e.target.result, file.name, index),
                 );
             };
 
             reader.readAsDataURL(file);
         });
+
+        bindRemoveButtons();
     }
 
-    xrayPhotoInput.addEventListener("change", function () {
-        renderImagePreviews(this.files);
-    });
+    function createCard(src, fileName, index) {
+        return `
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-4 preview-item">
+
+            <div class="card preview-card shadow-sm border-0">
+
+                <button
+                    type="button"
+                    class="btn btn-danger btn-sm preview-remove"
+                    data-index="${index}">
+
+                    <i class="fas fa-times"></i>
+
+                </button>
+
+                <img
+                    src="${src}"
+                    class="card-img-top preview-image"
+                    alt="${fileName}">
+
+                <div class="card-footer bg-white text-center">
+
+                    <small class="text-muted">
+
+                        ${fileName}
+
+                    </small>
+
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    }
+
+    function bindRemoveButtons() {
+        document.querySelectorAll(".preview-remove").forEach((btn) => {
+            btn.onclick = function () {
+                const index = Number(this.dataset.index);
+
+                selectedFiles.splice(index, 1);
+
+                const dt = new DataTransfer();
+
+                selectedFiles.forEach((file) => dt.items.add(file));
+
+                input.files = dt.files;
+
+                renderPreview();
+            };
+        });
+    }
 });

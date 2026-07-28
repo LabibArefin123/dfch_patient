@@ -1,0 +1,334 @@
+/* ==========================================================================
+   Patient Cancer Gallery
+   ========================================================================== */
+
+:root {
+    --gallery-radius: 14px;
+    --gallery-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    --gallery-shadow-hover: 0 12px 28px rgba(0, 0, 0, 0.15);
+    --gallery-border: #e9ecef;
+    --gallery-danger: #8b0000;
+    --gallery-danger-light: #dc3545;
+    --gallery-transition: 0.3s ease;
+}
+
+/* ==========================================================================
+   Existing Image Container
+   ========================================================================== */
+
+#existingImageContainer {
+    margin-top: 20px;
+}
+
+/* ==========================================================================
+   Image Card
+   ========================================================================== */
+
+.existing-image-card {
+    transition: var(--gallery-transition);
+}
+
+.existing-image-card:hover {
+    transform: translateY(-5px);
+}
+
+.existing-image-card .card {
+    border: 1px solid var(--gallery-border);
+    border-radius: var(--gallery-radius);
+    overflow: hidden;
+    box-shadow: var(--gallery-shadow);
+    transition: var(--gallery-transition);
+}
+
+.existing-image-card .card:hover {
+    box-shadow: var(--gallery-shadow-hover);
+}
+
+/* ==========================================================================
+   Image
+   ========================================================================== */
+
+.existing-image-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: contain;
+    transition: 0.35s ease;
+}
+
+.existing-image-card:hover img {
+    transform: scale(1.05);
+}
+
+/* ==========================================================================
+   Card Body
+   ========================================================================== */
+
+.existing-image-card .card-body {
+    padding: 12px;
+    background: #fff;
+}
+
+/* ==========================================================================
+   Delete Checkbox
+   ========================================================================== */
+
+.delete-image-checkbox {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.form-check {
+    margin-bottom: 0;
+}
+
+.form-check-label {
+    color: var(--gallery-danger);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: 6px;
+}
+
+/* ==========================================================================
+   Upload Preview
+   ========================================================================== */
+
+#previewContainer {
+    margin-top: 20px;
+}
+
+.preview-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 14px;
+}
+
+.preview-image {
+    width: 100%;
+    height: 220px;
+    object-fit: contain;
+    background: #fff;
+}
+
+.preview-remove {
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+
+    z-index: 10;
+
+    opacity: 0;
+
+    transition: 0.25s;
+}
+
+.preview-card:hover .preview-remove {
+    opacity: 1;
+}
+
+.preview-remove:hover {
+    transform: scale(1.12);
+}
+
+.marked-delete {
+    opacity: 0.45;
+
+    transform: scale(0.96);
+
+    transition: 0.3s;
+}
+
+.marked-delete img {
+    filter: grayscale(100%);
+}
+
+.marked-delete::after {
+    content: "DELETE";
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    background: #dc3545;
+
+    color: #fff;
+
+    padding: 8px 16px;
+
+    border-radius: 30px;
+
+    font-weight: 700;
+
+    letter-spacing: 1px;
+
+    z-index: 99;
+}
+
+.preview-image-card {
+    margin-bottom: 25px;
+}
+
+.preview-image-card .card {
+    border-radius: var(--gallery-radius);
+    overflow: hidden;
+    border: 1px solid var(--gallery-border);
+    box-shadow: var(--gallery-shadow);
+    transition: var(--gallery-transition);
+}
+
+.preview-image-card .card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--gallery-shadow-hover);
+}
+
+.preview-image-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: contain;
+}
+
+/* ==========================================================================
+   Upload Filename
+   ========================================================================== */
+
+.preview-file-name {
+    font-size: 0.85rem;
+    color: #666;
+    text-align: center;
+    margin-top: 10px;
+    word-break: break-word;
+}
+
+/* ==========================================================================
+   Remove Button
+   ========================================================================== */
+
+.remove-preview-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   Empty Gallery
+   ========================================================================== */
+
+.gallery-empty {
+    border: 2px dashed #d7d7d7;
+    border-radius: 14px;
+    padding: 45px 20px;
+    text-align: center;
+    color: #888;
+    background: #fafafa;
+}
+
+.gallery-empty i {
+    font-size: 42px;
+    color: #bbb;
+    margin-bottom: 15px;
+}
+
+/* ==========================================================================
+   Gallery Header
+   ========================================================================== */
+
+.gallery-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--gallery-danger);
+}
+
+.gallery-title i {
+    margin-right: 8px;
+}
+
+/* ==========================================================================
+   View Image Button
+   ========================================================================== */
+
+.gallery-view-btn {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* ==========================================================================
+   Image Overlay
+   ========================================================================== */
+
+.image-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+    transition: 0.3s ease;
+}
+
+.existing-image-card:hover .image-overlay,
+.preview-image-card:hover .image-overlay {
+    opacity: 1;
+}
+
+.image-overlay i {
+    color: #fff;
+    font-size: 34px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+    .existing-image-card img,
+    .preview-image-card img {
+        height: 220px;
+    }
+}
+
+@media (max-width: 992px) {
+    .existing-image-card img,
+    .preview-image-card img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .existing-image-card,
+    .preview-image-card {
+        margin-bottom: 20px;
+    }
+
+    .existing-image-card img,
+    .preview-image-card img {
+        height: 220px;
+    }
+}
+
+@media (max-width: 576px) {
+    .existing-image-card img,
+    .preview-image-card img {
+        height: 180px;
+    }
+
+    .form-check-label {
+        font-size: 0.82rem;
+    }
+}

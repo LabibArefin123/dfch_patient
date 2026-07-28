@@ -157,32 +157,39 @@ CANCER INFORMATION (EDIT)
                         </div>
                     </div>
                 </div>
- 
             </div>
 
-            {{-- Existing Images --}}
-            @if ($patient->cancerPhotos && !empty($patient->cancerPhotos->xray_photo))
-
+            {{-- Existing Cancer Images --}}
+            @if ($patient->cancerPhotos->isNotEmpty() && !empty($patient->cancerPhotos->first()->xray_photo))
                 <div class="form-group">
-
                     <label>Existing Cancer Images</label>
+                    <div class="card shadow-sm border-0">
+                        <div class="card-body">
+                            <div class="row">
+                                @foreach ($patient->cancerPhotos->first()->xray_photo as $image)
+                                    <div class="col-md-4 col-lg-3 mb-3">
+                                        <div class="card h-100 border-0 investigation-image-card">
+                                            <a href="#" data-bs-toggle="modal" data-bs-target="#imageZoomModal"
+                                                data-bs-img-src="{{ asset($image) }}" class="text-decoration-none">
+                                                <img src="{{ asset($image) }}"
+                                                    class="img-fluid investigation-gallery-image" alt="Cancer Image">
+                                            </a>
 
-                    <div class="existing-treatment-grid">
-
-                        @foreach ($patient->cancerPhotos->xray_photo as $image)
-                            <div class="existing-treatment-card">
-
-                                <img src="{{ asset($image) }}" class="img-fluid rounded">
-
+                                            <div class="card-body text-center">
+                                                <a href="#" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#imageZoomModal"
+                                                    data-bs-img-src="{{ asset($image) }}">
+                                                    View Image
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
                             </div>
-                        @endforeach
-
+                        </div>
                     </div>
-
                 </div>
-
             @endif
-
             {{-- Preview --}}
             <div id="cancerPreviewContainer" class="cancer-preview-container mt-3"></div>
 
@@ -201,49 +208,32 @@ CANCER INFORMATION (EDIT)
             </div>
 
             <div id="xrayDescriptionWrapper">
-
                 @php
                     $descriptions = optional($patient->cancerPhotos)->xray_description ?? [];
                 @endphp
 
                 @forelse($descriptions as $index => $description)
                     <div class="form-group">
-
                         <label>Cancer Description</label>
-
-                        <textarea name="xray_description[]" class="form-control" rows="4" placeholder="Enter X-Ray / CT Scan findings...">{{ $description }}</textarea>
-
+                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4" placeholder="Enter X-Ray / CT Scan findings...">{{ $description }}</textarea>
                     </div>
-
                 @empty
-
                     <div class="form-group">
-
                         <label>Description </label>
-
-                        <textarea name="xray_description[]" class="form-control" rows="4" placeholder="Enter X-Ray / CT Scan findings..."></textarea>
-
+                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4" placeholder="Enter X-Ray / CT Scan findings..."></textarea>
                     </div>
                 @endforelse
-
-            </div>
+            </div
 
             {{-- Remarks --}}
             <div class="form-group">
-
                 <label>Remarks</label>
-
-                <textarea name="cancer_remarks" class="form-control ckeditor" rows="5">{{ $patient->cancer_remarks }}</textarea>
-
+                <textarea name="cancer_remarks" id="edit_cancer_remarks" class="form-control" rows="5">{{ $patient->cancer_remarks }}</textarea>
                 <small class="text-muted">
                     Additional observations, diagnosis or recommendations.
                 </small>
-
             </div>
-
         </div>
-
     </div>
-
 
 </div>

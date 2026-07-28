@@ -2,6 +2,8 @@
 
 @section('title', 'Edit Patient Cancer Report')
 
+@section('plugins.Select2', true)
+
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1><i class="fas fa-x-ray text-danger"></i> Edit Patient Cancer Report</h1>
@@ -13,6 +15,11 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_search.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/edit_page/patient_cancer_card.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_cancer/edit_page/patient_cancer_gallery.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_cancer/edit_page/patient_cancer_preview.css') }}">
 
     <div class="container-fluid">
         @if ($errors->any())
@@ -105,7 +112,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>Remarks</label>
-                                <textarea name="cancer_remarks" rows="3" class="form-control">{{ old('cancer_remarks', $patientCancerPhoto->cancer_remarks) }}</textarea>
+                                <textarea name="cancer_remarks" id="cancer_remarks" class="form-control" rows="6">{!! old('cancer_remarks', $patientCancerPhoto->cancer_remarks) !!}</textarea>
                             </div>
                         </div>
                     </div>
@@ -123,34 +130,48 @@
                     @endphp
 
                     @if (count($oldPhotos))
-                        <div class="row mb-4" id="existingImageContainer">
+
+                        <div class="row" id="existingImageContainer">
+
                             @foreach ($oldPhotos as $photoIndex => $photo)
-                                <div class="col-md-3 mb-3 existing-image-card">
-                                    <div class="card h-100 shadow-sm border">
+                                <div class="col-lg-3 col-md-4 col-sm-6 mb-4 existing-image-card">
+
+                                    <div class="card preview-card shadow-sm border-0">
+
                                         <a href="{{ asset($photo) }}" target="_blank">
-                                            <img src="{{ asset($photo) }}" class="card-img-top"
-                                                style="height:220px; object-fit:cover;" alt="X-Ray Image">
+
+                                            <img src="{{ asset($photo) }}" class="card-img-top preview-image">
+
                                         </a>
 
-                                        <div class="card-body p-2">
+                                        <div class="card-footer bg-white">
+
                                             <div class="form-check">
+
                                                 <input class="form-check-input delete-image-checkbox" type="checkbox"
                                                     name="delete_images[]" value="{{ $photo }}"
                                                     id="delete_image_{{ $photoIndex }}">
+
                                                 <label class="form-check-label text-danger"
                                                     for="delete_image_{{ $photoIndex }}">
-                                                    Delete this image
+
+                                                    Delete Image
+
                                                 </label>
+
                                             </div>
+
                                         </div>
+
                                     </div>
+
                                 </div>
                             @endforeach
                         </div>
                     @else
                         <div class="alert alert-light border">
-                            <i class="fas fa-image text-muted mr-1"></i>
-                            No existing X-Ray images found.
+                            <i class="fas fa-image mr-2"></i>
+                            No existing cancer images found.
                         </div>
                     @endif
 
@@ -171,7 +192,7 @@
                         </small>
                     </div>
 
-                    <div class="row" id="previewContainer"></div>
+                    <div id="previewContainer" class="row mt-3"></div>
 
                     <hr>
 
@@ -190,39 +211,8 @@
                         );
                     @endphp
 
-                    <div id="descriptionArea">
-                        @if (count($oldDescriptions))
-                            @foreach ($oldDescriptions as $index => $description)
-                                <div class="input-group mb-2 patient-cancer-description-row">
-                                    <input type="text" name="xray_description[]" class="form-control"
-                                        placeholder="Enter X-Ray Description" value="{{ $description }}">
-
-                                    <div class="input-group-append">
-                                        @if ($loop->first)
-                                            <button type="button" class="btn btn-success" id="addDescription">
-                                                <i class="fas fa-plus"></i>
-                                            </button>
-                                        @else
-                                            <button type="button" class="btn btn-danger removeDescription">
-                                                <i class="fas fa-trash"></i>
-                                            </button>
-                                        @endif
-                                    </div>
-                                </div>
-                            @endforeach
-                        @else
-                            <div class="input-group mb-2 patient-cancer-description-row">
-                                <input type="text" name="xray_description[]" class="form-control"
-                                    placeholder="Enter X-Ray Description">
-
-                                <div class="input-group-append">
-                                    <button type="button" class="btn btn-success" id="addDescription">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </div>
-                        @endif
-                    </div>
+                    <textarea name="xray_description[]" class="form-control ckeditor xray-description-editor" rows="5"
+                        placeholder="Enter X-Ray Description"></textarea>
                 </div>
 
                 <div class="card-footer">
@@ -242,10 +232,13 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/backend/patient_management/patient_cancer/edit_page/patient-cancer-edit-description.js') }}">
-    </script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/edit_page/patient_cancer_editor.js') }}"></script>
     <script
         src="{{ asset('js/backend/patient_management/patient_cancer/edit_page/patient-cancer-edit-image-preview.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_cancer/edit_page/patient_cancer_old_image_destroy.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_init.js') }}"></script>

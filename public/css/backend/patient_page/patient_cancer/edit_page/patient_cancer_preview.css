@@ -1,0 +1,382 @@
+/* ==========================================================================
+   Patient Cancer Preview
+   ========================================================================== */
+
+:root {
+    --preview-primary: #8b0000;
+    --preview-success: #28a745;
+    --preview-warning: #ffc107;
+    --preview-danger: #dc3545;
+    --preview-info: #17a2b8;
+
+    --preview-border: #e9ecef;
+    --preview-bg: #f8f9fa;
+
+    --preview-radius: 14px;
+    --preview-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+    --preview-hover-shadow: 0 12px 26px rgba(0, 0, 0, 0.14);
+
+    --transition: 0.3s ease;
+}
+
+/* ==========================================================================
+   Upload Area
+   ========================================================================== */
+
+.global-upload-box {
+    position: relative;
+    border: 2px dashed #ced4da;
+    border-radius: 16px;
+    background: #fff;
+    min-height: 220px;
+    transition: var(--transition);
+    overflow: hidden;
+}
+
+.global-upload-box:hover {
+    border-color: var(--preview-primary);
+    background: #fcfcfc;
+}
+
+.global-upload-box input[type="file"] {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    opacity: 0;
+    cursor: pointer;
+    z-index: 10;
+}
+
+/* ==========================================================================
+   Placeholder
+   ========================================================================== */
+
+.upload-placeholder {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 220px;
+
+    text-align: center;
+    padding: 30px;
+}
+
+.upload-placeholder i {
+    font-size: 54px;
+    color: var(--preview-primary);
+    margin-bottom: 18px;
+}
+
+.upload-placeholder h6 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.upload-placeholder p {
+    color: #777;
+    margin: 0;
+}
+
+/* ==========================================================================
+   Preview Grid
+   ========================================================================== */
+
+.cancer-preview-container {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 20px;
+
+    margin-top: 25px;
+}
+
+/* ==========================================================================
+   Preview Card
+   ========================================================================== */
+
+.preview-card {
+    background: #fff;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 1px solid var(--preview-border);
+
+    box-shadow: var(--preview-shadow);
+
+    transition: var(--transition);
+
+    position: relative;
+}
+
+.preview-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow: var(--preview-hover-shadow);
+}
+
+/* ==========================================================================
+   Image
+   ========================================================================== */
+
+.preview-image {
+    width: 100%;
+    height: 220px;
+
+    object-fit: cover;
+
+    display: block;
+}
+
+/* ==========================================================================
+   Body
+   ========================================================================== */
+
+.preview-body {
+    padding: 15px;
+}
+
+/* ==========================================================================
+   File Name
+   ========================================================================== */
+
+.preview-file-name {
+    font-size: 0.85rem;
+    font-weight: 600;
+
+    color: #555;
+
+    word-break: break-word;
+
+    margin-bottom: 10px;
+}
+
+/* ==========================================================================
+   File Size
+   ========================================================================== */
+
+.preview-file-size {
+    font-size: 0.8rem;
+
+    color: #999;
+}
+
+/* ==========================================================================
+   Progress
+   ========================================================================== */
+
+.preview-progress {
+    width: 100%;
+    height: 8px;
+
+    border-radius: 20px;
+
+    background: #ececec;
+
+    overflow: hidden;
+
+    margin-top: 12px;
+}
+
+.preview-progress-bar {
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--preview-primary);
+
+    transition: width 0.4s ease;
+}
+
+/* ==========================================================================
+   Progress Text
+   ========================================================================== */
+
+.preview-progress-text {
+    text-align: center;
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+
+    margin-top: 8px;
+}
+
+/* ==========================================================================
+   Success
+   ========================================================================== */
+
+.preview-success {
+    color: var(--preview-success);
+}
+
+/* ==========================================================================
+   Error
+   ========================================================================== */
+
+.preview-error {
+    color: var(--preview-danger);
+}
+
+/* ==========================================================================
+   Warning
+   ========================================================================== */
+
+.preview-warning {
+    color: #e68900;
+}
+
+/* ==========================================================================
+   Remove Button
+   ========================================================================== */
+
+.preview-remove-btn {
+    width: 100%;
+
+    margin-top: 12px;
+}
+
+/* ==========================================================================
+   Status Badge
+   ========================================================================== */
+
+.preview-status {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    padding: 4px 10px;
+
+    border-radius: 30px;
+
+    color: #fff;
+
+    font-size: 0.72rem;
+
+    font-weight: 700;
+}
+
+.preview-status.success {
+    background: var(--preview-success);
+}
+
+.preview-status.error {
+    background: var(--preview-danger);
+}
+
+.preview-status.uploading {
+    background: var(--preview-info);
+}
+
+/* ==========================================================================
+   Overlay
+   ========================================================================== */
+
+.preview-overlay {
+    position: absolute;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.45);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    opacity: 0;
+
+    transition: var(--transition);
+}
+
+.preview-card:hover .preview-overlay {
+    opacity: 1;
+}
+
+.preview-overlay i {
+    color: #fff;
+
+    font-size: 36px;
+}
+
+/* ==========================================================================
+   Validation Message
+   ========================================================================== */
+
+.preview-validation {
+    margin-top: 10px;
+
+    font-size: 0.82rem;
+
+    font-weight: 600;
+}
+
+/* ==========================================================================
+   Empty Preview
+   ========================================================================== */
+
+.preview-empty {
+    border: 2px dashed #ddd;
+
+    border-radius: 16px;
+
+    padding: 40px;
+
+    text-align: center;
+
+    color: #888;
+}
+
+.preview-empty i {
+    font-size: 48px;
+
+    margin-bottom: 15px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 1200px) {
+    .cancer-preview-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .cancer-preview-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .cancer-preview-container {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 15px;
+    }
+
+    .preview-image {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .cancer-preview-container {
+        grid-template-columns: 1fr;
+    }
+
+    .preview-image {
+        height: 220px;
+    }
+
+    .upload-placeholder {
+        min-height: 180px;
+    }
+}

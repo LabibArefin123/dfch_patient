@@ -1,0 +1,371 @@
+/* ==========================================================================
+   Patient Cancer Card
+   ========================================================================== */
+
+:root {
+    --cancer-primary: #8b0000;
+    --cancer-primary-light: #c62828;
+    --cancer-danger: #dc3545;
+    --cancer-success: #28a745;
+    --cancer-warning: #ffc107;
+    --cancer-info: #17a2b8;
+
+    --card-radius: 14px;
+    --transition: all 0.3s ease;
+
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* ==========================================================================
+   Main Container
+   ========================================================================== */
+
+.card.card-danger.card-outline {
+    border-radius: 18px;
+    border-top: 4px solid var(--cancer-primary);
+    overflow: hidden;
+    box-shadow: var(--shadow-md);
+}
+
+/* ==========================================================================
+   Header
+   ========================================================================== */
+
+.card-header {
+    background: #fff;
+    border-bottom: 1px solid #ececec;
+    padding: 20px 25px;
+}
+
+.card-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    color: var(--cancer-primary);
+    margin: 0;
+}
+
+.card-title i {
+    margin-right: 8px;
+}
+
+/* ==========================================================================
+   Body
+   ========================================================================== */
+
+.card-body {
+    padding: 30px;
+}
+
+/* ==========================================================================
+   Cards
+   ========================================================================== */
+
+.patient-select-card,
+.total-cancer-card,
+.cancer-remarks-card,
+.upload-card,
+.description-card,
+.gallery-card {
+    border: none;
+    border-radius: var(--card-radius);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    background: #fff;
+    overflow: hidden;
+}
+
+.patient-select-card:hover,
+.total-cancer-card:hover,
+.cancer-remarks-card:hover,
+.upload-card:hover,
+.description-card:hover,
+.gallery-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+}
+
+.patient-select-card .card-body,
+.total-cancer-card .card-body,
+.cancer-remarks-card .card-body,
+.upload-card .card-body,
+.description-card .card-body,
+.gallery-card .card-body {
+    padding: 22px;
+}
+
+/* ==========================================================================
+   Labels
+   ========================================================================== */
+
+.form-label,
+label {
+    font-weight: 600;
+    color: #333;
+}
+
+/* ==========================================================================
+   Input Groups
+   ========================================================================== */
+
+.cancer-input-group .input-group-text {
+    background: #fff;
+    border-right: none;
+    color: var(--cancer-primary);
+}
+
+.cancer-input-group .form-control {
+    border-left: none;
+}
+
+.cancer-input-group .form-control:focus {
+    border-color: #ced4da;
+    box-shadow: none;
+}
+
+/* ==========================================================================
+   Inputs
+   ========================================================================== */
+
+.form-control {
+    border-radius: 10px;
+    min-height: 46px;
+    transition: var(--transition);
+}
+
+.form-control:focus {
+    border-color: var(--cancer-primary-light);
+    box-shadow: 0 0 0 0.15rem rgba(139, 0, 0, 0.15);
+}
+
+textarea.form-control {
+    min-height: 120px;
+}
+
+/* ==========================================================================
+   Small Text
+   ========================================================================== */
+
+.text-muted {
+    font-size: 0.85rem;
+}
+
+/* ==========================================================================
+   Section Titles
+   ========================================================================== */
+
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--cancer-primary);
+    margin-bottom: 20px;
+}
+
+.section-title i {
+    margin-right: 8px;
+}
+
+/* ==========================================================================
+   HR
+   ========================================================================== */
+
+hr {
+    margin: 35px 0;
+    border-top: 1px solid #ececec;
+}
+
+/* ==========================================================================
+   Existing Image Cards
+   ========================================================================== */
+
+.existing-image-card {
+    transition: var(--transition);
+}
+
+.existing-image-card:hover {
+    transform: translateY(-5px);
+}
+
+.existing-image-card .card {
+    border-radius: 14px;
+    overflow: hidden;
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
+
+.existing-image-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.existing-image-card:hover img {
+    transform: scale(1.05);
+}
+
+.existing-image-card .card-body {
+    padding: 12px;
+}
+
+/* ==========================================================================
+   Delete Checkbox
+   ========================================================================== */
+
+.delete-image-checkbox {
+    transform: scale(1.15);
+    cursor: pointer;
+}
+
+.form-check-label {
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+/* ==========================================================================
+   Upload Section
+   ========================================================================== */
+
+input[type="file"] {
+    border-radius: 10px;
+}
+
+/* ==========================================================================
+   Preview
+   ========================================================================== */
+
+#previewContainer {
+    margin-top: 20px;
+}
+
+#previewContainer .card {
+    border-radius: 14px;
+    overflow: hidden;
+    border: none;
+    box-shadow: var(--shadow-sm);
+}
+
+#previewContainer img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+}
+
+/* ==========================================================================
+   Description Cards
+   ========================================================================== */
+
+.patient-cancer-description-row {
+    margin-bottom: 30px;
+}
+
+.patient-cancer-description-row:last-child {
+    margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.btn {
+    border-radius: 10px;
+    transition: var(--transition);
+}
+
+.btn-success {
+    background: var(--cancer-success);
+    border-color: var(--cancer-success);
+}
+
+.btn-success:hover {
+    transform: translateY(-2px);
+}
+
+.btn-secondary:hover {
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.card-footer {
+    background: #fff;
+    border-top: 1px solid #ececec;
+    padding: 20px 25px;
+}
+
+/* ==========================================================================
+   Validation
+   ========================================================================== */
+
+.is-invalid {
+    border-color: var(--cancer-danger);
+}
+
+.invalid-feedback {
+    display: block;
+}
+
+/* ==========================================================================
+   Alert
+   ========================================================================== */
+
+.alert {
+    border-radius: 12px;
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media (max-width: 992px) {
+    .card-body {
+        padding: 20px;
+    }
+
+    .existing-image-card img {
+        height: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-header {
+        padding: 18px;
+    }
+
+    .card-body {
+        padding: 18px;
+    }
+
+    .card-footer {
+        text-align: center;
+    }
+
+    .card-footer .btn {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .card-footer .btn:last-child {
+        margin-bottom: 0;
+    }
+
+    .existing-image-card img {
+        height: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .card-title {
+        font-size: 1.1rem;
+    }
+
+    .existing-image-card img {
+        height: 180px;
+    }
+
+    .form-control {
+        min-height: 44px;
+    }
+}

@@ -1398,7 +1398,6 @@ class PatientController extends Controller
     public function edit(Patient $patient)
     {
         $patientImage = $this->getPatientImageInfo($patient);
-
         $documents = $this->getReferredDocuments($patient);
 
         return view('backend.patient_management.edit', array_merge(

@@ -21,6 +21,11 @@ function initializeEditors() {
 
         // Investigation
         "#edit_investigation_information",
+        
+        // Cancer
+        "#edit_xray_description",
+        "#edit_cancer_remarks",
+
     ];
 
     editors.forEach(function (selector) {

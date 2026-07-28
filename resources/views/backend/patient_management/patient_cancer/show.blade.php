@@ -92,7 +92,7 @@
                     <div class="card-body">
                         @if (!empty($patientCancerPhoto->cancer_remarks))
                             <div class="p-3 rounded bg-light border" style="min-height: 120px; white-space: pre-line;">
-                                {{ $patientCancerPhoto->cancer_remarks }}
+                                {!! $patientCancerPhoto->cancer_remarks !!}
                             </div>
                         @else
                             <div class="alert alert-light border mb-0">
@@ -170,10 +170,8 @@
 
 
                                     <div class="card-footer bg-white text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                            data-bs-toggle="modal"
-                                data-bs-target="#imageZoomModal" 
-                                            data-bs-img-src="{{ asset($photo) }}">
+                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
+                                            data-bs-target="#imageZoomModal" data-bs-img-src="{{ asset($photo) }}">
                                             <i class="fas fa-eye"></i> View Full Image
                                         </button>
                                     </div>
@@ -189,47 +187,72 @@
                 @endif
             </div>
         </div>
-
         {{-- X-Ray Descriptions --}}
         <div class="card card-primary card-outline shadow-sm mt-4">
+
             <div class="card-header">
                 <h3 class="card-title">
-                    <i class="fas fa-notes-medical"></i> X-Ray Descriptions
+                    <i class="fas fa-notes-medical"></i>
+                    X-Ray Descriptions
                 </h3>
             </div>
 
             <div class="card-body">
+
                 @php
                     $descriptions = is_array($patientCancerPhoto->xray_description)
-                        ? array_filter($patientCancerPhoto->xray_description, fn($item) => !empty(trim($item)))
+                        ? array_filter($patientCancerPhoto->xray_description)
                         : [];
                 @endphp
 
                 @if (count($descriptions))
+
                     <div class="row">
+
                         @foreach ($descriptions as $index => $description)
-                            <div class="col-md-6 mb-3">
-                                <div class="border rounded p-3 bg-light h-100">
-                                    <div class="mb-2 font-weight-bold text-primary">
-                                        <i class="fas fa-angle-right mr-1"></i>
-                                        Description {{ $index + 1 }}
+                            <div class="col-md-6 mb-4">
+
+                                <div class="card shadow-sm border-left-primary h-100">
+
+                                    <div class="card-header bg-white">
+
+                                        <strong>
+
+                                            <i class="fas fa-file-medical text-primary"></i>
+
+                                            Description {{ $index + 1 }}
+
+                                        </strong>
+
                                     </div>
 
-                                    <div class="text-dark" style="white-space: pre-line;">
-                                        {{ $description }}
+                                    <div class="card-body">
+
+                                        {!! $description !!}
+
                                     </div>
+
                                 </div>
+
                             </div>
                         @endforeach
+
                     </div>
                 @else
-                    <div class="alert alert-light border mb-0">
-                        <i class="fas fa-info-circle text-muted mr-1"></i>
-                        No X-Ray descriptions added for this report.
+                    <div class="alert alert-light">
+
+                        <i class="fas fa-info-circle"></i>
+
+                        No X-Ray descriptions available.
+
                     </div>
+
                 @endif
+
             </div>
+
         </div>
+
 
         {{-- Footer Action Buttons --}}
         <div class="card mt-4 shadow-sm border-0">

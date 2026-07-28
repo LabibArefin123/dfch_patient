@@ -190,21 +190,46 @@
                                         <span class="text-muted">No Image</span>
                                     @endif
                                 </td>
+                                <td class="description-column">
 
-                                <td>
                                     @if (!empty($report->xray_description))
-                                        <ul class="pl-3 mb-0">
+                                        <div class="content-preview">
+
                                             @foreach ($report->xray_description as $description)
-                                                <li> {{ $description }} </li>
+                                                <div class="preview-item">
+                                                    {{ \Illuminate\Support\Str::limit(strip_tags($description), 120) }}
+                                                </div>
                                             @endforeach
-                                        </ul>
+
+                                        </div>
                                     @else
-                                        <span class="text-muted">No Description</span>
+                                        <span class="text-muted">-</span>
                                     @endif
 
                                 </td>
+                                <td class="remarks-column">
 
-                                <td>{{ $report->cancer_remarks ?? '-' }}</td>
+                                    <div class="content-preview">
+
+                                        @php
+                                            $remarks = $report->cancer_remarks;
+                                        @endphp
+
+                                        @if (is_array($remarks))
+                                            @foreach ($remarks as $remark)
+                                                <div class="preview-item">
+                                                    {{ \Illuminate\Support\Str::limit(strip_tags($remark), 180) }}
+                                                </div>
+                                            @endforeach
+                                        @elseif (!empty($remarks))
+                                            {{ \Illuminate\Support\Str::limit(strip_tags($remarks), 180) }}
+                                        @else
+                                            <span class="text-muted">-</span>
+                                        @endif
+
+                                    </div>
+
+                                </td>
                                 <td class="text-center">
                                     <a href="{{ route('patient-cancer-photos.show', $report->id) }}"
                                         class="btn btn-info btn-sm">
@@ -251,11 +276,6 @@
             </div>
         </div>
     </div>
-@stop
-
-
-@section('css')
-
     <style>
         .table td,
         .table th {
@@ -274,10 +294,48 @@
         .badge {
             font-size: 13px;
         }
+
+        .description-column,
+        .remarks-column {
+            width: 240px;
+            min-width: 240px;
+            max-width: 240px;
+            vertical-align: top;
+        }
+
+        .content-preview {
+            max-height: 120px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #fafafa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            font-size: 13px;
+            line-height: 1.55;
+        }
+
+        .preview-item {
+            padding-bottom: 8px;
+            margin-bottom: 8px;
+            border-bottom: 1px dashed #dee2e6;
+        }
+
+        .preview-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .content-preview::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .content-preview::-webkit-scrollbar-thumb {
+            background: #c8c8c8;
+            border-radius: 20px;
+        }
     </style>
-
 @stop
-
 
 @section('js')
     <script>
@@ -344,7 +402,7 @@
         window.PatientCancerSync = {
             syncUrl: @json(route('patient-cancer-photos.sync'))
         };
-    </script>   
+    </script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_init.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_ui.js') }}">
