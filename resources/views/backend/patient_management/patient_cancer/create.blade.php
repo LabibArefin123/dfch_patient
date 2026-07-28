@@ -100,8 +100,12 @@
 
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Remarks</label>
-                                <textarea name="cancer_remarks" rows="3" class="form-control">{{ old('cancer_remarks') }}</textarea>
+                                <label>
+                                    <i class="fas fa-comment-medical text-info mr-1"></i>
+                                    Patient Cancer Remarks
+                                </label>
+
+                                <textarea name="cancer_remarks" id="cancer_remarks" class="form-control" rows="6">{!! old('cancer_remarks') !!}</textarea>
                             </div>
                         </div>
 
@@ -129,27 +133,13 @@
 
                     <h5 class="text-primary">
                         <i class="fas fa-notes-medical"></i>
-                        X-Ray Descriptions
+                        X-Ray Description
                     </h5>
 
-                    <div id="descriptionArea">
+                    <div class="form-group">
 
-                        <div class="input-group mb-2">
-
-                            <input type="text" name="xray_description[]" class="form-control"
-                                placeholder="Enter X-Ray Description">
-
-                            <div class="input-group-append">
-
-                                <button type="button" class="btn btn-success" id="addDescription">
-
-                                    <i class="fas fa-plus"></i>
-
-                                </button>
-
-                            </div>
-
-                        </div>
+                        <textarea name="xray_description[]" id="xray_description" class="form-control" rows="8"
+                            placeholder="Enter detailed X-Ray description...">{!! old('xray_description.0') !!}</textarea>
 
                     </div>
 
@@ -170,8 +160,11 @@
     <div style="height: 50px;"></div>
 @stop
 @section('js')
-    <script src="{{ asset('js/backend/patient_management/patient_cancer/create_page/patient-cancer-description.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/patient_cancer/create_page/patient-cancer-image-preview.js') }}"></script>
+    <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/create_page/patient_cancer_editor.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/create_page/patient-cancer-image-preview.js') }}">
+    </script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_init.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_events.js') }}"></script>

@@ -17,7 +17,7 @@ class PatientCancerPhoto extends Model
     protected $casts = [
         'xray_photo' => 'array',
         'xray_description' => 'array',
-        // 'cancer_remarks' => 'array',
+        'cancer_remarks' => 'array',
     ];
 
     public function patient()

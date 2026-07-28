@@ -38,6 +38,61 @@ class PatientCancerPhotoController extends Controller
             ->paginate(10)
             ->withQueryString();
 
+        // Prepare preview text
+        $patientCancerPhotos->getCollection()->transform(function ($report) {
+
+            /*
+        |--------------------------------------------------------------------------
+        | X-Ray Description Preview
+        |--------------------------------------------------------------------------
+        */
+
+            $report->description_preview = collect($report->xray_description ?? [])
+                ->map(function ($description) {
+
+                    $text = html_entity_decode($description);
+
+                    $text = preg_replace('/<\/li>/i', "\n• ", $text);
+                    $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
+                    $text = preg_replace('/<\/p>/i', "\n", $text);
+
+                    $text = strip_tags($text);
+
+                    $text = preg_replace("/\n+/", "\n", $text);
+
+                    return trim($text);
+                })
+                ->filter()
+                ->values()
+                ->toArray();
+
+            /*
+        |--------------------------------------------------------------------------
+        | Cancer Remarks Preview
+        |--------------------------------------------------------------------------
+        */
+
+            $remarks = $report->cancer_remarks;
+
+            if (is_array($remarks)) {
+                $remarks = implode("\n", $remarks);
+            }
+
+            $remarks = html_entity_decode($remarks ?? '');
+
+            $remarks = preg_replace('/<\/li>/i', "\n• ", $remarks);
+            $remarks = preg_replace('/<br\s*\/?>/i', "\n", $remarks);
+            $remarks = preg_replace('/<\/p>/i', "\n", $remarks);
+
+            $remarks = strip_tags($remarks);
+
+            $remarks = preg_replace("/\n+/", "\n", $remarks);
+
+            $report->remarks_preview = trim($remarks);
+
+            return $report;
+        });
+
         return view(
             'backend.patient_management.patient_cancer.index',
             compact(
@@ -46,7 +101,6 @@ class PatientCancerPhotoController extends Controller
             )
         );
     }
-
     public function patientsSync()
     {
         /*
@@ -295,8 +349,7 @@ class PatientCancerPhotoController extends Controller
             'total_cancer' => 'required|integer|min:0',
             'cancer_remarks' => 'nullable|string',
             'xray_photo.*' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:12288',
-            'xray_description' => 'nullable|array',
-            'xray_description.*' => 'nullable|string|max:1000',
+            'xray_description' => 'nullable|string',
             'delete_images' => 'nullable|array',
             'delete_images.*' => 'nullable|string',
         ]);

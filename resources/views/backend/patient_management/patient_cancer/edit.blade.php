@@ -111,7 +111,7 @@
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label>Remarks</label>
+                                <label>Patient Cancer Remarks</label>
                                 <textarea name="cancer_remarks" id="cancer_remarks" class="form-control" rows="6">{!! old('cancer_remarks', $patientCancerPhoto->cancer_remarks) !!}</textarea>
                             </div>
                         </div>
@@ -201,15 +201,6 @@
                         <i class="fas fa-notes-medical"></i>
                         X-Ray Descriptions
                     </h5>
-
-                    @php
-                        $oldDescriptions = old(
-                            'xray_description',
-                            is_array($patientCancerPhoto->xray_description)
-                                ? $patientCancerPhoto->xray_description
-                                : [],
-                        );
-                    @endphp
 
                     <textarea name="xray_description[]" class="form-control ckeditor xray-description-editor" rows="5"
                         placeholder="Enter X-Ray Description"></textarea>

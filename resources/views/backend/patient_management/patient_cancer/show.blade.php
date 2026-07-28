@@ -166,7 +166,7 @@
                                 <div class="card shadow-sm border-0 h-100">
 
                                     <img src="{{ asset($photo) }}" alt="X-Ray Image" class="card-img-top"
-                                        style="height: 250px; object-fit: cover; border-radius: 0.35rem 0.35rem 0 0;">
+                                        style="height: 250px; object-fit: contain; border-radius: 0.35rem 0.35rem 0 0;">
 
 
                                     <div class="card-footer bg-white text-center">

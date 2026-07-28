@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     <img
                         src="${imageSrc}"
                         class="card-img-top"
-                        style="height:220px; object-fit:cover;"
+                        style="height:220px; object-fit:contain;"
                         alt="${fileName}"
                     >
                     <div class="card-footer text-center bg-white">

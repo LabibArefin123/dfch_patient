@@ -18,7 +18,7 @@ return new class extends Migration
             // Description for each X-ray
             $table->json('xray_description')->nullable();
             // Doctor cancer_remarks
-            $table->text('cancer_remarks')->nullable();
+            $table->json('cancer_remarks')->nullable();
             $table->timestamps();
         });
     }

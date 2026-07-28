@@ -192,12 +192,12 @@
                                 </td>
                                 <td class="description-column">
 
-                                    @if (!empty($report->xray_description))
+                                    @if (!empty($report->description_preview))
                                         <div class="content-preview">
 
-                                            @foreach ($report->xray_description as $description)
+                                            @foreach ($report->description_preview as $description)
                                                 <div class="preview-item">
-                                                    {{ \Illuminate\Support\Str::limit(strip_tags($description), 120) }}
+                                                    {!! nl2br(e(\Illuminate\Support\Str::limit($description, 180))) !!}
                                                 </div>
                                             @endforeach
 
@@ -209,25 +209,17 @@
                                 </td>
                                 <td class="remarks-column">
 
-                                    <div class="content-preview">
+                                    @if (!empty($report->remarks_preview))
+                                        <div class="content-preview">
 
-                                        @php
-                                            $remarks = $report->cancer_remarks;
-                                        @endphp
+                                            <div class="preview-item">
+                                                {!! nl2br(e(\Illuminate\Support\Str::limit($report->remarks_preview, 220))) !!}
+                                            </div>
 
-                                        @if (is_array($remarks))
-                                            @foreach ($remarks as $remark)
-                                                <div class="preview-item">
-                                                    {{ \Illuminate\Support\Str::limit(strip_tags($remark), 180) }}
-                                                </div>
-                                            @endforeach
-                                        @elseif (!empty($remarks))
-                                            {{ \Illuminate\Support\Str::limit(strip_tags($remarks), 180) }}
-                                        @else
-                                            <span class="text-muted">-</span>
-                                        @endif
-
-                                    </div>
+                                        </div>
+                                    @else
+                                        <span class="text-muted">-</span>
+                                    @endif
 
                                 </td>
                                 <td class="text-center">
