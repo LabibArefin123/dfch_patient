@@ -87,6 +87,8 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/cancer_status.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_cancer_form.css') }}">
 
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/edit_page/patient_global_upload.css') }}">
+
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul class="mb-0">
@@ -219,4 +221,9 @@
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_manager.js') }}">
     </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_card.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_validation.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_progress.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_preview.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_manager.js') }}"></script>
 @stop

@@ -1110,6 +1110,7 @@ class PatientController extends Controller
                 ])
             );
     }
+
     public function updateEmergency(Request $request)
     {
         $validated = $request->validate([
@@ -1240,7 +1241,8 @@ class PatientController extends Controller
 
         /* Emergency Cleanup */
         if (!$validated['is_emergency']) {
-            $validated['emergency_details'] = null;
+            $validated['reason'] = null;
+            $validated['emergency_date'] = null;
         }
 
         /*Location Cleanup*/
@@ -1260,16 +1262,21 @@ class PatientController extends Controller
             $validated['passport_no'] = null;
         }
 
+
+
+        /*Create Patient*/
+        $patient = Patient::create($validated);
+
         if ($validated['is_emergency']) {
+
             PatientEmergency::create([
+                'patient_id' => $patient->id,
                 'is_emergency' => true,
                 'reason' => $request->reason,
                 'emergency_date' => $request->emergency_date,
             ]);
         }
 
-        /*Create Patient*/
-        $patient = Patient::create($validated);
         /* Generate Patient Code*/
         $patient->update([
             'patient_code' => 'DFCH-' . now()->format('Y') . '-' . str_pad($patient->id, 9, '0', STR_PAD_LEFT),
@@ -1647,6 +1654,17 @@ class PatientController extends Controller
                 'max:10240',
             ],
 
+            /* Cancer */
+            'total_cancer' => 'nullable|integer|min:1',
+            'xray_photo.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'xray_description' => 'nullable|array',
+            'xray_description.*' => 'nullable|string',
+            'cancer_remarks' => 'nullable|string',
+
+            /* Emergency */
+            'reason' => 'nullable|string|max:500',
+            'emergency_date' => 'nullable|date',
+
             /* Patient Profile Photo */
             'patient_photo' => [
                 'nullable',
@@ -1670,7 +1688,6 @@ class PatientController extends Controller
             $validated['treatment_images'] = null;
         }
 
-
         /*Investigation Cleanup  */
         if (!$validated['is_investigated']) {
             $validated['investigation_information'] = null;
@@ -1678,6 +1695,9 @@ class PatientController extends Controller
             $validated['investigation_images'] = null;
         }
 
+        if (!$validated['is_old_cancer']) {
+            $validated['total_cancer'] = null;
+        }
 
         /* Location Cleanup  */
         if ($request->location_type != 1) {
@@ -1701,7 +1721,13 @@ class PatientController extends Controller
             $validated['documents'],
             $validated['patient_photo'],
             $validated['treatment_images'],
-            $validated['investigation_images']
+            $validated['investigation_images'],
+            $validated['xray_photo'],
+            $validated['xray_description'],
+            $validated['total_cancer'],
+            $validated['cancer_remarks'],
+            $validated['reason'],
+            $validated['emergency_date'],
         );
 
         /* Update Patient */
@@ -1714,12 +1740,14 @@ class PatientController extends Controller
         $profilePath = public_path("uploads/images/patients/{$patientFolder}/profile");
         $treatmentPath = public_path("uploads/images/patients/{$patientFolder}/treatment");
         $investigationPath = public_path("uploads/images/patients/{$patientFolder}/investigation");
+        $cancerPath = public_path("uploads/images/patients/{$patientFolder}/cancer");
 
         /*Ensure Directories*/
         File::ensureDirectoryExists($documentPath);
         File::ensureDirectoryExists($profilePath);
         File::ensureDirectoryExists($treatmentPath);
         File::ensureDirectoryExists($investigationPath);
+        File::ensureDirectoryExists($cancerPath);
 
         /* Upload Referred Documents */
         if ($request->hasFile('documents')) {
@@ -1739,6 +1767,19 @@ class PatientController extends Controller
             }
         }
 
+        /* Update Emergency Information*/
+        if ($validated['is_emergency']) {
+            $emergency = PatientEmergency::firstOrNew([
+                'patient_id' => $patient->id,
+            ]);
+
+            $emergency->is_emergency = true;
+            $emergency->reason = $request->reason;
+            $emergency->emergency_date = $request->emergency_date;
+            $emergency->save();
+        } else {
+            PatientEmergency::where('patient_id', $patient->id)->delete();
+        }
 
         /* Upload Treatment Images*/
         if ($validated['is_treatment'] && $request->hasFile('treatment_images')) {
@@ -1798,6 +1839,41 @@ class PatientController extends Controller
                 $investigationImages,
 
             ]);
+        }
+
+        /*Update Cancer Information*/
+        if ($validated['is_old_cancer']) {
+            $cancer = PatientCancerPhoto::firstOrNew([
+                'patient_id' => $patient->id,
+            ]);
+
+            $photos = $cancer->xray_photo ?? [];
+            if ($request->hasFile('xray_photo')) {
+                foreach ($request->file('xray_photo') as $index => $image) {
+                    $extension = $image->getClientOriginalExtension();
+                    $filename =
+                        'cancer_' .
+                        now()->format('YmdHis') .
+                        '_' .
+                        ($index + 1) .
+                        '.' .
+                        $extension;
+
+                    $image->move($cancerPath, $filename);
+
+                    $photos[] =
+                        "uploads/images/patients/{$patientFolder}/cancer/{$filename}";
+                }
+            }
+
+            $cancer->patient_id = $patient->id;
+            $cancer->total_cancer = $request->total_cancer;
+            $cancer->xray_photo = $photos;
+            $cancer->xray_description = $request->xray_description;
+            $cancer->cancer_remarks = $request->cancer_remarks;
+            $cancer->save();
+        } else {
+            PatientCancerPhoto::where('patient_id', $patient->id)->delete();
         }
 
         /* Update Patient Profile Photo  */
