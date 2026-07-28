@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\DashboardController;
 
+use App\Http\Controllers\GlobalAjaxController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\PatientMeetingController;
 use App\Http\Controllers\PatientEmergencyController;
@@ -59,7 +60,6 @@ Route::get('/user_profile', function () {
 
 //Route::group(['middleware' => ['auth', 'permission']], function () {
 Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', 'permission']],  function () {
-
     // Profile Routes
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/system_dashboard', [DashboardController::class, 'system_index'])->name('dashboard.system');
@@ -68,7 +68,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
 
     // Organization Routes
     Route::resource('organizations', OrganizationController::class);
-    
+
     // Specialist Routes
     Route::resource('specialists', SpecialistController::class);
 
@@ -79,10 +79,13 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::get('/user_password_edit', [ProfileController::class, 'editPassword'])->name('user_password_edit');
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
-    Route::post('patients/summary/search', [PatientController::class, 'patientSummarySearch']) ->name('patients.summary.search');
-    Route::get('patients/summary/animation/{patient}',[PatientController::class, 'patientSummaryAnimation'])->name('patients.summary.animation');
-    Route::post('patients/document-search',[PatientController::class, 'patientDocumentSearch'])->name('patients.document.search');
-    Route::post('patients/photo-search',[PatientController::class, 'patientPhotoSearch'])->name('patients.photo.search');
+    Route::get('/ajax/patients/search', [GlobalAjaxController::class, 'patientAjax'])->name('ajax.patients.search');
+    Route::get('/ajax/patients/{patient}',[GlobalAjaxController::class, 'patientDetails'])->name('ajax.patient.details');
+
+    Route::post('patients/summary/search', [PatientController::class, 'patientSummarySearch'])->name('patients.summary.search');
+    Route::get('patients/summary/animation/{patient}', [PatientController::class, 'patientSummaryAnimation'])->name('patients.summary.animation');
+    Route::post('patients/document-search', [PatientController::class, 'patientDocumentSearch'])->name('patients.document.search');
+    Route::post('patients/photo-search', [PatientController::class, 'patientPhotoSearch'])->name('patients.photo.search');
     Route::get('patients/{id}/modal-details', [PatientController::class, 'getModalDetails'])->name('patients.modal_details');
     Route::post('/patients/emergency', [PatientController::class, 'updateEmergency'])->name('patients.emergency');
     Route::get('patients/recommend', [PatientController::class, 'patient_recommend'])->name('patients.recommend');
@@ -91,22 +94,22 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::post('patients/import-excel', [PatientController::class, 'importExcel'])->name('patients.import.excel');
     Route::post('patients/import-word', [PatientController::class, 'importWord'])->name('patients.import.word');
     Route::get('patients/{id}/print-card', [PatientController::class, 'printCard'])->name('patients.print_card');
-    Route::get('patients/card-list',[PatientController::class,'patientCardList',])->name('patients.card.list.index');
-    Route::get('patients/card-list/search',[PatientController::class,'patientCardListSearch',])->name('patients.card.list.search');
+    Route::get('patients/card-list', [PatientController::class, 'patientCardList',])->name('patients.card.list.index');
+    Route::get('patients/card-list/search', [PatientController::class, 'patientCardListSearch',])->name('patients.card.list.search');
     Route::post('patients/delete-selected', [PatientController::class, 'deleteSelected'])->name('patients.delete_selected');
-    Route::get('patients/{patient}/document-contents',[PatientController::class, 'patientDocumentContents'])->name('patients.document.contents');
-    Route::get('patients/{patient}/cancer-photo-contents',[PatientController::class, 'patientCancerPhotoContents'])->name('patients.cancer.photo.contents');
+    Route::get('patients/{patient}/document-contents', [PatientController::class, 'patientDocumentContents'])->name('patients.document.contents');
+    Route::get('patients/{patient}/cancer-photo-contents', [PatientController::class, 'patientCancerPhotoContents'])->name('patients.cancer.photo.contents');
     Route::resource('patients', PatientController::class);
     Route::resource('patient_emergencies', PatientEmergencyController::class);
 
-    Route::get('patients/{patient}/cancer-photos',[PatientCancerPhotoController::class, 'patientCancerPhotos'])->name('patients.cancer.photos');
-    Route::post('patient-cancer-photos/sync',[PatientCancerPhotoController::class, 'patientsSync'])->name('patient-cancer-photos.sync');
-    Route::resource('patient-cancer-photos',PatientCancerPhotoController::class);
-    Route::get('patient_meetings/list',[PatientMeetingController::class, 'list'])->name('patient_meetings.list');
-    Route::get('patient-meetings/today',[PatientMeetingController::class, 'today'])->name('patient_meetings.today');
-    Route::get('patient_meetings/history/{specialist}',[PatientMeetingController::class, 'patientsHistory'])->name('patient_meetings.history');
-    Route::resource('patient_meetings',PatientMeetingController::class);
-   
+    Route::get('patients/{patient}/cancer-photos', [PatientCancerPhotoController::class, 'patientCancerPhotos'])->name('patients.cancer.photos');
+    Route::post('patient-cancer-photos/sync', [PatientCancerPhotoController::class, 'patientsSync'])->name('patient-cancer-photos.sync');
+    Route::resource('patient-cancer-photos', PatientCancerPhotoController::class);
+    Route::get('patient_meetings/list', [PatientMeetingController::class, 'list'])->name('patient_meetings.list');
+    Route::get('patient-meetings/today', [PatientMeetingController::class, 'today'])->name('patient_meetings.today');
+    Route::get('patient_meetings/history/{specialist}', [PatientMeetingController::class, 'patientsHistory'])->name('patient_meetings.history');
+    Route::resource('patient_meetings', PatientMeetingController::class);
+
     //Report Module
     Route::get('daily_report', [ReportController::class, 'daily_report'])->name('report.daily');
     Route::get('daily_report/pdf', [ReportController::class, 'daily_report_pdf'])->name('report.daily.pdf');

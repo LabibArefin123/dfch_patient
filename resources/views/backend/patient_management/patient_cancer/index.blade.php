@@ -233,7 +233,7 @@
                                         <i class="fas fa-edit"></i>
                                     </a>
                                     <form action="{{ route('patient-cancer-photos.destroy', $report->id) }}" method="POST"
-                                        class="d-inline deleteForm">
+                                        class="d-inline deleteConfirmModal">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">
@@ -330,66 +330,7 @@
 @stop
 
 @section('js')
-    <script>
-        $(function() {
 
-            /*
-            |--------------------------------------------------------------------------
-            | Auto Hide Alert
-            |--------------------------------------------------------------------------
-            */
-
-            setTimeout(function() {
-
-                $('.alert').fadeOut('slow');
-
-            }, 4000);
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | Delete Confirmation
-            |--------------------------------------------------------------------------
-            */
-
-            $('.deleteForm').submit(function(e) {
-
-                e.preventDefault();
-
-                let form = this;
-
-                Swal.fire({
-
-                    title: 'Delete Report?',
-
-                    text: 'All uploaded X-Ray images will also be deleted.',
-
-                    icon: 'warning',
-
-                    showCancelButton: true,
-
-                    confirmButtonColor: '#d33',
-
-                    cancelButtonColor: '#6c757d',
-
-                    confirmButtonText: 'Yes, Delete',
-
-                    cancelButtonText: 'Cancel'
-
-                }).then((result) => {
-
-                    if (result.isConfirmed) {
-
-                        form.submit();
-
-                    }
-
-                });
-
-            });
-
-        });
-    </script>
     <script>
         window.PatientCancerSync = {
             syncUrl: @json(route('patient-cancer-photos.sync'))

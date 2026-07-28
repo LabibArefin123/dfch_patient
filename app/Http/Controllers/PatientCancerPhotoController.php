@@ -13,9 +13,7 @@ use Spatie\Image\Enums\Fit;
 
 class PatientCancerPhotoController extends Controller
 {
-    /**
-     * Display a listing.
-     */
+    /** Display a listing. */
     public function index(Request $request)
     {
         $search = $request->search;
@@ -46,7 +44,6 @@ class PatientCancerPhotoController extends Controller
         | X-Ray Description Preview
         |--------------------------------------------------------------------------
         */
-
             $report->description_preview = collect($report->xray_description ?? [])
                 ->map(function ($description) {
 

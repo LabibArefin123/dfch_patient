@@ -46,7 +46,8 @@
                                     </label>
 
                                     <div class="patient-select-wrapper">
-                                        <select name="patient_id" id="patientSelect" class="form-control" required>
+                                        <select name="patient_id" id="patientSelect" class="form-control">
+
                                             <option value="">Select Patient</option>
 
                                             @foreach ($patients as $patient)
@@ -63,8 +64,33 @@
                                     <small class="text-muted d-block mt-2">
                                         Search by patient name or patient code. First 15 patients are shown initially.
                                     </small>
+
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="card mt-3 shadow-sm" id="patientInfoCard">
+
+                            <div class="card-header">
+                                <strong>Patient Information</strong>
+                            </div>
+
+                            <div class="card-body">
+
+                                <div id="patientInformation">
+
+                                    <div class="text-center text-muted py-5">
+
+                                        <i class="fas fa-user fa-3x mb-3"></i>
+
+                                        <p>Select a patient to view details.</p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
                         </div>
 
                         {{-- Total Cancer --}}
@@ -84,8 +110,7 @@
                                         </div>
                                         <input type="number" name="total_cancer" id="total_cancer"
                                             class="form-control border-left-0" min="0"
-                                            value="{{ old('total_cancer', 1) }}" placeholder="Enter total cancer count"
-                                            required>
+                                            value="{{ old('total_cancer', 1) }}" placeholder="Enter total cancer count">
                                     </div>
 
                                     <small class="text-muted d-block mt-2">
@@ -171,4 +196,5 @@
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_dropdown.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_helpers.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_search/patient_search_filter.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/create_page/patient_cancer_ajax.js') }}"></script>
 @endsection
