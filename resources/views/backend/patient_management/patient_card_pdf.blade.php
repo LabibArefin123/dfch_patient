@@ -151,7 +151,7 @@
                         @endif
                     </td>
                     <td>
-                        @if ($patient->is_recommend)
+                        @if ($patient->is_referred)
                             <span class="badge badge-success">Yes</span>
                         @else
                             <span class="badge badge-secondary">No</span>

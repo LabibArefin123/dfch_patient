@@ -211,7 +211,7 @@
                 'totalRecords',
                 'perPage',
                 'gender',
-                'is_recommend',
+                'is_referred',
                 'year',
                 'month',
                 'week_filter',

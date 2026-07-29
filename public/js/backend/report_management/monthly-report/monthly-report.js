@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const year = document.querySelector('select[name="year"]');
     const month = document.querySelector('select[name="month"]');
     const gender = document.querySelector('select[name="gender"]');
-    const recommend = document.querySelector('select[name="is_recommend"]');
+    const recommend = document.querySelector('select[name="is_referred"]');
     const emergency = document.querySelector('select[name="is_emergency"]');
     const treatment = document.querySelector('select[name="is_treatment"]');
     const investigated = document.querySelector(

@@ -14,7 +14,7 @@ $(function () {
                 d.location_value = $("input[name='location_value']").val();
 
                 /* Patient Status */
-                d.is_recommend = $("select[name='is_recommend']").val();
+                d.is_referred = $("select[name='is_referred']").val();
                 d.is_emergency = $("select[name='is_emergency']").val();
                 d.is_treatment = $("select[name='is_treatment']").val();
                 d.is_investigated = $("select[name='is_investigated']").val();
@@ -77,8 +77,8 @@ $(function () {
                 searchable: false,
             },
             {
-                data: "is_recommend",
-                name: "is_recommend",
+                data: "is_referred",
+                name: "is_referred",
             },
             {
                 data: "emergency",

@@ -28,7 +28,7 @@ function renderPatientDetail(p) {
             <tr><th>Cancer Reports</th><td><span class="badge badge-danger">${p.cancer_reports || 0}</span></td></tr>
             <tr><th>Recommended</th><td>${p.recommend ? "Yes" : "No"}</td></tr>
             <tr><th>Doctor</th><td>${p.doctor || "N/A"}</td></tr>
-            <tr><th>Recommendation</th><td>${p.recommend_note || "N/A"}</td></tr>
+            <tr><th>Recommendation</th><td>${p.referred_note || "N/A"}</td></tr>
             <tr><th>Date Added</th><td>${p.date}</td></tr>
             <tr><th>Remarks</th><td>${p.remarks || "N/A"}</td></tr>
         </table>
@@ -46,13 +46,16 @@ $(document).on("click", ".patient-summary-show", function () {
     const patientData = $(this).data("patient");
     if (patientData) {
         renderPatientDetail(patientData);
-        
+
         // 🆕 Shift tabs dynamically to the Profile tab when clicked
-        const profileTabLink = $('#profile-tab');
+        const profileTabLink = $("#profile-tab");
         if (profileTabLink.length) {
-            profileTabLink.tab('show');
-            profileTabLink.find('i').removeClass('text-muted').addClass('text-primary');
-            $('#results-tab').find('i').addClass('text-muted');
+            profileTabLink.tab("show");
+            profileTabLink
+                .find("i")
+                .removeClass("text-muted")
+                .addClass("text-primary");
+            $("#results-tab").find("i").addClass("text-muted");
         }
     }
 });
@@ -101,7 +104,12 @@ $(document).on("click", ".view-complete-profile-btn", function () {
  */
 function populatePatientViewModal(patient) {
     // 1. Profile photo
-    $("#viewModalPhoto").attr("src", patient.patient_photo ? "/" + patient.patient_photo : "/uploads/images/default.jpg");
+    $("#viewModalPhoto").attr(
+        "src",
+        patient.patient_photo
+            ? "/" + patient.patient_photo
+            : "/uploads/images/default.jpg",
+    );
 
     // 2. Info grid
     const infoContainer = $("#viewPatientInfoContainer");
@@ -114,21 +122,31 @@ function populatePatientViewModal(patient) {
         { label: "Phone Secondary", val: patient.phone_2 || "N/A" },
         { label: "Father Name", val: patient.patient_f_name || patient.father },
         { label: "Mother Name", val: patient.patient_m_name || patient.mother },
-        { label: "Problem", val: patient.patient_problem_description || patient.problem || "N/A" },
-        { label: "Drug", val: patient.patient_drug_description || patient.drug || "N/A" },
+        {
+            label: "Problem",
+            val:
+                patient.patient_problem_description || patient.problem || "N/A",
+        },
+        {
+            label: "Drug",
+            val: patient.patient_drug_description || patient.drug || "N/A",
+        },
         { label: "Doctor", val: patient.doctor || "N/A" },
-        { label: "Recommendation", val: patient.recommend_note || "N/A" },
+        { label: "Recommendation", val: patient.referred_note || "N/A" },
         { label: "Remarks", val: patient.remarks || "N/A" },
-        { label: "Added Date", val: patient.date_of_patient_added || patient.date }
+        {
+            label: "Added Date",
+            val: patient.date_of_patient_added || patient.date,
+        },
     ];
 
     let infoHtml = "";
-    fields.forEach(f => {
+    fields.forEach((f) => {
         infoHtml += `
             <div class="col-sm-6 col-md-4">
                 <div class="p-2 border-bottom">
                     <small class="text-muted d-block mb-1" style="font-size: 11px; text-transform: uppercase; font-weight: 600;">${f.label}</small>
-                    <span class="text-dark" style="font-size: 14px; font-weight: 500;">${f.val || 'N/A'}</span>
+                    <span class="text-dark" style="font-size: 14px; font-weight: 500;">${f.val || "N/A"}</span>
                 </div>
             </div>
         `;
@@ -141,7 +159,7 @@ function populatePatientViewModal(patient) {
 
     const docs = patient.documents || [];
     if (docs.length > 0) {
-        docs.forEach(doc => {
+        docs.forEach((doc) => {
             const fileName = doc.document_name || "Document";
             const filePath = "/" + doc.file_path;
             docsContainer.append(`
@@ -158,7 +176,9 @@ function populatePatientViewModal(patient) {
             `);
         });
     } else {
-        docsContainer.html('<div class="col-12 text-muted p-2">No referred documents uploaded.</div>');
+        docsContainer.html(
+            '<div class="col-12 text-muted p-2">No referred documents uploaded.</div>',
+        );
     }
 
     // 4. Cancer & X-Ray Reports list (eager loaded via relation: cancerPhotos)
@@ -170,7 +190,7 @@ function populatePatientViewModal(patient) {
     if (reports.length > 0) {
         reports.forEach((report) => {
             const totalCancer = report.total_cancer ?? 0;
-            const remarks = report.cancer_remarks || 'N/A';
+            const remarks = report.cancer_remarks || "N/A";
             const xrayPhotos = report.xray_photo || [];
             const xrayDescriptions = report.xray_description || [];
 
@@ -196,7 +216,7 @@ function populatePatientViewModal(patient) {
                 reportHtml += `<div class="row">`;
                 xrayPhotos.forEach((photo, pIndex) => {
                     const fullPath = "/" + photo;
-                    const description = xrayDescriptions[pIndex] || 'N/A';
+                    const description = xrayDescriptions[pIndex] || "N/A";
                     reportHtml += `
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
                             <div class="card h-100 border shadow-xs" style="border-radius: 8px; overflow: hidden;">
@@ -220,6 +240,8 @@ function populatePatientViewModal(patient) {
             photosContainer.append(reportHtml);
         });
     } else {
-        photosContainer.html('<div class="alert alert-warning mb-0 w-100">No cancer reports found for this patient.</div>');
+        photosContainer.html(
+            '<div class="alert alert-warning mb-0 w-100">No cancer reports found for this patient.</div>',
+        );
     }
 }

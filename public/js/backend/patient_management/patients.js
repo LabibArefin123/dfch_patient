@@ -42,7 +42,7 @@ $(function () {
     const urlParams = new URLSearchParams(window.location.search);
     const presetFilters = [
         "gender",
-        "is_recommend",
+        "is_referred",
         "location_type",
         "location_value",
         "date_filter",

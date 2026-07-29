@@ -1,4 +1,4 @@
-@if ($patient->is_recommend)
+@if ($patient->is_referred)
 
     <div class="patient-section-card recommendation-card">
 
@@ -79,7 +79,7 @@
 
                 <div class="medical-note-content">
 
-                    {!! $patient->recommend_note ?: '<span class="text-muted">No note provided</span>' !!}
+                    {!! $patient->referred_note ?: '<span class="text-muted">No note provided</span>' !!}
 
                 </div>
 

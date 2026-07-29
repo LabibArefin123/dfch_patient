@@ -35,10 +35,10 @@ class Patient extends Model
         'patient_problem_description',
         'patient_drug_description',
 
-        'is_recommend',
+        'is_referred',
         'is_emergency',
         'referred_doctor_name',
-        'recommend_note',
+        'referred_note',
 
         'date_of_patient_added',
         'remarks',
@@ -60,7 +60,7 @@ class Patient extends Model
 
     protected $casts = [
 
-        'is_recommend' => 'boolean',
+        'is_referred' => 'boolean',
         'is_old_cancer' => 'boolean',
         'is_emergency' => 'boolean',
         'emergency_details' => 'array',

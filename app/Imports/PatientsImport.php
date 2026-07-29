@@ -47,7 +47,7 @@ class PatientsImport implements
             'city' => $row['city'] ?? null,
             'district' => $row['district'] ?? null,
             'country' => $row['country'] ?? null,
-            'is_recommend' => isset($row['is_recommend']) ? (int)$row['is_recommend'] : 0,
+            'is_referred' => isset($row['is_referred']) ? (int)$row['is_referred'] : 0,
 
             'date_of_patient_added' => isset($row['date_of_patient_added'])
                 ? Carbon::parse($row['date_of_patient_added'])

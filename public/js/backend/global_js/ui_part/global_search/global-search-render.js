@@ -44,7 +44,7 @@ function renderSearchResults(data, query, resultBox) {
 
             /* Recommended*/
 
-            if (item.is_recommend) {
+            if (item.is_referred) {
                 statusBadges += `
                     <span
                         style="

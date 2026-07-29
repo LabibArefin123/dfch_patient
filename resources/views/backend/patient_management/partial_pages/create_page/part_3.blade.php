@@ -46,13 +46,13 @@
                 </span>
             </div>
 
-            <select name="is_recommend" id="is_recommend" class="form-control">
+            <select name="is_referred" id="is_referred" class="form-control">
 
-                <option value="0" {{ old('is_recommend') == '0' ? 'selected' : '' }}>
+                <option value="0" {{ old('is_referred') == '0' ? 'selected' : '' }}>
                     No
                 </option>
 
-                <option value="1" {{ old('is_recommend') == '1' ? 'selected' : '' }}>
+                <option value="1" {{ old('is_referred') == '1' ? 'selected' : '' }}>
                     Yes
                 </option>
 
@@ -110,7 +110,7 @@
 
             <label>Referred Doctor Note</label>
 
-            <textarea name="recommend_note" class="form-control ckeditor" rows="6">{{ old('recommend_note') }}</textarea>
+            <textarea name="referred_note" class="form-control ckeditor" rows="6">{{ old('referred_note') }}</textarea>
 
             <small class="text-muted">
                 Enter diagnosis, referral reason, treatment advice and any

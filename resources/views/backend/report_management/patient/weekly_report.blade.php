@@ -18,7 +18,7 @@
         ['data' => 'phone_f_1'],
         ['data' => 'phone_m_1'],
         ['data' => 'location'],
-        ['data' => 'is_recommend'],
+        ['data' => 'is_referred'],
         ['data' => 'is_emergency'],
         ['data' => 'is_treatment'],
         ['data' => 'is_investigated'],
@@ -28,7 +28,6 @@
 @endphp
 
 @section('filters')
-
     <div class="row">
 
         {{-- =========================================
@@ -59,9 +58,7 @@
                                 Week Range
                             </label>
 
-                            <select name="week_filter"
-                                id="week_filter"
-                                class="form-control">
+                            <select name="week_filter" id="week_filter" class="form-control">
 
                                 <option value="current_week" selected>
                                     Current Week
@@ -90,8 +87,7 @@
                             </select>
                         </div>
 
-                        <div id="custom_date_range"
-                            class="col-lg-8 d-none">
+                        <div id="custom_date_range" class="col-lg-8 d-none">
 
                             <div class="row">
 
@@ -101,10 +97,7 @@
                                         From Date
                                     </label>
 
-                                    <input type="date"
-                                        name="from_date"
-                                        id="from_date"
-                                        class="form-control">
+                                    <input type="date" name="from_date" id="from_date" class="form-control">
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -113,10 +106,7 @@
                                         To Date
                                     </label>
 
-                                    <input type="date"
-                                        name="to_date"
-                                        id="to_date"
-                                        class="form-control">
+                                    <input type="date" name="to_date" id="to_date" class="form-control">
                                 </div>
 
                             </div>
@@ -160,8 +150,7 @@
                                 Gender
                             </label>
 
-                            <select name="gender"
-                                class="form-control">
+                            <select name="gender" class="form-control">
 
                                 <option value="">
                                     All Patients
@@ -184,8 +173,7 @@
                                 Referred
                             </label>
 
-                            <select name="is_recommend"
-                                class="form-control">
+                            <select name="is_referred" class="form-control">
 
                                 <option value="">
                                     All
@@ -208,8 +196,7 @@
                                 Emergency
                             </label>
 
-                            <select name="is_emergency"
-                                class="form-control">
+                            <select name="is_emergency" class="form-control">
 
                                 <option value="">
                                     All
@@ -232,8 +219,7 @@
                                 Treatment Status
                             </label>
 
-                            <select name="is_treatment"
-                                class="form-control">
+                            <select name="is_treatment" class="form-control">
 
                                 <option value="">
                                     All
@@ -256,8 +242,7 @@
                                 Investigation Status
                             </label>
 
-                            <select name="is_investigated"
-                                class="form-control">
+                            <select name="is_investigated" class="form-control">
 
                                 <option value="">
                                     All
@@ -283,7 +268,6 @@
         </div>
 
     </div>
-
 @endsection
 <!-- Filter Validation Modal -->
 <div class="modal fade" id="filterWarningModal" tabindex="-1">

@@ -109,7 +109,7 @@ class PatientSeeder extends Seeder
                     'patient_problem_description' => $problems[array_rand($problems)],
                     'patient_drug_description'    => $drugs[array_rand($drugs)],
 
-                    'is_recommend' => rand(1, 100) <= 15,
+                    'is_referred' => rand(1, 100) <= 15,
 
                     'date_of_patient_added' => $startDate->toDateString(),
 

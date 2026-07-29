@@ -1,6 +1,6 @@
 (function () {
     function render(patient) {
-        if (!patient.is_recommend) {
+        if (!patient.is_referred) {
             $("#patientAnimationDocumentContainer").html(`
             <div class="alert alert-warning shadow-sm mb-4">
                 <i class="fas fa-info-circle mr-2"></i>

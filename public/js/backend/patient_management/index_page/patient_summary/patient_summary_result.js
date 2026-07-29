@@ -27,7 +27,7 @@ function renderPatientResults(patients) {
         | Dropdown Items
         |--------------------------------------------------------------------------
         */
-        const hasRecommendation = Number(p.is_recommend) === 1;
+        const hasRecommendation = Number(p.is_referred) === 1;
 
         const hasOldXray =
             Number(p.cancer_photos_count || 0) > 0 ||

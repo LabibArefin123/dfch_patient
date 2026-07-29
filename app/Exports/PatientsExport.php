@@ -28,8 +28,8 @@ class PatientsExport implements FromQuery, WithHeadings, WithMapping, ShouldAuto
                 $q->where('gender', $this->request->gender);
             })
 
-            ->when($this->request->filled('is_recommend'), function ($q) {
-                $q->where('is_recommend', (int) $this->request->is_recommend);
+            ->when($this->request->filled('is_referred'), function ($q) {
+                $q->where('is_referred', (int) $this->request->is_referred);
             })
 
             ->when($this->request->location_type, function ($q) {
@@ -138,7 +138,7 @@ class PatientsExport implements FromQuery, WithHeadings, WithMapping, ShouldAuto
             $patient->city,
             $patient->district,
             $patient->country,
-            $patient->is_recommend ? 'Yes' : 'No',
+            $patient->is_referred ? 'Yes' : 'No',
             optional($patient->date_of_patient_added)->format('d M Y'),
         ];
     }

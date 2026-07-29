@@ -49,7 +49,7 @@
                                 alt="Patient Photo" class="patient-profile-photo zoomable" data-action="zoom">
                         </div>
                     </div>
-                    
+
                     {{-- PATIENT INFORMATION --}}
                     <div class="col-md-7 col-lg-8">
                         <div class="patient-profile-info">
@@ -59,7 +59,7 @@
                                         {{ $patient->patient_name }}
                                     </h2>
 
-                                    @if ($patient->is_recommend)
+                                    @if ($patient->is_referred)
                                         <span class="badge badge-primary patient-status-badge">
                                             <i class="fas fa-user-md mr-1"></i>
                                             Recommended
@@ -123,7 +123,7 @@
 
         {{-- IMAGE ZOOM MODAL --}}
         <div id="imageZoomModal" class="zoom-modal">
-            <span class="zoom-close">&times;  </span>
+            <span class="zoom-close">&times; </span>
             <img class="zoom-modal-content" id="zoomedImage">
         </div>
 

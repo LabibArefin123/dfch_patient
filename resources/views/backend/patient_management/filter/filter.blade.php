@@ -101,15 +101,15 @@
                         Referred Doctor
                     </label>
 
-                    <select name="is_recommend" class="form-control">
+                    <select name="is_referred" class="form-control">
 
                         <option value="">All</option>
 
-                        <option value="1" {{ request('is_recommend') === '1' ? 'selected' : '' }}>
+                        <option value="1" {{ request('is_referred') === '1' ? 'selected' : '' }}>
                             Referred
                         </option>
 
-                        <option value="0" {{ request('is_recommend') === '0' ? 'selected' : '' }}>
+                        <option value="0" {{ request('is_referred') === '0' ? 'selected' : '' }}>
                             Not Referred
                         </option>
 

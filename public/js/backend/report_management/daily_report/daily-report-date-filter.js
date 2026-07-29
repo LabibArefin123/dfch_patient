@@ -8,7 +8,7 @@ window.DailyReport.initDateFilter = function () {
 
     const genderSelect = document.querySelector('select[name="gender"]');
     const recommendSelect = document.querySelector(
-        'select[name="is_recommend"]',
+        'select[name="is_referred"]',
     );
     const emergencySelect = document.querySelector(
         'select[name="is_emergency"]',

@@ -18,7 +18,7 @@
         ['data' => 'phone_f_1'],
         ['data' => 'phone_m_1'],
         ['data' => 'location'],
-        ['data' => 'is_recommend'],
+        ['data' => 'is_referred'],
         ['data' => 'is_emergency'],
         ['data' => 'is_treatment'],
         ['data' => 'is_investigated'],
@@ -174,7 +174,7 @@
                                 Referred Patients
                             </label>
 
-                            <select name="is_recommend" class="form-control">
+                            <select name="is_referred" class="form-control">
                                 <option value="">All</option>
                                 <option value="1">Referred</option>
                                 <option value="0">Not Referred</option>

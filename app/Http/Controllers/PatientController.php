@@ -31,8 +31,8 @@ class PatientController extends Controller
             })
 
             // Refer Filter
-            ->when($request->filled('is_recommend'), function ($q) use ($request) {
-                $q->where('is_recommend', (int) $request->is_recommend);
+            ->when($request->filled('is_referred'), function ($q) use ($request) {
+                $q->where('is_referred', (int) $request->is_referred);
             })
             // Emergency Filter
             ->when($request->filled('is_emergency'), function ($q) use ($request) {
@@ -192,13 +192,13 @@ class PatientController extends Controller
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $loc . '</a>';
                 })
 
-                ->addColumn('is_recommend', function ($p) {
+                ->addColumn('is_referred', function ($p) {
 
                     return '
                     <a href="' . route('patients.show', $p) . '" class="hover-box">
-                        <span class="badge badge-' . ($p->is_recommend ? 'success' : 'secondary') . '">
+                        <span class="badge badge-' . ($p->is_referred ? 'success' : 'secondary') . '">
                             <i class="fas fa-user-md"></i>
-                            ' . ($p->is_recommend ? 'Yes' : 'No') . '
+                            ' . ($p->is_referred ? 'Yes' : 'No') . '
                         </span>
                     </a>';
                 })
@@ -319,7 +319,7 @@ class PatientController extends Controller
                     'gender',
                     'phone',
                     'location',
-                    'is_recommend',
+                    'is_referred',
                     'does_old_cancer',
                     'total_cancer_photos',
                     'emergency',
@@ -367,7 +367,7 @@ class PatientController extends Controller
         // Base Query
         $baseQuery = Patient::query()
             ->with('cancerPhotos')
-            ->where('is_recommend', 1)
+            ->where('is_referred', 1)
 
             ->when($request->filled('gender'), function ($q) use ($request) {
                 $q->where('gender', $request->gender);
@@ -502,7 +502,7 @@ class PatientController extends Controller
                     $loc = $p->location_type == 1 ? $p->location_simple : ($p->location_type == 2 ? $p->city . '<br>' . $p->district : $p->country);
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $loc . '</a>';
                 })
-                ->addColumn('is_recommend', fn() => '<span class="badge badge-success">Recommended</span>')
+                ->addColumn('is_referred', fn() => '<span class="badge badge-success">Recommended</span>')
                 ->addColumn('does_old_cancer', function ($p) {
 
                     return '
@@ -613,7 +613,7 @@ class PatientController extends Controller
                     'gender',
                     'phone',
                     'location',
-                    'is_recommend',
+                    'is_referred',
                     'does_old_cancer',
                     'total_cancer_photos',
                     'emergency',
@@ -769,9 +769,9 @@ class PatientController extends Controller
                     'problem' => $patient->patient_problem_description,
                     'drug' => $patient->patient_drug_description,
                     'remarks' => $patient->remarks,
-                    'recommend' => $patient->is_recommend,
+                    'recommend' => $patient->is_referred,
                     'doctor' => $patient->referred_doctor_name,
-                    'recommend_note' => $patient->recommend_note,
+                    'referred_note' => $patient->referred_note,
                     'document_folder' => asset("uploads/documents/{$patientFolder}/recommend_doc"),
                     'documents' => $patient->documents_count,
                     'cancer_reports' => $patient->cancer_photos_count,
@@ -799,11 +799,11 @@ class PatientController extends Controller
 
                 'patient_name' => $patient->patient_name,
 
-                'is_recommend' => (bool) $patient->is_recommend,
+                'is_referred' => (bool) $patient->is_referred,
 
                 'referred_doctor_name' => $patient->referred_doctor_name,
 
-                'recommend_note' => $patient->recommend_note,
+                'referred_note' => $patient->referred_note,
 
                 'documents' => $patient->documents
                     ->where('document_type', 'recommendation')
@@ -888,11 +888,11 @@ class PatientController extends Controller
 
                     'remarks' => $patient->remarks,
 
-                    'recommend' => $patient->is_recommend,
+                    'recommend' => $patient->is_referred,
 
                     'doctor' => $patient->referred_doctor_name,
 
-                    'recommend_note' => $patient->recommend_note,
+                    'referred_note' => $patient->referred_note,
 
                     'documents' => $patient->documents()->count(),
 
@@ -993,9 +993,9 @@ class PatientController extends Controller
 
                     'remarks' => $patient->remarks,
 
-                    'recommend' => $patient->is_recommend,
+                    'recommend' => $patient->is_referred,
                     'doctor' => $patient->referred_doctor_name,
-                    'recommend_note' => $patient->recommend_note,
+                    'referred_note' => $patient->referred_note,
 
                     'documents' => $patient->documents_count,
                     'cancer_reports' => $patient->cancer_photos_count,
@@ -1066,9 +1066,9 @@ class PatientController extends Controller
             )
 
             ->when(
-                $request->filled('is_recommend'),
+                $request->filled('is_referred'),
                 fn($q) =>
-                $q->where('is_recommend', (int)$request->is_recommend)
+                $q->where('is_referred', (int)$request->is_referred)
             )
 
             ->when($request->location_type, function ($q) use ($request) {
@@ -1183,7 +1183,7 @@ class PatientController extends Controller
 
             /* Referred    */
             'referred_doctor_name' => 'nullable|string|max:255',
-            'recommend_note' => 'nullable|string',
+            'referred_note' => 'nullable|string',
 
             /* Treatment */
             'treatment_information' => 'nullable|string',
@@ -1215,7 +1215,7 @@ class PatientController extends Controller
         ]);
 
         /* Boolean Values */
-        $validated['is_recommend'] = $request->boolean('is_recommend');
+        $validated['is_referred'] = $request->boolean('is_referred');
         $validated['is_emergency'] = $request->boolean('is_emergency');
         $validated['is_old_cancer'] = $request->boolean('is_old_cancer');
         $validated['is_treatment'] = $request->boolean('is_treatment');
@@ -1625,7 +1625,7 @@ class PatientController extends Controller
 
             /*Recommendation */
             'referred_doctor_name' => 'nullable|string|max:255',
-            'recommend_note' => 'nullable|string',
+            'referred_note' => 'nullable|string',
 
             /* Treatment   */
             'treatment_information' => 'nullable|string',
@@ -1674,7 +1674,7 @@ class PatientController extends Controller
         ]);
 
         /* Boolean Values */
-        $validated['is_recommend'] = $request->boolean('is_recommend');
+        $validated['is_referred'] = $request->boolean('is_referred');
         $validated['is_emergency'] = $request->boolean('is_emergency');
         $validated['is_old_cancer'] = $request->boolean('is_old_cancer');
         $validated['is_treatment'] = $request->boolean('is_treatment');

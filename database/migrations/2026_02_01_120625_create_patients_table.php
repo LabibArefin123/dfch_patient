@@ -49,10 +49,10 @@ return new class extends Migration {
             $table->string('phone_m_1')->nullable();
 
             /* Recommendation  */
-            $table->boolean('is_recommend')->default(false);
+            $table->boolean('is_referred')->default(false);
             $table->boolean('is_emergency')->default(false);
             $table->string('referred_doctor_name')->nullable();
-            $table->longText('recommend_note')->nullable();
+            $table->longText('referred_note')->nullable();
 
             /* Treatment*/
             $table->boolean('is_treatment')->default(false)->comment('0=No, 1=Yes');

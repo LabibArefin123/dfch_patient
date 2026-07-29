@@ -64,12 +64,12 @@ class DashboardController extends Controller
     */
 
         $totalRecommendedPatients = Patient::where(
-            'is_recommend',
+            'is_referred',
             1
         )->count();
 
         $todayRecommendedPatients = Patient::where(
-            'is_recommend',
+            'is_referred',
             1
         )
             ->whereDate(
@@ -79,7 +79,7 @@ class DashboardController extends Controller
             ->count();
 
         $weeklyRecommendedPatients = Patient::where(
-            'is_recommend',
+            'is_referred',
             1
         )
             ->whereBetween(
@@ -92,7 +92,7 @@ class DashboardController extends Controller
             ->count();
 
         $monthlyRecommendedPatients = Patient::where(
-            'is_recommend',
+            'is_referred',
             1
         )
             ->whereMonth(
@@ -380,7 +380,7 @@ class DashboardController extends Controller
             |--------------------------------------------------------------------------
             */
 
-                'is_recommend' => (bool) $patient->is_recommend,
+                'is_referred' => (bool) $patient->is_referred,
 
                 'is_old_cancer' => (bool) $patient->is_old_cancer,
 

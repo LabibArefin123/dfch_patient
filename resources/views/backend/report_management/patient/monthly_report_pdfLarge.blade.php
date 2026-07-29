@@ -153,7 +153,7 @@
                             <strong>Passport:</strong> {{ $patient->passport_no }}
                         @endif
                     </td>
-                    <td>{{ $patient->is_recommend ? 'Yes' : 'No' }}</td>
+                    <td>{{ $patient->is_referred ? 'Yes' : 'No' }}</td>
                     <td>
                         {{ \Carbon\Carbon::parse($patient->date_of_patient_added)->format('d-m-Y') }}
                         ({{ \Carbon\Carbon::parse($patient->date_of_patient_added)->format('d F Y') }})

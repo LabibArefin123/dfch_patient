@@ -113,7 +113,7 @@ class ReportController extends Controller
         return $request->filled('day_filter')
             || ($request->filled('from_date') && $request->filled('to_date'))
             || $request->filled('gender')
-            || $request->filled('is_recommend')
+            || $request->filled('is_referred')
             || $request->filled('is_emergency')
             || $request->filled('is_treatment')
             || $request->filled('is_investigated')
@@ -125,7 +125,7 @@ class ReportController extends Controller
         return $request->filled('week_filter')
             || ($request->filled('from_date') && $request->filled('to_date'))
             || $request->filled('gender')
-            || $request->filled('is_recommend')
+            || $request->filled('is_referred')
             || $request->filled('is_emergency')
             || $request->filled('is_treatment')
             || $request->filled('is_investigated');
@@ -136,7 +136,7 @@ class ReportController extends Controller
         return $request->filled('year')
             || $request->filled('month')
             || $request->filled('gender')
-            || $request->filled('is_recommend')
+            || $request->filled('is_referred')
             || $request->filled('is_emergency')
             || $request->filled('is_treatment')
             || $request->filled('is_investigated');
@@ -146,7 +146,7 @@ class ReportController extends Controller
     {
         return $request->filled('year')
             || $request->filled('gender')
-            || $request->filled('is_recommend')
+            || $request->filled('is_referred')
             || $request->filled('is_emergency')
             || $request->filled('is_treatment')
             || $request->filled('is_investigated');
@@ -288,8 +288,8 @@ class ReportController extends Controller
             $query->where('gender', $request->gender);
         }
 
-        if ($request->filled('is_recommend')) {
-            $query->where('is_recommend', $request->is_recommend);
+        if ($request->filled('is_referred')) {
+            $query->where('is_referred', $request->is_referred);
         }
 
         if ($request->filled('is_emergency')) {

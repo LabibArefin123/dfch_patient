@@ -11,7 +11,7 @@ function initializeEditors() {
         "#edit_patient_drug_description",
 
         // Recommendation
-        "#edit_recommend_note",
+        "#edit_referred_note",
 
         // Emergency
         "#edit_emergency_details",
@@ -21,11 +21,10 @@ function initializeEditors() {
 
         // Investigation
         "#edit_investigation_information",
-        
+
         // Cancer
         "#edit_xray_description",
         "#edit_cancer_remarks",
-
     ];
 
     editors.forEach(function (selector) {

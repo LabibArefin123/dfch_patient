@@ -5,7 +5,7 @@
  */
 
 function toggleRecommend() {
-    if ($("#is_recommend").val() == "1") {
+    if ($("#is_referred").val() == "1") {
         $(".recommend-section").removeClass("d-none");
     } else {
         $(".recommend-section").addClass("d-none");
@@ -15,7 +15,7 @@ function toggleRecommend() {
 function initializeRecommendToggle() {
     toggleRecommend();
 
-    $("#is_recommend").on("change", function () {
+    $("#is_referred").on("change", function () {
         toggleRecommend();
     });
 }

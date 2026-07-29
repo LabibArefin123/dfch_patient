@@ -31,7 +31,7 @@
                 <td>{{ $patient->phone_f_1 }}</td>
                 <td>{{ $patient->phone_m_1 }}</td>
                 <td>{{ $patient->location }}</td>
-                <td>{{ $patient->is_recommend ? 'Yes' : 'No' }}</td>
+                <td>{{ $patient->is_referred ? 'Yes' : 'No' }}</td>
                 <td>{{ $patient->date_of_patient_added }}</td>
             </tr>
         @endforeach

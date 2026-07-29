@@ -44,10 +44,10 @@ class DataTableService
             */
 
             ->editColumn(
-                'is_recommend',
+                'is_referred',
                 function ($row) {
 
-                    return $row->is_recommend
+                    return $row->is_referred
                         ? 'Yes'
                         : 'No';
                 }

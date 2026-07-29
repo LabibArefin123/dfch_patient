@@ -36,7 +36,6 @@ document.addEventListener("DOMContentLoaded", function () {
             marginTop: "5px",
         });
 
-       
         // 📌 Attach dropdown to input parent
         const parentGroup =
             input.closest(".input-group") || input.parentElement;
@@ -120,7 +119,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                 let statusBadges = "";
 
                                 // 🟠 Recommended Patient
-                                if (item.is_recommend) {
+                                if (item.is_referred) {
                                     statusBadges += `
                                         <span
                                             style="

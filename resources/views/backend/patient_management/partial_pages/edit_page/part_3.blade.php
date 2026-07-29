@@ -13,11 +13,11 @@
         <div class="row">
             <div class="form-group col-md-6">
                 <label>Is Patient Referred?</label>
-                <select name="is_recommend" id="is_recommend" class="form-control">
-                    <option value="0" {{ old('is_recommend', $patient->is_recommend) == 0 ? 'selected' : '' }}>
+                <select name="is_referred" id="is_referred" class="form-control">
+                    <option value="0" {{ old('is_referred', $patient->is_referred) == 0 ? 'selected' : '' }}>
                         No
                     </option>
-                    <option value="1" {{ old('is_recommend', $patient->is_recommend) == 1 ? 'selected' : '' }}>
+                    <option value="1" {{ old('is_referred', $patient->is_referred) == 1 ? 'selected' : '' }}>
                         Yes
                     </option>
                 </select>
@@ -35,7 +35,7 @@
                 {{-- Doctor Note --}}
                 <div class="form-group col-md-6">
                     <label>Referred Doctor's Note</label>
-                    <textarea name="recommend_note" id="edit_recommend_note" class="form-control">{!! old('recommend_note', $patient->recommend_note) !!}</textarea>
+                    <textarea name="referred_note" id="edit_referred_note" class="form-control">{!! old('referred_note', $patient->referred_note) !!}</textarea>
                 </div>
 
                 {{-- Existing Documents --}}

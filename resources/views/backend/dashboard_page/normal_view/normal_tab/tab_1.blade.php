@@ -27,25 +27,25 @@
 
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
             <x-adminlte-small-box title="{{ $totalRecommendedPatients }}" text="Total Recommended" theme="danger"
-                icon="fas fa-user-md" url="{{ route('patients.recommend', ['is_recommend' => 1]) }}" />
+                icon="fas fa-user-md" url="{{ route('patients.recommend', ['is_referred' => 1]) }}" />
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
             <x-adminlte-small-box title="{{ $todayRecommendedPatients }}" text="Today's Recommended" theme="warning"
                 icon="fas fa-stethoscope"
-                url="{{ route('patients.recommend', ['is_recommend' => 1, 'date_filter' => 'today']) }}" />
+                url="{{ route('patients.recommend', ['is_referred' => 1, 'date_filter' => 'today']) }}" />
         </div>
-        
+
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
             <x-adminlte-small-box title="{{ $weeklyRecommendedPatients }}" text="Weekly Recommended" theme="warning"
                 icon="fas fa-stethoscope"
-                url="{{ route('patients.recommend', ['is_recommend' => 1, 'date_filter' => 'this_week']) }}" />
+                url="{{ route('patients.recommend', ['is_referred' => 1, 'date_filter' => 'this_week']) }}" />
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
             <x-adminlte-small-box title="{{ $monthlyRecommendedPatients }}" text="Monthly Recommended" theme="success"
                 icon="fas fa-chart-line"
-                url="{{ route('patients.recommend', ['is_recommend' => 1, 'date_filter' => 'this_month']) }}" />
+                url="{{ route('patients.recommend', ['is_referred' => 1, 'date_filter' => 'this_month']) }}" />
         </div>
 
         {{-- Emergency Patient History --}}

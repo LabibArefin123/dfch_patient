@@ -83,7 +83,7 @@
 
                         ${field("Doctor", patient.doctor || patient.referred_doctor_name || "N/A")}
 
-                        ${field("Recommendation", patient.recommend_note || "N/A")}
+                        ${field("Recommendation", patient.referred_note || "N/A")}
 
                         ${field("Remarks", patient.remarks || "N/A")}
 

@@ -13,7 +13,7 @@ function updatePatientTabs(patient) {
     }
 
     // Recommendation tab
-    if (Number(patient.is_recommend) === 1) {
+    if (Number(patient.is_referred) === 1) {
         $("#documents-tab-item").removeClass("d-none");
     }
 

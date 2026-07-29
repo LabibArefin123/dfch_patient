@@ -46,7 +46,7 @@ class GlobalAjaxController extends Controller
                     'date_added' => optional($patient->date_of_patient_added)
                         ->format('d M Y'),
 
-                    'is_referred' => $patient->is_recommend,
+                    'is_referred' => $patient->is_referred,
 
                     'is_treatment' => $patient->is_treatment,
 
@@ -94,7 +94,7 @@ class GlobalAjaxController extends Controller
             'date_added' => optional($patient->date_of_patient_added)
                 ->format('d M Y'),
 
-            'is_referred' => $patient->is_recommend,
+            'is_referred' => $patient->is_referred,
 
             'is_treatment' => $patient->is_treatment,
 

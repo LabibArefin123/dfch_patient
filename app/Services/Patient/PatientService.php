@@ -14,7 +14,7 @@ use Carbon\Carbon;
 
 class PatientService
 {
-    
+
     // ==============================
     // DELETE
     // ==============================
@@ -174,7 +174,7 @@ class PatientService
                     'city' => $row[11] ?? null,
                     'district' => $row[12] ?? null,
                     'country' => $row[13] ?? null,
-                    'is_recommend' => $row[14] ?? 0,
+                    'is_referred' => $row[14] ?? 0,
                     'date_of_patient_added' => $row[15] ?? Carbon::now()->toDateString(),
                 ]);
             }

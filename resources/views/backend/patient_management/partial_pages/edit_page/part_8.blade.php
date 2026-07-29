@@ -179,15 +179,17 @@
                 @forelse($descriptions as $index => $description)
                     <div class="form-group">
                         <label>Cancer Description</label>
-                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4" placeholder="Enter X-Ray / CT Scan findings...">{{ $description }}</textarea>
+                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4"
+                            placeholder="Enter X-Ray / CT Scan findings...">{{ $description }}</textarea>
                     </div>
                 @empty
                     <div class="form-group">
                         <label>Description </label>
-                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4" placeholder="Enter X-Ray / CT Scan findings..."></textarea>
+                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4"
+                            placeholder="Enter X-Ray / CT Scan findings..."></textarea>
                     </div>
                 @endforelse
-            </div
+            </div>
 
             {{-- Remarks --}}
             <div class="form-group">

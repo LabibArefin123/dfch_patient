@@ -27,7 +27,7 @@ class PatientExcelSeeder extends Seeder
                 'city' => 'Dhaka',
                 'district' => 'Dhaka',
                 'country' => null,
-                'is_recommend' => 1,
+                'is_referred' => 1,
                 'date_of_patient_added' => Carbon::now()->toDateString(),
             ],
 
@@ -46,7 +46,7 @@ class PatientExcelSeeder extends Seeder
                 'city' => null,
                 'district' => null,
                 'country' => null,
-                'is_recommend' => 0,
+                'is_referred' => 0,
                 'date_of_patient_added' => Carbon::now()->toDateString(),
             ],
 
@@ -65,7 +65,7 @@ class PatientExcelSeeder extends Seeder
                 'city' => null,
                 'district' => null,
                 'country' => 'India',
-                'is_recommend' => 1,
+                'is_referred' => 1,
                 'date_of_patient_added' => Carbon::now()->toDateString(),
             ],
 
@@ -84,7 +84,7 @@ class PatientExcelSeeder extends Seeder
                 'city' => 'Chattogram',
                 'district' => 'Chattogram',
                 'country' => null,
-                'is_recommend' => 0,
+                'is_referred' => 0,
                 'date_of_patient_added' => Carbon::now()->toDateString(),
             ],
 
@@ -103,7 +103,7 @@ class PatientExcelSeeder extends Seeder
                 'city' => null,
                 'district' => null,
                 'country' => null,
-                'is_recommend' => 1,
+                'is_referred' => 1,
                 'date_of_patient_added' => Carbon::now()->toDateString(),
             ],
 
@@ -144,7 +144,7 @@ class PatientExcelSeeder extends Seeder
                         'city',
                         'district',
                         'country',
-                        'is_recommend',
+                        'is_referred',
                         'date_of_patient_added',
                     ];
                 }
