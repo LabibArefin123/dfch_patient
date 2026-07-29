@@ -1,0 +1,479 @@
+/* ============================================================
+   PATIENT CANCER - PATIENT INFORMATION
+   ============================================================ */
+
+#patientInfoCard {
+    position: relative;
+
+    margin-top: 18px !important;
+
+    border: 1px solid #e5eaf0;
+    border-radius: 14px;
+
+    background: #fff;
+
+    overflow: visible;
+
+    box-shadow: 0 4px 18px rgba(16, 24, 40, 0.06);
+
+    transition:
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+#patientInfoCard:hover {
+    box-shadow: 0 8px 25px rgba(16, 24, 40, 0.08);
+}
+
+/* ============================================================
+   HEADER
+   ============================================================ */
+
+#patientInfoCard > .card-header {
+    padding: 15px 18px;
+
+    border-bottom: 1px solid #edf1f5;
+
+    background: #fff;
+
+    border-radius: 14px 14px 0 0;
+}
+
+#patientInfoCard > .card-header strong {
+    display: flex;
+    align-items: center;
+
+    gap: 8px;
+
+    font-size: 16px;
+
+    color: #343a40;
+}
+
+#patientInfoCard > .card-header strong::before {
+    content: "\f007";
+
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+
+    width: 32px;
+    height: 32px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 8px;
+
+    background: #f0f6ff;
+    color: #0d6efd;
+
+    font-size: 14px;
+}
+
+/* ============================================================
+   BODY
+   ============================================================ */
+
+#patientInfoCard > .card-body {
+    padding: 18px;
+}
+
+/* ============================================================
+   INFORMATION GRID
+   ============================================================ */
+
+.patient-info-grid {
+    margin-left: -6px;
+    margin-right: -6px;
+}
+
+.patient-info-grid > [class*="col-"] {
+    padding-left: 6px;
+    padding-right: 6px;
+}
+
+/* Individual information item */
+.patient-info-item {
+    height: 100%;
+
+    min-height: 82px;
+
+    padding: 13px 14px;
+
+    margin-bottom: 12px;
+
+    border: 1px solid #edf1f5;
+    border-radius: 10px;
+
+    background: #fbfcfe;
+
+    transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+}
+
+.patient-info-item:hover {
+    border-color: #d8e5f5;
+
+    background: #f8fbff;
+
+    transform: translateY(-1px);
+}
+
+/* Label */
+.patient-info-label {
+    display: flex;
+    align-items: center;
+
+    gap: 6px;
+
+    margin-bottom: 7px;
+
+    color: #6c757d;
+
+    font-size: 11px;
+    font-weight: 700;
+
+    text-transform: uppercase;
+
+    letter-spacing: 0.35px;
+}
+
+/* Label icon */
+.patient-info-label i {
+    color: #0d6efd;
+
+    font-size: 11px;
+}
+
+/* Value */
+.patient-info-value {
+    color: #212529;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    line-height: 1.4;
+
+    word-break: break-word;
+}
+
+/* Empty value */
+.patient-info-value.is-empty {
+    color: #adb5bd;
+
+    font-weight: 500;
+}
+
+/* ============================================================
+   PATIENT NAME - FEATURED
+   ============================================================ */
+
+.patient-info-item.patient-name {
+    background: linear-gradient(135deg, #f5f9ff, #ffffff);
+
+    border-color: #dce9f8;
+}
+
+.patient-info-item.patient-name .patient-info-value {
+    font-size: 16px;
+
+    color: #0d6efd;
+}
+
+/* Patient code */
+.patient-code-badge {
+    display: inline-flex;
+    align-items: center;
+
+    padding: 4px 9px;
+
+    border-radius: 6px;
+
+    background: #eef5ff;
+
+    color: #0d6efd;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+/* ============================================================
+   STATUS CARD
+   ============================================================ */
+
+.patient-status-card,
+.patient-documents-card {
+    height: 100%;
+
+    border: 1px solid #e7ebf0;
+
+    border-radius: 12px;
+
+    background: #fff;
+
+    overflow: hidden;
+}
+
+.patient-status-card .card-header,
+.patient-documents-card .card-header {
+    padding: 13px 15px;
+
+    background: #fbfcfe;
+
+    border-bottom: 1px solid #edf1f5;
+}
+
+.patient-status-card .card-header strong,
+.patient-documents-card .card-header strong {
+    font-size: 14px;
+
+    color: #343a40;
+}
+
+.patient-status-card .card-body,
+.patient-documents-card .card-body {
+    padding: 15px;
+}
+
+/* Status row */
+.patient-status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 15px;
+
+    padding: 10px 0;
+
+    border-bottom: 1px solid #f0f2f5;
+}
+
+.patient-status-row:first-child {
+    padding-top: 0;
+}
+
+.patient-status-row:last-child {
+    padding-bottom: 0;
+
+    border-bottom: 0;
+}
+
+.patient-status-label {
+    color: #495057;
+
+    font-size: 13px;
+    font-weight: 500;
+}
+
+/* ============================================================
+   STATUS BADGES
+   ============================================================ */
+
+.patient-status-yes {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #eaf8ef;
+
+    color: #198754;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.patient-status-no {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 4px;
+
+    padding: 4px 9px;
+
+    border-radius: 20px;
+
+    background: #fff0f0;
+
+    color: #dc3545;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+/* ============================================================
+   DOCUMENTS
+   ============================================================ */
+
+.patient-documents-list {
+    display: flex;
+
+    flex-wrap: wrap;
+
+    gap: 8px;
+}
+
+.patient-document-btn {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 5px;
+
+    padding: 7px 10px;
+
+    border: 1px solid #dbe5f0;
+    border-radius: 7px;
+
+    background: #f8fbff;
+
+    color: #0d6efd;
+
+    font-size: 12px;
+    font-weight: 600;
+
+    text-decoration: none;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.patient-document-btn:hover {
+    background: #eef5ff;
+
+    border-color: #bcd3ef;
+
+    color: #0b5ed7;
+
+    text-decoration: none;
+
+    transform: translateY(-1px);
+}
+
+/* ============================================================
+   EMPTY STATE
+   ============================================================ */
+
+.patient-empty-state {
+    padding: 45px 20px;
+
+    text-align: center;
+}
+
+.patient-empty-state-icon {
+    width: 65px;
+    height: 65px;
+
+    margin: 0 auto 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #f4f7fa;
+
+    color: #adb5bd;
+
+    font-size: 25px;
+}
+
+.patient-empty-state h5 {
+    margin-bottom: 6px;
+
+    color: #495057;
+
+    font-size: 15px;
+}
+
+.patient-empty-state p {
+    margin-bottom: 0;
+
+    color: #8a94a3;
+
+    font-size: 13px;
+}
+
+/* ============================================================
+   LOADING
+   ============================================================ */
+
+.patient-info-loading {
+    padding: 45px 20px;
+
+    text-align: center;
+
+    color: #6c757d;
+}
+
+.patient-info-loading i {
+    margin-bottom: 10px;
+
+    color: #0d6efd;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 991.98px) {
+    .patient-info-item {
+        min-height: 78px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    #patientInfoCard > .card-body {
+        padding: 12px;
+    }
+
+    .patient-info-item {
+        min-height: auto;
+
+        padding: 12px;
+
+        margin-bottom: 8px;
+    }
+
+    .patient-info-value {
+        font-size: 13px;
+    }
+
+    .patient-status-row {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 6px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    #patientInfoCard > .card-header {
+        padding: 13px 14px;
+    }
+
+    #patientInfoCard > .card-body {
+        padding: 10px;
+    }
+
+    .patient-info-item {
+        padding: 11px;
+    }
+
+    .patient-info-label {
+        font-size: 10px;
+    }
+
+    .patient-info-value {
+        font-size: 13px;
+    }
+}

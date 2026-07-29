@@ -14,7 +14,9 @@
 @stop
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/patient_search.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_search.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_cancer_select.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_cancer_info.css') }}">
     <div class="container-fluid">
         @if ($errors->any())
             <div class="alert alert-danger">
@@ -46,6 +48,7 @@
                                     </label>
 
                                     <div class="patient-select-wrapper">
+
                                         <select name="patient_id" id="patientSelect" class="form-control">
 
                                             <option value="">Select Patient</option>
@@ -55,44 +58,51 @@
                                                     data-name="{{ strtolower($patient->patient_name) }}"
                                                     data-code="{{ strtolower($patient->patient_code) }}"
                                                     {{ old('patient_id') == $patient->id ? 'selected' : '' }}>
-                                                    {{ $patient->patient_name }}{{ $patient->patient_code ? ' (' . $patient->patient_code . ')' : '' }}
+
+                                                    {{ $patient->patient_name }}
+
+                                                    {{ $patient->patient_code ? ' (' . $patient->patient_code . ')' : '' }}
+
                                                 </option>
                                             @endforeach
+
                                         </select>
+
                                     </div>
 
                                     <small class="text-muted d-block mt-2">
-                                        Search by patient name or patient code. First 15 patients are shown initially.
+                                        <i class="fas fa-search mr-1"></i>
+                                        Search by patient name or patient code.
+                                        First 15 patients are shown initially.
                                     </small>
+
+
 
                                 </div>
                             </div>
                         </div>
 
                         <div class="card mt-3 shadow-sm" id="patientInfoCard">
-
                             <div class="card-header">
-                                <strong>Patient Information</strong>
+                                <strong>
+                                    Patient Information
+                                </strong>
                             </div>
 
                             <div class="card-body">
-
                                 <div id="patientInformation">
-
-                                    <div class="text-center text-muted py-5">
-
-                                        <i class="fas fa-user fa-3x mb-3"></i>
-
-                                        <p>Select a patient to view details.</p>
-
+                                    <div class="patient-empty-state">
+                                        <div class="patient-empty-state-icon">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <h5>Select a Patient</h5>
+                                        <p> Search and select a patient to view details.</p>
                                     </div>
-
                                 </div>
 
                             </div>
 
                         </div>
-
                         {{-- Total Cancer --}}
                         <div class="col-lg-5 col-md-12 mb-3">
                             <div class="card border-0 shadow-sm total-cancer-card h-100">
@@ -122,18 +132,15 @@
                     </div>
 
                     <div class="row">
-
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label>
                                     <i class="fas fa-comment-medical text-info mr-1"></i>
                                     Patient Cancer Remarks
                                 </label>
-
                                 <textarea name="cancer_remarks" id="cancer_remarks" class="form-control" rows="6">{!! old('cancer_remarks') !!}</textarea>
                             </div>
                         </div>
-
                     </div>
 
                     <hr>
