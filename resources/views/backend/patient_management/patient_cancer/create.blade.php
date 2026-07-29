@@ -15,7 +15,11 @@
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_search.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_cancer_select.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_select.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_select_selection.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_select_dropdown.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_select_states.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_select_responsive.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/create_page/patient_cancer_info.css') }}">
     <div class="container-fluid">
         @if ($errors->any())

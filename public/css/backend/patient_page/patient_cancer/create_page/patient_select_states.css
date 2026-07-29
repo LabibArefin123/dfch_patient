@@ -1,0 +1,54 @@
+/* ============================================================
+   PATIENT CANCER - PATIENT SELECT
+   States
+   ============================================================ */
+
+/* ============================================================
+   FOCUS STATE
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4.select2-container--focus
+    .select2-selection--single {
+    border-color: #0d6efd;
+
+    box-shadow: 0 0 0 0.18rem rgba(13, 110, 253, 0.12);
+}
+
+/* ============================================================
+   OPEN STATE
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4.select2-container--open
+    .select2-selection--single {
+    border-color: #0d6efd;
+
+    box-shadow: 0 0 0 0.18rem rgba(13, 110, 253, 0.12);
+}
+
+/* ============================================================
+   HOVER STATE
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single:hover {
+    border-color: #c8d5e2;
+}
+
+/* ============================================================
+   DISABLED STATE
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single.select2-selection--disabled {
+    cursor: not-allowed;
+
+    background: #f5f7f9;
+
+    color: #9aa3ad;
+
+    opacity: 0.75;
+}

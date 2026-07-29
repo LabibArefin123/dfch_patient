@@ -1,63 +1,47 @@
 @extends('adminlte::page')
 
 @section('title', 'Patient Cancer Photos')
+
 @section('content_header')
-
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center">
-
         {{-- Page Title --}}
         <div class="mb-3 mb-md-0">
-
             <h1 class="mb-1 font-weight-bold">
-
                 <i class="fas fa-x-ray text-danger mr-2"></i>
-
                 Patient Cancer Reports
-
             </h1>
 
             <small class="text-muted">
-
                 <i class="fas fa-info-circle mr-1"></i>
-
                 Manage patient X-ray images and cancer reports
-
             </small>
-
         </div>
-
 
         {{-- Action Buttons --}}
         <div class="d-flex flex-wrap align-items-center">
-
             {{-- Sync Patients --}}
             <button type="button" id="syncCancerPatientsBtn" class="btn btn-outline-primary mr-2 mb-2 mb-md-0">
-
                 <i class="fas fa-sync-alt mr-1"></i>
-
                 Sync Patients
-
             </button>
 
 
             {{-- Add New Report --}}
             <a href="{{ route('patient-cancer-photos.create') }}" class="btn btn-success mb-2 mb-md-0">
-
                 <i class="fas fa-plus-circle mr-1"></i>
-
                 Add New Report
-
             </a>
-
         </div>
-
     </div>
-
 @stop
 
 
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_details.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_phone.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_responsive.css') }}">
     @include('backend.patient_management.modals.patient_cancer.index_page.patient_sync_modal')
     <div class="container-fluid">
         <div class="card card-outline card-danger">

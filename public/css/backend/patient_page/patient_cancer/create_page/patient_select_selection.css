@@ -1,0 +1,134 @@
+/* ============================================================
+   PATIENT CANCER - PATIENT SELECT
+   Selection Box
+   ============================================================ */
+
+/* ============================================================
+   MAIN SELECTION BOX
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    height: 48px !important;
+    min-height: 48px;
+
+    border: 1px solid #dfe5ec;
+
+    border-radius: 10px;
+
+    background: #ffffff;
+
+    box-shadow: none;
+
+    transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+}
+
+/* ============================================================
+   RENDERED TEXT
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single
+    .select2-selection__rendered {
+    display: flex;
+    align-items: center;
+
+    width: 100%;
+
+    height: 46px;
+
+    padding-left: 14px;
+    padding-right: 40px;
+
+    color: #343a40;
+
+    font-size: 14px;
+    font-weight: 500;
+
+    line-height: normal;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+/* ============================================================
+   PLACEHOLDER
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single
+    .select2-selection__placeholder {
+    color: #6c757d;
+}
+
+/* ============================================================
+   ARROW
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single
+    .select2-selection__arrow {
+    position: absolute;
+
+    top: 0;
+    right: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 46px;
+}
+
+/* ============================================================
+   CLEAR BUTTON
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single
+    .select2-selection__clear {
+    position: absolute;
+
+    top: 50%;
+    right: 32px;
+
+    z-index: 5;
+
+    margin: 0;
+
+    color: #6c757d;
+
+    font-size: 18px;
+
+    transform: translateY(-50%);
+
+    transition: color 0.2s ease;
+}
+
+/* ============================================================
+   CLEAR BUTTON HOVER
+   ============================================================ */
+
+.patient-select-wrapper
+    .select2-container--bootstrap4
+    .select2-selection--single
+    .select2-selection__clear:hover {
+    color: #dc3545;
+}

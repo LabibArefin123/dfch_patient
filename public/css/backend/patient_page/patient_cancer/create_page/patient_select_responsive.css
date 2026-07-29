@@ -1,0 +1,131 @@
+/* ============================================================
+   PATIENT CANCER - PATIENT SELECT
+   Responsive
+   ============================================================ */
+
+/* ============================================================
+   MOBILE
+   ============================================================ */
+
+@media (max-width: 576px) {
+    /* --------------------------------------------------------
+       Selection Box
+       -------------------------------------------------------- */
+
+    .patient-select-wrapper
+        .select2-container--bootstrap4
+        .select2-selection--single {
+        height: 44px !important;
+
+        min-height: 44px;
+
+        border-radius: 8px;
+    }
+
+    /* --------------------------------------------------------
+       Rendered Text
+       -------------------------------------------------------- */
+
+    .patient-select-wrapper
+        .select2-container--bootstrap4
+        .select2-selection--single
+        .select2-selection__rendered {
+        height: 42px;
+
+        padding-left: 12px;
+        padding-right: 36px;
+
+        font-size: 13px;
+    }
+
+    /* --------------------------------------------------------
+       Arrow
+       -------------------------------------------------------- */
+
+    .patient-select-wrapper
+        .select2-container--bootstrap4
+        .select2-selection--single
+        .select2-selection__arrow {
+        width: 34px;
+
+        height: 42px;
+    }
+
+    /* --------------------------------------------------------
+       Clear Button
+       -------------------------------------------------------- */
+
+    .patient-select-wrapper
+        .select2-container--bootstrap4
+        .select2-selection--single
+        .select2-selection__clear {
+        right: 28px;
+
+        font-size: 16px;
+    }
+
+    /* --------------------------------------------------------
+       Search Input
+       -------------------------------------------------------- */
+
+    .select2-container--bootstrap4 .select2-search--dropdown {
+        padding: 8px;
+    }
+
+    .select2-container--bootstrap4
+        .select2-search--dropdown
+        .select2-search__field {
+        height: 38px;
+
+        padding: 7px 10px;
+
+        font-size: 13px;
+    }
+
+    /* --------------------------------------------------------
+       Result List
+       -------------------------------------------------------- */
+
+    .select2-container--bootstrap4 .select2-results__options {
+        max-height: 230px;
+    }
+
+    /* --------------------------------------------------------
+       Patient Result
+       -------------------------------------------------------- */
+
+    .select2-container--bootstrap4 .select2-results__option {
+        padding: 9px 12px;
+
+        font-size: 13px;
+    }
+
+    /* --------------------------------------------------------
+       Helper Text
+       -------------------------------------------------------- */
+
+    .patient-select-wrapper + small {
+        font-size: 11px;
+    }
+}
+
+/* ============================================================
+   EXTRA SMALL DEVICES
+   ============================================================ */
+
+@media (max-width: 375px) {
+    .patient-select-wrapper
+        .select2-container--bootstrap4
+        .select2-selection--single
+        .select2-selection__rendered {
+        font-size: 12px;
+
+        padding-left: 10px;
+    }
+
+    .select2-container--bootstrap4 .select2-results__option {
+        padding: 8px 10px;
+
+        font-size: 12px;
+    }
+}

@@ -1,0 +1,82 @@
+/* ============================================================
+   PATIENT INFORMATION DETAILS
+   ============================================================ */
+
+/* ============================================================
+   PATIENT NAME
+   ============================================================ */
+
+.patient-info-name {
+    margin-bottom: 4px;
+
+    overflow: hidden;
+
+    color: #263238;
+
+    font-size: 13px;
+    font-weight: 700;
+
+    line-height: 1.25;
+
+    text-overflow: ellipsis;
+
+    white-space: nowrap;
+}
+
+/* ============================================================
+   PATIENT CODE
+   ============================================================ */
+
+.patient-info-code {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    margin-bottom: 3px;
+
+    color: #6c757d;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1.2;
+}
+
+.patient-info-code i {
+    flex: 0 0 12px;
+
+    color: #1976d2;
+
+    font-size: 9px;
+
+    text-align: center;
+}
+
+/* ============================================================
+   PATIENT AGE
+   ============================================================ */
+
+.patient-info-age {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+
+    color: #6c757d;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1.2;
+}
+
+.patient-info-age i {
+    flex: 0 0 12px;
+
+    color: #e67e22;
+
+    font-size: 9px;
+
+    text-align: center;
+}
