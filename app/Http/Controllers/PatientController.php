@@ -770,7 +770,7 @@ class PatientController extends Controller
                     'drug' => $patient->patient_drug_description,
                     'remarks' => $patient->remarks,
                     'recommend' => $patient->is_recommend,
-                    'doctor' => $patient->recommend_doctor_name,
+                    'doctor' => $patient->referred_doctor_name,
                     'recommend_note' => $patient->recommend_note,
                     'document_folder' => asset("uploads/documents/{$patientFolder}/recommend_doc"),
                     'documents' => $patient->documents_count,
@@ -801,7 +801,7 @@ class PatientController extends Controller
 
                 'is_recommend' => (bool) $patient->is_recommend,
 
-                'recommend_doctor_name' => $patient->recommend_doctor_name,
+                'referred_doctor_name' => $patient->referred_doctor_name,
 
                 'recommend_note' => $patient->recommend_note,
 
@@ -890,7 +890,7 @@ class PatientController extends Controller
 
                     'recommend' => $patient->is_recommend,
 
-                    'doctor' => $patient->recommend_doctor_name,
+                    'doctor' => $patient->referred_doctor_name,
 
                     'recommend_note' => $patient->recommend_note,
 
@@ -994,7 +994,7 @@ class PatientController extends Controller
                     'remarks' => $patient->remarks,
 
                     'recommend' => $patient->is_recommend,
-                    'doctor' => $patient->recommend_doctor_name,
+                    'doctor' => $patient->referred_doctor_name,
                     'recommend_note' => $patient->recommend_note,
 
                     'documents' => $patient->documents_count,
@@ -1182,7 +1182,7 @@ class PatientController extends Controller
             'remarks' => 'nullable|string',
 
             /* Referred    */
-            'recommend_doctor_name' => 'nullable|string|max:255',
+            'referred_doctor_name' => 'nullable|string|max:255',
             'recommend_note' => 'nullable|string',
 
             /* Treatment */
@@ -1624,7 +1624,7 @@ class PatientController extends Controller
             'remarks' => 'nullable|string',
 
             /*Recommendation */
-            'recommend_doctor_name' => 'nullable|string|max:255',
+            'referred_doctor_name' => 'nullable|string|max:255',
             'recommend_note' => 'nullable|string',
 
             /* Treatment   */

@@ -143,7 +143,6 @@
                     <input type="file" name="treatment_images[]" multiple class="form-control">
                 </div>
                 <div id="treatmentPreviewContainer" class="treatment-preview-container mt-3"></div>
-
             </div>
         </div>
 

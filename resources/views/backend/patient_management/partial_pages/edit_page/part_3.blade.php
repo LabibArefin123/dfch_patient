@@ -28,8 +28,8 @@
             <div class="row">
                 <div class="form-group col-md-6">
                     <label>Referred Doctor Name</label>
-                    <input type="text" name="recommend_doctor_name" class="form-control"
-                        value="{{ old('recommend_doctor_name', $patient->recommend_doctor_name) }}">
+                    <input type="text" name="referred_doctor_name" class="form-control"
+                        value="{{ old('referred_doctor_name', $patient->referred_doctor_name) }}">
                 </div>
 
                 {{-- Doctor Note --}}

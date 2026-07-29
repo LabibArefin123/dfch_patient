@@ -81,7 +81,7 @@
 
                         ${field("Mother Name", patient.patient_m_name || patient.mother || "N/A")}
 
-                        ${field("Doctor", patient.doctor || patient.recommend_doctor_name || "N/A")}
+                        ${field("Doctor", patient.doctor || patient.referred_doctor_name || "N/A")}
 
                         ${field("Recommendation", patient.recommend_note || "N/A")}
 

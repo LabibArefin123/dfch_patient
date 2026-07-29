@@ -1,7 +1,5 @@
 <div class="col-12">
-
     <div class="patient-section-card">
-
         <div class="section-header">
             <div>
                 <h5>
@@ -13,7 +11,6 @@
         </div>
 
         <div class="row">
-
             {{-- Location Type --}}
             <div class="form-group col-md-6">
                 <label>Location Type</label>
@@ -86,12 +83,8 @@
                         <input type="text" name="passport_no" class="form-control"
                             value="{{ old('passport_no', $patient->passport_no) }}">
                     </div>
-
                 </div>
             </div>
-
         </div>
-
-    </div>
-
+    </div>          
 </div>

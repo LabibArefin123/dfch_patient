@@ -34,12 +34,12 @@ class Patient extends Model
         'phone_m_1',
         'patient_problem_description',
         'patient_drug_description',
-        
+
         'is_recommend',
         'is_emergency',
-        'recommend_doctor_name',
+        'referred_doctor_name',
         'recommend_note',
-        
+
         'date_of_patient_added',
         'remarks',
         'is_old_cancer',

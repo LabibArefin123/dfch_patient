@@ -51,7 +51,7 @@ return new class extends Migration {
             /* Recommendation  */
             $table->boolean('is_recommend')->default(false);
             $table->boolean('is_emergency')->default(false);
-            $table->string('recommend_doctor_name')->nullable();
+            $table->string('referred_doctor_name')->nullable();
             $table->longText('recommend_note')->nullable();
 
             /* Treatment*/

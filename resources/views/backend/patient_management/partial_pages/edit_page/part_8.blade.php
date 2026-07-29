@@ -1,6 +1,4 @@
-{{-- ===========================================================
-CANCER INFORMATION (EDIT)
-=========================================================== --}}
+{{-- CANCER INFORMATION (EDIT) --}}
 <div class="patient-section-card cancer-card">
     <div class="section-header">
         <div>
@@ -12,55 +10,42 @@ CANCER INFORMATION (EDIT)
             <span>
                 Cancer history & diagnostic image archive
             </span>
-
         </div>
 
         <span class="section-badge badge-danger">
             Cancer Record
         </span>
     </div>
-    <div class="section-body">
 
+    <div class="section-body">
         {{-- Cancer Status --}}
         <div class="section-subtitle">
-
             <span>
                 <i class="fas fa-ribbon"></i>
                 Cancer Status
             </span>
-
             <hr>
-
         </div>
 
         <div class="section-note danger">
-
             <div class="section-note-icon">
                 <i class="fas fa-radiation-alt"></i>
             </div>
 
             <div class="section-note-content">
-
                 <strong>Previous Cancer History</strong>
-
                 <p>
                     Select whether the patient has a previous or existing cancer
                     history. Additional cancer information will appear
                     automatically.
                 </p>
-
             </div>
-
         </div>
 
         <div class="row">
-
             <div class="form-group col-lg-6">
-
                 <label>Has Previous Cancer?</label>
-
                 <div class="input-group modern-input">
-
                     <div class="input-group-prepend">
                         <span class="input-group-text">
                             <i class="fas fa-heartbeat"></i>
@@ -68,7 +53,6 @@ CANCER INFORMATION (EDIT)
                     </div>
 
                     <select name="is_old_cancer" id="is_old_cancer" class="form-control">
-
                         <option value="0" {{ $patient->is_old_cancer ? '' : 'selected' }}>
                             No
                         </option>
@@ -76,52 +60,36 @@ CANCER INFORMATION (EDIT)
                         <option value="1" {{ $patient->is_old_cancer ? 'selected' : '' }}>
                             Yes
                         </option>
-
                     </select>
-
                 </div>
 
-                <small class="text-muted">
-                    Choose whether the patient has a previous cancer history.
-                </small>
-
+                <small class="text-muted">Choose whether the patient has a previous cancer history. </small>
             </div>
-
         </div>
 
         <div id="cancerSection" style="{{ $patient->is_old_cancer ? '' : 'display:none;' }}">
-
             <div class="section-divider"></div>
-
             {{-- Cancer Details --}}
             <div class="section-subtitle">
-
                 <span>
                     <i class="fas fa-x-ray"></i>
                     Cancer Details
                 </span>
-
                 <hr>
-
             </div>
 
             <div class="section-note warning">
-
                 <div class="section-note-icon">
                     <i class="fas fa-file-medical-alt"></i>
                 </div>
 
                 <div class="section-note-content">
-
                     <strong>Diagnostic Information</strong>
-
                     <p>
                         Upload additional diagnostic images, update the cancer
                         count and modify report descriptions whenever required.
                     </p>
-
                 </div>
-
             </div>
 
             <div class="row">
@@ -192,19 +160,15 @@ CANCER INFORMATION (EDIT)
             @endif
             {{-- Preview --}}
             <div id="cancerPreviewContainer" class="cancer-preview-container mt-3"></div>
-
             <div class="section-divider my-4"></div>
 
             {{-- X-Ray Description --}}
             <div class="section-subtitle">
-
                 <span>
                     <i class="fas fa-align-left"></i>
                     X-Ray Description
                 </span>
-
                 <hr>
-
             </div>
 
             <div id="xrayDescriptionWrapper">
@@ -235,5 +199,4 @@ CANCER INFORMATION (EDIT)
             </div>
         </div>
     </div>
-
 </div>

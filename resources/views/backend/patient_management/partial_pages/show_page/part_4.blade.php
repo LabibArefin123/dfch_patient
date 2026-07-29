@@ -39,7 +39,7 @@
                         </span>
 
                         <strong>
-                            {{ $patient->recommend_doctor_name ?: 'N/A' }}
+                            {{ $patient->referred_doctor_name ?: 'N/A' }}
                         </strong>
 
                     </div>
