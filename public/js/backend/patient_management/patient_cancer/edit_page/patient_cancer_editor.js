@@ -1,63 +1,59 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
     initializeCancerEditors();
 });
 
 /* --------------------------------------------------------------------------
-| Initialize All Editors
----------------------------------------------------------------------------*/
+| Initialize Cancer Editors
+--------------------------------------------------------------------------- */
 
 function initializeCancerEditors() {
     initializeEditor("#cancer_remarks");
 
-    initializeDescriptionEditors();
+    initializeEditor("#xray_description");
 }
 
 /* --------------------------------------------------------------------------
-| Generic Editor
----------------------------------------------------------------------------*/
+| Generic CKEditor Initializer
+--------------------------------------------------------------------------- */
 
 function initializeEditor(selector) {
     const textarea = document.querySelector(selector);
 
-    if (!textarea) return;
+    if (!textarea) {
+        console.warn("Cancer editor textarea not found:", selector);
 
-    if (textarea.dataset.editorInitialized) return;
+        return;
+    }
+
+    if (textarea.dataset.editorInitialized === "true") {
+        return;
+    }
+
+    if (typeof ClassicEditor === "undefined") {
+        console.error("ClassicEditor is not loaded.");
+
+        return;
+    }
 
     ClassicEditor.create(textarea)
-        .then((editor) => {
+
+        .then(function (editor) {
             textarea.editor = editor;
 
             textarea.dataset.editorInitialized = "true";
+
+            console.log("Cancer editor initialized:", selector);
         })
-        .catch(console.error);
-}
 
-/* --------------------------------------------------------------------------
-| Description Editors
----------------------------------------------------------------------------*/
-
-function initializeDescriptionEditors() {
-    document
-        .querySelectorAll(".xray-description-editor")
-        .forEach((textarea) => {
-            if (textarea.dataset.editorInitialized) {
-                return;
-            }
-
-            ClassicEditor.create(textarea)
-                .then((editor) => {
-                    textarea.editor = editor;
-
-                    textarea.dataset.editorInitialized = "true";
-                })
-                .catch(console.error);
+        .catch(function (error) {
+            console.error("CKEditor initialization failed:", selector, error);
         });
 }
 
 /* --------------------------------------------------------------------------
 | Refresh
----------------------------------------------------------------------------*/
+--------------------------------------------------------------------------- */
 
 window.refreshCancerEditors = function () {
-    initializeDescriptionEditors();
+    initializeCancerEditors();
 };

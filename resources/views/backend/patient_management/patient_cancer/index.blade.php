@@ -57,6 +57,7 @@
 
 
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info.css') }}">
     @include('backend.patient_management.modals.patient_cancer.index_page.patient_sync_modal')
     <div class="container-fluid">
         <div class="card card-outline card-danger">
@@ -105,38 +106,139 @@
                             <th width="180">Action</th>
                         </tr>
                     </thead>
-
+                    {{-- PATIENT AGE INFO --}}
                     <tbody>
                         @forelse($patientCancerPhotos as $report)
                             <tr>
                                 <td class="text-center align-middle">
                                     {{ $loop->iteration + ($patientCancerPhotos->firstItem() - 1) }}
                                 </td>
-                                <td>
-                                    <strong class="text-primary">
-                                        {{ $report->patient->patient_name ?? 'N/A' }}
-                                    </strong>
-                                    <br>
-                                    <small class="text-muted">
-                                        Code :
-                                        {{ $report->patient->patient_code ?? 'N/A' }}
-                                    </small>
-                                    <br>
-                                    <small>
-                                        <i class="fas fa-phone text-success"></i>
-                                        {{ $report->patient->phone_1 ?? '-' }}
-                                    </small>
+                              
+                                <td class="patient-info-td">
 
-                                    @if (isset($report->patient->age))
-                                        <br>
-                                        <small>
-                                            Age :
-                                            <span class="badge badge-info">
-                                                {{ $report->patient->age }}
-                                            </span>
-                                        </small>
+                                    @if (isset($report->patient))
+                                        <div class="patient-info-card">
+
+                                            {{-- Patient Avatar --}}
+                                            <div class="patient-info-avatar">
+                                                <i class="fas fa-user-injured"></i>
+                                            </div>
+
+                                            {{-- Patient Details --}}
+                                            <div class="patient-info-content">
+
+                                                {{-- Patient Name --}}
+                                                <div class="patient-info-name">
+                                                    {{ $report->patient->patient_name }}
+                                                </div>
+
+                                                {{-- Patient Code --}}
+                                                @if (!empty($report->patient->patient_code))
+                                                    <div class="patient-info-code">
+                                                        <i class="fas fa-id-card"></i>
+                                                        <span>
+                                                            {{ $report->patient->patient_code }}
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+                                                {{-- Patient Age --}}
+                                                @if (isset($report->patient->age))
+                                                    <div class="patient-info-age">
+                                                        <i class="fas fa-birthday-cake"></i>
+
+                                                        <span>
+                                                            {{ $report->patient->age }}
+
+                                                            @if ($report->patient->age == 1)
+                                                                year old
+                                                            @else
+                                                                years old
+                                                            @endif
+                                                        </span>
+                                                    </div>
+                                                @endif
+
+                                                @if (
+                                                    !empty($report->patient->phone_1) ||
+                                                        !empty($report->patient->phone_2) ||
+                                                        !empty($report->patient->phone_f_1) ||
+                                                        !empty($report->patient->phone_m_1))
+                                                    <div class="patient-info-phones">
+
+                                                        {{-- Primary Phone --}}
+                                                        @if (!empty($report->patient->phone_1))
+                                                            <div class="patient-phone-item primary">
+                                                                <i class="fas fa-phone"></i>
+
+                                                                <span>
+                                                                    {{ $report->patient->phone_1 }}
+                                                                </span>
+
+                                                                <small>Primary</small>
+                                                            </div>
+                                                        @endif
+
+
+                                                        {{-- Secondary Phone --}}
+                                                        @if (!empty($report->patient->phone_2))
+                                                            <div class="patient-phone-item">
+                                                                <i class="fas fa-phone-alt"></i>
+
+                                                                <span>
+                                                                    {{ $report->patient->phone_2 }}
+                                                                </span>
+
+                                                                <small>Secondary</small>
+                                                            </div>
+                                                        @endif
+
+
+                                                        {{-- Father's Phone --}}
+                                                        @if (!empty($report->patient->phone_f_1))
+                                                            <div class="patient-phone-item">
+                                                                <i class="fas fa-male"></i>
+
+                                                                <span>
+                                                                    {{ $report->patient->phone_f_1 }}
+                                                                </span>
+
+                                                                <small>Father</small>
+                                                            </div>
+                                                        @endif
+
+
+                                                        {{-- Mother's Phone --}}
+                                                        @if (!empty($report->patient->phone_m_1))
+                                                            <div class="patient-phone-item">
+                                                                <i class="fas fa-female"></i>
+
+                                                                <span>
+                                                                    {{ $report->patient->phone_m_1 }}
+                                                                </span>
+
+                                                                <small>Mother</small>
+                                                            </div>
+                                                        @endif
+
+                                                    </div>
+                                                @endif
+
+                                            </div>
+
+                                        </div>
+                                    @else
+                                        <div class="patient-info-empty">
+                                            <i class="fas fa-user-slash"></i>
+                                            <span>Patient information unavailable</span>
+                                        </div>
                                     @endif
+
                                 </td>
+                               
+
+
+
 
                                 <td class="text-center align-middle">
                                     <span class="badge badge-danger p-2">
@@ -153,23 +255,6 @@
                                                     .magnify-img:hover {
                                                         transform: scale(1.08) translateY(-2px);
                                                         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
-                                                    }
-
-                                                    /* Styling for the premium close button hover effect */
-                                                    .zoom-modal-close-btn {
-                                                        cursor: pointer;
-                                                    }
-
-                                                    .zoom-modal-close-btn:hover {
-                                                        background: rgba(255, 255, 255, 0.15) !important;
-                                                        border-color: rgba(255, 255, 255, 0.4) !important;
-                                                        transform: scale(1.05);
-                                                        color: #ffffff !important;
-                                                        box-shadow: 0 4px 20px rgba(255, 255, 255, 0.1) !important;
-                                                    }
-
-                                                    .zoom-modal-close-btn:active {
-                                                        transform: scale(0.95);
                                                     }
                                                 </style>
                                                 <a href="#" data-bs-toggle="modal" data-bs-target="#imageZoomModal"
@@ -191,7 +276,6 @@
                                     @endif
                                 </td>
                                 <td class="description-column">
-
                                     @if (!empty($report->description_preview))
                                         <div class="content-preview">
 
@@ -254,8 +338,8 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer clearfix">
 
+            <div class="card-footer clearfix">
                 <div class="float-left mt-2">
                     Showing
                     <strong>{{ $patientCancerPhotos->firstItem() ?? 0 }}</strong>
@@ -268,74 +352,15 @@
             </div>
         </div>
     </div>
-    <style>
-        .table td,
-        .table th {
-            vertical-align: middle;
-        }
-
-        .img-thumbnail {
-            transition: .25s;
-        }
-
-        .img-thumbnail:hover {
-            transform: scale(1.08);
-            box-shadow: 0 2px 12px rgba(0, 0, 0, .25);
-        }
-
-        .badge {
-            font-size: 13px;
-        }
-
-        .description-column,
-        .remarks-column {
-            width: 240px;
-            min-width: 240px;
-            max-width: 240px;
-            vertical-align: top;
-        }
-
-        .content-preview {
-            max-height: 120px;
-            overflow-y: auto;
-            padding: 10px;
-            background: #fafafa;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            font-size: 13px;
-            line-height: 1.55;
-        }
-
-        .preview-item {
-            padding-bottom: 8px;
-            margin-bottom: 8px;
-            border-bottom: 1px dashed #dee2e6;
-        }
-
-        .preview-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .content-preview::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .content-preview::-webkit-scrollbar-thumb {
-            background: #c8c8c8;
-            border-radius: 20px;
-        }
-    </style>
 @stop
 
 @section('js')
-
     <script>
         window.PatientCancerSync = {
             syncUrl: @json(route('patient-cancer-photos.sync'))
         };
     </script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_age.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_init.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_ui.js') }}">

@@ -197,13 +197,15 @@
                     <hr>
 
                     {{-- X-Ray Descriptions --}}
-                    <h5 class="text-primary">
-                        <i class="fas fa-notes-medical"></i>
-                        X-Ray Descriptions
-                    </h5>
+                    <div class="form-group">
+                        <label for="xray_description">
+                            <i class="fas fa-notes-medical mr-1"></i>
+                            X-Ray Description
+                        </label>
 
-                    <textarea name="xray_description[]" class="form-control ckeditor xray-description-editor" rows="5"
-                        placeholder="Enter X-Ray Description"></textarea>
+                        <textarea name="xray_description" id="xray_description" class="form-control xray-description-editor" rows="5"
+                            placeholder="Enter X-Ray Description">{!! old('xray_description', $patientCancerPhoto->xray_description) !!}</textarea>
+                    </div>
                 </div>
 
                 <div class="card-footer">
