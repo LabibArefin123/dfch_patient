@@ -36,121 +36,116 @@ function loadInvestigationSection(patient) {
 
         html += `
                 </div>
+
             </div>
+
         </div>
         `;
 
         investigationContainer.html(html);
+
         return;
     }
 
-    const infos = patient.investigation_information || [];
-    const images = patient.investigation_images || [];
+    const info =
+        patient.investigation_information &&
+        patient.investigation_information.trim() !== ""
+            ? patient.investigation_information
+            : "N/A";
 
-    infos.forEach((info, index) => {
-        const investigationImages = Array.isArray(images[index])
-            ? images[index]
-            : images[index]
-              ? [images[index]]
-              : [];
-
-        html += `
-
-            <div class="border rounded p-3 mb-4 bg-light">
-
-                <div class="row">
-
-                    <div class="col-12 mb-3">
-
-                        <label class="font-weight-bold">
-
-                            Investigation Description
-
-                        </label>
-
-                        <div
-                            class="form-control"
-                            style="
-                                min-height:80px;
-                                height:auto;
-                                white-space:pre-wrap;
-                            ">
-
-                            ${info || "N/A"}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-        `;
-
-        if (investigationImages.length > 0) {
-            html += `
-                <div class="row">
-            `;
-
-            investigationImages.forEach((image) => {
-                const fullPath = "/" + image;
-
-                html += `
-
-                    <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-3">
-
-                        <div class="card shadow-sm h-100">
-
-                            <a
-                                href="#"
-                                data-bs-toggle="modal"
-                                data-bs-target="#imageZoomModal"
-                                data-bs-img-src="${fullPath}">
-
-                                <img
-                                    src="${fullPath}"
-                                    class="card-img-top img-fluid"
-                                    alt="Investigation Image"
-                                    style="
-                                        height:180px;
-                                        object-fit:cover;
-                                        cursor:zoom-in;
-                                    ">
-
-                            </a>
-
-                        </div>
-
-                    </div>
-
-                `;
-            });
-
-            html += `
-                </div>
-            `;
-        } else {
-            html += `
-
-                <div class="alert alert-warning mt-3 mb-0">
-
-                    No investigation images uploaded.
-
-                </div>
-
-            `;
-        }
-
-        html += `
-            </div>
-        `;
-    });
+    const investigationImages = Array.isArray(patient.investigation_images)
+        ? patient.investigation_images
+        : patient.investigation_images
+          ? [patient.investigation_images]
+          : [];
 
     html += `
+
+        <div class="border rounded p-3 mb-4 bg-light">
+
+            <label class="font-weight-bold">
+
+                Investigation Description
+
+            </label>
+
+            <div
+                class="form-control mb-3"
+                style="
+                    min-height:80px;
+                    height:auto;
+                    white-space:pre-wrap;
+                ">
+
+                ${info}
+
+            </div>
+
+    `;
+
+    if (investigationImages.length > 0) {
+        html += `<div class="row">`;
+
+        investigationImages.forEach(function (image) {
+            if (!image) return;
+
+            const fullPath = "/" + image;
+
+            html += `
+
+                <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6 mb-3">
+
+                    <div class="card shadow-sm h-100">
+
+                        <a
+                            href="#"
+                            data-bs-toggle="modal"
+                            data-bs-target="#imageZoomModal"
+                            data-bs-img-src="${fullPath}">
+
+                            <img
+                                src="${fullPath}"
+                                class="card-img-top img-fluid"
+                                alt="Investigation Image"
+                                style="
+                                    height:180px;
+                                    object-fit:contain;
+                                    cursor:zoom-in;
+                                ">
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            `;
+        });
+
+        html += `</div>`;
+    } else {
+        html += `
+
+            <div class="alert alert-warning mb-0">
+
+                No investigation images uploaded.
+
+            </div>
+
+        `;
+    }
+
+    html += `
+
+        </div>
+
                 </div>
 
             </div>
 
         </div>
+
     `;
+
     investigationContainer.html(html);
 }

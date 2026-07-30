@@ -62,63 +62,71 @@
                 </div>
 
                 {{-- ========================= Treatment ========================= --}}
-                <div id="viewPatientTreatmentContainer">
-                    {{-- Loaded by patient_summary_treatment.js --}}
-                </div>
-
-                {{-- ========================= Investigation ========================= --}}
-                <div id="viewPatientInvestigationContainer">
-                    {{-- Loaded by patient_summary_investigation.js --}}
-                </div>
-
-                {{-- ========================= Referred Documents ========================= --}}
                 <div class="card border-0 shadow-sm mb-4" style="border-radius:12px; overflow:hidden;">
-
                     <div class="card-header bg-white border-0 py-3">
-
                         <h6 class="mb-0 text-success font-weight-bold">
-
                             <i class="fas fa-file-medical mr-2"></i>
-
-                            Referred Documents
-
+                            Patient Treatment
                         </h6>
-
                     </div>
 
                     <div class="card-body bg-white">
 
-                        <div class="row" id="viewPatientDocsContainer">
-                            {{-- Loaded by patient_summary_cancer.js --}}
+                        <div class="row" id="viewPatientTreatmentContainer">
+                            {{-- Loaded by patient_summary_treatment.js --}}
+                        </div>
+                    </div>
+                </div>
+
+
+                {{-- ========================= Investigation ========================= --}}
+
+
+                <div class="card border-0 shadow-sm mb-4" style="border-radius:12px; overflow:hidden;">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h6 class="mb-0 text-success font-weight-bold">
+                            <i class="fas fa-file-medical mr-2"></i>
+                            Patient Treatment
+                        </h6>
+                    </div>
+
+                    <div class="card-body bg-white">
+
+                        <div id="viewPatientInvestigationContainer">
+                            {{-- Loaded by patient_summary_investigation.js --}}
                         </div>
 
                     </div>
+                </div>
+                {{-- ========================= Referred Documents ========================= --}}
+                <div class="card border-0 shadow-sm mb-4" style="border-radius:12px; overflow:hidden;">
+                    <div class="card-header bg-white border-0 py-3">
+                        <h6 class="mb-0 text-success font-weight-bold">
+                            <i class="fas fa-file-medical mr-2"></i>
+                            Referred Documents
+                        </h6>
+                    </div>
 
+                    <div class="card-body bg-white">
+                        <div class="row" id="viewPatientDocsContainer">
+                            {{-- Loaded by patient_summary_cancer.js --}}
+                        </div>
+                    </div>
                 </div>
 
                 {{-- ========================= Cancer & X-Ray Reports ========================= --}}
                 <div class="card border-0 shadow-sm" style="border-radius:12px; overflow:hidden;">
-
                     <div class="card-header bg-white border-0 py-3">
-
                         <h6 class="mb-0 text-danger font-weight-bold">
-
                             <i class="fas fa-images mr-2"></i>
-
                             Cancer & X-Ray Reports
-
                         </h6>
-
                     </div>
-
                     <div class="card-body bg-white">
-
                         <div class="row" id="viewPatientCancerPhotosContainer">
                             {{-- Loaded by patient_summary_cancer.js --}}
                         </div>
-
                     </div>
-
                 </div>
 
             </div>
