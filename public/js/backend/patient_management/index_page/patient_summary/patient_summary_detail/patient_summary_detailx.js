@@ -20,16 +20,16 @@ function renderPatientDetail(p) {
             <tr><th>Age</th><td>${p.age} Years</td></tr>
             <tr><th>Gender</th><td>${p.gender}</td></tr>
             <tr><th>Phone</th><td>${p.phone}</td></tr>
-            <tr><th>Father</th><td>${p.father || "N/A"}</td></tr>
-            <tr><th>Mother</th><td>${p.mother || "N/A"}</td></tr>
-            <tr><th>Problem</th><td>${p.problem || "N/A"}</td></tr>
-            <tr><th>Drug</th><td>${p.drug || "N/A"}</td></tr>
+            <tr><th>Father's Name</th><td>${p.father || "N/A"}</td></tr>
+            <tr><th>Mother's Name</th><td>${p.mother || "N/A"}</td></tr>
+            <tr><th>Problem Details</th><td>${p.problem || "N/A"}</td></tr>
+            <tr><th>Drug Description</th><td>${p.drug || "N/A"}</td></tr>
             <tr><th>Documents</th><td><span class="badge badge-primary">${p.documents || 0}</span></td></tr>
             <tr><th>Cancer Reports</th><td><span class="badge badge-danger">${p.cancer_reports || 0}</span></td></tr>
-            <tr><th>Recommended</th><td>${p.recommend ? "Yes" : "No"}</td></tr>
-            <tr><th>Doctor</th><td>${p.doctor || "N/A"}</td></tr>
-            <tr><th>Recommendation</th><td>${p.referred_note || "N/A"}</td></tr>
-            <tr><th>Date Added</th><td>${p.date}</td></tr>
+            <tr><th>Referred Patient</th><td>${p.recommend ? "Yes" : "No"}</td></tr>
+            <tr><th>Referred Doctor</th><td>${p.doctor || "N/A"}</td></tr>
+            <tr><th>Referred Note</th><td>${p.referred_note || "N/A"}</td></tr>
+            <tr><th>Date of Patient Added</th><td>${p.date}</td></tr>
             <tr><th>Remarks</th><td>${p.remarks || "N/A"}</td></tr>
         </table>
     </div>
@@ -118,24 +118,24 @@ function populatePatientViewModal(patient) {
         { label: "Name", val: patient.patient_name },
         { label: "Age", val: patient.age ? patient.age + " Years" : "N/A" },
         { label: "Gender", val: patient.gender },
-        { label: "Phone Primary", val: patient.phone_1 || patient.phone },
-        { label: "Phone Secondary", val: patient.phone_2 || "N/A" },
+        { label: "Primary Phone", val: patient.phone_1 || patient.phone },
+        { label: "Alternative Phone", val: patient.phone_2 || "N/A" },
         { label: "Father Name", val: patient.patient_f_name || patient.father },
         { label: "Mother Name", val: patient.patient_m_name || patient.mother },
         {
-            label: "Problem",
+            label: "Problem Description",
             val:
                 patient.patient_problem_description || patient.problem || "N/A",
         },
         {
-            label: "Drug",
+            label: "Drug Description",
             val: patient.patient_drug_description || patient.drug || "N/A",
         },
-        { label: "Doctor", val: patient.doctor || "N/A" },
-        { label: "Recommendation", val: patient.referred_note || "N/A" },
+        { label: "Referred Doctor Name", val: patient.doctor || "N/A" },
+        { label: "Referred Doctor Note", val: patient.referred_note || "N/A" },
         { label: "Remarks", val: patient.remarks || "N/A" },
         {
-            label: "Added Date",
+            label: "Date of Patient Added",
             val: patient.date_of_patient_added || patient.date,
         },
     ];
@@ -152,6 +152,65 @@ function populatePatientViewModal(patient) {
         `;
     });
     infoContainer.html(infoHtml);
+
+    const emergency = patient.latest_emergency || patient.latestEmergency;
+
+    let emergencyHtml = `
+            <div class="col-12 mt-4">
+                <div class="card border-danger shadow-sm">
+                    <div class="card-header bg-danger text-white">
+                        <i class="fas fa-ambulance mr-2"></i>
+                        Emergency Information
+                    </div>
+                    <div class="card-body">
+            `;
+
+    if (emergency) {
+        emergencyHtml += `
+                    <div class="row">
+
+                        <div class="col-md-4 mb-3">
+                            <strong>Status</strong>
+                            <div class="form-control">
+                                ${
+                                    emergency.is_emergency
+                                        ? '<span class="badge badge-danger">Emergency</span>'
+                                        : '<span class="badge badge-success">Normal</span>'
+                                }
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 mb-3">
+                            <strong>Date</strong>
+                            <div class="form-control">
+                                ${emergency.emergency_date ?? "N/A"}
+                            </div>
+                        </div>
+
+                        <div class="col-md-12">
+                            <strong>Reason</strong>
+                            <div class="form-control" style="height:auto;min-height:70px">
+                                ${emergency.reason || "N/A"}
+                            </div>
+                        </div>
+
+                    </div>
+                `;
+    } else {
+        emergencyHtml += `
+                    <div class="alert alert-success mb-0">
+                        No emergency records found.
+                    </div>
+                `;
+    }
+
+    emergencyHtml += `
+                    </div>
+                </div>
+            </div>
+            `;
+
+    infoContainer.append(emergencyHtml);
 
     // 3. Referred Documents
     const docsContainer = $("#viewPatientDocsContainer");
@@ -181,6 +240,183 @@ function populatePatientViewModal(patient) {
         );
     }
 
+    let treatmentHtml = `
+        <div class="col-12 mt-4">
+
+        <div class="card border-primary shadow-sm">
+
+        <div class="card-header bg-primary text-white">
+
+        <i class="fas fa-procedures mr-2"></i>
+
+        Treatment Information
+
+        </div>
+
+        <div class="card-body">
+        `;
+
+    if (patient.is_treatment) {
+        const infos = patient.treatment_information || [];
+        const images = patient.treatment_images || [];
+        const types = patient.treatment_type || [];
+
+        infos.forEach((info, i) => {
+            treatmentHtml += `
+                    <div class="border rounded p-3 mb-3">
+
+                        <div class="row">
+
+                            <div class="col-md-3">
+
+                                <strong>Type</strong>
+
+                                <div class="form-control">
+                                    ${types[i] || "N/A"}
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-9">
+
+                                <strong>Description</strong>
+
+                                <div class="form-control" style="height:auto;min-height:70px">
+                                    ${info}
+                                </div>
+
+                            </div>
+
+                        </div>
+                `;
+
+            if (images[i]) {
+                treatmentHtml += `
+                        <div class="row mt-3">
+                    `;
+
+                const imgList = Array.isArray(images[i])
+                    ? images[i]
+                    : [images[i]];
+
+                imgList.forEach((img) => {
+                    treatmentHtml += `
+                            <div class="col-md-3 mb-3">
+
+                                <img
+                                    src="/${img}"
+                                    class="img-fluid rounded border"
+                                    style="height:160px;object-fit:cover;cursor:pointer"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#imageZoomModal"
+                                    data-bs-img-src="/${img}"
+                                >
+
+                            </div>
+                        `;
+                });
+
+                treatmentHtml += `</div>`;
+            }
+
+            treatmentHtml += `</div>`;
+        });
+    } else {
+        treatmentHtml += `
+                <div class="alert alert-light mb-0">
+                    No treatment information found.
+                </div>
+            `;
+    }
+
+    treatmentHtml += `
+        </div>
+
+        </div>
+
+        </div>
+        `;
+
+    infoContainer.append(treatmentHtml);
+
+    let investigationHtml = `
+            <div class="col-12 mt-4">
+
+            <div class="card border-warning shadow-sm">
+
+            <div class="card-header bg-warning">
+
+            <i class="fas fa-microscope mr-2"></i>
+
+            Investigation Information
+
+            </div>
+
+            <div class="card-body">
+            `;
+
+    if (patient.is_investigated) {
+        const infos = patient.investigation_information || [];
+        const images = patient.investigation_images || [];
+
+        infos.forEach((info, i) => {
+            investigationHtml += `
+                        <div class="border rounded p-3 mb-3">
+
+                            <strong>Description</strong>
+
+                            <div class="form-control mb-3" style="height:auto;min-height:70px">
+                                ${info}
+                            </div>
+                    `;
+
+            if (images[i]) {
+                investigationHtml += `<div class="row">`;
+
+                const imgList = Array.isArray(images[i])
+                    ? images[i]
+                    : [images[i]];
+
+                imgList.forEach((img) => {
+                    investigationHtml += `
+                                <div class="col-md-3 mb-3">
+
+                                    <img
+                                        src="/${img}"
+                                        class="img-fluid rounded border"
+                                        style="height:160px;object-fit:cover;cursor:pointer"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#imageZoomModal"
+                                        data-bs-img-src="/${img}"
+                                    >
+
+                                </div>
+                            `;
+                });
+
+                investigationHtml += `</div>`;
+            }
+
+            investigationHtml += `</div>`;
+        });
+    } else {
+        investigationHtml += `
+                    <div class="alert alert-light mb-0">
+                        No investigation information found.
+                    </div>
+                `;
+    }
+
+    investigationHtml += `
+            </div>
+
+            </div>
+
+            </div>
+            `;
+
+    infoContainer.append(investigationHtml);
+
     // 4. Cancer & X-Ray Reports list (eager loaded via relation: cancerPhotos)
     const photosContainer = $("#viewPatientCancerPhotosContainer");
     photosContainer.empty();
@@ -191,9 +427,8 @@ function populatePatientViewModal(patient) {
         reports.forEach((report) => {
             const totalCancer = report.total_cancer ?? 0;
             const remarks = report.cancer_remarks || "N/A";
+            const description = report.xray_description || "N/A";
             const xrayPhotos = report.xray_photo || [];
-            const xrayDescriptions = report.xray_description || [];
-
             let reportHtml = `
                 <div class="border rounded p-3 mb-4 w-100 bg-light shadow-sm">
                     <div class="row mb-3 align-items-center">
@@ -201,12 +436,18 @@ function populatePatientViewModal(patient) {
                             <strong>Total Cancer</strong>
                             <div class="form-control bg-white border" style="font-weight: 500;">
                                 ${totalCancer}
-                            </div>
+                              </div>
                         </div>
-                        <div class="col-md-9">
-                            <strong>Remarks</strong>
+                        <div class="col-md-12">
+                            <strong>Patient Remarks</strong>
                             <div class="form-control bg-white border" style="min-height: 40px; height: auto;">
                                 ${remarks}
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <strong>Patient Description</strong>
+                            <div class="form-control bg-white border" style="min-height: 40px; height: auto;">
+                                ${description}
                             </div>
                         </div>
                     </div>
@@ -216,17 +457,13 @@ function populatePatientViewModal(patient) {
                 reportHtml += `<div class="row">`;
                 xrayPhotos.forEach((photo, pIndex) => {
                     const fullPath = "/" + photo;
-                    const description = xrayDescriptions[pIndex] || "N/A";
+
                     reportHtml += `
                         <div class="col-lg-3 col-md-4 col-sm-6 mb-3">
                             <div class="card h-100 border shadow-xs" style="border-radius: 8px; overflow: hidden;">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#imageZoomModal" data-bs-img-src="${fullPath}">
                                     <img src="${fullPath}" class="card-img-top img-fluid" style="height: 160px; object-fit: cover; cursor: zoom-in;" alt="Cancer X-ray Image">
                                 </a>
-                                <div class="card-body p-2 bg-white border-top">
-                                    <strong>Description</strong>
-                                    <p class="mb-0 text-muted" style="font-size: 13px; line-height: 1.4;">${description}</p>
-                                </div>
                             </div>
                         </div>
                     `;

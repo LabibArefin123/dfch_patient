@@ -126,10 +126,11 @@
                     <input type="file" name="documents[]" multiple class="form-control">
 
                 </div>
+                
                 <div id="referPreviewContainer" class="refer-preview-container mt-3"></div>
-                {{-- Date --}}
-                <div class="form-group col-md-6">
 
+                {{-- Date of Patient Added--}}
+                <div class="form-group col-md-6">
                     <label>Date of Patient Added</label>
 
                     <input type="date" name="date_of_patient_added"
@@ -144,13 +145,8 @@
                             {{ $message }}
                         </div>
                     @enderror
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
-
 </div>

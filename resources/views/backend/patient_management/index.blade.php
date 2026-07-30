@@ -45,26 +45,17 @@
 
                     <div class="dropdown-divider"></div>
 
-
                     {{-- PATIENT CARD LIST --}}
                     <a href="{{ route('patients.card.list.index') }}" class="dropdown-item">
-
                         <i class="fas fa-id-card text-primary"></i>
-
                         Patient Card List
-
                     </a>
-
 
                     <a href="#" class="dropdown-item" data-toggle="modal" data-target="#patientEmergencyModal">
-
                         <i class="fas fa-ambulance text-danger"></i>
-
                         Emergency Status
-
                     </a>
                 </div>
-
             </div>
         </div>
     </div>
@@ -116,9 +107,7 @@
     @include('backend.patient_management.modals.index_page.no_filter_modal')
     @include('backend.patient_management.modals.index_page.progress_modal')
     @include('backend.patient_management.modals.index_page.select_modal')
-
     <iframe id="downloadFrame" style="display:none;"></iframe>
-
     <div style="height: 50px;"></div>
 @stop
 
@@ -161,7 +150,6 @@
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_state.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_search.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_result.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_preview.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_chat_validator.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_photo_search.js') }}"></script>
@@ -169,6 +157,14 @@
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_document_content.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_cancer_content.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}"></script>
+    
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_detail.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_modal.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_info.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_profile.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_treatment.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_investigation.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_cancer.js') }}"></script>
    
     {{-- Patient Summary Helpers --}}
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_chat.js') }}"></script>

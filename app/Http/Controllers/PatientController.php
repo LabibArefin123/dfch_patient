@@ -646,14 +646,19 @@ class PatientController extends Controller
 
         $search = trim($request->search);
 
-        $query = Patient::withCount([
+        $query = Patient::with([
+            'latestEmergency',
+            'emergencies',
             'documents',
-            'cancerPhotos'
-        ]);
+            'cancerPhotos',
+        ])
+            ->withCount([
+                'documents',
+                'cancerPhotos',
+                'emergencies',
+            ]);
 
         $query->where(function ($q) use ($search) {
-
-            // Normal text search
             $q->where('patient_name', 'like', "%{$search}%")
                 ->orWhere('patient_code', 'like', "%{$search}%")
                 ->orWhere('phone_1', 'like', "%{$search}%")
@@ -663,12 +668,7 @@ class PatientController extends Controller
 
             $lower = strtolower($search);
 
-            /*
-        |--------------------------------------------------------------------------
-        | Quick date keywords
-        |--------------------------------------------------------------------------
-        */
-
+            /* Quick Date Keywords */
             if ($lower === 'today') {
                 $q->orWhereDate('date_of_patient_added', today());
             }
@@ -688,18 +688,12 @@ class PatientController extends Controller
             if ($lower === 'this month') {
                 $q->orWhereBetween('date_of_patient_added', [
                     now()->startOfMonth(),
-                    now()->endOfMonth()
+                    now()->endOfMonth(),
                 ]);
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | 15/07/2026 or 15-07-2026
-        |--------------------------------------------------------------------------
-        */
-
+            /* 15/07/2026 or 15-07-2026*/
             foreach (['d/m/Y', 'd-m-Y'] as $format) {
-
                 try {
                     $date = Carbon::createFromFormat($format, $search);
                     $q->orWhereDate('date_of_patient_added', $date);
@@ -708,25 +702,16 @@ class PatientController extends Controller
                 }
             }
 
-            /*15 August 2026 */
+            /* 15 August 2026  */
             try {
-
                 $date = Carbon::parse($search);
-
                 $q->orWhereDate('date_of_patient_added', $date);
             } catch (\Exception $e) {
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | 15 August (any year)
-        |--------------------------------------------------------------------------
-        */
-
+            /*15 August (any year)*/
             if (preg_match('/^\d{1,2}\s+[a-zA-Z]+$/', $search)) {
-
                 try {
-
                     $date = Carbon::parse($search . ' ' . now()->year);
 
                     $q->orWhereDay('date_of_patient_added', $date->day)
@@ -757,6 +742,7 @@ class PatientController extends Controller
                     'id' => $patient->id,
                     'patient_code' => $patient->patient_code,
                     'patient_name' => $patient->patient_name,
+
                     'patient_photo' => $patient->patient_photo
                         ? asset($patient->patient_photo)
                         : asset('uploads/images/default.jpg'),
@@ -769,18 +755,47 @@ class PatientController extends Controller
                     'problem' => $patient->patient_problem_description,
                     'drug' => $patient->patient_drug_description,
                     'remarks' => $patient->remarks,
+                    
+                    /* Referred*/
                     'recommend' => $patient->is_referred,
                     'doctor' => $patient->referred_doctor_name,
                     'referred_note' => $patient->referred_note,
+
                     'document_folder' => asset("uploads/documents/{$patientFolder}/recommend_doc"),
+
+                    /* Counts*/
                     'documents' => $patient->documents_count,
                     'cancer_reports' => $patient->cancer_photos_count,
-                    'date' => optional($patient->date_of_patient_added)->format('d F Y'),
+                    'emergency_records' => $patient->emergencies_count,
+
+                    /*Emergency  */
+                    'is_emergency' => $patient->is_emergency,
+                    'latest_emergency' => $patient->latestEmergency ? [
+                        'id' => $patient->latestEmergency->id,
+                        'is_emergency' => $patient->latestEmergency->is_emergency,
+                        'reason' => $patient->latestEmergency->reason,
+                        'emergency_date' => optional($patient->latestEmergency->emergency_date)
+                            ->format('d F Y h:i A'),
+                    ] : null,
+
+                    /*Treatment  */
+                    'is_treatment' => $patient->is_treatment,
+                    'treatment_information' => $patient->treatment_information ?? [],
+                    'treatment_type' => $patient->treatment_type ?? [],
+                    'treatment_images' => $patient->treatment_images ?? [],
+
+                    /* Investigation */
+                    'is_investigated' => $patient->is_investigated,
+                    'investigation_information' => $patient->investigation_information ?? [],
+                    'investigation_images' => $patient->investigation_images ?? [],
+
+                    /* Date */
+                    'date' => optional($patient->date_of_patient_added)
+                        ->format('d F Y'),
                 ];
             }),
         ]);
     }
-
     public function patientSummaryAnimation(Patient $patient)
     {
         $patient->load([
@@ -1046,15 +1061,18 @@ class PatientController extends Controller
 
     public function getModalDetails($id)
     {
-        // Eager load the plural 'cancerPhotos' relation matching your show page
-        $patient = Patient::with(['documents', 'cancerPhotos'])->findOrFail($id);
+        $patient = Patient::with([
+            'documents',
+            'cancerPhotos',
+            'latestEmergency',
+        ])->findOrFail($id);
 
         return response()->json([
             'success' => true,
-            'patient' => $patient
+            'patient' => $patient,
         ]);
     }
-
+    
     private function filteredPatients(Request $request)
     {
         return Patient::query()
