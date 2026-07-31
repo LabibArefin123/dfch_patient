@@ -796,6 +796,7 @@ class PatientController extends Controller
             }),
         ]);
     }
+
     public function patientSummaryAnimation(Patient $patient)
     {
         $patient->load([
@@ -807,19 +808,12 @@ class PatientController extends Controller
 
         return response()->json([
             'success' => true,
-
             'patient' => [
-
                 'id' => $patient->id,
-
                 'patient_name' => $patient->patient_name,
-
                 'is_referred' => (bool) $patient->is_referred,
-
                 'referred_doctor_name' => $patient->referred_doctor_name,
-
                 'referred_note' => $patient->referred_note,
-
                 'documents' => $patient->documents
                     ->where('document_type', 'recommendation')
                     ->values()
@@ -831,18 +825,13 @@ class PatientController extends Controller
                             'document_type' => $doc->document_type,
                         ];
                     })->values(),
-
             ]
-
         ]);
     }
 
     public function patientDocumentSearch(Request $request)
     {
-        $request->validate([
-            'document' => 'required|file|max:20480'
-        ]);
-
+        $request->validate(['document' => 'required|file|max:20480']);
         $hash = hash_file(
             'sha256',
             $request->file('document')->getRealPath()
@@ -868,57 +857,33 @@ class PatientController extends Controller
             ->values();
 
         return response()->json([
-
             'status' => true,
-
             'count' => $patients->count(),
-
             'patients' => $patients->map(function ($patient) {
-
                 return [
-
                     'id' => $patient->id,
-
                     'patient_code' => $patient->patient_code,
-
                     'patient_name' => $patient->patient_name,
-
                     'patient_photo' => $patient->patient_photo
                         ? asset($patient->patient_photo)
                         : asset('uploads/images/default.jpg'),
 
                     'age' => $patient->age,
-
                     'gender' => $patient->gender,
-
                     'phone' => $patient->phone_1,
-
                     'father' => $patient->patient_f_name,
-
                     'mother' => $patient->patient_m_name,
-
                     'problem' => $patient->patient_problem_description,
-
                     'drug' => $patient->patient_drug_description,
-
                     'remarks' => $patient->remarks,
-
                     'recommend' => $patient->is_referred,
-
                     'doctor' => $patient->referred_doctor_name,
-
                     'referred_note' => $patient->referred_note,
-
                     'documents' => $patient->documents()->count(),
-
                     'cancer_reports' => $patient->cancerPhotos()->count(),
-
-                    'date' => optional($patient->date_of_patient_added)
-                        ->format('d F Y')
-
+                    'date' => optional($patient->date_of_patient_added)->format('d F Y')
                 ];
             })
-
         ]);
     }
 

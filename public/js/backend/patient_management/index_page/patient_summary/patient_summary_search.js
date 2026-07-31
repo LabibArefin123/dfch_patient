@@ -3,12 +3,9 @@ function patientSummarySearch() {
     let keyword = $("#patientSummarySearch").val().trim();
 
     if (!keyword) return;
-
     if (patientChatClosedWarning()) return;
 
-    /*-----------------------------------
-    Close Command
-    ------------------------------------*/
+    /* Close Command*/
     if (keyword.toLowerCase() === "close") {
         $("#patientSummarySearch").val("");
 
@@ -35,9 +32,7 @@ function patientSummarySearch() {
         return;
     }
 
-    /*-----------------------------------
-    Future Date Validation
-    ------------------------------------*/
+    /* Future Date Validation*/
     if (patientSummaryIsFutureSearch(keyword)) {
         patientSummaryFutureWarning(function () {
             doPatientSummarySearch(keyword);
@@ -49,9 +44,7 @@ function patientSummarySearch() {
     doPatientSummarySearch(keyword);
 }
 
-/*========================================================
-Actual AJAX
-========================================================*/
+/*Actual AJAX File*/
 function doPatientSummarySearch(keyword) {
     resetPatientTabs();
     appendUserMessage(keyword);
@@ -62,7 +55,6 @@ function doPatientSummarySearch(keyword) {
 
     $.ajax({
         url: patientSummarySearchUrl,
-
         type: "POST",
 
         data: {
@@ -78,7 +70,6 @@ function doPatientSummarySearch(keyword) {
                     <b>Patient not found.</b><br><br>
 
                     Please try searching with:
-
                     • Patient Name<br>
                     • Patient Code<br>
                     • Phone Number<br>
@@ -92,22 +83,17 @@ function doPatientSummarySearch(keyword) {
                 `);
 
                 $("#patientSummaryAction").removeClass("d-none");
-
                 $("#patientSearchResult").empty();
-
                 $("#patientSummaryDetail").empty();
-
                 return;
             }
 
             appendDateSearchInfo(res.patients, keyword);
-
             renderPatientResults(res.patients);
         },
 
         error: function () {
             patientTypingDone();
-
             appendBotMessage(
                 "Unable to complete the search at the moment. Please try again.",
             );
@@ -115,9 +101,7 @@ function doPatientSummarySearch(keyword) {
     });
 }
 
-/*========================================================
-Reopen Chat
-========================================================*/
+/*Reopen Chat*/
 
 $(document).on("click", "#reopenChatBtn", function () {
     const chatCol = $("#patientSummaryChat").closest(".col-lg-5");
@@ -126,9 +110,7 @@ $(document).on("click", "#reopenChatBtn", function () {
     );
 
     chatCol.removeClass("d-none");
-
     detailCol.removeClass("col-lg-12").addClass("col-lg-7");
-
     $(this).remove();
 });
 

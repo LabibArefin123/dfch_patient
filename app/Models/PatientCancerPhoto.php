@@ -12,6 +12,7 @@ class PatientCancerPhoto extends Model
         'total_cancer',
         'xray_description',
         'cancer_remarks',
+        'cancer_hashes',
     ];
 
     protected $casts = [

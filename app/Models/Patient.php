@@ -51,11 +51,13 @@ class Patient extends Model
         'treatment_information',
         'treatment_images',
         'treatment_type',
+        'treatment_hashes',
 
         // Investigation
         'is_investigated',
         'investigation_information',
         'investigation_images',
+        'investigation_hashes',
     ];
 
     protected $casts = [
