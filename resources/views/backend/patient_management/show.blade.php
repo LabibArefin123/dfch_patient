@@ -186,7 +186,7 @@
                     </div>
                 </div>
 
-                {{-- RECOMMENDATION PART --}}
+                {{-- REFERRED PART --}}
                 @include('backend.patient_management.partial_pages.show_page.part_4')
                 {{-- TREATMENT PART --}}
                 @include('backend.patient_management.partial_pages.show_page.part_5')

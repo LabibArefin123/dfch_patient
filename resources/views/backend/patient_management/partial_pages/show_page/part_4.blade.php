@@ -52,43 +52,82 @@
 
             @php
                 $documents = $patient->documents->where('document_type', 'recommendation');
+
+                $imageExtensions = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp', 'svg', 'jfif'];
             @endphp
 
             <div>
-                <div class="documents-title mb-2">
+                <div class="documents-title mb-3">
                     <i class="fas fa-paperclip mr-1"></i>
                     Supporting Documents
                 </div>
 
                 @if ($documents->count() > 0)
-                    <div class="recommendation-documents">
+
+                    <div class="row">
+
                         @foreach ($documents as $doc)
-                            <div class="document-item">
-                                <div class="document-info">
-                                    <div class="document-icon">
-                                        <i class="fas fa-file-medical"></i>
+                            @php
+                                $file = asset($doc->file_path);
+                                $extension = strtolower(pathinfo($doc->file_path, PATHINFO_EXTENSION));
+                                $isImage = in_array($extension, $imageExtensions);
+                            @endphp
+                            <div class="col-lg-3 col-md-6 mb-3">
+                                <div class="card h-100 shadow-sm border">
+                                    @if ($isImage)
+                                        <div class="p-2">
+                                            <img src="{{ $file }}" alt="{{ $doc->document_name }}"
+                                                class="img-fluid rounded border w-100"
+                                                style="height:180px; object-fit:contain; cursor:pointer;"
+                                                data-bs-toggle="modal" data-bs-target="#imageZoomModal"
+                                                data-bs-img-src="{{ $file }}">
+                                        </div>
+                                    @else
+                                        <div class="d-flex align-items-center justify-content-center border-bottom"
+                                            style="height:180px;">
+                                            <div class="text-center">
+                                                <i class="fas fa-file-pdf text-danger" style="font-size:70px;"></i>
+                                                <div class="small text-muted mt-2">
+                                                    {{ strtoupper($extension) }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endif
+
+                                    <div class="card-body d-flex flex-column">
+                                        <h6 class="mb-2 text-truncate" title="{{ $doc->document_name }}">
+                                            {{ $doc->document_name }}
+                                        </h6>
+                                        <div class="mt-auto">
+                                            @if ($isImage)
+                                                <button class="btn btn-outline-primary btn-sm btn-block"
+                                                    data-bs-toggle="modal" data-bs-target="#imageZoomModal"
+                                                    data-bs-img-src="{{ $file }}">
+
+                                                    <i class="fas fa-image mr-1"></i>
+                                                    View Image
+                                                </button>
+                                            @else
+                                                <a href="{{ $file }}" target="_blank"
+                                                    class="btn btn-outline-danger btn-sm btn-block">
+                                                    <i class="fas fa-file-pdf mr-1"></i>
+                                                    Preview
+                                                </a>
+                                            @endif
+                                        </div>
+
                                     </div>
 
-                                    <span>
-                                        {{ $doc->document_name }}
-                                    </span>
                                 </div>
 
-
-                                <a href="{{ asset($doc->file_path) }}" target="_blank"
-                                    class="btn btn-sm btn-outline-primary">
-                                    <i class="fas fa-eye mr-1"></i>
-                                    View
-                                </a>
                             </div>
                         @endforeach
+
                     </div>
                 @else
                     <div class="empty-state">
                         <i class="fas fa-folder-open"></i>
-                        <span>
-                            No refered documents available
-                        </span>
+                        <span> No referred documents available </span>
                     </div>
                 @endif
             </div>

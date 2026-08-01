@@ -755,7 +755,7 @@ class PatientController extends Controller
                     'problem' => $patient->patient_problem_description,
                     'drug' => $patient->patient_drug_description,
                     'remarks' => $patient->remarks,
-                    
+
                     /* Referred*/
                     'recommend' => $patient->is_referred,
                     'doctor' => $patient->referred_doctor_name,
@@ -1037,7 +1037,7 @@ class PatientController extends Controller
             'patient' => $patient,
         ]);
     }
-    
+
     private function filteredPatients(Request $request)
     {
         return Patient::query()
@@ -1245,8 +1245,6 @@ class PatientController extends Controller
             $validated['passport_no'] = null;
         }
 
-
-
         /*Create Patient*/
         $patient = Patient::create($validated);
 
@@ -1285,21 +1283,26 @@ class PatientController extends Controller
         /* Upload Cancer Images*/
         if ($validated['is_old_cancer']) {
             $xrayPhotos = [];
+            $xrayHashes = [];
             if ($request->hasFile('xray_photo')) {
                 foreach ($request->file('xray_photo') as $index => $image) {
                     $extension = $image->getClientOriginalExtension();
                     $filename = 'cancer_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                    $hash = hash_file('sha256', $image->getRealPath());
                     $image->move($cancerPath, $filename);
-                    $xrayPhotos[] = "uploads/images/patients/{$patientFolder}/cancer/{$filename}";
+                    $xrayPhotos[] =
+                        "uploads/images/patients/{$patientFolder}/cancer/{$filename}";
+                    $xrayHashes[] = $hash;
                 }
             }
 
             PatientCancerPhoto::create([
-                'patient_id' => $patient->id,
-                'total_cancer' => $request->total_cancer,
-                'xray_photo' => $xrayPhotos,
-                'xray_description' => $request->xray_description,
-                'cancer_remarks' => $request->cancer_remarks,
+                'patient_id'        => $patient->id,
+                'total_cancer'      => $request->total_cancer,
+                'xray_photo'        => $xrayPhotos,
+                'xray_hash'         => $xrayHashes,
+                'xray_description'  => $request->xray_description,
+                'cancer_remarks'    => $request->cancer_remarks,
             ]);
         }
 
@@ -1327,15 +1330,20 @@ class PatientController extends Controller
         /*Upload Treatment Images  */
         if ($validated['is_treatment'] && $request->hasFile('treatment_images')) {
             $treatmentImages = [];
+            $treatmentHashes = [];
             foreach ($request->file('treatment_images') as $index => $image) {
                 $extension = $image->getClientOriginalExtension();
                 $filename = 'treatment_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                $hash = hash_file('sha256', $image->getRealPath());
                 $image->move($treatmentPath, $filename);
-                $treatmentImages[] = "uploads/images/patients/{$patientFolder}/treatment/{$filename}";
+                $treatmentImages[] =
+                    "uploads/images/patients/{$patientFolder}/treatment/{$filename}";
+                $treatmentHashes[] = $hash;
             }
 
             $patient->update([
                 'treatment_images' => $treatmentImages,
+                'treatment_hashes' => $treatmentHashes,
             ]);
         }
 
@@ -1343,17 +1351,20 @@ class PatientController extends Controller
         /* Upload Investigation Images*/
         if ($validated['is_investigated'] && $request->hasFile('investigation_images')) {
             $investigationImages = [];
+            $investigationHashes = [];
             foreach ($request->file('investigation_images') as $index => $image) {
-
                 $extension = $image->getClientOriginalExtension();
                 $filename = 'investigation_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                $hash = hash_file('sha256', $image->getRealPath());
                 $image->move($investigationPath, $filename);
                 $investigationImages[] =
                     "uploads/images/patients/{$patientFolder}/investigation/{$filename}";
+                $investigationHashes[] = $hash;
             }
 
             $patient->update([
                 'investigation_images' => $investigationImages,
+                'investigation_hashes' => $investigationHashes,
             ]);
         }
 
@@ -1763,63 +1774,47 @@ class PatientController extends Controller
             PatientEmergency::where('patient_id', $patient->id)->delete();
         }
 
-        /* Upload Treatment Images*/
+        /* Upload Treatment Images */
         if ($validated['is_treatment'] && $request->hasFile('treatment_images')) {
             $treatmentImages = $patient->treatment_images ?? [];
+            $treatmentHashes = $patient->treatment_hashes ?? [];
 
-            foreach (
-                $request->file('treatment_images')
-                as $index => $image
-            ) {
-
+            foreach ($request->file('treatment_images') as $index => $image) {
                 $extension = $image->getClientOriginalExtension();
                 $filename = 'treatment_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                $hash = hash_file('sha256', $image->getRealPath());
                 $image->move($treatmentPath, $filename);
                 $treatmentImages[] = "uploads/images/patients/{$patientFolder}/treatment/{$filename}";
+                $treatmentHashes[] = $hash;
             }
 
             $patient->update([
                 'treatment_images' => $treatmentImages,
+                'treatment_hashes' => $treatmentHashes,
             ]);
         }
 
-        /*Upload Investigation Images*/
-        if (
-            $validated['is_investigated'] &&
-            $request->hasFile('investigation_images')
-        ) {
-            $investigationImages =
-                $patient->investigation_images ?? [];
+        /* Upload Investigation Images */
+        if ($validated['is_investigated'] && $request->hasFile('investigation_images')) {
 
-            foreach (
-                $request->file('investigation_images')
-                as $index => $image
-            ) {
-
+            $investigationImages = $patient->investigation_images ?? [];
+            $investigationHashes = $patient->investigation_hashes ?? [];
+            foreach ($request->file('investigation_images') as $index => $image) {
                 $extension =
                     $image->getClientOriginalExtension();
-
-                $filename =
-                    'investigation_' .
-                    now()->format('YmdHis') .
-                    '_' .
-                    ($index + 1) .
-                    '.' .
-                    $extension;
-
+                $filename = 'investigation_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
+                $hash = hash_file('sha256', $image->getRealPath());
                 $image->move(
                     $investigationPath,
                     $filename
                 );
-
-                $investigationImages[] =
-                    "uploads/images/patients/{$patientFolder}/investigation/{$filename}";
+                $investigationImages[] ="uploads/images/patients/{$patientFolder}/investigation/{$filename}";
+                $investigationHashes[] = $hash;
             }
 
             $patient->update([
-                'investigation_images' =>
-                $investigationImages,
-
+                'investigation_images' => $investigationImages,
+                'investigation_hashes' => $investigationHashes,
             ]);
         }
 
@@ -1830,27 +1825,23 @@ class PatientController extends Controller
             ]);
 
             $photos = $cancer->xray_photo ?? [];
+            $hashes = $cancer->xray_hashes ?? [];
             if ($request->hasFile('xray_photo')) {
                 foreach ($request->file('xray_photo') as $index => $image) {
-                    $extension = $image->getClientOriginalExtension();
-                    $filename =
-                        'cancer_' .
-                        now()->format('YmdHis') .
-                        '_' .
-                        ($index + 1) .
-                        '.' .
-                        $extension;
-
+                    $extension =
+                        $image->getClientOriginalExtension();
+                    $filename ='cancer_' .now()->format('YmdHis') .'_' .($index + 1) .'.' .$extension;
+                    $hash = hash_file('sha256', $image->getRealPath());
                     $image->move($cancerPath, $filename);
-
-                    $photos[] =
-                        "uploads/images/patients/{$patientFolder}/cancer/{$filename}";
+                    $photos[] ="uploads/images/patients/{$patientFolder}/cancer/{$filename}";
+                    $hashes[] = $hash;
                 }
             }
 
             $cancer->patient_id = $patient->id;
             $cancer->total_cancer = $request->total_cancer;
             $cancer->xray_photo = $photos;
+            $cancer->xray_hashes = $hashes;
             $cancer->xray_description = $request->xray_description;
             $cancer->cancer_remarks = $request->cancer_remarks;
             $cancer->save();
@@ -1875,12 +1866,13 @@ class PatientController extends Controller
             $extension = $file->getClientOriginalExtension();
             $filename = 'patient_profile_' . now()->format('YmdHis') . '.' . $extension;
             $file->move($profilePath, $filename);
+            $profileHash = hash_file('sha256', $file->getRealPath());
 
             $patient->update([
                 'patient_photo' => "uploads/images/patients/{$patientFolder}/profile/{$filename}",
+                'photo_hash'    => $profileHash,
             ]);
         }
-
 
         /*Redirect */
         return redirect()
