@@ -19,7 +19,7 @@ return new class extends Migration
             $table->json('xray_description')->nullable();
             // Doctor cancer_remarks
             $table->json('cancer_remarks')->nullable();
-            $table->string('cancer_hashes')->nullable();
+            $table->json('cancer_hashes')->nullable();
             $table->timestamps();
         });
     }

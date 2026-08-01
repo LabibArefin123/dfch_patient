@@ -932,14 +932,111 @@ class PatientController extends Controller
             $request->file('photo')->getRealPath()
         );
 
-        $patients = Patient::withCount([
+        $results = collect();
+
+        /*
+    |--------------------------------------------------------------------------
+    | 1. Profile Photo
+    |--------------------------------------------------------------------------
+    */
+
+        $profilePatients = Patient::withCount([
             'documents',
-            'cancerPhotos'
+            'cancerPhotos',
         ])
             ->where('photo_hash', $hash)
             ->get();
 
-        if ($patients->isEmpty()) {
+        foreach ($profilePatients as $patient) {
+
+            $patient->matched_image = 'Profile Photo';
+
+            $results->push($patient);
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | 2. Treatment Images
+    |--------------------------------------------------------------------------
+    */
+
+        $treatmentPatients = Patient::withCount([
+            'documents',
+            'cancerPhotos',
+        ])
+            ->whereJsonContains('treatment_hashes', $hash)
+            ->get();
+
+        foreach ($treatmentPatients as $patient) {
+
+            if (!$results->contains('id', $patient->id)) {
+
+                $patient->matched_image = 'Treatment Image';
+
+                $results->push($patient);
+            }
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | 3. Investigation Images
+    |--------------------------------------------------------------------------
+    */
+
+        $investigationPatients = Patient::withCount([
+            'documents',
+            'cancerPhotos',
+        ])
+            ->whereJsonContains('investigation_hashes', $hash)
+            ->get();
+
+        foreach ($investigationPatients as $patient) {
+
+            if (!$results->contains('id', $patient->id)) {
+
+                $patient->matched_image = 'Investigation Image';
+
+                $results->push($patient);
+            }
+        }
+
+        /*
+    |--------------------------------------------------------------------------
+    | 4. Cancer Images
+    |--------------------------------------------------------------------------
+    */
+
+        $cancerReports = PatientCancerPhoto::whereJsonContains(
+            'cancer_hashes',
+            $hash
+        )
+            ->with('patient')
+            ->get();
+
+        foreach ($cancerReports as $report) {
+
+            if (!$report->patient) {
+                continue;
+            }
+
+            $patient = Patient::withCount([
+                'documents',
+                'cancerPhotos',
+            ])
+                ->find($report->patient_id);
+
+            if (
+                $patient &&
+                !$results->contains('id', $patient->id)
+            ) {
+
+                $patient->matched_image = 'Cancer Image';
+
+                $results->push($patient);
+            }
+        }
+
+        if ($results->isEmpty()) {
 
             return response()->json([
                 'status' => false,
@@ -948,13 +1045,21 @@ class PatientController extends Controller
         }
 
         return response()->json([
+
             'status' => true,
-            'count' => $patients->count(),
-            'patients' => $patients->map(function ($patient) {
+
+            'count' => $results->count(),
+
+            'patients' => $results->map(function ($patient) {
 
                 return [
+
                     'id' => $patient->id,
+
+                    'matched_image' => $patient->matched_image,
+
                     'patient_code' => $patient->patient_code,
+
                     'patient_name' => $patient->patient_name,
 
                     'patient_photo' => $patient->patient_photo
@@ -962,28 +1067,36 @@ class PatientController extends Controller
                         : asset('uploads/images/default.jpg'),
 
                     'age' => $patient->age,
+
                     'gender' => $patient->gender,
+
                     'phone' => $patient->phone_1,
 
                     'father' => $patient->patient_f_name,
+
                     'mother' => $patient->patient_m_name,
 
                     'problem' => $patient->patient_problem_description,
+
                     'drug' => $patient->patient_drug_description,
 
                     'remarks' => $patient->remarks,
 
                     'recommend' => $patient->is_referred,
+
                     'doctor' => $patient->referred_doctor_name,
+
                     'referred_note' => $patient->referred_note,
 
                     'documents' => $patient->documents_count,
+
                     'cancer_reports' => $patient->cancer_photos_count,
 
-                    'date' => optional($patient->date_of_patient_added)
-                        ->format('d F Y'),
+                    'date' => optional(
+                        $patient->date_of_patient_added
+                    )->format('d F Y'),
                 ];
-            }),
+            })->values(),
         ]);
     }
 
@@ -1825,7 +1938,7 @@ class PatientController extends Controller
             ]);
 
             $photos = $cancer->xray_photo ?? [];
-            $hashes = $cancer->xray_hashes ?? [];
+            $hashes = $cancer->cancer_hashes ?? [];
             if ($request->hasFile('xray_photo')) {
                 foreach ($request->file('xray_photo') as $index => $image) {
                     $extension =
@@ -1841,7 +1954,7 @@ class PatientController extends Controller
             $cancer->patient_id = $patient->id;
             $cancer->total_cancer = $request->total_cancer;
             $cancer->xray_photo = $photos;
-            $cancer->xray_hashes = $hashes;
+            $cancer->cancer_hashes = $hashes;
             $cancer->xray_description = $request->xray_description;
             $cancer->cancer_remarks = $request->cancer_remarks;
             $cancer->save();

@@ -1,20 +1,23 @@
-$("#patientPhotoBtn").click(function () {
+$("#patientPhotoBtn").on("click", function () {
     if (patientChatClosedWarning()) return;
-    $("#patientPhotoInput").click();
+
+    $("#patientPhotoInput").trigger("click");
 });
 
-$("#patientPhotoInput").change(function () {
+$("#patientPhotoInput").on("change", function () {
     if (patientChatClosedWarning()) {
         $(this).val("");
+
         return;
     }
+
     if (!this.files.length) return;
 
-    let fd = new FormData();
+    const formData = new FormData();
 
-    fd.append("photo", this.files[0]);
+    formData.append("photo", this.files[0]);
 
-    fd.append("_token", $('meta[name="csrf-token"]').attr("content"));
+    formData.append("_token", $('meta[name="csrf-token"]').attr("content"));
 
     patientSearching();
 
@@ -23,11 +26,13 @@ $("#patientPhotoInput").change(function () {
 
         type: "POST",
 
-        data: fd,
+        data: formData,
 
         processData: false,
 
         contentType: false,
+
+        cache: false,
 
         success: function (res) {
             patientTypingDone();
@@ -35,20 +40,40 @@ $("#patientPhotoInput").change(function () {
             if (!res.status) {
                 appendBotMessage("📷 No matching patient photo found.");
 
+                $("#patientPhotoInput").val("");
+
                 return;
             }
 
-            appendBotMessage("📷 Matching patient photo found.");
+            let message = `📷 Found ${res.count} matching patient`;
+
+            if (res.count > 1) {
+                message += "s";
+            }
+
+            message += ".";
+
+            appendBotMessage(message);
+
+            res.patients.forEach(function (patient) {
+                appendBotMessage(
+                    `🔍 Match Source: <strong>${patient.matched_image}</strong>`,
+                );
+            });
 
             appendDateSearchInfo(res.patients, "Uploaded Patient Photo");
 
             renderPatientResults(res.patients);
+
+            $("#patientPhotoInput").val("");
         },
 
         error: function () {
             patientTypingDone();
 
-            appendBotMessage("Unable to process uploaded photo.");
+            appendBotMessage("❌ Unable to process uploaded photo.");
+
+            $("#patientPhotoInput").val("");
         },
     });
 });

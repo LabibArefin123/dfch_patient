@@ -74,10 +74,12 @@ class Patient extends Model
 
         'treatment_information' => 'array',
         'treatment_images' => 'array',
+        'treatment_hashes' => 'array',
         'treatment_type' => 'array',
 
         'investigation_information' => 'array',
         'investigation_images' => 'array',
+        'investigation_hashes' => 'array',
     ];
 
     public function getFullLocationAttribute()

@@ -19,6 +19,7 @@ class PatientCancerPhoto extends Model
         'xray_photo' => 'array',
         'xray_description' => 'array',
         'cancer_remarks' => 'array',
+        'cancer_hashes' => 'array',
     ];
 
     public function patient()
