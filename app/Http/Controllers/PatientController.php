@@ -25,6 +25,33 @@ class PatientController extends Controller
         $baseQuery = Patient::withCount('cancerPhotos')
             ->with('cancerPhotos')
 
+            // Global Search (DataTables)
+            ->when($request->filled('search.value'), function ($q) use ($request) {
+
+                $search = trim($request->input('search.value'));
+
+                $q->where(function ($query) use ($search) {
+
+                    $query->where('patient_code', 'like', "%{$search}%")
+                        ->orWhere('patient_name', 'like', "%{$search}%")
+                        ->orWhere('patient_f_name', 'like', "%{$search}%")
+                        ->orWhere('patient_m_name', 'like', "%{$search}%")
+
+                        ->orWhere('phone_1', 'like', "%{$search}%")
+                        ->orWhere('phone_2', 'like', "%{$search}%")
+                        ->orWhere('phone_f_1', 'like', "%{$search}%")
+                        ->orWhere('phone_m_1', 'like', "%{$search}%")
+
+                        ->orWhere('age', 'like', "%{$search}%")
+                        ->orWhere('gender', 'like', "%{$search}%")
+
+                        ->orWhere('location_simple', 'like', "%{$search}%")
+                        ->orWhere('city', 'like', "%{$search}%")
+                        ->orWhere('district', 'like', "%{$search}%")
+                        ->orWhere('country', 'like', "%{$search}%");
+                });
+            })
+
             // Gender Filter
             ->when($request->gender, function ($q) use ($request) {
                 $q->where('gender', $request->gender);
@@ -131,6 +158,19 @@ class PatientController extends Controller
             $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
             $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 60])->count();
             $seniorPatients = (clone $baseQuery)->where('age', '>', 60)->count();
+            $search = trim($request->input('search.value', ''));
+            $highlight = function ($text) use ($search) {
+
+                if (empty($search) || empty($text)) {
+                    return e($text);
+                }
+
+                return preg_replace(
+                    '/' . preg_quote($search, '/') . '/i',
+                    '<span style="background:#fff1f2;color:#c62828;padding:1px 3px;border-radius:3px;font-weight:600;">$0</span>',
+                    e($text)
+                );
+            };
 
             return DataTables::of($baseQuery)
                 ->addIndexColumn()
@@ -161,36 +201,68 @@ class PatientController extends Controller
                 })
 
                 ->rawColumns(['photo'])
-                ->addColumn('patient_code', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->patient_code . '</a>';
+                ->addColumn('patient_code', function ($p) use ($highlight) {
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">'
+                        . $highlight($p->patient_code) .
+                        '</a>';
                 })
 
-                ->addColumn('name', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box"><strong>' . $p->patient_name . '</strong><br>
-                    <small class="text-muted">Father: ' . ($p->patient_f_name ?? 'N/A') . '</small><br>
-                    <small class="text-muted">Mother: ' . ($p->patient_m_name ?? 'N/A') . '</small></a>';
+                ->addColumn('name', function ($p) use ($highlight) {
+
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">
+                    <strong>' . $highlight($p->patient_name) . '</strong><br>
+
+                    <small class="text-muted">
+                        Father: ' . $highlight($p->patient_f_name ?? 'N/A') . '
+                    </small><br>
+
+                    <small class="text-muted">
+                        Mother: ' . $highlight($p->patient_m_name ?? 'N/A') . '
+                    </small>
+                </a>';
                 })
 
-                ->addColumn('age', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $p->age . '</a>';
+                ->addColumn('age', function ($p) use ($highlight) {
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">'
+                        . $highlight($p->age) .
+                        '</a>';
                 })
 
                 ->addColumn('gender', function ($p) {
                     return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . ucfirst($p->gender) . '</a>';
                 })
 
-                ->addColumn('phone', function ($p) {
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' .
-                        ($p->phone_1 ?? 'N/A') . '<br><small>Alt: ' . ($p->phone_2 ?? 'N/A') . '</small>' .
-                        '<br><small>Father: ' . ($p->phone_f_1 ?? 'N/A') . '</small>' .
-                        '<br><small>Mother: ' . ($p->phone_m_1 ?? 'N/A') . '</small>' .
-                        '</a>';
+                ->addColumn('phone', function ($p) use ($highlight) {
+
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">'
+                        . $highlight($p->phone_1 ?? 'N/A')
+                        . '<br><small>Alt: '
+                        . $highlight($p->phone_2 ?? 'N/A')
+                        . '</small>'
+                        . '<br><small>Father: '
+                        . $highlight($p->phone_f_1 ?? 'N/A')
+                        . '</small>'
+                        . '<br><small>Mother: '
+                        . $highlight($p->phone_m_1 ?? 'N/A')
+                        . '</small>'
+                        . '</a>';
                 })
 
-                ->addColumn('location', function ($p) {
-                    $loc = $p->location_type == 1 ? $p->location_simple : ($p->location_type == 2 ? $p->city . '<br>' . $p->district : $p->country);
-                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">' . $loc . '</a>';
+                ->addColumn('location', function ($p) use ($highlight) {
+
+                    if ($p->location_type == 1) {
+                        $loc = $highlight($p->location_simple);
+                    } elseif ($p->location_type == 2) {
+                        $loc = $highlight($p->city) . '<br>' . $highlight($p->district);
+                    } else {
+                        $loc = $highlight($p->country);
+                    }
+
+                    return '<a href="' . route('patients.show', $p->id) . '" class="hover-box">'
+                        . $loc .
+                        '</a>';
                 })
+                
 
                 ->addColumn('is_referred', function ($p) {
 
@@ -470,6 +542,7 @@ class PatientController extends Controller
                         break;
                 }
             });
+
         // AJAX Request
         if ($request->ajax()) {
 
@@ -1921,7 +1994,7 @@ class PatientController extends Controller
                     $investigationPath,
                     $filename
                 );
-                $investigationImages[] ="uploads/images/patients/{$patientFolder}/investigation/{$filename}";
+                $investigationImages[] = "uploads/images/patients/{$patientFolder}/investigation/{$filename}";
                 $investigationHashes[] = $hash;
             }
 
@@ -1943,10 +2016,10 @@ class PatientController extends Controller
                 foreach ($request->file('xray_photo') as $index => $image) {
                     $extension =
                         $image->getClientOriginalExtension();
-                    $filename ='cancer_' .now()->format('YmdHis') .'_' .($index + 1) .'.' .$extension;
+                    $filename = 'cancer_' . now()->format('YmdHis') . '_' . ($index + 1) . '.' . $extension;
                     $hash = hash_file('sha256', $image->getRealPath());
                     $image->move($cancerPath, $filename);
-                    $photos[] ="uploads/images/patients/{$patientFolder}/cancer/{$filename}";
+                    $photos[] = "uploads/images/patients/{$patientFolder}/cancer/{$filename}";
                     $hashes[] = $hash;
                 }
             }

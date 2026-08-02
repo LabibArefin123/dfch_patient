@@ -73,6 +73,7 @@
     {{-- @include('backend.patient_management.modals.index_page.patient_emergency_progress') --}}
     @include('backend.patient_management.modals.index_page.patient_close_modal')
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_image.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_search.css') }}">
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
             <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
@@ -130,11 +131,14 @@
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_filter.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_ajax_tb_search.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_ajax_tb_highlight.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_shared_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_select_all.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_import_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_pdf_file.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_progress_percent.js') }}"></script>
 
     {{-- Patient Emergency Core --}}
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency_ajax.js') }}"></script>

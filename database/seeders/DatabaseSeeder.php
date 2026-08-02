@@ -24,8 +24,9 @@ class DatabaseSeeder extends Seeder
             // PatientPhotoHashSeeder::class,
             // PatientDocumentHashSeeder::class,
             // PatientMeetingScheduleSeeder::class,
-            PatientHashSeeder::class,
+            // PatientHashSeeder::class,
             // SpecialistSeeder::class,
+            SpecialistCardSeeder::class,
             // AboutDoctorsSeeder::class,
             // UserSeeder::class,
         ]);

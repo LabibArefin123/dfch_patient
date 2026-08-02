@@ -3,6 +3,7 @@
 use App\Http\Controllers\WelcomePageController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\SpecialistController;
+use App\Http\Controllers\SpecialistCardController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ActivityLogController;
@@ -71,6 +72,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
 
     // Specialist Routes
     Route::resource('specialists', SpecialistController::class);
+    Route::resource('specialist-cards', SpecialistCardController::class);
 
     Route::get('/user_profile', [ProfileController::class, 'user_profile_show'])->name('user_profile_show');
     Route::get('/user_profile_edit', [ProfileController::class, 'user_profile_edit'])->name('user_profile_edit');

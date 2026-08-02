@@ -12,7 +12,6 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('patient_meetings', function (Blueprint $table) {
-
             $table->id();
             $table->foreignId('patient_id')->nullable()->index();
             $table->foreignId('specialist_id')->nullable()->index();

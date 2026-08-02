@@ -8,11 +8,15 @@
         <i class="fas fa-user-md text-danger"></i>
         Specialist List
     </h1>
-
+  <div class="d-flex gap-2">
     <a href="{{ route('specialists.create') }}" class="btn btn-success">
         <i class="fas fa-plus-circle"></i>
         Add Specialist
     </a>
+    <a href="{{ route('specialist-cards.index') }}" class="btn btn-primary">
+         See Specialist Card
+    </a>
+  </div>
 </div>
 @stop
 
