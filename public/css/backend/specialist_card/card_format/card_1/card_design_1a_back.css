@@ -1,22 +1,33 @@
-/*  BACK SIDE FRIENDLY DESIGN */
+/* =====================================
+   BACK SIDE - SPECIALIST ID CARD
+===================================== */
+
 .doctor-card-back {
     position: absolute;
     inset: 0;
     background: #ffffff;
     border-radius: 22px;
     overflow: hidden;
+    border: 2px solid #8b0000;
+    box-shadow: 0 15px 35px rgba(139, 0, 0, 0.2);
 }
 
-/* TOP HEADER */
+/* =====================================
+   TOP HEADER
+===================================== */
+
 .back-top-bg {
-    height: 145px;
+    height: 110px;
     background: linear-gradient(135deg, #8b0000, #b22222);
 }
 
-/*  BACK HOSPITAL LOGO*/
+/* =====================================
+   HOSPITAL LOGO
+===================================== */
+
 .back-hospital-logo {
     position: absolute;
-    top: 20px;
+    top: 18px;
     width: 100%;
     text-align: center;
     z-index: 5;
@@ -26,102 +37,98 @@
     width: 200px;
     height: 50px;
     object-fit: contain;
-    background: white;
-    padding: 5px 10px;
+    background: #fff;
+    padding: 6px 12px;
     border-radius: 8px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.back-hospital-name {
-    position: absolute;
-    top: 95px;
-    width: 100%;
-    text-align: center;
-    color: white;
-    z-index: 5;
-}
-
-.back-hospital-name h3 {
-    margin: 0;
-    font-size: 21px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.back-hospital-name p {
-    margin: 4px 0;
-    font-size: 12px;
-    letter-spacing: 2px;
-}
-
-/* CONTENT AREA */
+/* =====================================
+   CONTENT
+===================================== */
 
 .back-content {
     position: absolute;
-    top: 170px;
-    width: 88%;
-    left: 6%;
+    top: 80px;
+    left: 7%;
+    width: 86%;
 }
 
 .back-content h4 {
-    color: #8b0000;
+    margin: 0 0 15px;
+    color: #fff;
+    text-align: center;
     font-size: 18px;
     font-weight: 700;
-    margin-bottom: 8px;
 }
 
-.back-content p {
-    font-size: 14px;
-    line-height: 1.7;
-    color: #333;
-    text-align: justify;
+/* =====================================
+   INSTRUCTION BOX
+===================================== */
+
+.instruction-list {
+    margin: 0;
+    padding: 18px 25px;
+    background: #fafafa;
+    border: 1px solid #eeeeee;
+    border-left: 5px solid #8b0000;
+    border-radius: 12px;
+}
+
+.instruction-list li {
+    color: #444;
+    font-size: 11px;
+    line-height: 1.65;
     margin-bottom: 10px;
+    text-align: justify;
 }
 
-/* DIVIDER */
-
-.back-divider {
-    height: 3px;
-    width: 100%;
-    background: linear-gradient(to right, #8b0000, #ff6b6b);
-    border-radius: 10px;
-    margin: 18px 0;
+.instruction-list li:last-child {
+    margin-bottom: 0;
 }
 
-/* CONTACT */
-
-.contact-details {
-    margin-top: 10px;
-}
-
-.contact-details p {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    color: #333;
-    font-size: 14px;
-    margin: 10px 0;
-}
-
-.contact-details i {
-    width: 22px;
-    height: 22px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    background: #8b0000;
-    border-radius: 50%;
+.instruction-list li::marker {
+    color: #8b0000;
     font-size: 11px;
 }
 
+/* =====================================
+   WEBSITE
+===================================== */
 
-/* BOTTOM DESIGN */
+.back-website {
+    position: absolute;
+    left: 50%;
+    bottom: 80px;
+    transform: translateX(-50%);
+    width: 84%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 15px;
+    background: #fff6f6;
+    border: 1px dashed rgba(139, 0, 0, 0.35);
+    border-radius: 30px;
+    color: #8b0000;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.back-website i {
+    font-size: 11px;
+}
+
+/* =====================================
+   BOTTOM WAVE
+===================================== */
+
 .back-bottom-wave {
     position: absolute;
-    bottom: -50px;
+    left: 0;
+    bottom: -48px;
     width: 100%;
-    height: 100px;
+    height: 95px;
     background: #8b0000;
     border-radius: 50% 50% 0 0;
 }

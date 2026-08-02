@@ -1,0 +1,83 @@
+.card-preview-left {
+    display: flex;
+    gap: 35px;
+}
+
+.lanyard-preview {
+    width: 170px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.lanyard-card {
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+}
+
+.lanyard-title {
+    padding: 10px;
+    background: #8b0000;
+    color: #fff;
+    text-align: center;
+    font-weight: 600;
+}
+
+.lanyard-body {
+    height: 300px;
+    overflow: hidden;
+}
+
+.lanyard-strip {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: #ffffff;
+    color: #8b0000;
+    font-size: 11px;
+    font-weight: 700;
+    border-bottom: 1px dashed rgba(139, 0, 0, 0.2);
+}
+
+.lanyard-strip:nth-child(even) {
+    background: #8b0000;
+    color: #fff;
+}
+
+.lanyard-strip img {
+    width: 18px;
+    height: 18px;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 50%;
+    padding: 2px;
+}
+
+.lanyard-coming {
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #999;
+    text-align: center;
+}
+
+.lanyard-coming i {
+    font-size: 42px;
+    margin-bottom: 15px;
+}
+
+.lanyard-coming h6 {
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.lanyard-card.active {
+    border: 2px solid #8b0000;
+}

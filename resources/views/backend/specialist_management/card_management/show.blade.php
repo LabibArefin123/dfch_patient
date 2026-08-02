@@ -13,17 +13,26 @@
 @stop
 
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/lanyard_format/layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_base.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_elements.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_front.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_back.css') }}">
-    {{-- ========================= CARD DESIGN 1A ========================= --}}
     <div class="card-preview-container">
-    {{-- ========================= FRONT SIDE ========================= --}}
-     @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_1')
-     {{-- ========================= BACK SIDE ========================= --}}
-     @include('backend.specialist_management.card_management.format_card.backcard_layout.back_1')
-    </div>
+        {{-- ========================= CARD DESIGN 1A ========================= --}}
+        <div class="card-preview-left">
+            {{-- ========================= FRONT SIDE ========================= --}}
+            @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_1')
+            {{-- ========================= BACK SIDE ========================= --}}
+            @include('backend.specialist_management.card_management.format_card.backcard_layout.back_1')
+        </div>
 
+        {{-- Lanyard Designs --}}
+
+
+    </div>
+    @include('backend.specialist_management.card_management.format_card.lanyards.design_1')
+    @include('backend.specialist_management.card_management.format_card.lanyards.design_2')
+    @include('backend.specialist_management.card_management.format_card.lanyards.design_3')
     <div style="height:50px;"></div>
 @stop
