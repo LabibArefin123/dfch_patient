@@ -262,7 +262,7 @@ class PatientController extends Controller
                         . $loc .
                         '</a>';
                 })
-                
+
 
                 ->addColumn('is_referred', function ($p) {
 
@@ -354,7 +354,6 @@ class PatientController extends Controller
                 })
 
                 ->addColumn('action', function ($p) {
-
                     $showUrl   = route('patients.show', $p->id);
                     $editUrl   = route('patients.edit', $p->id);
                     $printUrl  = route('patients.print_card', $p->id);
@@ -364,6 +363,7 @@ class PatientController extends Controller
                     <a href="' . $showUrl . '" class="btn btn-primary btn-sm mr-1">
                         <i class="fas fa-eye"></i>
                     </a>
+
                     <a href="' . $editUrl . '" class="btn btn-warning btn-sm mr-1">
                         <i class="fas fa-edit"></i>
                     </a>
@@ -372,14 +372,13 @@ class PatientController extends Controller
                         <i class="fas fa-print"></i>
                     </a>
 
-                    <form action="' . $deleteUrl . '" method="POST" style="display:inline-block;" 
-                        onsubmit="return confirm(\'Are you sure you want to delete this patient?\')">
-                        ' . csrf_field() . '
-                        ' . method_field('DELETE') . '
-                        <button type="submit" class="btn btn-danger btn-sm">
+                    <div class="d-inline">
+                        <button type="button"
+                            class="btn btn-danger btn-sm"
+                            onclick="triggerDeleteModal(\'' . $deleteUrl . '\')">
                             <i class="fas fa-trash"></i>
                         </button>
-                    </form>
+                    </div>
                 ';
                 })
 

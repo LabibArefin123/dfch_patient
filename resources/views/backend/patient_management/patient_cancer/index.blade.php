@@ -39,9 +39,11 @@
 @section('content')
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_card.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_details.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_details.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_phone.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_responsive.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_responsive.css') }}">
     @include('backend.patient_management.modals.patient_cancer.index_page.patient_sync_modal')
     <div class="container-fluid">
         <div class="card card-outline card-danger">
@@ -97,7 +99,7 @@
                                 <td class="text-center align-middle">
                                     {{ $loop->iteration + ($patientCancerPhotos->firstItem() - 1) }}
                                 </td>
-                              
+
                                 <td class="patient-info-td">
 
                                     @if (isset($report->patient))
@@ -219,7 +221,7 @@
                                     @endif
 
                                 </td>
-                               
+
 
 
 
@@ -300,11 +302,12 @@
                                         class="btn btn-warning btn-sm">
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                    <form action="{{ route('patient-cancer-photos.destroy', $report->id) }}" method="POST"
-                                        class="d-inline deleteConfirmModal">
+                                    <form action="{{ route('patient-cancer-photos.destroy', $report->id) }}"
+                                        method="POST" class="d-inline deleteConfirmModal">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">
+                                        <button type="button" class="btn btn-sm btn-danger"
+                                            onclick="triggerDeleteModal('{{ route('patient-cancer-photos.destroy', $report->id) }}')">
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>

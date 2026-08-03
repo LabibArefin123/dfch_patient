@@ -3,12 +3,10 @@
 @section('title', 'Specialist Cards')
 
 @section('content_header')
-
     <a href="{{ route('specialist-cards.create') }}" class="btn btn-success">
         <i class="fas fa-plus-circle"></i>
         Add Specialist Card
     </a>
-
 @stop
 
 
@@ -27,7 +25,7 @@
             </div>
         </div>
 
-        <div class="card-body table-responsive p-0">
+        <div class="card-body table-responsive">
             <table class="table table-hover table-bordered text-nowrap">
                 <thead class="bg-primary text-center">
                     <tr>

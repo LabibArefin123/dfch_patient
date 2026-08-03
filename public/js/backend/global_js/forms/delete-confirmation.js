@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const userRole = config.userRole;
 
     // Secure UI: Hide and remove delete triggers from unauthorized roles
-    if (userRole && userRole !== "admin" && userRole !== "manager") {
+    if (userRole && userRole !== "admin") {
         document
             .querySelectorAll("button.btn-danger.btn-sm")
             .forEach((button) => {
@@ -18,7 +18,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Set globally so blade action calls can call it (e.g. onclick="triggerDeleteModal('url')")
     window.triggerDeleteModal = function (actionUrl) {
-        if (userRole !== "admin" && userRole !== "manager") return;
+        if (userRole !== "admin") return;
 
         Swal.fire({
             title: "Are you sure?",

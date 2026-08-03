@@ -185,9 +185,7 @@
                     </div>
 
                     <div id="previewContainer" class="row mt-3"></div>
-
-                    <hr>
-
+                    
                     {{-- X-Ray Descriptions --}}
                     <div class="form-group">
                         <label for="xray_description">
