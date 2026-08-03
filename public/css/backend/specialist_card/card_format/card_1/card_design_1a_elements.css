@@ -1,3 +1,11 @@
+/* =========================
+   LEFT CARD PREVIEW
+========================= */
+.card-preview-middle {
+    display: flex;
+    gap: 35px;
+}
+
 /* FRONT SIDE */
 .hospital-logo {
     position: absolute;

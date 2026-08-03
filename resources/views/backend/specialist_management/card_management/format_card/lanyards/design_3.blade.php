@@ -1,42 +1,47 @@
 {{-- ========================= LANYARD DESIGN 03 ========================= --}}
 
 <div class="lanyard-card">
-
     <div class="lanyard-title">
         Design 03
     </div>
-
     <div class="lanyard03-body">
-
         {{-- WHITE --}}
         <div class="lanyard03-strip lanyard03-white">
 
-            <span class="left-band"></span>
-            <span class="right-band"></span>
+            <span class="left-band left-band-1"></span>
+            <span class="left-band left-band-2"></span>
+            <span class="left-band left-band-3"></span>
+
+            <span class="right-band right-band-1"></span>
+            <span class="right-band right-band-2"></span>
+            <span class="right-band right-band-3"></span>
 
             <div class="lanyard03-center">
 
-                <div class="lanyard03-badge">
-                    <img src="{{ asset('uploads/images/icon.png') }}">
-                </div>
+                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
 
                 <span>{{ config('app.name') }}</span>
 
             </div>
 
         </div>
+
+
 
         {{-- RED --}}
-        <div class="lanyard03-strip lanyard03-red">
+        <div class="lanyard03-strip lanyard03-red mt-4">
 
-            <span class="left-band"></span>
-            <span class="right-band"></span>
+            <span class="left-band left-band-1"></span>
+            <span class="left-band left-band-2"></span>
+            <span class="left-band left-band-3"></span>
+
+            <span class="right-band right-band-1"></span>
+            <span class="right-band right-band-2"></span>
+            <span class="right-band right-band-3"></span>
 
             <div class="lanyard03-center">
 
-                <div class="lanyard03-badge">
-                    <img src="{{ asset('uploads/images/icon.png') }}">
-                </div>
+                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
 
                 <span>{{ config('app.name') }}</span>
 
@@ -44,17 +49,22 @@
 
         </div>
 
-        {{-- BLACK --}}
-        <div class="lanyard03-strip lanyard03-black">
 
-            <span class="left-band"></span>
-            <span class="right-band"></span>
+
+        {{-- BLACK --}}
+        <div class="lanyard03-strip lanyard03-black mt-4">
+
+            <span class="left-band left-band-1"></span>
+            <span class="left-band left-band-2"></span>
+            <span class="left-band left-band-3"></span>
+
+            <span class="right-band right-band-1"></span>
+            <span class="right-band right-band-2"></span>
+            <span class="right-band right-band-3"></span>
 
             <div class="lanyard03-center">
 
-                <div class="lanyard03-badge">
-                    <img src="{{ asset('uploads/images/icon.png') }}">
-                </div>
+                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
 
                 <span>{{ config('app.name') }}</span>
 
@@ -63,5 +73,4 @@
         </div>
 
     </div>
-
 </div>

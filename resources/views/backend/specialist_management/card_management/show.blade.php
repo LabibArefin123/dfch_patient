@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_back.css') }}">
     <div class="card-preview-container">
         {{-- ========================= CARD DESIGN 1A ========================= --}}
-        <div class="card-preview-left">
+        <div class="card-preview-middle">
             {{-- ========================= FRONT SIDE ========================= --}}
             @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_1')
             {{-- ========================= BACK SIDE ========================= --}}
