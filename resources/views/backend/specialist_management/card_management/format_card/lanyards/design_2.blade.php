@@ -1,6 +1,6 @@
 {{-- ========================= LANYARD DESIGN 02 ========================= --}}
 
-<div class="lanyard-card">
+<div class="lanyard-card mt-5">
 
     <div class="lanyard-title">
         Design 02

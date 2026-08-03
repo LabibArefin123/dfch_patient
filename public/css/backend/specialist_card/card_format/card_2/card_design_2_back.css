@@ -1,0 +1,247 @@
+/* =====================================
+   WIDE CARD BACK
+===================================== */
+
+.wide-card-back {
+
+    position: relative;
+
+    width: 580px;
+
+    height: 350px;
+
+    background: #ffffff;
+
+    border: 2px solid #8b0000;
+
+    border-radius: 20px;
+
+    overflow: hidden;
+
+    box-shadow: 0 14px 30px rgba(139, 0, 0, .18);
+
+}
+
+/* =====================================
+   HEADER
+===================================== */
+
+.wide-back-header2 {
+
+    position: relative;
+
+    height: 72px;
+
+    background: linear-gradient(135deg, #8b0000, #b91c1c);
+
+    display: flex;
+
+    justify-content: center;
+
+    align-items: center;
+
+}
+
+.wide-back-header2::after {
+
+    content: "";
+
+    position: absolute;
+
+    left: 0;
+
+    bottom: -18px;
+
+    width: 100%;
+
+    height: 38px;
+
+    background: #fff;
+
+    border-radius: 50% 50% 0 0;
+
+}
+
+/* =====================================
+   LOGO
+===================================== */
+
+.wide-back-logo {
+
+    position: relative;
+
+    z-index: 5;
+
+}
+
+.wide-back-logo img {
+
+    width: 165px;
+
+    height: auto;
+
+    background: #fff;
+
+    padding: 6px 14px;
+
+    border-radius: 8px;
+
+    box-shadow: 0 5px 12px rgba(0,0,0,.18);
+
+}
+
+/* =====================================
+   CONTENT
+===================================== */
+
+.wide-back-content2 {
+
+    position: absolute;
+
+    left: 22px;
+
+    right: 22px;
+
+    top: 82px;
+
+    bottom: 56px;
+
+}
+
+.wide-back-title {
+
+    margin-bottom: 12px;
+
+    text-align: center;
+
+    font-size: 18px;
+
+    font-weight: 700;
+
+    color: #8b0000;
+
+    letter-spacing: .3px;
+
+}
+
+/* =====================================
+   INSTRUCTION BOX
+===================================== */
+
+.wide-back-list {
+
+    margin: 0;
+
+    padding: 14px 20px;
+
+    background: #fcfcfc;
+
+    border-left: 5px solid #8b0000;
+
+    border-radius: 10px;
+
+    box-shadow: 0 3px 10px rgba(0,0,0,.05);
+
+}
+
+.wide-back-list li {
+
+    margin-bottom: 8px;
+
+    color: #444;
+
+    font-size: 11px;
+
+    line-height: 1.55;
+
+    text-align: justify;
+
+}
+
+.wide-back-list li:last-child {
+
+    margin-bottom: 0;
+
+}
+
+.wide-back-list li::marker {
+
+    color: #8b0000;
+
+    font-size: 11px;
+
+}
+
+/* =====================================
+   FOOTER
+===================================== */
+
+.wide-back-footer2 {
+
+    position: absolute;
+
+    left: 22px;
+
+    right: 22px;
+
+    bottom: 14px;
+
+    display: flex;
+
+    justify-content: center;
+
+}
+
+.wide-website {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 18px;
+
+    background: #fff7f7;
+
+    border: 1px dashed rgba(139,0,0,.35);
+
+    border-radius: 30px;
+
+    color: #8b0000;
+
+    font-size: 11px;
+
+    font-weight: 700;
+
+    letter-spacing: .3px;
+
+}
+
+.wide-website i{
+    font-size: 12px;
+}
+
+/* DECORATIVE BACKGROUND */
+
+.wide-card-back::before{
+    content:"";
+    position:absolute;
+    top:-60px;
+    right:-60px;
+    width:140px;
+    height:140px;
+    border-radius:50%;
+    background:rgba(139,0,0,.05);
+}
+
+.wide-card-back::after{
+    content:"";
+    position:absolute;
+    bottom:-45px;
+    left:-45px;
+    width:110px;
+    height:110px;
+    border-radius:50%;
+    background:rgba(139,0,0,.05);
+}
