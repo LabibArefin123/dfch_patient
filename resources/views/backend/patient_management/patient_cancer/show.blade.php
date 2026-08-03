@@ -198,72 +198,32 @@
             </div>
 
             <div class="card-body">
-
-                @php
-                    $descriptions = is_array($patientCancerPhoto->xray_description)
-                        ? array_filter($patientCancerPhoto->xray_description)
-                        : [];
-                @endphp
-
-                @if (count($descriptions))
-
-                    <div class="row">
-
-                        @foreach ($descriptions as $index => $description)
-                            <div class="col-md-6 mb-4">
-
-                                <div class="card shadow-sm border-left-primary h-100">
-
-                                    <div class="card-header bg-white">
-
-                                        <strong>
-
-                                            <i class="fas fa-file-medical text-primary"></i>
-
-                                            Description {{ $index + 1 }}
-
-                                        </strong>
-
-                                    </div>
-
-                                    <div class="card-body">
-
-                                        {!! $description !!}
-
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        @endforeach
-
+                @if (!empty($patientCancerPhoto->xray_description))
+                    <div class="p-3 rounded bg-light border" style="min-height: 120px; white-space: pre-line;">
+                        {!! $patientCancerPhoto->xray_description !!}
                     </div>
                 @else
-                    <div class="alert alert-light">
-
-                        <i class="fas fa-info-circle"></i>
-
-                        No X-Ray descriptions available.
-
+                    <div class="alert alert-light border mb-0">
+                        <i class="fas fa-info-circle text-muted mr-1"></i>
+                        No xray description for this cancer report.
                     </div>
-
                 @endif
-
-            </div>
-
-        </div>
-
-
-        {{-- Footer Action Buttons --}}
-        <div class="card mt-4 shadow-sm border-0">
-            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
-                <div class="text-muted mb-2 mb-md-0">
-                    <i class="fas fa-heartbeat text-danger mr-1"></i>
-                    Review the report details, images, and descriptions before making any update.
-                </div>
             </div>
         </div>
 
-        <div style="height: 40px;"></div>
     </div>
+
+
+    {{-- Footer Action Buttons --}}
+    <div class="card mt-4 shadow-sm border-0">
+        <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+            <div class="text-muted mb-2 mb-md-0">
+                <i class="fas fa-heartbeat text-danger mr-1"></i>
+                Review the report details, images, and descriptions before making any update.
+            </div>
+        </div>
+    </div>
+
+    <div style="height: 40px;"></div>
+
 @stop

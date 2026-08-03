@@ -27,16 +27,7 @@
                     </div>
                 </div>
 
-                <div class="col-md-6 mb-3">
-                    <div class="recommendation-detail">
-                        <span>
-                            <i class="fas fa-check-circle mr-1"></i>
-                            Status
-                        </span>
-
-                        <strong class="text-success">Active Referred </strong>
-                    </div>
-                </div>
+              
             </div>
 
             <div class="medical-note-box mb-4">

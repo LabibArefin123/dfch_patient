@@ -57,22 +57,21 @@
                                     </label>
 
                                     <div class="patient-select-wrapper">
-                                        <select name="patient_id" id="patientSelect" class="form-control" required>
-                                            <option value="">Select Patient</option>
-
-                                            @foreach ($patients as $patient)
-                                                <option value="{{ $patient->id }}"
-                                                    data-name="{{ strtolower($patient->patient_name) }}"
-                                                    data-code="{{ strtolower($patient->patient_code) }}"
-                                                    {{ old('patient_id', $patientCancerPhoto->patient_id) == $patient->id ? 'selected' : '' }}>
-                                                    {{ $patient->patient_name }}{{ $patient->patient_code ? ' (' . $patient->patient_code . ')' : '' }}
-                                                </option>
-                                            @endforeach
+                                        <select name="patient_id" id="patientSelect" class="form-control" required disabled>
+                                            <option value="{{ $patientCancerPhoto->patient->id }}" selected>
+                                                {{ $patientCancerPhoto->patient->patient_name }}
+                                                {{ $patientCancerPhoto->patient->patient_code ? ' (' . $patientCancerPhoto->patient->patient_code . ')' : '' }}
+                                            </option>
                                         </select>
+
+                                        {{-- If you ever submit this form, disabled fields are not submitted --}}
+                                        <input type="hidden" name="patient_id"
+                                            value="{{ $patientCancerPhoto->patient->id }}">
                                     </div>
 
                                     <small class="text-muted d-block mt-2">
-                                        Search by patient name or patient code. First 15 patients are shown initially.
+                                        The patient associated with this cancer report is displayed below and cannot be
+                                        changed.
                                     </small>
                                 </div>
                             </div>
@@ -116,55 +115,50 @@
                             </div>
                         </div>
                     </div>
-
-                    <hr>
-
                     {{-- Existing Images --}}
                     <h5 class="text-danger">
                         <i class="fas fa-images"></i>
                         Existing X-Ray Images
                     </h5>
 
-                    @php
-                        $oldPhotos = is_array($patientCancerPhoto->xray_photo) ? $patientCancerPhoto->xray_photo : [];
-                    @endphp
 
                     @if (count($oldPhotos))
-
                         <div class="row" id="existingImageContainer">
-
                             @foreach ($oldPhotos as $photoIndex => $photo)
                                 <div class="col-lg-3 col-md-4 col-sm-6 mb-4 existing-image-card">
-
                                     <div class="card preview-card shadow-sm border-0">
-
                                         <a href="{{ asset($photo) }}" target="_blank">
-
                                             <img src="{{ asset($photo) }}" class="card-img-top preview-image">
-
                                         </a>
 
+
                                         <div class="card-footer bg-white">
+                                            <div class="d-flex justify-content-between align-items-center mb-2">
+                                                <small class="text-muted">
+                                                    <i class="fas fa-clock mr-1"></i>
+
+                                                    @if ($photoLastUpdated[$photo])
+                                                        {{ $photoLastUpdated[$photo]->format('d M Y') }}
+                                                        <span class="mx-1">•</span>
+                                                        {{ $photoLastUpdated[$photo]->format('h:i A') }}
+                                                    @else
+                                                        Unknown
+                                                    @endif
+                                                </small>
+                                            </div>
 
                                             <div class="form-check">
-
                                                 <input class="form-check-input delete-image-checkbox" type="checkbox"
                                                     name="delete_images[]" value="{{ $photo }}"
                                                     id="delete_image_{{ $photoIndex }}">
 
                                                 <label class="form-check-label text-danger"
                                                     for="delete_image_{{ $photoIndex }}">
-
                                                     Delete Image
-
                                                 </label>
-
                                             </div>
-
                                         </div>
-
                                     </div>
-
                                 </div>
                             @endforeach
                         </div>
@@ -174,8 +168,6 @@
                             No existing cancer images found.
                         </div>
                     @endif
-
-                    <hr>
 
                     {{-- Upload New Images --}}
                     <h5 class="text-danger">

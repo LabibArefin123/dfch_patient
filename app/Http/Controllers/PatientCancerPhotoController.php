@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Spatie\Image\Image;
 use Spatie\Image\Enums\Fit;
+use Illuminate\Support\Facades\File;
+use Carbon\Carbon;
 
 class PatientCancerPhotoController extends Controller
 {
@@ -312,7 +314,7 @@ class PatientCancerPhotoController extends Controller
             )
         );
     }
-        
+
     public function patientsSync()
     {
         /*
@@ -560,9 +562,28 @@ class PatientCancerPhotoController extends Controller
     {
         $patients = Patient::orderBy('patient_name')->get();
 
+        $oldPhotos = is_array($patientCancerPhoto->xray_photo)
+            ? $patientCancerPhoto->xray_photo
+            : [];
+
+        $photoLastUpdated = [];
+
+        foreach ($oldPhotos as $photo) {
+            $filePath = public_path($photo);
+
+            $photoLastUpdated[$photo] = File::exists($filePath)
+                ? Carbon::createFromTimestamp(File::lastModified($filePath))
+                : null;
+        }
+
         return view(
             'backend.patient_management.patient_cancer.edit',
-            compact('patientCancerPhoto', 'patients')
+            compact(
+                'patientCancerPhoto',
+                'patients',
+                'oldPhotos',
+                'photoLastUpdated'
+            )
         );
     }
 

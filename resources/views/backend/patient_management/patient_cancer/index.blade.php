@@ -246,9 +246,9 @@
                                                     <img src="{{ asset($photo) }}" class="img-thumbnail m-1 magnify-img"
                                                         alt="X-Ray Photo"
                                                         style="
-                                                        width: 80px;
-                                                        height: 80px;
-                                                        object-fit: cover;
+                                                        width: 40px;
+                                                        height: 40px;
+                                                        object-fit: contain;
                                                         cursor: zoom-in;
                                                             transition: transform 0.2s ease, box-shadow 0.2s ease;
                                                     ">
