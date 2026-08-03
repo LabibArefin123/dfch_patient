@@ -47,16 +47,10 @@ class SpecialistCardController extends Controller
             'card_type'        => 'required|in:wide,vertical',
             'card_theme'       => 'required|string|max:100',
             'background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
-            'logo_position'    => 'required|in:left,right,center',
-            'photo_position'   => 'required|in:left,right,center',
             'show_logo'        => 'required|boolean',
             'show_degree'      => 'required|boolean',
             'show_designation' => 'required|boolean',
             'show_details'     => 'required|boolean',
-            'show_qr'          => 'required|boolean',
-            'primary_color'    => 'required|string|max:20',
-            'secondary_color'  => 'required|string|max:20',
-            'accent_color'     => 'required|string|max:20',
             'position'         => 'required|integer|min:1',
             'is_active'        => 'required|boolean',
         ]);
@@ -80,16 +74,10 @@ class SpecialistCardController extends Controller
             'card_type'        => $request->card_type,
             'card_theme'       => $request->card_theme,
             'background_image' => $backgroundImage,
-            'logo_position'    => $request->logo_position,
-            'photo_position'   => $request->photo_position,
             'show_logo'        => $request->show_logo,
             'show_degree'      => $request->show_degree,
             'show_designation' => $request->show_designation,
             'show_details'     => $request->show_details,
-            'show_qr'          => $request->show_qr,
-            'primary_color'    => $request->primary_color,
-            'secondary_color'  => $request->secondary_color,
-            'accent_color'     => $request->accent_color,
             'position'         => $request->position,
             'is_active'        => $request->is_active,
         ]);
@@ -130,42 +118,22 @@ class SpecialistCardController extends Controller
     {
         $request->validate([
             'specialist_id'    => 'required|exists:specialists,id',
-
             'name'             => 'required|string|max:255|unique:specialist_cards,name,' . $specialistCard->id,
-
             'card_type'        => 'required|in:wide,vertical',
-
             'card_theme'       => 'required|string|max:100',
-
             'background_image' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:4096',
-
-            'logo_position'    => 'required|in:left,right,center',
-
-            'photo_position'   => 'required|in:left,right,center',
-
             'show_logo'        => 'required|boolean',
             'show_degree'      => 'required|boolean',
             'show_designation' => 'required|boolean',
             'show_details'     => 'required|boolean',
-            'show_qr'          => 'required|boolean',
-
-            'primary_color'    => 'required|string|max:20',
-            'secondary_color'  => 'required|string|max:20',
-            'accent_color'     => 'required|string|max:20',
-
             'position'         => 'required|integer|min:1',
-
             'is_active'        => 'required|boolean',
         ]);
 
         $backgroundImage = $specialistCard->background_image;
-
         if ($request->hasFile('background_image')) {
-
             if ($specialistCard->background_image) {
-
                 foreach (['jpg', 'jpeg', 'png', 'webp'] as $ext) {
-
                     $oldImage = public_path(
                         'uploads/images/welcome_page/specialist_cards/' .
                             $specialistCard->background_image . '.' . $ext
@@ -199,16 +167,10 @@ class SpecialistCardController extends Controller
             'card_type'        => $request->card_type,
             'card_theme'       => $request->card_theme,
             'background_image' => $backgroundImage,
-            'logo_position'    => $request->logo_position,
-            'photo_position'   => $request->photo_position,
             'show_logo'        => $request->show_logo,
             'show_degree'      => $request->show_degree,
             'show_designation' => $request->show_designation,
             'show_details'     => $request->show_details,
-            'show_qr'          => $request->show_qr,
-            'primary_color'    => $request->primary_color,
-            'secondary_color'  => $request->secondary_color,
-            'accent_color'     => $request->accent_color,
             'position'         => $request->position,
             'is_active'        => $request->is_active,
         ]);

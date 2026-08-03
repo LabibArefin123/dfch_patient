@@ -58,20 +58,31 @@
 
                     {{-- Card Type --}}
                     <div class="form-group col-md-4 mb-2">
-                        <label>Card Type</label>
-                        <select name="card_type" class="form-control">
-                            <option value="digital">Digital</option>
-                            <option value="print">Print</option>
+                        <label>
+                            Card Type <span class="text-danger">*</span>
+                        </label>
+                        <select name="card_type" class="form-control @error('card_type') is-invalid @enderror">
+                            <option value="wide" {{ old('card_type') == 'wide' ? 'selected' : '' }}>Wide</option>
+                            <option value="vertical" {{ old('card_type') == 'vertical' ? 'selected' : '' }}>Vertical
+                            </option>
                         </select>
+                        @error('card_type')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     {{-- Theme --}}
                     <div class="form-group col-md-4 mb-2">
-                        <label>Card Theme</label>
-                        <select name="card_theme" class="form-control">
-                            <option value="modern">Modern</option>
-                            <option value="classic">Classic</option>
+                        <label>
+                            Card Theme <span class="text-danger">*</span>
+                        </label>
+                        <select name="card_theme" class="form-control @error('card_theme') is-invalid @enderror">
+                            <option value="modern" {{ old('card_theme') == 'modern' ? 'selected' : '' }}>Modern</option>
+                            <option value="classic" {{ old('card_theme') == 'classic' ? 'selected' : '' }}>Classic</option>
                         </select>
+                        @error('card_theme')
+                            <span class="invalid-feedback">{{ $message }}</span>
+                        @enderror
                     </div>
 
                     {{-- Position --}}
@@ -105,73 +116,35 @@
 
                     </div>
 
-                    {{-- Positions --}}
-                    <div class="form-group col-md-6 mb-2">
-                        <label>Logo Position</label>
-                        <select name="logo_position" class="form-control">
-                            <option value="top">Top</option>
-                            <option value="left">Left</option>
-                            <option value="right">Right</option>
-                        </select>
-                    </div>
-
-
-
-                    <div class="form-group col-md-6 mb-2">
-                        <label>Photo Position</label>
-
-                        <select name="photo_position" class="form-control">
-                            <option value="center">Center</option>
-                            <option value="left">Left</option>
-                            <option value="right">Right</option>
-                        </select>
-                    </div>
 
                     {{-- Display Options --}}
-                    <div class="col-md-12 mb-2">
-                        <label>
-                            Display Options
-                        </label>
-                        <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <label class="font-weight-bold">Display Options</label>
+
+                        <div class="row mt-2">
+
                             @foreach ([
-                            'show_logo' => 'Logo',
-                            'show_degree' => 'Degree',
-                            'show_designation' => 'Designation',
-                            'show_details' => 'Details',
-                            'show_qr' => 'QR Code',
-                        ] as $field => $label)
-                                <div class="col-md-2">
-                                    <div class="custom-control custom-checkbox">
+            'show_logo' => 'Hospital Logo',
+            'show_degree' => 'Degree',
+            'show_designation' => 'Designation',
+            'show_details' => 'Additional Details',
+        ] as $field => $label)
+                                <div class="col-md-3 mb-2">
+                                    <div class="custom-control custom-switch">
+                                        <input type="hidden" name="{{ $field }}" value="0">
+
                                         <input type="checkbox" class="custom-control-input" id="{{ $field }}"
-                                            name="{{ $field }}" value="1" checked>
+                                            name="{{ $field }}" value="1"
+                                            {{ old($field, 1) ? 'checked' : '' }}>
+
                                         <label class="custom-control-label" for="{{ $field }}">
                                             {{ $label }}
                                         </label>
                                     </div>
                                 </div>
                             @endforeach
+
                         </div>
-                    </div>
-
-
-                    {{-- Colors --}}
-                    <div class="form-group col-md-4 mb-2">
-                        <label>
-                            Primary Color
-                        </label>
-                        <input type="color" name="primary_color" value="#8b0000" class="form-control">
-                    </div>
-
-                    <div class="form-group col-md-4 mb-2">
-                        <label>
-                            Secondary Color
-                        </label>
-                        <input type="color" name="secondary_color" value="#ffffff" class="form-control">
-                    </div>
-
-                    <div class="form-group col-md-4 mb-2">
-                        <label>Accent Color</label>
-                        <input type="color" name="accent_color" value="#00a0d6" class="form-control">
                     </div>
                 </div>
             </div>

@@ -13,7 +13,9 @@
 @stop
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/lanyard_format/layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/lanyard_format/layout_1.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/lanyard_format/layout_2.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/lanyard_format/layout_3.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_base.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_elements.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1a_front.css') }}">

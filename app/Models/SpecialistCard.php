@@ -11,40 +11,23 @@ class SpecialistCard extends Model
         'specialist_id',
         'name',
         'slug',
-
         'card_type',
         'card_theme',
-
         'background_image',
-
-        'logo_position',
-        'photo_position',
-
         'show_logo',
         'show_degree',
         'show_designation',
         'show_details',
-        'show_qr',
-
-        'primary_color',
-        'secondary_color',
-        'accent_color',
-
         'position',
-
         'is_active',
-
     ];
 
     protected $casts = [
-
         'show_logo' => 'boolean',
         'show_degree' => 'boolean',
         'show_designation' => 'boolean',
         'show_details' => 'boolean',
-        'show_qr' => 'boolean',
         'is_active' => 'boolean',
-
     ];
 
     protected static function boot()
