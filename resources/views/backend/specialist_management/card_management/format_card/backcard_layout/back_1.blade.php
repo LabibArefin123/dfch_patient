@@ -26,7 +26,5 @@
         </div>
 
         <div class="back-bottom-wave"></div>
-
     </div>
-
 </div>

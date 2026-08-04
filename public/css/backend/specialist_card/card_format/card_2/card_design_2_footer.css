@@ -1,0 +1,26 @@
+/* =====================================
+   CARD DESIGN 2 - FOOTER
+===================================== */
+
+.wide-footer {
+    position: absolute;
+    left: 25px;
+    right: 25px;
+    bottom: 18px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.wide-footer-left {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #8b0000;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.wide-footer-logo img {
+    width: 110px;
+}

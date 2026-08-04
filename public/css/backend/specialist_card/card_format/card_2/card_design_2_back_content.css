@@ -1,0 +1,48 @@
+/* =====================================
+   CARD DESIGN 2 BACK - CONTENT
+===================================== */
+
+.wide-back-content2 {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    top: 82px;
+    bottom: 56px;
+}
+
+.wide-back-title {
+    margin-bottom: 12px;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+    color: #8b0000;
+    letter-spacing: .3px;
+}
+
+/* INSTRUCTION BOX */
+
+.wide-back-list {
+    margin: 0;
+    padding: 14px 20px;
+    background: #fcfcfc;
+    border-left: 5px solid #8b0000;
+    border-radius: 10px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, .05);
+}
+
+.wide-back-list li {
+    margin-bottom: 8px;
+    color: #444;
+    font-size: 11px;
+    line-height: 1.55;
+    text-align: justify;
+}
+
+.wide-back-list li:last-child {
+    margin-bottom: 0;
+}
+
+.wide-back-list li::marker {
+    color: #8b0000;
+    font-size: 11px;
+}

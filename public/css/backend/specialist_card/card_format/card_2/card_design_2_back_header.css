@@ -1,0 +1,39 @@
+/* =====================================
+   CARD DESIGN 2 BACK - HEADER
+===================================== */
+
+.wide-back-header2 {
+    position: relative;
+    height: 72px;
+    background: linear-gradient(135deg, #8b0000, #b91c1c);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wide-back-header2::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -18px;
+    width: 100%;
+    height: 38px;
+    background: #fff;
+    border-radius: 50% 50% 0 0;
+}
+
+/* LOGO */
+
+.wide-back-logo {
+    position: relative;
+    z-index: 5;
+}
+
+.wide-back-logo img {
+    width: 165px;
+    height: auto;
+    background: #fff;
+    padding: 6px 14px;
+    border-radius: 8px;
+    box-shadow: 0 5px 12px rgba(0, 0, 0, .18);
+}

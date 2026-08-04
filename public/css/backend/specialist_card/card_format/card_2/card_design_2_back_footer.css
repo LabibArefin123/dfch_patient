@@ -1,0 +1,30 @@
+/* =====================================
+   CARD DESIGN 2 BACK - FOOTER
+===================================== */
+
+.wide-back-footer2 {
+    position: absolute;
+    left: 22px;
+    right: 22px;
+    bottom: 14px;
+    display: flex;
+    justify-content: center;
+}
+
+.wide-website {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: #fff7f7;
+    border: 1px dashed rgba(139, 0, 0, 0.35);
+    border-radius: 30px;
+    color: #8b0000;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+}
+
+.wide-website i {
+    font-size: 12px;
+}

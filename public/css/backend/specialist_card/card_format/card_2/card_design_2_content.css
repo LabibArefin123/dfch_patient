@@ -1,0 +1,66 @@
+/* =====================================
+   CARD DESIGN 2 - CONTENT
+===================================== */
+
+.wide-content {
+    position: absolute;
+    left: 185px;
+    right: 25px;
+    top: 105px;
+}
+
+.wide-name {
+    margin: 0;
+    font-size: 25px;
+    color: #8b0000;
+    font-weight: 800;
+}
+
+.wide-designation {
+    margin-top: 8px;
+    font-size: 15px;
+    color: #444;
+    font-weight: 600;
+}
+
+.wide-degree {
+    margin-top: 8px;
+    color: #666;
+    line-height: 1.5;
+    font-size: 12px;
+}
+
+.wide-info-box {
+    margin-top: 18px;
+    padding: 14px 18px;
+    border-left: 5px solid #8b0000;
+    background: #fafafa;
+    border-radius: 10px;
+}
+
+.wide-detail-row {
+    display: flex;
+    margin-bottom: 8px;
+}
+
+.wide-detail-row:last-child {
+    margin-bottom: 0;
+}
+
+.wide-label {
+    width: 95px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #8b0000;
+}
+
+.wide-value {
+    color: #444;
+    font-size: 12px;
+}
+
+.wide-status {
+    color: #198754;
+    font-weight: 700;
+    font-size: 12px;
+}
