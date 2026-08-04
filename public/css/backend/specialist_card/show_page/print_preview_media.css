@@ -1,0 +1,40 @@
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    #printA4Paper,
+    #printA4Paper * {
+        visibility: visible;
+    }
+
+    #printA4Paper {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 210mm;
+        min-height: 297mm;
+        box-shadow: none;
+    }
+
+    .modal,
+    .modal-backdrop {
+        display: none !important;
+    }
+
+    .print-card-grid {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(5, auto);
+        gap: 8mm;
+    }
+
+    .print-card-item {
+        break-inside: avoid;
+    }
+
+    @page {
+        size: A4 portrait;
+        margin: 0;
+    }
+}

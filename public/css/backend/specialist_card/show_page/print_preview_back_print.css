@@ -1,0 +1,15 @@
+@media print {
+    .back-print-card {
+        break-inside: avoid;
+    }
+
+    .back-print-card .doctor-card-back {
+        box-shadow: none !important;
+    }
+
+    @page {
+        size: A4 portrait;
+
+        margin: 0;
+    }
+}

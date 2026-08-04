@@ -65,11 +65,22 @@
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_header.css') }}">
     <link rel="stylesheet"
-        href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_content.css') }}">
+    href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_content.css') }}">
     <link rel="stylesheet"
-        href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_footer.css') }}">
+    href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/layout.css') }}">
-
+    {{-- Print Preview Front Part --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_buttons.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_modal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_media.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_controls.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_a4_paper.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_card_grid.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_responsive.css') }}">
+    {{-- Print Preview Back Part --}}
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_back_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_back_card.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_back_print.css') }}">
     <div class="design-selection-card">
         <div class="design-selection-header">
             <i class="fas fa-id-card"></i>
@@ -88,6 +99,7 @@
         </select>
     </div>
 
+    @include('backend.specialist_management.card_management.modals.print_preview_modal')
     <div class="card-preview-container">
         {{-- ========================= CARD DESIGN 1A ========================= --}}
         <div class="card-preview-middle">
@@ -98,6 +110,27 @@
         </div>
     </div>
 
+    <div class="print-button-container">
+        <button type="button" class="btn btn-danger" id="openFrontPrintPreview">
+
+            <i class="fas fa-id-card"></i>
+            Print Front Card
+        </button>
+
+
+        <button type="button" class="btn btn-danger" id="openBackPrintPreview">
+
+            <i class="fas fa-id-card-alt"></i>
+            Print Back Card
+        </button>
+
+
+        <button type="button" class="btn btn-dark" id="openWholePrintPreview">
+
+            <i class="fas fa-print"></i>
+            Print Whole Card
+        </button>
+    </div>
     <div class="card-preview-container2">
         {{-- ========================= CARD DESIGN 1B ========================= --}}
         {{-- ========================= FRONT SIDE ========================= --}}
@@ -106,23 +139,24 @@
         @include('backend.specialist_management.card_management.format_card.backcard_layout.back_2')
     </div>
 
-   <div class="design-selection-card mt-4">
-    <div class="design-selection-header">
-        <i class="fas fa-ribbon"></i>
-        <div>
-            <h4>Select Your Lanyard Design</h4>
-            <p>
-                Pick a matching lanyard style to complete the specialist ID card. Try different combinations to find the best professional appearance.
-            </p>
+    <div class="design-selection-card mt-4">
+        <div class="design-selection-header">
+            <i class="fas fa-ribbon"></i>
+            <div>
+                <h4>Select Your Lanyard Design</h4>
+                <p>
+                    Pick a matching lanyard style to complete the specialist ID card. Try different combinations to find the
+                    best professional appearance.
+                </p>
+            </div>
         </div>
-    </div>
 
-    <select name="lanyard_theme" id="lanyard_theme" class="form-control">
-        <option value="1" selected>Theme 1</option>
-        <option value="2">Theme 2</option>
-        <option value="3">Theme 3</option>
-    </select>
-</div>
+        <select name="lanyard_theme" id="lanyard_theme" class="form-control">
+            <option value="1" selected>Theme 1</option>
+            <option value="2">Theme 2</option>
+            <option value="3">Theme 3</option>
+        </select>
+    </div>
 
     <div class="lanyard-preview-container">
         @include('backend.specialist_management.card_management.format_card.lanyards.design_1')
@@ -139,6 +173,7 @@
 @stop
 
 @section('js')
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_card_front.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
 @endsection

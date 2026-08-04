@@ -1,0 +1,9 @@
+.print-control-box {
+    width: 220px;
+    margin-bottom: 20px;
+}
+
+.print-control-box label {
+    font-weight: 600;
+    margin-bottom: 8px;
+}

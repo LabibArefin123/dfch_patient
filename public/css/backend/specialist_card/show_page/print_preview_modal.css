@@ -1,0 +1,14 @@
+.print-preview-modal-content {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.print-preview-modal-content .modal-header {
+    background: #8b0000;
+    color: #ffffff;
+}
+
+.print-preview-modal-content .modal-header .close {
+    color: #ffffff;
+    opacity: 1;
+}

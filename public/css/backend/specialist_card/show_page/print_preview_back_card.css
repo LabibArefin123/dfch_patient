@@ -1,0 +1,12 @@
+.back-print-card .doctor-card-back {
+    width: 350px;
+    height: 560px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 22px;
+}
+
+.back-print-card img {
+    object-fit: contain;
+    max-width: 100%;
+}
