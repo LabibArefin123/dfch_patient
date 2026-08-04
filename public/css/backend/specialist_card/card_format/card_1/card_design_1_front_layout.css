@@ -1,12 +1,10 @@
 /* =====================================
    CARD DESIGN 1 FRONT - LAYOUT
 ===================================== */
-
 .doctor-card {
     position: relative;
     width: 350px;
     height: 560px;
-    background: #fff;
     overflow: hidden;
     border-radius: 22px;
     border: 2px solid #8b0000;

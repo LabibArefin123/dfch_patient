@@ -20,11 +20,11 @@
     {{-- CARD 1 CSS --}}
     {{-- CARD 1 CSS (base part) --}}
     <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1_base_front_layout.css') }}">
+    <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1_base_preview.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1_base_front.css') }}">
-    <link rel="stylesheet"
-        href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1_base_front_layout.css') }}">
     {{-- CARD 1 CSS (front part) --}}
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_1/card_design_1_front_layout.css') }}">
