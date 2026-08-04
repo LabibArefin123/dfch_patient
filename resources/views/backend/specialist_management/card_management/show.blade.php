@@ -68,11 +68,25 @@
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_content.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/layout.css') }}">
 
-    <select name="card_theme" id="card_theme" class="form-control">
-        <option value="1" selected>Theme 1</option>
-        <option value="2">Theme 2</option>
-    </select>
+    <div class="design-selection-card">
+        <div class="design-selection-header">
+            <i class="fas fa-id-card"></i>
+            <div>
+                <h4>Select Your Card Design</h4>
+                <p>
+                    Choose the ID card style that best matches your preference. The preview below will update instantly so
+                    you can compare each design before making your choice.
+                </p>
+            </div>
+        </div>
+
+        <select name="card_theme" id="card_theme" class="form-control">
+            <option value="1" selected>Theme 1</option>
+            <option value="2">Theme 2</option>
+        </select>
+    </div>
 
     <div class="card-preview-container">
         {{-- ========================= CARD DESIGN 1A ========================= --}}
@@ -83,6 +97,7 @@
             @include('backend.specialist_management.card_management.format_card.backcard_layout.back_1')
         </div>
     </div>
+
     <div class="card-preview-container2">
         {{-- ========================= CARD DESIGN 1B ========================= --}}
         {{-- ========================= FRONT SIDE ========================= --}}
@@ -91,11 +106,23 @@
         @include('backend.specialist_management.card_management.format_card.backcard_layout.back_2')
     </div>
 
+   <div class="design-selection-card mt-4">
+    <div class="design-selection-header">
+        <i class="fas fa-ribbon"></i>
+        <div>
+            <h4>Select Your Lanyard Design</h4>
+            <p>
+                Pick a matching lanyard style to complete the specialist ID card. Try different combinations to find the best professional appearance.
+            </p>
+        </div>
+    </div>
+
     <select name="lanyard_theme" id="lanyard_theme" class="form-control">
         <option value="1" selected>Theme 1</option>
         <option value="2">Theme 2</option>
         <option value="3">Theme 3</option>
     </select>
+</div>
 
     <div class="lanyard-preview-container">
         @include('backend.specialist_management.card_management.format_card.lanyards.design_1')
