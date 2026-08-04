@@ -1,69 +1,54 @@
 $(document).ready(function () {
-    let printType = "whole";
-
     /*
-Open Front Print
-*/
+    |--------------------------------------------------------------------------
+    | OPEN FRONT CARD PRINT PREVIEW
+    |--------------------------------------------------------------------------
+    */
 
     $(document).on("click", "#openFrontPrintPreview", function () {
-        printType = "front";
-
         $("#printPreviewModal").modal("show");
 
-        generatePrintCards();
-    });
-
-    /*Open Back Print*/
-    $(document).on("click", "#openBackPrintPreview", function () {
-        printType = "back";
-
-        $("#printPreviewModal").modal("show");
-
-        generatePrintCards();
+        generateFrontPrintCards();
     });
 
     /*
-Open Whole Print
-*/
-
-    $(document).on("click", "#openWholePrintPreview", function () {
-        printType = "whole";
-
-        $("#printPreviewModal").modal("show");
-
-        generatePrintCards();
-    });
-
-    /*
-Copy Change
-*/
+    |--------------------------------------------------------------------------
+    | COPY CHANGE UPDATE
+    |--------------------------------------------------------------------------
+    */
 
     $(document).on("change", "#cardPrintCopies", function () {
-        generatePrintCards();
+        generateFrontPrintCards();
     });
 
-    function generatePrintCards() {
+    /*
+    |--------------------------------------------------------------------------
+    | GENERATE FRONT CARD COPIES
+    |--------------------------------------------------------------------------
+    */
+
+    function generateFrontPrintCards() {
         let copies = parseInt($("#cardPrintCopies").val());
 
         let grid = $("#printCardGrid");
 
         grid.empty();
 
-        let source;
+        /*
+        FRONT CARD SOURCE
+        */
 
-        if (printType === "front") {
-            source = $(".doctor-card").first();
-        } else if (printType === "back") {
-            source = $(".doctor-card-back").first();
-        } else {
-            source = $(".card-preview-middle").first();
-        }
+        let source = $(".doctor-card").first();
 
         if (!source.length) {
-            console.error("Card not found");
+            console.error("Front card not found");
 
             return;
         }
+
+        /*
+        CREATE COPIES
+        */
 
         for (let i = 1; i <= copies; i++) {
             let clone = source.clone(true, true);
@@ -79,10 +64,16 @@ Copy Change
             grid.append(wrapper);
         }
 
-        resizePrintCards();
+        resizeFrontPrintCards();
     }
 
-    function resizePrintCards() {
+    /*
+    |--------------------------------------------------------------------------
+    | FRONT CARD SCALE
+    |--------------------------------------------------------------------------
+    */
+
+    function resizeFrontPrintCards() {
         $(".print-clone-card").each(function () {
             $(this).css({
                 transform: "scale(0.38)",
@@ -93,18 +84,26 @@ Copy Change
     }
 
     /*
-Print
-*/
+    |--------------------------------------------------------------------------
+    | PRINT BUTTON
+    |--------------------------------------------------------------------------
+    */
 
     $(document).on("click", "#printCardButton", function () {
-        generatePrintCards();
+        generateFrontPrintCards();
 
         setTimeout(function () {
             window.print();
         }, 500);
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | MODAL OPEN REFRESH
+    |--------------------------------------------------------------------------
+    */
+
     $("#printPreviewModal").on("shown.bs.modal", function () {
-        generatePrintCards();
+        generateFrontPrintCards();
     });
 });

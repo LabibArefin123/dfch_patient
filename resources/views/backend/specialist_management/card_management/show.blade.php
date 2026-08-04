@@ -174,6 +174,8 @@
 
 @section('js')
     <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_card_front.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_card_back.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_card_whole.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
 @endsection
