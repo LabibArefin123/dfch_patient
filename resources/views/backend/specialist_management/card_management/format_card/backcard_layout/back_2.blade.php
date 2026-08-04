@@ -1,6 +1,6 @@
 {{-- ========================= BACK SIDE - WIDE CARD ========================= --}}
 
-<div class="wide-card-back">
+<div class="wide-card-back mt-4">
 
     {{-- Header --}}
     <div class="wide-back-header2">

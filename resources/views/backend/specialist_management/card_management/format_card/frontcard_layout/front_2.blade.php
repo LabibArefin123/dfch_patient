@@ -1,4 +1,4 @@
-<div class="wide-card">
+<div class="wide-card mt-4">
     {{-- ========================= FRONT SIDE - WIDE CARD ========================= --}}
     <div class="wide-header">
 
@@ -78,13 +78,9 @@
     </div>
 
     <div class="wide-footer">
-
         <div class="wide-footer-left">
-
             <i class="fas fa-id-badge"></i>
-
             Official Hospital Identity Card
-
         </div>
 
         @if ($specialistCard->show_logo)
@@ -94,7 +90,5 @@
 
             </div>
         @endif
-
     </div>
-
 </div>

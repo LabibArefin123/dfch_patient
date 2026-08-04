@@ -21,9 +21,7 @@
 @stop
 
 @section('content')
-
     <div class="card card-outline card-primary shadow">
-
         <div class="card-header">
             <h3 class="card-title">
                 <i class="fas fa-stethoscope"></i>

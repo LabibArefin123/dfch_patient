@@ -1,31 +1,27 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const lanyards = document.querySelectorAll(".lanyard-card");
+    initializeSpecialistCard();
 
-    const cards = document.querySelectorAll(".specialist-card-preview");
-
-    lanyards.forEach(function (lanyard) {
-        lanyard.addEventListener("click", function () {
-            const selectedCard = this.dataset.card;
-
-            // remove active
-            lanyards.forEach((item) => {
-                item.classList.remove("active");
-            });
-
-            this.classList.add("active");
-
-            // hide cards
-            cards.forEach((card) => {
-                card.style.display = "none";
-            });
-
-            const target = document.querySelector(
-                `[data-card="${selectedCard}"]`,
-            );
-
-            if (target) {
-                target.style.display = "block";
-            }
-        });
+    $("#card_theme").on("change", function () {
+        initializeSpecialistCard();
     });
 });
+
+function initializeSpecialistCard() {
+    $(".card-preview-container").hide();
+    $(".card-preview-container2").hide();
+
+    let theme = $("#card_theme").val() || "1";
+
+    switch (theme) {
+        case "1":
+            $(".card-preview-container").show();
+            break;
+
+        case "2":
+            $(".card-preview-container2").show();
+            break;
+
+        default:
+            $(".card-preview-container").show();
+    }
+}

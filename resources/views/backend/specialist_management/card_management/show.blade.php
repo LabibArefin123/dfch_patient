@@ -23,6 +23,12 @@
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_elements.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_front.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back.css') }}">
+    
+    <select name="card_theme" id="card_theme" class="form-control">
+        <option value="1" selected>Theme 1</option>
+        <option value="2">Theme 2</option>
+    </select>
+    
     <div class="card-preview-container">
         {{-- ========================= CARD DESIGN 1A ========================= --}}
         <div class="card-preview-middle">
@@ -31,18 +37,36 @@
             {{-- ========================= BACK SIDE ========================= --}}
             @include('backend.specialist_management.card_management.format_card.backcard_layout.back_1')
         </div>
-
     </div>
-    <div class="card-preview-middle2">
-
-        @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_2')
-
-        @include('backend.specialist_management.card_management.format_card.backcard_layout.back_2')
-
+    <div class="card-preview-container2">
+        {{-- ========================= CARD DESIGN 1B ========================= --}}
+            {{-- ========================= FRONT SIDE ========================= --}}
+            @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_2')
+            {{-- ========================= BACK SIDE ========================= --}}
+            @include('backend.specialist_management.card_management.format_card.backcard_layout.back_2')
     </div>
-    
-    @include('backend.specialist_management.card_management.format_card.lanyards.design_1')
-    @include('backend.specialist_management.card_management.format_card.lanyards.design_2')
-    @include('backend.specialist_management.card_management.format_card.lanyards.design_3')
+
+    <select name="lanyard_theme" id="lanyard_theme" class="form-control">
+        <option value="1" selected>Theme 1</option>
+        <option value="2">Theme 2</option>
+        <option value="3">Theme 3</option>
+    </select>
+
+    <div class="lanyard-preview-container">
+        @include('backend.specialist_management.card_management.format_card.lanyards.design_1')
+    </div>
+
+    <div class="lanyard-preview-container2">
+        @include('backend.specialist_management.card_management.format_card.lanyards.design_2')
+    </div>
+
+    <div class="lanyard-preview-container3">
+        @include('backend.specialist_management.card_management.format_card.lanyards.design_3')
+    </div>
     <div style="height:50px;"></div>
 @stop
+
+@section('js')
+    <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
+@endsection

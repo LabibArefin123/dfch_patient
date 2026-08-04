@@ -1,7 +1,5 @@
 {{-- ========================= LANYARD DESIGN 01 ========================= --}}
-
-<div class="lanyard-card active">
-
+<div class="lanyard-card active mt-4">
     <div class="lanyard-title">
         Design 01
     </div>

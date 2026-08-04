@@ -1,19 +1,13 @@
-/* =====================================
-CARD PREVIEW
-===================================== */
+/* CARD PREVIEW */
 
-.card-preview-middle2 {
-    display: flex;
-
+.card-preview-container2 {
+   display: flex;
     justify-content: center;
-
     align-items: flex-start;
-
     gap: 30px;
-
     flex-wrap: wrap;
 }
-
+ 
 /* PHOTO */
 
 .wide-photo {
@@ -142,31 +136,20 @@ CARD PREVIEW
 
 .wide-footer {
     position: absolute;
-
     left: 25px;
-
     right: 25px;
-
     bottom: 18px;
-
     display: flex;
-
     justify-content: space-between;
-
     align-items: center;
 }
 
 .wide-footer-left {
     display: flex;
-
     align-items: center;
-
     gap: 8px;
-
     color: #8b0000;
-
     font-size: 12px;
-
     font-weight: 700;
 }
 

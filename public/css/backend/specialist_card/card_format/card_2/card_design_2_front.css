@@ -1,38 +1,24 @@
 /* =====================================
    WIDE CARD
 ===================================== */
-
 .wide-card {
     position: relative;
-
     width: 580px;
-
     height: 350px;
-
     background: #fff;
-
     border: 2px solid #8b0000;
-
     border-radius: 22px;
-
     overflow: hidden;
-
     box-shadow: 0 15px 35px rgba(139, 0, 0, 0.18);
 }
 
 /* Header */
-
 .wide-header {
     position: relative;
-
     height: 85px;
-
     background: linear-gradient(135deg, #8b0000, #b81414);
-
     display: flex;
-
     align-items: center;
-
     padding: 18px 30px;
 }
 
@@ -53,24 +39,16 @@
 
 .wide-header-title p {
     margin-top: 4px;
-
     font-size: 12px;
-
     letter-spacing: 2px;
 }
 
 .wide-wave {
     position: absolute;
-
     left: 0;
-
     top: 72px;
-
     width: 100%;
-
     height: 40px;
-
     background: #fff;
-
     border-radius: 0 0 50% 50%;
 }

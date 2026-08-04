@@ -2,13 +2,21 @@
 
 @section('title', 'Specialist Cards')
 
-@section('content_header')
-    <a href="{{ route('specialist-cards.create') }}" class="btn btn-success">
-        <i class="fas fa-plus-circle"></i>
-        Add Specialist Card
-    </a>
-@stop
 
+@section('content_header')
+    <div class="d-flex justify-content-between align-items-center">
+        <h1>
+            <i class="fas fa-user-md text-danger"></i>
+            Specialist Card List
+        </h1>
+        <div class="d-flex gap-2">
+            <a href="{{ route('specialist-cards.create') }}" class="btn btn-success">
+                <i class="fas fa-plus-circle"></i>
+                Add Card
+            </a>
+        </div>
+    </div>
+@stop
 
 @section('content')
     <div class="card">
