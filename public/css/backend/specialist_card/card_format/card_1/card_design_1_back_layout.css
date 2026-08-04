@@ -1,0 +1,13 @@
+/* =====================================
+   CARD DESIGN 1 BACK - LAYOUT
+===================================== */
+
+.doctor-card-back {
+    position: absolute;
+    inset: 0;
+    background: #ffffff;
+    border-radius: 22px;
+    overflow: hidden;
+    border: 2px solid #8b0000;
+    box-shadow: 0 15px 35px rgba(139, 0, 0, 0.2);
+}

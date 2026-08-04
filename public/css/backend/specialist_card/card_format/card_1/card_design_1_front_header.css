@@ -1,0 +1,23 @@
+/* =====================================
+   CARD DESIGN 1 FRONT - HEADER
+===================================== */
+
+/* RED HEADER */
+
+.card-top-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 125px;
+    background: linear-gradient(135deg, #8b0000, #dc143c);
+}
+
+.card-wave {
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    border-radius: 50% 50% 0 0;
+}

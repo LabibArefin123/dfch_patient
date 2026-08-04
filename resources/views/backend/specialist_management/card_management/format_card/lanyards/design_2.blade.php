@@ -7,7 +7,7 @@
             <div class="lanyard02-content">
                 <span class="top top-1"></span>
                 <span class="top top-2"></span>
-                <img src="{{ asset('uploads/images/icon.png') }}">
+                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
                 <span>{{ config('app.name') }}</span>
                 <span class="bottom bottom-1"></span>
                 <span class="bottom bottom-2"></span>
@@ -19,7 +19,7 @@
             <div class="lanyard02-content">
                 <span class="top top-1"></span>
                 <span class="top top-2"></span>
-                <img src="{{ asset('uploads/images/icon.png') }}">
+                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
                 <span>{{ config('app.name') }}</span>
                 <span class="bottom bottom-1"></span>
                 <span class="bottom bottom-2"></span>
@@ -31,7 +31,7 @@
             <div class="lanyard02-content">
                 <span class="top top-1"></span>
                 <span class="top top-2"></span>
-                <img src="{{ asset('uploads/images/icon.png') }}">
+                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
                 <span>{{ config('app.name') }}</span>
                 <span class="bottom bottom-1"></span>
                 <span class="bottom bottom-2"></span>

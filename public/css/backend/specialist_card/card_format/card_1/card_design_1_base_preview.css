@@ -1,0 +1,31 @@
+/* =====================================
+   CARD DESIGN 1 - PREVIEW
+===================================== */
+
+.card-preview-wrapper {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.card-preview-left {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.card-preview-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 40px;
+    padding: 40px;
+}
+
+.specialist-card-preview {
+    display: none;
+}
+
+.specialist-card-preview.active-card {
+    display: block;
+}

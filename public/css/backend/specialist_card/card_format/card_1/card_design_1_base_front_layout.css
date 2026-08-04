@@ -1,0 +1,34 @@
+/* =====================================
+   CARD DESIGN 1 - FRONT LAYOUT
+===================================== */
+
+.card-top-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 150px;
+    background: linear-gradient(135deg, #8b0000, #c00000);
+}
+
+.card-wave {
+    position: absolute;
+    top: 100px;
+    width: 100%;
+    height: 70px;
+    background: #fff;
+    border-radius: 50% 50% 0 0;
+}
+
+.lanyard-hole {
+    position: absolute;
+    top: -8px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35px;
+    height: 15px;
+    background: #fff;
+    border: 3px solid #8b0000;
+    border-radius: 20px;
+    z-index: 20;
+}

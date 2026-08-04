@@ -1,0 +1,46 @@
+/* =====================================
+   CARD DESIGN 1 BACK - CONTENT
+===================================== */
+
+.back-content {
+    position: absolute;
+    top: 80px;
+    left: 7%;
+    width: 86%;
+}
+
+.back-content h4 {
+    margin: 0 0 15px;
+    color: #fff;
+    text-align: center;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+/* INSTRUCTION BOX */
+
+.instruction-list {
+    margin: 0;
+    padding: 18px 25px;
+    background: #fafafa;
+    border: 1px solid #eeeeee;
+    border-left: 5px solid #8b0000;
+    border-radius: 12px;
+}
+
+.instruction-list li {
+    color: #444;
+    font-size: 11px;
+    line-height: 1.65;
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+.instruction-list li:last-child {
+    margin-bottom: 0;
+}
+
+.instruction-list li::marker {
+    color: #8b0000;
+    font-size: 11px;
+}

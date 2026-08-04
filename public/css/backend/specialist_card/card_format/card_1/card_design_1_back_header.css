@@ -1,0 +1,30 @@
+/* =====================================
+   CARD DESIGN 1 BACK - HEADER
+===================================== */
+
+/* TOP HEADER */
+
+.back-top-bg {
+    height: 110px;
+    background: linear-gradient(135deg, #8b0000, #b22222);
+}
+
+/* HOSPITAL LOGO */
+
+.back-hospital-logo {
+    position: absolute;
+    top: 18px;
+    width: 100%;
+    text-align: center;
+    z-index: 5;
+}
+
+.back-hospital-logo img {
+    width: 200px;
+    height: 50px;
+    object-fit: contain;
+    background: #fff;
+    padding: 6px 12px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}

@@ -1,0 +1,22 @@
+/* =====================================
+   CARD DESIGN 1 - FRONT BASE
+===================================== */
+
+.doctor-card-holder {
+    width: 350px;
+    height: 560px;
+    perspective: 1000px;
+    position: relative;
+    font-family: "Poppins", Arial, sans-serif;
+}
+
+.doctor-card {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    border-radius: 22px;
+    border: 2px solid #8b0000;
+    box-shadow: 0 15px 35px rgba(139, 0, 0, 0.25);
+}

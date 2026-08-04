@@ -1,0 +1,46 @@
+/* =====================================
+   CARD DESIGN 1 FRONT - FOOTER
+===================================== */
+
+/* LOGO */
+
+.logo-card {
+    position: absolute;
+    top: 475px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+}
+
+.logo-card img {
+    width: 150px;
+    height: 35px;
+    object-fit: contain;
+    background: transparent;
+}
+
+/* BOTTOM INFO */
+
+.card-body-info {
+    position: absolute;
+    bottom: 25px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.info-card {
+    width: 135px;
+    height: 55px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+}
