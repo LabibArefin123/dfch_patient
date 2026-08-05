@@ -15,15 +15,22 @@ class SpecialistCardController extends Controller
     public function index()
     {
         $cards = SpecialistCard::with('specialist')
-            ->orderBy('position')
             ->paginate(10);
+
+        $cards->getCollection()->transform(function ($card) {
+            $card->background_image_url = $card->background_image
+                ? asset('uploads/images/welcome_page/doctors/' . $card->background_image)
+                : null;
+
+            return $card;
+        });
 
         return view(
             'backend.specialist_management.card_management.index',
             compact('cards')
         );
     }
-   
+
 
     /**
      * Display the specified resource.
@@ -37,7 +44,7 @@ class SpecialistCardController extends Controller
             compact('specialistCard')
         );
     }
- 
+
     /**
      * Remove the specified resource from storage.
      */

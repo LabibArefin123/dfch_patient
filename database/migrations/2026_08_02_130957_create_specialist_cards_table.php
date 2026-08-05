@@ -25,11 +25,6 @@ return new class extends Migration
             $table->boolean('show_degree')->default(true);
             $table->boolean('show_designation')->default(true);
             $table->boolean('show_details')->default(true);
-            $table->boolean('show_qr')->default(false);
-
-            $table->string('primary_color')->default('#8b0000');
-            $table->string('secondary_color')->default('#ffffff');
-            $table->string('accent_color')->default('#00a0d6');
             $table->integer('position')->default(1);
             $table->boolean('is_active')->default(true);
             $table->timestamps();

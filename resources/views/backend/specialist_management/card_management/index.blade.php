@@ -2,19 +2,13 @@
 
 @section('title', 'Specialist Cards')
 
-
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
         <h1>
             <i class="fas fa-user-md text-danger"></i>
             Specialist Card List
         </h1>
-        <div class="d-flex gap-2">
-            <a href="{{ route('specialist-cards.create') }}" class="btn btn-success">
-                <i class="fas fa-plus-circle"></i>
-                Add Card
-            </a>
-        </div>
+
     </div>
 @stop
 
@@ -41,9 +35,7 @@
                         <th width="100">Background</th>
                         <th>Card Name</th>
                         <th>Specialist</th>
-                        <th>Card Type</th>
                         <th>Theme</th>
-                        <th width="100">Position</th>
                         <th width="100">Status</th>
                         <th width="220">Action</th>
                     </tr>
@@ -57,22 +49,17 @@
                             </td>
 
                             <td class="text-center align-middle">
-                                @if ($card->background_image)
-                                    @php
-                                        $image = asset(
-                                            'uploads/images/welcome_page/doctors/' . $card->background_image,
-                                        );
-                                    @endphp
-
-                                    <img src="{{ $image }}" alt="{{ $card->name }}" class="img-thumbnail zoomable"
+                                @if ($card->background_image_url)
+                                    <img src="{{ $card->background_image_url }}" alt="{{ $card->name }}"
+                                        class="img-thumbnail zoomable"
                                         style="width:80px;height:80px;object-fit:contain;cursor:pointer;"
                                         data-bs-toggle="modal" data-bs-target="#imageZoomModal"
-                                        data-bs-img-src="{{ $image }}">
+                                        data-bs-img-src="{{ $card->background_image_url }}">
                                 @else
                                     <i class="fas fa-image fa-3x text-muted"></i>
                                 @endif
-
                             </td>
+
                             <td class="align-middle">
                                 <strong>{{ $card->name }}</strong>
                                 <br>
@@ -91,17 +78,7 @@
                                 @endif
                             </td>
                             <td class="align-middle">
-                                <span class="badge badge-info">
-
-                                    {{ strtoupper($card->card_type) }}
-
-                                </span>
-                            </td>
-                            <td class="align-middle">
                                 <span class="badge badge-secondary">{{ ucfirst($card->card_theme) }}</span>
-                            </td>
-                            <td class="text-center align-middle">
-                                <span class="badge badge-warning">{{ $card->position }}</span>
                             </td>
                             <td class="text-center align-middle">
                                 @if ($card->is_active)
@@ -146,4 +123,6 @@
             {{ $cards->links() }}
         </div>
     </div>
+
+    <div style="height: 50px;"></div>
 @stop

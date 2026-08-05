@@ -11,14 +11,12 @@ class SpecialistCard extends Model
         'specialist_id',
         'name',
         'slug',
-        'card_type',
         'card_theme',
-        'background_image',
         'show_logo',
         'show_degree',
         'show_designation',
         'show_details',
-        'position',
+        'background_image',
         'is_active',
     ];
 
