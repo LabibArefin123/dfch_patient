@@ -4,8 +4,6 @@
     <div class="d-flex justify-content-between align-items-center">
         <h1><i class="fas fa-id-card text-danger"></i> Specialist Card</h1>
         <div>
-            <a href="{{ route('specialist-cards.edit', $specialistCard->id) }}" class="btn btn-primary"><i
-                    class="fas fa-edit"></i> Edit</a>
             <a href="{{ route('specialist-cards.index') }}" class="btn btn-secondary"><i class="fas fa-arrow-left"></i>
                 Back</a>
         </div>
