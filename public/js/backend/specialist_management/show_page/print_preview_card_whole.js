@@ -3,9 +3,7 @@ $(document).ready(function () {
 
     $(document).on("click", "#openWholePrintPreview", function () {
         printType = "whole";
-
         $("#printPreviewModal").modal("show");
-
         generatePrintCards();
     });
 
@@ -15,33 +13,23 @@ $(document).ready(function () {
 
     function generatePrintCards() {
         let copies = parseInt($("#cardPrintCopies").val());
-
         let grid = $("#printCardGrid");
-
         grid.empty();
-
         let source = $(".card-preview-middle").first();
-
         if (!source.length) {
             console.error("Whole card not found");
-
             return;
         }
 
         for (let i = 1; i <= copies; i++) {
             let clone = source.clone(true, true);
-
             clone.addClass("print-clone-card");
-
             let wrapper = $("<div>", {
                 class: "print-card-item",
             });
-
             wrapper.append(clone);
-
             grid.append(wrapper);
         }
-
         resizePrintCards();
     }
 
@@ -49,7 +37,6 @@ $(document).ready(function () {
         $(".print-clone-card").each(function () {
             $(this).css({
                 transform: "scale(0.38)",
-
                 transformOrigin: "top center",
             });
         });

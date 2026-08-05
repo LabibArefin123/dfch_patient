@@ -7,7 +7,6 @@ $(document).ready(function () {
 
     $(document).on("click", "#openFrontPrintPreview", function () {
         $("#printPreviewModal").modal("show");
-
         generateFrontPrintCards();
     });
 
@@ -28,32 +27,24 @@ $(document).ready(function () {
     */
 
     function generateFrontPrintCards() {
-        let copies = parseInt($("#cardPrintCopies").val());
+        let copies = parseInt($("#cardPrintCopies").val()) || 1;
 
         let grid = $("#printCardGrid");
 
         grid.empty();
 
-        /*
-        FRONT CARD SOURCE
-        */
-
+        // Only clone the front doctor card
         let source = $(".doctor-card").first();
 
         if (!source.length) {
-            console.error("Front card not found");
-
+            console.error("Doctor card not found.");
             return;
         }
 
-        /*
-        CREATE COPIES
-        */
+        for (let i = 0; i < copies; i++) {
+            let clone = source.clone(false);
 
-        for (let i = 1; i <= copies; i++) {
-            let clone = source.clone(true, true);
-
-            clone.addClass("print-clone-card");
+            clone.removeAttr("id").addClass("print-clone-card");
 
             let wrapper = $("<div>", {
                 class: "print-card-item",
@@ -74,12 +65,9 @@ $(document).ready(function () {
     */
 
     function resizeFrontPrintCards() {
-        $(".print-clone-card").each(function () {
-            $(this).css({
-                transform: "scale(0.38)",
-
-                transformOrigin: "top center",
-            });
+        $(".print-clone-card").css({
+            transform: "scale(0.36)",
+            transformOrigin: "top center",
         });
     }
 
@@ -99,7 +87,7 @@ $(document).ready(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | MODAL OPEN REFRESH
+    | MODAL REFRESH
     |--------------------------------------------------------------------------
     */
 

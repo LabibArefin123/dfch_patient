@@ -1,36 +1,53 @@
 $(document).ready(function () {
-    let printType = "back";
+    let printType = "front";
 
     /*
     |--------------------------------------------------------------------------
-    | OPEN BACK PRINT PREVIEW
+    | OPEN FRONT
     |--------------------------------------------------------------------------
     */
-
-    $(document).on("click", "#openBackPrintPreview", function () {
-        printType = "back";
-
+    $(document).on("click", "#openFrontPrintPreview", function () {
+        printType = "front";
         $("#printPreviewModal").modal("show");
-
         generatePrintCards();
     });
 
     /*
     |--------------------------------------------------------------------------
-    | COPY CHANGE
+    | OPEN BACK
     |--------------------------------------------------------------------------
     */
+    $(document).on("click", "#openBackPrintPreview", function () {
+        printType = "back";
+        $("#printPreviewModal").modal("show");
+        generatePrintCards();
+    });
 
+    /*
+    |--------------------------------------------------------------------------
+    | OPEN WHOLE
+    |--------------------------------------------------------------------------
+    */
+    $(document).on("click", "#openWholePrintPreview", function () {
+        printType = "whole";
+        $("#printPreviewModal").modal("show");
+        generatePrintCards();
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | COPIES CHANGE
+    |--------------------------------------------------------------------------
+    */
     $(document).on("change", "#cardPrintCopies", function () {
         generatePrintCards();
     });
 
     /*
     |--------------------------------------------------------------------------
-    | GENERATE BACK CARD COPIES
+    | GENERATE PRINT CARDS
     |--------------------------------------------------------------------------
     */
-
     function generatePrintCards() {
         let copies = parseInt($("#cardPrintCopies").val()) || 1;
 
@@ -38,11 +55,27 @@ $(document).ready(function () {
 
         grid.empty();
 
-        // Only clone the back card
-        let source = $(".doctor-card-holder").first();
+        let source;
+
+        switch (printType) {
+            case "front":
+                source = $(".doctor-card").first();
+                break;
+
+            case "back":
+                source = $(".doctor-card-holder").first();
+                break;
+
+            case "whole":
+                source = $(".card-preview-middle").first();
+                break;
+
+            default:
+                return;
+        }
 
         if (!source.length) {
-            console.error("Doctor back card not found.");
+            console.error(printType + " source not found.");
             return;
         }
 
@@ -65,13 +98,18 @@ $(document).ready(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | SCALE BACK CARD
+    | SCALE
     |--------------------------------------------------------------------------
     */
-
     function resizePrintCards() {
+        let scale = 0.38;
+
+        if (printType === "front") {
+            scale = 0.36;
+        }
+
         $(".print-clone-card").css({
-            transform: "scale(0.38)",
+            transform: "scale(" + scale + ")",
             transformOrigin: "top center",
         });
     }
@@ -81,7 +119,6 @@ $(document).ready(function () {
     | PRINT
     |--------------------------------------------------------------------------
     */
-
     $(document).on("click", "#printCardButton", function () {
         generatePrintCards();
 
@@ -95,7 +132,6 @@ $(document).ready(function () {
     | MODAL REFRESH
     |--------------------------------------------------------------------------
     */
-
     $("#printPreviewModal").on("shown.bs.modal", function () {
         generatePrintCards();
     });
