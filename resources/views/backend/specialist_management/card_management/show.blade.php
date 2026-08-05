@@ -65,9 +65,9 @@
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_header.css') }}">
     <link rel="stylesheet"
-    href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_content.css') }}">
+        href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_content.css') }}">
     <link rel="stylesheet"
-    href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_footer.css') }}">
+        href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_footer.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/layout.css') }}">
     {{-- Print Preview Front Part --}}
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_buttons.css') }}">
@@ -173,7 +173,10 @@
 @stop
 
 @section('js')
-    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_common.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_front.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_back.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_whole.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
 @endsection
