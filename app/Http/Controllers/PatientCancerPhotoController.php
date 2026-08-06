@@ -39,20 +39,10 @@ class PatientCancerPhotoController extends Controller
             ->withQueryString();
 
 
-        /*
-    |--------------------------------------------------------------------------
-    | Prepare Preview Text
-    |--------------------------------------------------------------------------
-    */
-
+        /* Prepare Preview Text  */
         $patientCancerPhotos->getCollection()->transform(function ($report) {
 
-            /*
-        |--------------------------------------------------------------------------
-        | X-Ray Description Preview
-        |--------------------------------------------------------------------------
-        */
-
+            /* X-Ray Description Preview */
             $report->description_preview = collect(
                 $report->xray_description ?? []
             )
@@ -69,242 +59,70 @@ class PatientCancerPhotoController extends Controller
                     );
 
 
-                    /*
-                |--------------------------------------------------------------------------
-                | Remove empty list items first
-                |--------------------------------------------------------------------------
-                */
-
-                    $text = preg_replace(
-                        '/<li>\s*(?:<br\s*\/?>)?\s*<\/li>/i',
-                        '',
-                        $text
-                    );
+                    /* Remove empty list items first */
+                    $text = preg_replace('/<li>\s*(?:<br\s*\/?>)?\s*<\/li>/i', '', $text);
+                    /* Convert list items to bullets */
+                    $text = preg_replace('/<li[^>]*>\s*/i', '• ', $text);
+                    $text = preg_replace('/<\/li>/i', "\n", $text);
 
 
-                    /*
-                |--------------------------------------------------------------------------
-                | Convert list items to bullets
-                |--------------------------------------------------------------------------
-                */
+                    /* Convert common HTML line breaks  */
+                    $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
+                    $text = preg_replace('/<\/p>/i', "\n", $text);
 
-                    $text = preg_replace(
-                        '/<li[^>]*>\s*/i',
-                        '• ',
-                        $text
-                    );
-
-                    $text = preg_replace(
-                        '/<\/li>/i',
-                        "\n",
-                        $text
-                    );
-
-
-                    /*
-                |--------------------------------------------------------------------------
-                | Convert common HTML line breaks
-                |--------------------------------------------------------------------------
-                */
-
-                    $text = preg_replace(
-                        '/<br\s*\/?>/i',
-                        "\n",
-                        $text
-                    );
-
-                    $text = preg_replace(
-                        '/<\/p>/i',
-                        "\n",
-                        $text
-                    );
-
-
-                    /*
-                |--------------------------------------------------------------------------
-                | Remove remaining HTML
-                |--------------------------------------------------------------------------
-                */
-
+                    /* Remove remaining HTML  */
                     $text = strip_tags($text);
 
+                    /* Normalize whitespace  */
+                    $text = str_replace(["\r\n", "\r"], "\n", $text);
+                    $text = preg_replace("/[ \t]+/", " ", $text);
+                    $text = preg_replace("/\n{2,}/", "\n", $text);
 
-                    /*
-                |--------------------------------------------------------------------------
-                | Normalize whitespace
-                |--------------------------------------------------------------------------
-                */
+                    /*Remove empty bullet lines */
+                    $text = preg_replace('/^[ \t]*•[ \t]*(?=\n|$)/m', '', $text);
 
-                    $text = str_replace(
-                        ["\r\n", "\r"],
-                        "\n",
-                        $text
-                    );
-
-                    $text = preg_replace(
-                        "/[ \t]+/",
-                        " ",
-                        $text
-                    );
-
-                    $text = preg_replace(
-                        "/\n{2,}/",
-                        "\n",
-                        $text
-                    );
-
-
-                    /*
-                |--------------------------------------------------------------------------
-                | Remove empty bullet lines
-                |--------------------------------------------------------------------------
-                */
-
-                    $text = preg_replace(
-                        '/^[ \t]*•[ \t]*(?=\n|$)/m',
-                        '',
-                        $text
-                    );
-
-
-                    /*
-                |--------------------------------------------------------------------------
-                | Remove trailing whitespace/newlines
-                |--------------------------------------------------------------------------
-                */
-
+                    /* Remove trailing whitespace/newlines */
                     return trim($text);
                 })
                 ->filter(function ($description) {
-
                     return !empty(trim($description));
                 })
                 ->values()
                 ->toArray();
 
 
-            /*
-        |--------------------------------------------------------------------------
-        | Cancer Remarks Preview
-        |--------------------------------------------------------------------------
-        */
-
+            /*| Cancer Remarks Preview */
             $remarks = $report->cancer_remarks;
 
             if (is_array($remarks)) {
                 $remarks = implode("\n", $remarks);
             }
 
-            $remarks = html_entity_decode(
-                $remarks ?? '',
-                ENT_QUOTES | ENT_HTML5,
-                'UTF-8'
-            );
+            $remarks = html_entity_decode($remarks ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
+            /* Remove Empty List Items*/
+            $remarks = preg_replace('/<li>\s*(?:<br\s*\/?>)?\s*<\/li>/i', '', $remarks);
 
+            /*| Convert Lists */
+            $remarks = preg_replace('/<li[^>]*>\s*/i', '• ', $remarks);
+            $remarks = preg_replace('/<\/li>/i', "\n", $remarks);
 
-            /*
-        |--------------------------------------------------------------------------
-        | Remove Empty List Items
-        |--------------------------------------------------------------------------
-        */
-
-            $remarks = preg_replace(
-                '/<li>\s*(?:<br\s*\/?>)?\s*<\/li>/i',
-                '',
-                $remarks
-            );
-
-
-            /*
-        |--------------------------------------------------------------------------
-        | Convert Lists
-        |--------------------------------------------------------------------------
-        */
-
-            $remarks = preg_replace(
-                '/<li[^>]*>\s*/i',
-                '• ',
-                $remarks
-            );
-
-            $remarks = preg_replace(
-                '/<\/li>/i',
-                "\n",
-                $remarks
-            );
-
-
-            /*
-        |--------------------------------------------------------------------------
-        | Convert Line Breaks
-        |--------------------------------------------------------------------------
-        */
-
-            $remarks = preg_replace(
-                '/<br\s*\/?>/i',
-                "\n",
-                $remarks
-            );
-
-            $remarks = preg_replace(
-                '/<\/p>/i',
-                "\n",
-                $remarks
-            );
-
-
-            /*
-        |--------------------------------------------------------------------------
-        | Remove HTML
-        |--------------------------------------------------------------------------
-        */
-
+            /*Convert Line Breaks */
+            $remarks = preg_replace('/<br\s*\/?>/i', "\n", $remarks);
+            $remarks = preg_replace('/<\/p>/i', "\n", $remarks);
+            
+            /*Remove HTML*/
             $remarks = strip_tags($remarks);
 
+            /* Normalize Whitespace */
+            $remarks = str_replace(["\r\n", "\r"],"\n",$remarks);
+            $remarks = preg_replace("/[ \t]+/"," ",$remarks);
+            $remarks = preg_replace("/\n{2,}/","\n",$remarks);
 
-            /*
-        |--------------------------------------------------------------------------
-        | Normalize Whitespace
-        |--------------------------------------------------------------------------
-        */
-
-            $remarks = str_replace(
-                ["\r\n", "\r"],
-                "\n",
-                $remarks
-            );
-
-            $remarks = preg_replace(
-                "/[ \t]+/",
-                " ",
-                $remarks
-            );
-
-            $remarks = preg_replace(
-                "/\n{2,}/",
-                "\n",
-                $remarks
-            );
-
-
-            /*
-        |--------------------------------------------------------------------------
-        | Remove Empty Bullet Lines
-        |--------------------------------------------------------------------------
-        */
-
-            $remarks = preg_replace(
-                '/^[ \t]*•[ \t]*(?=\n|$)/m',
-                '',
-                $remarks
-            );
-
-
+            /* Remove Empty Bullet Lines */
+            $remarks = preg_replace('/^[ \t]*•[ \t]*(?=\n|$)/m','',$remarks);
             $report->remarks_preview = trim($remarks);
-
             return $report;
         });
-
 
         return view(
             'backend.patient_management.patient_cancer.index',
