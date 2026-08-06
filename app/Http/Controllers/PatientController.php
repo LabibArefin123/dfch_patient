@@ -2116,7 +2116,7 @@ class PatientController extends Controller
 
         foreach ($investigationImages as $key => $oldImage) {
 
-            $newPath = $this->$newPath = $this->migrateOldImage(
+            $newPath = $this->migrateOldImage(
                 $oldImage,
                 $investigationPath,
                 'investigation'

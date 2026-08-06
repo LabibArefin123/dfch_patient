@@ -43,25 +43,25 @@
 
                     <div class="form-group col-md-6">
                         <label>House Address</label>
-                        <input type="text" name="house_address" class="form-control"
+                        <input type="text" name="house_address" id="house_address" class="form-control"
                             value="{{ old('house_address', $patient->house_address) }}">
                     </div>
 
                     <div class="form-group col-md-2">
                         <label>City</label>
-                        <input type="text" name="city" class="form-control"
+                        <input type="text" name="city" id="city"  class="form-control"
                             value="{{ old('city', $patient->city) }}">
                     </div>
 
                     <div class="form-group col-md-2">
                         <label>District</label>
-                        <input type="text" name="district" class="form-control"
+                        <input type="text" name="district" id="district" class="form-control"
                             value="{{ old('district', $patient->district) }}">
                     </div>
 
                     <div class="form-group col-md-2">
                         <label>Post Code</label>
-                        <input type="text" name="post_code" class="form-control"
+                        <input type="text" name="post_code" id="post_code" class="form-control"
                             value="{{ old('post_code', $patient->post_code) }}">
                     </div>
 
@@ -74,13 +74,13 @@
 
                     <div class="form-group col-md-6">
                         <label>Country</label>
-                        <input type="text" name="country" class="form-control"
+                        <input type="text" name="country" id="country" class="form-control"
                             value="{{ old('country', $patient->country) }}">
                     </div>
 
                     <div class="form-group col-md-6">
                         <label>Passport No</label>
-                        <input type="text" name="passport_no" class="form-control"
+                        <input type="text" name="passport_no" id="passport_no" class="form-control"
                             value="{{ old('passport_no', $patient->passport_no) }}">
                     </div>
                 </div>
