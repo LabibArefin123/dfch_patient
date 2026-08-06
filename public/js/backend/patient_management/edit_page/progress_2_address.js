@@ -59,7 +59,17 @@ $(window).on("load", function () {
         let filled = 0;
 
         fields.forEach(function (field) {
-            if (isFilled(field)) {
+            let value = "";
+
+            if ($(field).is(":checkbox")) {
+                value = field.checked ? "1" : "";
+            } else if ($(field).is("select")) {
+                value = $(field).find(":selected").val();
+            } else {
+                value = $.trim($(field).val());
+            }
+
+            if (value !== "") {
                 filled++;
             }
         });
@@ -67,7 +77,6 @@ $(window).on("load", function () {
         const percent = Math.round((filled / fields.length) * 100);
 
         step.style.setProperty("--fill", percent + "%");
-
         addressItem.classList.toggle("completed", percent === 100);
     }
 
@@ -94,18 +103,33 @@ $(window).on("load", function () {
     // ===========================
 
     $("#location_type").on("change", function () {
-        // Wait until toggleLocation() finishes
-        setTimeout(updateProgress, 300);
+        requestAnimationFrame(function () {
+            updateProgress();
+
+            setTimeout(updateProgress, 100);
+            setTimeout(updateProgress, 300);
+        });
     });
 
     // ===========================
     // Initial Load (Edit Page)
     // ===========================
 
+    // Immediately
     updateProgress();
 
-    // If another script finishes initialization later
+    // After other initialization scripts
+    setTimeout(updateProgress, 100);
+    setTimeout(updateProgress, 300);
+    setTimeout(updateProgress, 600);
+
+    // Custom event from other scripts
     document.addEventListener("patient-form-ready", function () {
+        updateProgress();
+    });
+
+    // Browser Back/Forward cache
+    window.addEventListener("pageshow", function () {
         updateProgress();
     });
 });
