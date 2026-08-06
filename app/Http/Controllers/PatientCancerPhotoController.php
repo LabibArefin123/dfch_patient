@@ -468,44 +468,47 @@ class PatientCancerPhotoController extends Controller
         | Build patient folder
         |--------------------------------------------------------------------------
         */
-            $patientFolder = Str::slug(($patient->patient_name ?? 'patient') . '-' . $patient->id);
-            $relativeFolder = "uploads/images/patients/{$patientFolder}/cancer_photos";
+            $patientFolder = Str::slug($patient->patient_name) . '-' . $patient->id;
+
+            $relativeFolder = "uploads/patients/{$patientFolder}/cancer_photos";
             $uploadPath = public_path($relativeFolder);
 
-            if (!file_exists($uploadPath)) {
-                mkdir($uploadPath, 0777, true);
+            if (!File::exists($uploadPath)) {
+                File::makeDirectory($uploadPath, 0777, true);
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | Upload images and convert to WEBP
-        |--------------------------------------------------------------------------
-        */
-            $photos = [];
-
-            if ($request->hasFile('xray_photo')) {
-                foreach ($request->file('xray_photo') as $imageFile) {
-                    $filename = time() . '_' . uniqid() . '.webp';
-                    $savePath = $uploadPath . DIRECTORY_SEPARATOR . $filename;
-
-                    Image::load($imageFile->getRealPath())
-                        ->width(1800) // resize large images
-                        ->format('webp')
-                        ->quality(75)
-                        ->save($savePath);
-
-                    $relativePath = $relativeFolder . '/' . $filename;
-
-                    $photos[] = $relativePath;
-                    $uploadedPhotos[] = $relativePath;
+            /* Find Next Cancer Image Number*/
+            $nextNumber = 1;
+            $existingFiles = File::files($uploadPath);
+            foreach ($existingFiles as $file) {
+                if (preg_match('/^cancer_(\d+)\.webp$/', $file->getFilename(), $matches)) {
+                    $nextNumber = max($nextNumber, ((int) $matches[1]) + 1);
                 }
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | Create DB record
-        |--------------------------------------------------------------------------
-        */
+            /*Upload images and convert to WEBP */
+            $photos = [];
+
+            foreach ($request->file('xray_photo') as $imageFile) {
+
+                $filename = 'cancer_' . $nextNumber . '.webp';
+                $savePath = $uploadPath . DIRECTORY_SEPARATOR . $filename;
+
+                Image::load($imageFile->getRealPath())
+                    ->width(1800)
+                    ->format('webp')
+                    ->quality(75)
+                    ->save($savePath);
+
+                $relativePath = $relativeFolder . '/' . $filename;
+
+                $photos[] = $relativePath;
+                $uploadedPhotos[] = $relativePath;
+
+                $nextNumber++;
+            }
+
+            /* Create DB record*/
             PatientCancerPhoto::create([
                 'patient_id' => $request->patient_id,
                 'total_cancer' => $request->total_cancer,
@@ -522,11 +525,7 @@ class PatientCancerPhotoController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            /*
-        |--------------------------------------------------------------------------
-        | Delete uploaded files if store fails
-        |--------------------------------------------------------------------------
-        */
+            /* Delete uploaded files if store fails */
             if (!empty($uploadedPhotos)) {
                 foreach ($uploadedPhotos as $photo) {
                     $fullPath = public_path($photo);
@@ -603,18 +602,12 @@ class PatientCancerPhotoController extends Controller
         ]);
 
         DB::beginTransaction();
-
         $newUploadedPhotos = [];
         $deletedOldPhotos = [];
 
         try {
             $patient = Patient::findOrFail($request->patient_id);
-
-            /*
-        |--------------------------------------------------------------------------
-        | Build patient folder
-        |--------------------------------------------------------------------------
-        */
+            /* Build patient folder */
             $patientName = $patient->patient_name ?? ('patient-' . $patient->id);
             $patientFolderName = Str::slug($patientName);
 
@@ -622,28 +615,21 @@ class PatientCancerPhotoController extends Controller
             $uploadPath = public_path($relativeFolder);
 
 
-            $patientFolder = Str::slug($patient->patient_name . '-' . $patient->id);
-            $relativeFolder = "uploads/images/patients/{$patientFolder}/cancer_photos";
-            $uploadPath     = public_path($relativeFolder);
+            $patientFolder = Str::slug($patient->patient_name) . '-' . $patient->id;
 
-            if (!file_exists($uploadPath)) {
-                mkdir($uploadPath, 0777, true);
+            $relativeFolder = "uploads/patients/{$patientFolder}/cancer_photos";
+            $uploadPath = public_path($relativeFolder);
+
+            if (!File::exists($uploadPath)) {
+                File::makeDirectory($uploadPath, 0777, true);
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | Current photos from DB
-        |--------------------------------------------------------------------------
-        */
+            /* Current photos from DB */
             $photos = is_array($patientCancerPhoto->xray_photo)
                 ? $patientCancerPhoto->xray_photo
                 : [];
 
-            /*
-        |--------------------------------------------------------------------------
-        | Delete selected old images
-        |--------------------------------------------------------------------------
-        */
+            /*Delete selected old images  */
             if ($request->filled('delete_images')) {
                 foreach ($request->delete_images as $deleteImage) {
                     $deleteImage = trim($deleteImage);
@@ -671,18 +657,27 @@ class PatientCancerPhotoController extends Controller
                 }
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | Upload new images and convert to WEBP
-        |--------------------------------------------------------------------------
-        */
+            /*Upload new images and convert to WEBP */
             if ($request->hasFile('xray_photo')) {
+                // Find the next available cancer number
+                $nextNumber = 1;
+
+                $existingFiles = File::files($uploadPath);
+
+                foreach ($existingFiles as $file) {
+                    if (preg_match('/^cancer_(\d+)\.webp$/', $file->getFilename(), $matches)) {
+                        $nextNumber = max($nextNumber, ((int) $matches[1]) + 1);
+                    }
+                }
+
                 foreach ($request->file('xray_photo') as $imageFile) {
-                    $filename = time() . '_' . uniqid() . '.webp';
+
+                    $filename = 'cancer_' . $nextNumber . '.webp';
+
                     $savePath = $uploadPath . DIRECTORY_SEPARATOR . $filename;
 
                     Image::load($imageFile->getRealPath())
-                        ->width(1800) // resize large images
+                        ->width(1800)
                         ->format('webp')
                         ->quality(75)
                         ->save($savePath);
@@ -691,6 +686,8 @@ class PatientCancerPhotoController extends Controller
 
                     $photos[] = $relativePath;
                     $newUploadedPhotos[] = $relativePath;
+
+                    $nextNumber++;
                 }
             }
 
