@@ -245,11 +245,7 @@ class PatientCancerPhotoController extends Controller
         try {
             $patient = Patient::findOrFail($request->patient_id);
 
-            /*
-        |--------------------------------------------------------------------------
-        | Build patient folder
-        |--------------------------------------------------------------------------
-        */
+            /* Build patient folder*/
             $patientFolder = Str::slug($patient->patient_name) . '-' . $patient->id;
 
             $relativeFolder = "uploads/patients/{$patientFolder}/cancer_photos";
@@ -272,7 +268,6 @@ class PatientCancerPhotoController extends Controller
             $photos = [];
 
             foreach ($request->file('xray_photo') as $imageFile) {
-
                 $filename = 'cancer_' . $nextNumber . '.webp';
                 $savePath = $uploadPath . DIRECTORY_SEPARATOR . $filename;
 
@@ -286,7 +281,6 @@ class PatientCancerPhotoController extends Controller
 
                 $photos[] = $relativePath;
                 $uploadedPhotos[] = $relativePath;
-
                 $nextNumber++;
             }
 
@@ -351,7 +345,6 @@ class PatientCancerPhotoController extends Controller
 
         foreach ($oldPhotos as $photo) {
             $filePath = public_path($photo);
-
             $photoLastUpdated[$photo] = File::exists($filePath)
                 ? Carbon::createFromTimestamp(File::lastModified($filePath))
                 : null;
@@ -396,9 +389,7 @@ class PatientCancerPhotoController extends Controller
             $relativeFolder = 'uploads/images/patient_photos/' . $patientFolderName . '/cancer';
             $uploadPath = public_path($relativeFolder);
 
-
             $patientFolder = Str::slug($patient->patient_name) . '-' . $patient->id;
-
             $relativeFolder = "uploads/patients/{$patientFolder}/cancer_photos";
             $uploadPath = public_path($relativeFolder);
 
@@ -453,9 +444,7 @@ class PatientCancerPhotoController extends Controller
                 }
 
                 foreach ($request->file('xray_photo') as $imageFile) {
-
                     $filename = 'cancer_' . $nextNumber . '.webp';
-
                     $savePath = $uploadPath . DIRECTORY_SEPARATOR . $filename;
 
                     Image::load($imageFile->getRealPath())
@@ -465,19 +454,13 @@ class PatientCancerPhotoController extends Controller
                         ->save($savePath);
 
                     $relativePath = $relativeFolder . '/' . $filename;
-
                     $photos[] = $relativePath;
                     $newUploadedPhotos[] = $relativePath;
-
                     $nextNumber++;
                 }
             }
 
-            /*
-        |--------------------------------------------------------------------------
-        | Update DB record
-        |--------------------------------------------------------------------------
-        */
+            /*Update DB record */
             $patientCancerPhoto->update([
                 'patient_id' => $request->patient_id,
                 'total_cancer' => $request->total_cancer,
@@ -494,11 +477,7 @@ class PatientCancerPhotoController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
 
-            /*
-        |--------------------------------------------------------------------------
-        | Delete newly uploaded files if update fails
-        |--------------------------------------------------------------------------
-        */
+            /* Delete newly uploaded files if update fails */
             if (!empty($newUploadedPhotos)) {
                 foreach ($newUploadedPhotos as $photo) {
                     $fullPath = public_path($photo);

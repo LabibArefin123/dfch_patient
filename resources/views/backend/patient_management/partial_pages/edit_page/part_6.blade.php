@@ -45,7 +45,7 @@
                         </span>
                     </div>
 
-                    <select name="is_emergency" id="edit_is_emergency" class="form-control">
+                    <select name="is_emergency" id="is_emergency" class="form-control">
                         <option value="0" {{ old('is_emergency', $patient->is_emergency) == 0 ? 'selected' : '' }}>
                             No
                         </option>
@@ -97,7 +97,7 @@
                                 <i class="fas fa-calendar-alt"></i>
                             </span>
                         </div>
-                        <input type="datetime-local" name="emergency_date" id="edit_emergency_date" class="form-control"
+                        <input type="datetime-local" name="emergency_date" id="emergency_date" class="form-control"
                             value="{{ old('emergency_date', optional($patient->latestEmergency?->emergency_date)->format('Y-m-d\TH:i')) }}">
                     </div>
 

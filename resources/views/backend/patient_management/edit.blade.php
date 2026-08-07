@@ -188,6 +188,7 @@
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_editor.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_location_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_emergency_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_recommend_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_investigation_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_treatment_toggle.js') }}"></script>

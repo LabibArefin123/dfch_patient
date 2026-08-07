@@ -1,38 +1,113 @@
 $(window).on("load", function () {
+    /*
+    |--------------------------------------------------------------------------
+    | PROGRESS CARD
+    |--------------------------------------------------------------------------
+    */
     const progressCard = document.querySelector(".patient-progress-card");
-    if (!progressCard) return;
 
-    const addressItem = progressCard.querySelectorAll(".progress-item")[1];
-    if (!addressItem) return;
+    if (!progressCard) {
+        return;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | FIND ADDRESS PROGRESS ITEM
+    |--------------------------------------------------------------------------
+    |
+    | Do NOT use:
+    | querySelectorAll(".progress-item")[1]
+    |
+    | Instead find the item containing "Address".
+    |--------------------------------------------------------------------------
+    */
+    let addressItem = null;
+
+    progressCard.querySelectorAll(".progress-item").forEach(function (item) {
+        const label = item.querySelector("span");
+
+        if (label && $.trim(label.textContent).toLowerCase() === "address") {
+            addressItem = item;
+        }
+    });
+
+    if (!addressItem) {
+        console.warn("Address progress item not found.");
+        return;
+    }
 
     const step = addressItem.querySelector(".step");
 
-    injectAddressWaterCSS();
+    if (!step) {
+        console.warn("Address progress step not found.");
+        return;
+    }
 
+    /*
+    |--------------------------------------------------------------------------
+    | LOCATION TYPE
+    |--------------------------------------------------------------------------
+    */
     const locationType = document.getElementById("location_type");
-    if (!locationType) return;
 
+    if (!locationType) {
+        console.warn("Location type field not found.");
+        return;
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | ADDRESS WATER CSS
+    |--------------------------------------------------------------------------
+    */
+    if (typeof injectAddressWaterCSS === "function") {
+        injectAddressWaterCSS();
+    }
+
+    /*
+    |--------------------------------------------------------------------------
+    | GET LOCATION FIELDS
+    |--------------------------------------------------------------------------
+    */
     function getFields() {
-        switch (locationType.value) {
-            // Simple
+        const type = String(locationType.value || "");
+
+        switch (type) {
+            /*
+            |--------------------------------------------------------------------------
+            | SIMPLE
+            |--------------------------------------------------------------------------
+            */
             case "1":
                 return [
                     document.querySelector("textarea[name='location_simple']"),
                 ];
 
-            // Bangladesh
+            /*
+            |--------------------------------------------------------------------------
+            | BANGLADESH
+            |--------------------------------------------------------------------------
+            */
             case "2":
                 return [
                     document.querySelector("input[name='house_address']"),
+
                     document.querySelector("input[name='city']"),
+
                     document.querySelector("input[name='district']"),
+
                     document.querySelector("input[name='post_code']"),
                 ];
 
-            // Outside Bangladesh
+            /*
+            |--------------------------------------------------------------------------
+            | OUTSIDE BANGLADESH
+            |--------------------------------------------------------------------------
+            */
             case "3":
                 return [
                     document.querySelector("input[name='country']"),
+
                     document.querySelector("input[name='passport_no']"),
                 ];
 
@@ -41,95 +116,228 @@ $(window).on("load", function () {
         }
     }
 
+    /*
+    |--------------------------------------------------------------------------
+    | CHECK FIELD VALUE
+    |--------------------------------------------------------------------------
+    */
     function isFilled(field) {
-        if (!field) return false;
+        if (!field) {
+            return false;
+        }
 
-        return $.trim($(field).val()) !== "";
+        /*
+        | Checkbox
+        */
+        if ($(field).is(":checkbox")) {
+            return field.checked;
+        }
+
+        /*
+        | Select
+        */
+        if ($(field).is("select")) {
+            return $.trim($(field).val() || "") !== "";
+        }
+
+        /*
+        | Input / Textarea
+        */
+        return $.trim($(field).val() || "") !== "";
     }
 
-    function updateProgress() {
-        const fields = getFields().filter(Boolean);
+    /*
+    |--------------------------------------------------------------------------
+    | UPDATE ADDRESS PROGRESS
+    |--------------------------------------------------------------------------
+    */
+    function updateAddressProgress() {
+        const fields = getFields().filter(function (field) {
+            return field !== null && field !== undefined;
+        });
 
-        if (!fields.length) {
+        /*
+        |--------------------------------------------------------------------------
+        | No Fields
+        |--------------------------------------------------------------------------
+        */
+        if (fields.length === 0) {
             step.style.setProperty("--fill", "0%");
+
             addressItem.classList.remove("completed");
+
             return;
         }
 
+        /*
+        |--------------------------------------------------------------------------
+        | Count Filled Fields
+        |--------------------------------------------------------------------------
+        */
         let filled = 0;
 
         fields.forEach(function (field) {
-            let value = "";
-
-            if ($(field).is(":checkbox")) {
-                value = field.checked ? "1" : "";
-            } else if ($(field).is("select")) {
-                value = $(field).find(":selected").val();
-            } else {
-                value = $.trim($(field).val());
-            }
-
-            if (value !== "") {
+            if (isFilled(field)) {
                 filled++;
             }
         });
 
-        const percent = Math.round((filled / fields.length) * 100);
+        /*
+        |--------------------------------------------------------------------------
+        | Calculate Percentage
+        |--------------------------------------------------------------------------
+        */
+        const percentage = Math.round((filled / fields.length) * 100);
 
-        step.style.setProperty("--fill", percent + "%");
-        addressItem.classList.toggle("completed", percent === 100);
+        /*
+        |--------------------------------------------------------------------------
+        | Apply Progress
+        |--------------------------------------------------------------------------
+        */
+        step.style.setProperty("--fill", percentage + "%");
+
+        /*
+        |--------------------------------------------------------------------------
+        | Completed
+        |--------------------------------------------------------------------------
+        */
+        if (percentage === 100) {
+            addressItem.classList.add("completed");
+        } else {
+            addressItem.classList.remove("completed");
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | DEBUG
+        |--------------------------------------------------------------------------
+        |
+        | You can remove this console.log later.
+        |--------------------------------------------------------------------------
+        */
+        console.log("Address Progress:", {
+            locationType: locationType.value,
+            fields: fields.map(function (field) {
+                return {
+                    name: field.name,
+                    value: $(field).val(),
+                };
+            }),
+            filled: filled,
+            total: fields.length,
+            percentage: percentage,
+        });
     }
 
-    // ===========================
-    // Listen for all inputs
-    // ===========================
-
+    /*
+    |--------------------------------------------------------------------------
+    | LOCATION FIELD EVENTS
+    |--------------------------------------------------------------------------
+    */
     $(document).on(
         "input change",
-        "textarea[name='location_simple'],\
-         input[name='house_address'],\
-         input[name='city'],\
-         input[name='district'],\
-         input[name='post_code'],\
-         input[name='country'],\
-         input[name='passport_no']",
+        [
+            "textarea[name='location_simple']",
+            "input[name='house_address']",
+            "input[name='city']",
+            "input[name='district']",
+            "input[name='post_code']",
+            "input[name='country']",
+            "input[name='passport_no']",
+        ].join(", "),
         function () {
-            updateProgress();
+            updateAddressProgress();
         },
     );
 
-    // ===========================
-    // Location Type Changed
-    // ===========================
+    /*
+    |--------------------------------------------------------------------------
+    | LOCATION TYPE CHANGE
+    |--------------------------------------------------------------------------
+    */
+    $(document).on("change", "#location_type", function () {
+        /*
+            | Run immediately
+            */
+        updateAddressProgress();
 
-    $("#location_type").on("change", function () {
+        /*
+            | Run after location fields are shown/hidden
+            */
         requestAnimationFrame(function () {
-            updateProgress();
-
-            setTimeout(updateProgress, 100);
-            setTimeout(updateProgress, 300);
+            updateAddressProgress();
         });
+
+        setTimeout(function () {
+            updateAddressProgress();
+        }, 100);
+
+        setTimeout(function () {
+            updateAddressProgress();
+        }, 300);
     });
 
-    // ===========================
-    // Initial Load (Edit Page)
-    // ===========================
+    /*
+    |--------------------------------------------------------------------------
+    | INITIAL LOAD
+    |--------------------------------------------------------------------------
+    |
+    | IMPORTANT FOR EDIT PAGE
+    |
+    | Laravel already places the old database values into:
+    |
+    | value="{{ old('city', $patient->city) }}"
+    |
+    | So we directly read those values.
+    |--------------------------------------------------------------------------
+    */
+    function initializeAddressProgress() {
+        updateAddressProgress();
+    }
 
-    // Immediately
-    updateProgress();
+    /*
+    |--------------------------------------------------------------------------
+    | INITIALIZE
+    |--------------------------------------------------------------------------
+    */
+    initializeAddressProgress();
 
-    // After other initialization scripts
-    setTimeout(updateProgress, 100);
-    setTimeout(updateProgress, 300);
-    setTimeout(updateProgress, 600);
+    /*
+    |--------------------------------------------------------------------------
+    | Some Other JS May Initialize Location Fields
+    |--------------------------------------------------------------------------
+    */
+    setTimeout(function () {
+        initializeAddressProgress();
+    }, 50);
 
-    // Custom event from other scripts
+    setTimeout(function () {
+        initializeAddressProgress();
+    }, 150);
+
+    setTimeout(function () {
+        initializeAddressProgress();
+    }, 300);
+
+    setTimeout(function () {
+        initializeAddressProgress();
+    }, 600);
+
+    /*
+    |--------------------------------------------------------------------------
+    | PATIENT FORM READY
+    |--------------------------------------------------------------------------
+    */
     document.addEventListener("patient-form-ready", function () {
-        updateProgress();
+        initializeAddressProgress();
     });
 
-    // Browser Back/Forward cache
+    /*
+    |--------------------------------------------------------------------------
+    | BROWSER BACK / FORWARD
+    |--------------------------------------------------------------------------
+    */
     window.addEventListener("pageshow", function () {
-        updateProgress();
+        initializeAddressProgress();
     });
 });
