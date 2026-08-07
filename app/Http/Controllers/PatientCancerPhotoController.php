@@ -159,16 +159,13 @@ class PatientCancerPhotoController extends Controller
             ]);
         }
 
-       /*Synchronize Patients*/
+        /*Synchronize Patients*/
         $syncedNow = 0;
-
         DB::transaction(function () use (
             $patientsToSync,
             &$syncedNow
         ) {
-
             foreach ($patientsToSync as $patient) {
-
                 $patient->update([
                     'is_old_cancer' => true,
                 ]);
@@ -177,12 +174,7 @@ class PatientCancerPhotoController extends Controller
             }
         });
 
-        /*
-    |--------------------------------------------------------------------------
-    | Return Result
-    |--------------------------------------------------------------------------
-    */
-
+        /* Return Result */
         return response()->json([
             'success' => true,
             'status' => 'synced',
