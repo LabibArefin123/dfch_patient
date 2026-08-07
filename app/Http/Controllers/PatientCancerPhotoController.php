@@ -109,17 +109,17 @@ class PatientCancerPhotoController extends Controller
             /*Convert Line Breaks */
             $remarks = preg_replace('/<br\s*\/?>/i', "\n", $remarks);
             $remarks = preg_replace('/<\/p>/i', "\n", $remarks);
-            
+
             /*Remove HTML*/
             $remarks = strip_tags($remarks);
 
             /* Normalize Whitespace */
-            $remarks = str_replace(["\r\n", "\r"],"\n",$remarks);
-            $remarks = preg_replace("/[ \t]+/"," ",$remarks);
-            $remarks = preg_replace("/\n{2,}/","\n",$remarks);
+            $remarks = str_replace(["\r\n", "\r"], "\n", $remarks);
+            $remarks = preg_replace("/[ \t]+/", " ", $remarks);
+            $remarks = preg_replace("/\n{2,}/", "\n", $remarks);
 
             /* Remove Empty Bullet Lines */
-            $remarks = preg_replace('/^[ \t]*•[ \t]*(?=\n|$)/m','',$remarks);
+            $remarks = preg_replace('/^[ \t]*•[ \t]*(?=\n|$)/m', '', $remarks);
             $report->remarks_preview = trim($remarks);
             return $report;
         });
@@ -135,41 +135,18 @@ class PatientCancerPhotoController extends Controller
 
     public function patientsSync()
     {
-        /*
-    |--------------------------------------------------------------------------
-    | Find Patients Who Have Cancer Photos
-    |--------------------------------------------------------------------------
-    */
-
+        /*Find Patients Who Have Cancer Photos*/
         $patientsWithCancerPhotos = Patient::whereHas('cancerPhotos')
             ->select('id', 'patient_name', 'patient_code', 'is_old_cancer')
             ->get();
 
-        /*
-    |--------------------------------------------------------------------------
-    | Find Patients That Need Synchronization
-    |--------------------------------------------------------------------------
-    */
+        /* Find Patients That Need Synchronization*/
+        $patientsToSync = $patientsWithCancerPhotos->where('is_old_cancer', false);
 
-        $patientsToSync = $patientsWithCancerPhotos
-            ->where('is_old_cancer', false);
+        /* Already Synced Patients */
+        $alreadySynced = $patientsWithCancerPhotos->where('is_old_cancer', true)->count();
 
-        /*
-    |--------------------------------------------------------------------------
-    | Already Synced Patients
-    |--------------------------------------------------------------------------
-    */
-
-        $alreadySynced = $patientsWithCancerPhotos
-            ->where('is_old_cancer', true)
-            ->count();
-
-        /*
-    |--------------------------------------------------------------------------
-    | If Everything Is Already Synced
-    |--------------------------------------------------------------------------
-    */
-
+        /*If Everything Is Already Synced*/
         if ($patientsToSync->isEmpty()) {
             return response()->json([
                 'success' => true,
@@ -182,12 +159,7 @@ class PatientCancerPhotoController extends Controller
             ]);
         }
 
-        /*
-    |--------------------------------------------------------------------------
-    | Synchronize Patients
-    |--------------------------------------------------------------------------
-    */
-
+       /*Synchronize Patients*/
         $syncedNow = 0;
 
         DB::transaction(function () use (
