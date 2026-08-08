@@ -64,14 +64,8 @@
 @section('content')
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
-    @include('backend.patient_management.modals.index_page.patient_photo_info_modal')
-    @include('backend.patient_management.modals.index_page.patient_summary_modal')
-    @include('backend.patient_management.modals.index_page.patient_summary_document_overlay')
-    @include('backend.patient_management.modals.index_page.patient_summary_cancer_overlay')
-    @include('backend.patient_management.modals.index_page.patient_view_modal')
-    @include('backend.patient_management.modals.index_page.patient_view_modal_animation')
-    {{-- @include('backend.patient_management.modals.index_page.patient_emergency_progress') --}}
-    @include('backend.patient_management.modals.index_page.patient_close_modal')
+
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_lost_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_image.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_search.css') }}">
     <div class="card shadow-sm">
@@ -108,6 +102,14 @@
     @include('backend.patient_management.modals.index_page.no_filter_modal')
     @include('backend.patient_management.modals.index_page.progress_modal')
     @include('backend.patient_management.modals.index_page.select_modal')
+    @include('backend.patient_management.modals.index_page.patient_photo_info_modal')
+    @include('backend.patient_management.modals.index_page.patient_summary_modal')
+    @include('backend.patient_management.modals.index_page.patient_summary_document_overlay')
+    @include('backend.patient_management.modals.index_page.patient_summary_cancer_overlay')
+    @include('backend.patient_management.modals.index_page.patient_view_modal')
+    @include('backend.patient_management.modals.index_page.patient_view_modal_animation')
+    @include('backend.patient_management.modals.index_page.patient_notification_modal')
+    @include('backend.patient_management.modals.index_page.patient_close_modal')
     <iframe id="downloadFrame" style="display:none;"></iframe>
     <div style="height: 50px;"></div>
 @stop
@@ -126,6 +128,8 @@
         const patientDocumentContentsUrl = "{{ route('patients.document.contents', ':id') }}";
         const patientCancerPhotoContentsUrl = "{{ route('patients.cancer.photo.contents', ':id') }}";
         const patientPhotoSearchUrl = "{{ route('patients.photo.search') }}";
+        // const lostDataSave: "{{ route('patients.drafts.save') }}";
+        // const lostDataPending: "{{ route('patients.drafts.pending') }}";
     </script>
 
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
@@ -139,6 +143,63 @@
     <script src="{{ asset('js/backend/patient_management/patient_export_excel_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_export_pdf_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_progress_percent.js') }}"></script>
+
+
+    {{-- Start of Patient Lost Notification --}}
+    {{-- <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_core.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_display.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_check.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_actions.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_init.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_start.js') }}">
+    </script> --}}
+    {{-- End of Patient Lost Notification --}}
+
+    {{-- Start of Patient Recover Data --}}
+    {{-- <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_ckeditor.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_form.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_step.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_success.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_request.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_init.js') }}">
+    </script> --}}
+    {{-- End of Patient Recover Data --}}
+
+    {{-- Start of Patient Temporary Save --}}
+    {{-- <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_init.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_request.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_collect.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_storage.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_cleanup.js') }}">
+    </script> --}}
+    {{-- End of Patient Temporary Save --}}
 
     {{-- Patient Emergency Core --}}
     <script src="{{ asset('js/backend/patient_management/emergency_patient/patient_emergency_ajax.js') }}"></script>
@@ -171,6 +232,7 @@
     <script src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_close_action.js') }}">
     </script>
 
+    {{-- Patient Summary Detail Core --}}
     <script
         src="{{ asset('js/backend/patient_management/index_page/patient_summary/patient_summary_detail/patient_summary_detail.js') }}">
     </script>

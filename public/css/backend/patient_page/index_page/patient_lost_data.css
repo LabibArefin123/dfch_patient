@@ -1,0 +1,112 @@
+.patient-lost-data-notification {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+
+    width: 380px;
+    max-width: calc(100vw - 40px);
+
+    display: flex;
+    align-items: flex-start;
+
+    background: #ffffff;
+
+    border-radius: 12px;
+
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.18);
+
+    border-left: 5px solid #dc3545;
+
+    padding: 16px;
+
+    z-index: 99999;
+
+    animation: patientLostDataSlideIn 0.45s ease;
+}
+
+.patient-lost-data-icon {
+    width: 42px;
+    height: 42px;
+
+    min-width: 42px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #fff3cd;
+    color: #dc3545;
+
+    font-size: 20px;
+
+    margin-right: 12px;
+}
+
+.patient-lost-data-content {
+    flex: 1;
+}
+
+.patient-lost-data-title {
+    font-size: 16px;
+    font-weight: 700;
+    color: #212529;
+
+    margin-bottom: 5px;
+}
+
+.patient-lost-data-message {
+    font-size: 13px;
+    line-height: 1.5;
+    color: #6c757d;
+}
+
+.patient-lost-data-message strong {
+    color: #dc3545;
+}
+
+.patient-lost-data-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.patient-lost-data-close {
+    border: none;
+    background: transparent;
+
+    font-size: 22px;
+    line-height: 1;
+
+    color: #999;
+
+    cursor: pointer;
+
+    padding: 0;
+}
+
+.patient-lost-data-close:hover {
+    color: #333;
+}
+
+@keyframes patientLostDataSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-120%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@media (max-width: 576px) {
+    .patient-lost-data-notification {
+        left: 10px;
+        bottom: 10px;
+
+        width: calc(100vw - 20px);
+    }
+}
