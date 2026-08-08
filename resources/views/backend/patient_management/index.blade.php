@@ -3,57 +3,64 @@
 @section('title', 'Patients List')
 
 @section('content_header')
-    <div class="d-flex justify-content-between align-items-center flex-wrap">
-        <h1 class="mb-0">Patients</h1>
+    <div class="d-flex justify-content-between align-items-center">
+        <h1 class="m-0">Patients</h1>
 
         <div class="d-flex gap-2">
             <a href="{{ route('patients.create') }}" class="btn btn-success btn-sm">
-                <i class="fas fa-plus"></i> Add Patient
+                <i class="fas fa-user-plus mr-1"></i>
+                New Patient
             </a>
 
             <button type="button" class="btn btn-primary btn-sm" id="openPatientSummaryModal" data-toggle="modal"
                 data-target="#patientSummaryModal">
-                <i class="fas fa-comments-medical mr-1"></i>
-                Patient Summary
+                <i class="fas fa-notes-medical mr-1"></i>
+                Patient Overview
             </button>
 
             <button id="delete-selected" class="btn btn-danger btn-sm d-none">
-                <i class="fas fa-trash"></i> Delete Selected
+                <i class="fas fa-trash-alt mr-1"></i>
+                Delete Selected
             </button>
 
             <button class="export-excel d-none" href="{{ route('patients.export.excel') }}">
-                <i class="fas fa-file-excel text-success"></i> Export Excel
+                <i class="fas fa-file-excel text-success mr-1"></i>
+                Export to Excel
             </button>
 
             <button class="export-pdf d-none" href="{{ route('patients.export.pdf') }}">
-                <i class="fas fa-file-pdf text-danger"></i> Export PDF
+                <i class="fas fa-file-pdf text-danger mr-1"></i>
+                Export to PDF
             </button>
 
             <div class="dropdown">
-                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown">
-                    <i class="fas fa-ellipsis-v"></i>
+                <button class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fas fa-ellipsis-h mr-1"></i>
+                    More
                 </button>
 
                 <div class="dropdown-menu dropdown-menu-right">
                     <a class="dropdown-item import-excel" href="{{ route('patients.import.excel') }}">
-                        <i class="fas fa-upload"></i> Import Excel
+                        <i class="fas fa-file-import mr-2 text-success"></i>
+                        Import from Excel
                     </a>
 
                     <a class="dropdown-item import-word" href="{{ route('patients.import.word') }}">
-                        <i class="fas fa-upload"></i> Import Word
+                        <i class="fas fa-file-word mr-2 text-primary"></i>
+                        Import from Word
                     </a>
 
                     <div class="dropdown-divider"></div>
 
-                    {{-- PATIENT CARD LIST --}}
                     <a href="{{ route('patients.card.list.index') }}" class="dropdown-item">
-                        <i class="fas fa-id-card text-primary"></i>
-                        Patient Card List
+                        <i class="fas fa-id-card mr-2 text-primary"></i>
+                        Patient Cards
                     </a>
 
                     <a href="#" class="dropdown-item" data-toggle="modal" data-target="#patientEmergencyModal">
-                        <i class="fas fa-ambulance text-danger"></i>
-                        Emergency Status
+                        <i class="fas fa-ambulance mr-2 text-danger"></i>
+                        Emergency Patients
                     </a>
                 </div>
             </div>
@@ -118,20 +125,20 @@
     {{-- Patient Route Core --}}
     <script>
         window.patientRoutes = {
-            index: "{{ route('patients.index') }}"
+            index: "{{ route('patients.index') }}",
+            emergency: "{{ route('patients.emergency') }}",
+            summarySearch: "{{ route('patients.summary.search') }}",
+            summaryAnimation: "{{ url('patients/summary/animation') }}",
+            documentSearch: "{{ route('patients.document.search') }}",
+            documentContents: "{{ route('patients.document.contents', ':id') }}",
+            cancerPhotoContents: "{{ route('patients.cancer.photo.contents', ':id') }}",
+            photoSearch: "{{ route('patients.photo.search') }}",
+            draftSave: "{{ route('patients.drafts.save') }}",
+            draftPending: "{{ route('patients.drafts.pending') }}",
+            draftShow: "{{ route('patients.drafts.show', ':id') }}",
+            draftDestroy: "{{ route('patients.drafts.destroy', ':id') }}"
         };
-
-        const patientEmergencyUrl = "{{ route('patients.emergency') }}";
-        const patientSummarySearchUrl = "{{ route('patients.summary.search') }}";
-        const patientSummaryAnimationSearchUrl = "{{ url('patients/summary/animation') }}";
-        const patientDocumentSearchUrl = "{{ route('patients.document.search') }}";
-        const patientDocumentContentsUrl = "{{ route('patients.document.contents', ':id') }}";
-        const patientCancerPhotoContentsUrl = "{{ route('patients.cancer.photo.contents', ':id') }}";
-        const patientPhotoSearchUrl = "{{ route('patients.photo.search') }}";
-        // const lostDataSave: "{{ route('patients.drafts.save') }}";
-        // const lostDataPending: "{{ route('patients.drafts.pending') }}";
     </script>
-
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_filter.js') }}"></script>
@@ -146,7 +153,7 @@
 
 
     {{-- Start of Patient Lost Notification --}}
-    {{-- <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_core.js') }}">
+    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_core.js') }}">
     </script>
     <script
         src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_display.js') }}">
@@ -159,11 +166,11 @@
     <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_init.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_start.js') }}">
-    </script> --}}
+    </script>
     {{-- End of Patient Lost Notification --}}
 
     {{-- Start of Patient Recover Data --}}
-    {{-- <script
+    <script
         src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_ckeditor.js') }}">
     </script>
     <script
@@ -180,11 +187,11 @@
     </script>
     <script
         src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_init.js') }}">
-    </script> --}}
+    </script>
     {{-- End of Patient Recover Data --}}
 
     {{-- Start of Patient Temporary Save --}}
-    {{-- <script
+    <script
         src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_init.js') }}">
     </script>
     <script
@@ -198,7 +205,7 @@
     </script>
     <script
         src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_cleanup.js') }}">
-    </script> --}}
+    </script>
     {{-- End of Patient Temporary Save --}}
 
     {{-- Patient Emergency Core --}}
