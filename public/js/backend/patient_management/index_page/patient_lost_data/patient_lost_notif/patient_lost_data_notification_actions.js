@@ -26,7 +26,7 @@ function setupLostPatientDataActions() {
         if (!currentLostPatientDraft) return;
         const draftId = currentLostPatientDraft.id;
         $.ajax({
-            url: "/patient-drafts/" + encodeURIComponent(draftId),
+            url: "patient-drafts/" + encodeURIComponent(draftId),
             method: "DELETE",
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),

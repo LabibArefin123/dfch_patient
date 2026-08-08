@@ -1,6 +1,6 @@
-/* PATIENT TEMPORARY SAVE - INIT*/
+/* PATIENT TEMPORARY SAVE - INIT */
+
 $(function () {
-    /*Patient Create Form*/
     const form = $("#patientCreateForm");
 
     if (!form.length) {
@@ -9,29 +9,54 @@ $(function () {
         return;
     }
 
-    /*Configuration */
     const SAVE_INTERVAL = 5000;
 
-    /* Start Autosave */
+    let dirty = false;
+
+    /*
+    |--------------------------------------------------------------------------
+    | Detect changes
+    |--------------------------------------------------------------------------
+    */
+
+    form.on("input change", "input, select, textarea", function () {
+        dirty = true;
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Autosave
+    |--------------------------------------------------------------------------
+    */
+
     const timer = setInterval(function () {
         if (
+            dirty &&
             window.PatientTemporarySave &&
             typeof window.PatientTemporarySave.save === "function"
         ) {
             window.PatientTemporarySave.save();
+
+            dirty = false;
         }
     }, SAVE_INTERVAL);
 
-    /*Expose Timer */
     window.patientTemporarySaveTimer = timer;
 
-    /* Manual Save*/
+    /*
+    |--------------------------------------------------------------------------
+    | Manual Save
+    |--------------------------------------------------------------------------
+    */
+
     window.savePatientDraft = function () {
         if (
             window.PatientTemporarySave &&
             typeof window.PatientTemporarySave.save === "function"
         ) {
             window.PatientTemporarySave.save();
+
+            dirty = false;
         }
     };
 
@@ -39,18 +64,12 @@ $(function () {
     |--------------------------------------------------------------------------
     | Form Submit
     |--------------------------------------------------------------------------
-    |
-    | Don't delete the draft here.
-    |
-    | The patient controller should delete the draft only
-    | after the Patient record has been successfully created.
-    |
     */
 
     form.on("submit", function () {
-        /*Stop future autosaves. */
         if (window.patientTemporarySaveTimer) {
             clearInterval(window.patientTemporarySaveTimer);
+
             window.patientTemporarySaveTimer = null;
         }
     });

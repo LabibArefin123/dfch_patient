@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
-        <h1 class="m-0">Patients</h1>
+        <h1 class="m-0">Patients Records</h1>
 
         <div class="d-flex gap-2">
             <a href="{{ route('patients.create') }}" class="btn btn-success btn-sm">
@@ -71,7 +71,6 @@
 @section('content')
     {{-- Filter Form --}}
     @include('backend.patient_management.filter.filter')
-
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_lost_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_image.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_search.css') }}">
@@ -104,6 +103,7 @@
             </table>
         </div>
     </div>
+
     @include('backend.patient_management.modals.index_page.patient_emergency_modal')
     @include('backend.patient_management.modals.index_page.import_file_modal')
     @include('backend.patient_management.modals.index_page.no_filter_modal')
@@ -153,58 +153,62 @@
 
 
     {{-- Start of Patient Lost Notification --}}
-    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_core.js') }}">
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_notif/patient_lost_data_notification_core.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_display.js') }}">
-    </script>
-    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_check.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_notif/patient_lost_data_notification_display.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_actions.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_notif/patient_lost_data_notification_check.js') }}">
     </script>
-    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_init.js') }}">
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_notif/patient_lost_data_notification_actions.js') }}">
     </script>
-    <script src="{{ asset('js/backend/patient_management/patient_lost_notif/patient_lost_data_notification_start.js') }}">
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_notif/patient_lost_data_notification_init.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_notif/patient_lost_data_notification_start.js') }}">
     </script>
     {{-- End of Patient Lost Notification --}}
 
     {{-- Start of Patient Recover Data --}}
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_ckeditor.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_recover/patient_recover_data_ckeditor.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_form.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_recover/patient_recover_data_form.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_step.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_recover/patient_recover_data_step.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_success.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_recover/patient_recover_data_success.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_request.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_recover/patient_recover_data_request.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_recover/patient_recover_data_init.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_recover/patient_recover_data_init.js') }}">
     </script>
     {{-- End of Patient Recover Data --}}
 
     {{-- Start of Patient Temporary Save --}}
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_init.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_save/patient_temporary_save_init.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_request.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_save/patient_temporary_save_request.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_collect.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_save/patient_temporary_save_collect.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_storage.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_save/patient_temporary_save_storage.js') }}">
     </script>
     <script
-        src="{{ asset('js/backend/patient_management/patient_lost_data/patient_save/patient_temporary_save_cleanup.js') }}">
+        src="{{ asset('js/backend/patient_management/index_page/patient_lost_data/patient_save/patient_temporary_save_cleanup.js') }}">
     </script>
     {{-- End of Patient Temporary Save --}}
 

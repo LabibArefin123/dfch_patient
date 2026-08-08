@@ -1,12 +1,11 @@
 
-/*PATIENT TEMPORARY SAVE - REQUEST*/
+/* PATIENT TEMPORARY SAVE - REQUEST */
 window.PatientTemporarySave = window.PatientTemporarySave || {};
 
 (function (module) {
 
     let saving = false;
 
-    /* Save Draft */
     module.save = function () {
 
         if (saving) {
@@ -19,68 +18,67 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
             return;
         }
 
-        const formData =
-            module.collect();
+        const formData = module.collect();
 
-        /* Don't save empty form  */
+        /*
+        |--------------------------------------------------------------------------
+        | Don't save empty form
+        |--------------------------------------------------------------------------
+        */
 
-        if (
-            !module.hasData(formData)
-        ) {
+        if (!module.hasData(formData)) {
             return;
         }
 
         saving = true;
 
-        const draftToken =
-            module.getToken();
+        const draftToken = module.getToken();
 
         const saveUrl =
             window.patientRoutes?.lostDataSave ||
-            "patient-drafts/save";
+            "/patient-drafts/save";
 
         $.ajax({
             url: saveUrl,
             method: "POST",
             dataType: "json",
+
             headers: {
-                "X-CSRF-TOKEN":
-                    $('meta[name="csrf-token"]').attr(
-                        "content"
-                    )
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content")
             },
 
             data: {
-
                 draft_token: draftToken,
-
                 form_data: formData,
 
                 current_step:
-                    module.getCurrentStep
+                    typeof module.getCurrentStep === "function"
                         ? module.getCurrentStep()
                         : null
-
             },
 
             success: function (response) {
 
-                if (
-                    !response ||
-                    !response.success
-                ) {
+                if (!response || !response.success) {
                     return;
                 }
 
-                /*Store Draft ID*/
-                if (response.draft_id) {
+                /*
+                |--------------------------------------------------------------------------
+                | Store Draft ID
+                |--------------------------------------------------------------------------
+                */
 
-                    module.setId(
-                        response.draft_id
-                    );
+                if (response.draft_id) {
+                    module.setId(response.draft_id);
                 }
 
-                /* Store Token Returned By Server */
+                /*
+                |--------------------------------------------------------------------------
+                | Store server token
+                |--------------------------------------------------------------------------
+                */
+
                 if (response.draft_token) {
 
                     sessionStorage.setItem(
@@ -89,20 +87,21 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
                     );
                 }
 
-                /*Optional Save Callback  */
+                /*
+                |--------------------------------------------------------------------------
+                | Optional callback
+                |--------------------------------------------------------------------------
+                */
+
                 if (
-                    typeof window.onPatientDraftSaved ===
-                    "function"
+                    typeof window.onPatientDraftSaved === "function"
                 ) {
-
-                    window.onPatientDraftSaved(
-                        response
-                    );
+                    window.onPatientDraftSaved(response);
                 }
-
             },
 
             error: function (xhr) {
+
                 console.warn(
                     "Patient temporary save failed.",
                     xhr
@@ -112,11 +111,8 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
             complete: function () {
 
                 saving = false;
-
             }
-
         });
-
     };
 
 })(window.PatientTemporarySave);
