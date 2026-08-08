@@ -18,20 +18,25 @@
             <div class="d-flex flex-wrap">
 
                 <span class="badge badge-light border mr-2 px-3 py-2">
-                    👶 Child
-                    <strong class="text-primary ml-1">{{ $childPatients }}</strong>
+                    🧒 Child
+                    <strong id="childCount" class="text-primary ml-1">
+                        {{ $childPatients }}
+                    </strong>
                 </span>
 
                 <span class="badge badge-light border mr-2 px-3 py-2">
                     🧑 Adult
-                    <strong class="text-success ml-1">{{ $adultPatients }}</strong>
+                    <strong id="adultCount" class="text-success ml-1">
+                        {{ $adultPatients }}
+                    </strong>
                 </span>
 
                 <span class="badge badge-light border px-3 py-2">
                     👴 Senior
-                    <strong class="text-danger ml-1">{{ $seniorPatients }}</strong>
+                    <strong id="seniorCount" class="text-danger ml-1">
+                        {{ $seniorPatients }}
+                    </strong>
                 </span>
-
             </div>
 
         </div>

@@ -25,6 +25,7 @@ $(function () {
             },
 
             dataSrc: function (json) {
+                // Update age counters from filtered result
                 $("#childCount").text(json.childPatients ?? 0);
                 $("#adultCount").text(json.adultPatients ?? 0);
                 $("#seniorCount").text(json.seniorPatients ?? 0);
@@ -91,4 +92,57 @@ $(function () {
     });
 
     window.patientTable = table;
+
+    /*
+    |--------------------------------------------------------------------------
+    | FILTER CHANGE → RELOAD TABLE + AGE COUNTS
+    |--------------------------------------------------------------------------
+    */
+
+    $(document).on(
+        "change",
+        [
+            "select[name='gender']",
+            "select[name='location_type']",
+            "select[name='is_referred']",
+            "select[name='is_emergency']",
+            "select[name='is_treatment']",
+            "select[name='is_investigated']",
+            "select[name='is_old_cancer']",
+            "select[name='date_filter']",
+        ].join(","),
+        function () {
+            table.ajax.reload(null, true);
+        },
+    );
+
+    /*
+    |--------------------------------------------------------------------------
+    | LOCATION VALUE CHANGE
+    |--------------------------------------------------------------------------
+    */
+
+    $(document).on("input", "input[name='location_value']", function () {
+        clearTimeout(window.patientLocationTimer);
+
+        window.patientLocationTimer = setTimeout(function () {
+            table.ajax.reload(null, true);
+        }, 400);
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | CUSTOM DATE CHANGE
+    |--------------------------------------------------------------------------
+    */
+
+    $(document).on(
+        "change",
+        "input[name='from_date'], input[name='to_date']",
+        function () {
+            if ($("select[name='date_filter']").val() === "custom") {
+                table.ajax.reload(null, true);
+            }
+        },
+    );
 });

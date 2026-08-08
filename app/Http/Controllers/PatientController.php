@@ -547,8 +547,8 @@ class PatientController extends Controller
         if ($request->ajax()) {
 
             $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
-            $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 60])->count();
-            $seniorPatients = (clone $baseQuery)->where('age', '>', 60)->count();
+            $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 70])->count();
+            $seniorPatients = (clone $baseQuery)->where('age', '>', 70)->count();
 
             return DataTables::of($baseQuery)
                 ->addIndexColumn()
@@ -705,8 +705,8 @@ class PatientController extends Controller
 
         // First Page Load
         $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
-        $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 60])->count();
-        $seniorPatients = (clone $baseQuery)->where('age', '>', 60)->count();
+        $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 70])->count();
+        $seniorPatients = (clone $baseQuery)->where('age', '>', 70)->count();
 
         return view('backend.patient_management.recommend_index', compact('childPatients', 'adultPatients', 'seniorPatients'));
     }

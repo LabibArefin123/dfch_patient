@@ -102,9 +102,9 @@
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
-            <x-adminlte-small-box title="{{ $todayCancerPatientHistory }}" text="Today's Cancer History"
+            <x-adminlte-small-box title="{{ $weeklyCancerPatientHistory }}" text="Weekly Cancer History"
                 theme="warning" icon="fas fa-calendar-check"
-                url="{{ route('patient-cancer-photos.index', ['date_filter' => 'today']) }}" />
+                url="{{ route('patient-cancer-photos.index', ['date_filter' => 'weekly']) }}" />
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
