@@ -1,0 +1,119 @@
+/* =========================================================
+   CARD DESIGN 3 - BACK
+   DECORATION
+========================================================= */
+
+
+/* =========================================================
+   SOFT TOP BACKGROUND
+========================================================= */
+
+.back-3-top-shape {
+    position: absolute;
+
+    top: -145px;
+    left: -100px;
+
+    width: 315px;
+    height: 315px;
+
+    background: #fff4f4;
+
+    border-radius: 50%;
+
+    z-index: 1;
+}
+
+
+/* =========================================================
+   SMALL RED TOP ACCENT
+========================================================= */
+
+.back-3-top-line {
+    position: absolute;
+
+    top: 0;
+    right: 0;
+
+    width: 145px;
+    height: 7px;
+
+    background: #8b0000;
+
+    border-radius: 0 0 0 15px;
+
+    z-index: 5;
+}
+
+
+/* =========================================================
+   DIAGONAL CIRCLE
+========================================================= */
+
+.doctor-card-back-3::before {
+    content: "";
+
+    position: absolute;
+
+    width: 330px;
+    height: 330px;
+
+    top: 105px;
+    left: 70px;
+
+    border-radius: 50%;
+
+    border: 55px solid #8b0000;
+
+    transform: rotate(-45deg);
+
+    opacity: 0.95;
+
+    z-index: 2;
+}
+
+
+/* =========================================================
+   WHITE CUT THROUGH DIAGONAL CIRCLE
+========================================================= */
+
+.doctor-card-back-3::after {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    top: 160px;
+    left: 125px;
+
+    background: #ffffff;
+
+    border-radius: 50%;
+
+    z-index: 3;
+}
+
+
+/* =========================================================
+   BOTTOM RED ARC
+========================================================= */
+
+.back-3-bottom-shape {
+    position: absolute;
+
+    bottom: -115px;
+    right: -95px;
+
+    width: 235px;
+    height: 235px;
+
+    background: #fff4f4;
+
+    border: 35px solid #8b0000;
+
+    border-radius: 50%;
+
+    z-index: 4;
+}

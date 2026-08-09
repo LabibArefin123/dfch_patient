@@ -1,0 +1,121 @@
+/* =========================================================
+   CARD DESIGN 3 - BACK
+   INFORMATION
+========================================================= */
+
+/* =========================================================
+   INFORMATION AREA
+========================================================= */
+
+.back-3-information {
+    position: absolute;
+
+    top: 250px;
+    left: 25px;
+
+    width: 300px;
+
+    z-index: 30;
+}
+
+/* =========================================================
+   SECTION HEADING
+========================================================= */
+
+.back-3-section-heading {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 12px;
+}
+
+/* =========================================================
+   HEADING LINES
+========================================================= */
+
+.back-3-section-heading span {
+    flex: 1;
+
+    height: 1px;
+
+    background: rgba(139, 0, 0, 0.22);
+}
+
+/* =========================================================
+   HEADING TEXT
+========================================================= */
+
+.back-3-section-heading h4 {
+    margin: 0;
+
+    color: #8b0000;
+
+    font-size: 10px;
+
+    font-weight: 800;
+
+    letter-spacing: 0.8px;
+
+    white-space: nowrap;
+}
+
+/* =========================================================
+   INSTRUCTION
+========================================================= */
+
+.back-3-instruction {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 9px;
+
+    margin-bottom: 9px;
+}
+
+/* =========================================================
+   CHECK ICON
+========================================================= */
+
+.back-3-instruction-icon {
+    width: 17px;
+    height: 17px;
+
+    flex-shrink: 0;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    background: #8b0000;
+
+    color: #ffffff;
+
+    border-radius: 50%;
+
+    margin-top: 1px;
+}
+
+.back-3-instruction-icon i {
+    font-size: 7px;
+}
+
+/* =========================================================
+   INSTRUCTION TEXT
+========================================================= */
+
+.back-3-instruction p {
+    margin: 0;
+
+    color: #444444;
+
+    font-size: 9.5px;
+
+    line-height: 1.5;
+
+    text-align: left;
+}

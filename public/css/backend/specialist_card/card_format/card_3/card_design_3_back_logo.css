@@ -1,0 +1,44 @@
+/* =========================================================
+   CARD DESIGN 3 - BACK
+   LOGO
+========================================================= */
+
+.back-3-logo {
+    position: absolute;
+
+    top: 25px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    width: 220px;
+    height: 58px;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 20;
+}
+
+/* =========================================================
+   LOGO IMAGE
+========================================================= */
+
+.back-3-logo img {
+    width: 205px;
+    height: 52px;
+
+    object-fit: contain;
+
+    background: #fff8f8;
+
+    padding: 5px 12px;
+
+    border-radius: 10px;
+
+    border: 1px solid rgba(255, 107, 107, 0.15);
+
+    box-shadow: 0 4px 14px rgba(139, 0, 0, 0.08);
+}

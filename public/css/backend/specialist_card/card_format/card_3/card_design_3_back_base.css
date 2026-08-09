@@ -1,0 +1,24 @@
+/* CARD DESIGN 3 - BACK BASE*/
+.doctor-card-back-3 {
+    position: relative;
+    width: 350px;
+    height: 560px;
+    background: #ffffff;
+    border: 2px solid #8b0000;
+    border-radius: 22px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(139, 0, 0, 0.18);
+    font-family: "Poppins", Arial, sans-serif;
+    box-sizing: border-box;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 500px) {
+    .doctor-card-back-3 {
+        transform: scale(0.9);
+        transform-origin: top center;
+    }
+}

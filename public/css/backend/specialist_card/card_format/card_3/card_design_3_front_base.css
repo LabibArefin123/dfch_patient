@@ -1,0 +1,15 @@
+/* =========================================================
+   CARD DESIGN 3
+   WHITE CARD + RED BORDER
+========================================================= */
+
+.doctor-card-3 {
+    position: relative;
+    width: 350px;
+    height: 560px;
+    background: #ffffff;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(139, 0, 0, 0.18);
+    font-family: "Poppins", Arial, sans-serif;
+    box-sizing: border-box;
+}

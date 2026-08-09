@@ -50,6 +50,7 @@
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_photo.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_content.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_footer.css') }}">
+
     {{-- CARD 2 CSS (Front Card) --}}
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_front_layout.css') }}">
@@ -57,6 +58,7 @@
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_front_header.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_front_content.css') }}">
+
     {{-- CARD 2 CSS (Back Card) --}}
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_layout.css') }}">
@@ -66,9 +68,35 @@
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_content.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_footer.css') }}">
+
+    {{-- CARD 3 CSS (Front Card) --}}
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_front.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_front_layout.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_front_base.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_front_logo.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_front_profile.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_front_decoration.css') }}">
+
+    {{-- CARD 3 CSS (BACK Card) --}}
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back_base.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back_logo.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back_decoration.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back_profile.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back_information.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back_footer.css') }}">
+
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/layout.css') }}">
     {{-- Print Preview Front Part --}}
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_buttons.css') }}">

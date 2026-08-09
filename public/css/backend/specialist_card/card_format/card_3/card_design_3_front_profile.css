@@ -1,0 +1,134 @@
+/* =========================================================
+   CARD DESIGN 3 - FRONT PROFILE
+   45 DEGREE HALF-CIRCLE PHOTO EDGE
+========================================================= */
+
+/* =========================================================
+   PHOTO WRAPPER
+========================================================= */
+
+.card-3-photo-wrapper {
+    position: absolute;
+    top: 150px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 185px;
+    height: 185px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 8;
+}
+
+/* =========================================================
+   PHOTO CIRCLE
+========================================================= */
+
+.card-3-photo-ring {
+    position: relative;
+    width: 165px;
+    height: 165px;
+    padding: 7px;
+    background: #ffffff;
+    border-radius: 50%;
+    box-sizing: border-box;
+    overflow: visible;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* =========================================================
+   DOCTOR PHOTO
+========================================================= */
+
+.card-3-photo-ring img {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    object-position: top center;
+    border-radius: 50%;
+    z-index: 3;
+}
+
+/* RED HALF-CIRCLE EDGE Approximately 75 degrees= */
+.card-3-photo-ring::before {
+    content: "";
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    width: 181px;
+    height: 181px;
+    border-radius: 70%;
+    border: 15px solid transparent;
+    border-top-color: #8b0000;
+    border-right-color: #8b0000;
+    transform: rotate(75deg);
+    box-sizing: border-box;
+    z-index: 2;
+    pointer-events: none;
+}
+
+/* =========================================================
+   WHITE INNER EDGE
+========================================================= */
+
+.card-3-photo-ring::after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 169px;
+    height: 169px;
+    border-radius: 50%;
+    border: 3px solid #ffffff;
+    box-sizing: border-box;
+    z-index: 4;
+    pointer-events: none;
+}
+
+/* =========================================================
+   DOCTOR INFORMATION
+========================================================= */
+
+.card-3-doctor-info {
+    position: absolute;
+    top: 385px;
+    left: 0;
+    width: 100%;
+    padding: 0 20px;
+    text-align: center;
+    box-sizing: border-box;
+    z-index: 10;
+}
+
+/* =========================================================
+   DOCTOR NAME
+========================================================= */
+
+.card-3-doctor-info h2 {
+    margin: 0;
+    color: #8b0000;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+/* DESIGNATION */
+
+.card-3-doctor-info h5 {
+    margin: 7px 0 3px;
+    color: #333333;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.4;
+}
+
+/* DEGREE */
+
+.card-3-doctor-info p {
+    margin: 0;
+    color: #666666;
+    font-size: 12px;
+    line-height: 1.4;
+}
