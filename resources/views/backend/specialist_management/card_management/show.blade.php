@@ -66,6 +66,9 @@
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_content.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/specialist_card/card_format/card_2/card_design_2_back_footer.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_front.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/layout.css') }}">
     {{-- Print Preview Front Part --}}
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_buttons.css') }}">
@@ -94,6 +97,7 @@
         <select name="card_theme" id="card_theme" class="form-control">
             <option value="1" selected>Theme 1</option>
             <option value="2">Theme 2</option>
+            <option value="3">Theme 3</option>
         </select>
     </div>
 
@@ -135,6 +139,13 @@
         @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_2')
         {{-- ========================= BACK SIDE ========================= --}}
         @include('backend.specialist_management.card_management.format_card.backcard_layout.back_2')
+    </div>
+    <div class="card-preview-container3">
+        {{-- ========================= CARD DESIGN 1C ========================= --}}
+        {{-- ========================= FRONT SIDE ========================= --}}
+        @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_3')
+        {{-- ========================= BACK SIDE ========================= --}}
+        @include('backend.specialist_management.card_management.format_card.backcard_layout.back_3')
     </div>
 
     <div class="design-selection-card mt-4">

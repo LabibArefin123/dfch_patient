@@ -1,0 +1,14 @@
+/* =====================================
+   CARD DESIGN 3 - LAYOUT
+===================================== */
+
+/* CARD PREVIEW */
+
+.card-preview-container3 {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}

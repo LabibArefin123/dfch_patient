@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function initializeSpecialistCard() {
     $(".card-preview-container").hide();
     $(".card-preview-container2").hide();
+    $(".card-preview-container3").hide();
 
     let theme = $("#card_theme").val() || "1";
 
@@ -19,6 +20,10 @@ function initializeSpecialistCard() {
 
         case "2":
             $(".card-preview-container2").show();
+            break;
+
+        case "3":
+            $(".card-preview-container3").show();
             break;
 
         default:
