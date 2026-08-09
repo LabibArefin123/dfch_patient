@@ -47,56 +47,6 @@
 
 
 /* =========================================================
-   DIAGONAL CIRCLE
-========================================================= */
-
-.doctor-card-back-3::before {
-    content: "";
-
-    position: absolute;
-
-    width: 330px;
-    height: 330px;
-
-    top: 105px;
-    left: 70px;
-
-    border-radius: 50%;
-
-    border: 55px solid #8b0000;
-
-    transform: rotate(-45deg);
-
-    opacity: 0.95;
-
-    z-index: 2;
-}
-
-
-/* =========================================================
-   WHITE CUT THROUGH DIAGONAL CIRCLE
-========================================================= */
-
-.doctor-card-back-3::after {
-    content: "";
-
-    position: absolute;
-
-    width: 220px;
-    height: 220px;
-
-    top: 160px;
-    left: 125px;
-
-    background: #ffffff;
-
-    border-radius: 50%;
-
-    z-index: 3;
-}
-
-
-/* =========================================================
    BOTTOM RED ARC
 ========================================================= */
 
