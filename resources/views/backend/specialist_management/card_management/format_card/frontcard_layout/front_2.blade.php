@@ -2,7 +2,7 @@
     {{-- ========================= FRONT SIDE - WIDE CARD ========================= --}}
     <div class="wide-header">
         <div class="wide-header-logo">
-            <img src="{{ asset('uploads/images/icon.png') }}" alt="Hospital Logo">
+            <img src="{{ asset('uploads/images/icon_2.png') }}" alt="Hospital Logo">
         </div>
 
         <div class="wide-header-title">

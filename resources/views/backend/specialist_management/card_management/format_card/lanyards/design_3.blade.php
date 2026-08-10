@@ -13,7 +13,7 @@
             <span class="right-band right-band-2"></span>
             <span class="right-band right-band-3"></span>
             <div class="lanyard03-center">
-                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
+                <img src="{{ asset('uploads/images/icon_2.png') }}" class="lanyard03-logo">
                 <span>{{ config('app.name') }}</span>
             </div>
         </div>
@@ -27,7 +27,7 @@
             <span class="right-band right-band-2"></span>
             <span class="right-band right-band-3"></span>
             <div class="lanyard03-center">
-                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
+                <img src="{{ asset('uploads/images/icon_2.png') }}" class="lanyard03-logo">
                 <span>{{ config('app.name') }}</span>
             </div>
         </div>
@@ -41,7 +41,7 @@
             <span class="right-band right-band-2"></span>
             <span class="right-band right-band-3"></span>
             <div class="lanyard03-center">
-                <img src="{{ asset('uploads/images/icon.png') }}" class="lanyard03-logo">
+                <img src="{{ asset('uploads/images/icon_2.png') }}" class="lanyard03-logo">
                 <span>{{ config('app.name') }}</span>
             </div>
         </div>
