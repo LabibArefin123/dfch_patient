@@ -1,18 +1,8 @@
 $(function () {
-    /*
-    |--------------------------------------------------------------------------
-    | INITIAL AGE FILTER
-    |--------------------------------------------------------------------------
-    */
-
+    /*INITIAL AGE FILTER */
     window.patientAgeFilter = "";
 
-    /*
-    |--------------------------------------------------------------------------
-    | CLICK CHILD
-    |--------------------------------------------------------------------------
-    */
-
+    /* CLICK CHILD */
     $(document).on("click", "#childCount", function (e) {
         e.preventDefault();
 
@@ -26,12 +16,7 @@ $(function () {
         updateActiveAgeFilter();
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | CLICK ADULT
-    |--------------------------------------------------------------------------
-    */
-
+    /*CLICK ADULT*/
     $(document).on("click", "#adultCount", function (e) {
         e.preventDefault();
 
@@ -45,11 +30,7 @@ $(function () {
         updateActiveAgeFilter();
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | CLICK SENIOR
-    |--------------------------------------------------------------------------
-    */
+    /* CLICK SENIOR*/
 
     $(document).on("click", "#seniorCount", function (e) {
         e.preventDefault();
@@ -64,12 +45,7 @@ $(function () {
         updateActiveAgeFilter();
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | RELOAD TABLE
-    |--------------------------------------------------------------------------
-    */
-
+    /* RELOAD TABLE*/
     function reloadPatientTable() {
         if (!window.patientTable) {
             console.warn("Patient DataTable not found.");
@@ -79,12 +55,7 @@ $(function () {
         window.patientTable.ajax.reload(null, false);
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | ACTIVE FILTER STYLE
-    |--------------------------------------------------------------------------
-    */
-
+    /* ACTIVE FILTER STYLE*/
     function updateActiveAgeFilter() {
         $("#childCount, #adultCount, #seniorCount").removeClass(
             "age-filter-active",
@@ -103,12 +74,7 @@ $(function () {
         }
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | CLEAR AGE FILTER WHEN NORMAL FILTER CHANGES
-    |--------------------------------------------------------------------------
-    */
-
+    /* CLEAR AGE FILTER WHEN NORMAL FILTER CHANGES*/
     $(document).on(
         "change",
         [
@@ -128,24 +94,14 @@ $(function () {
         },
     );
 
-    /*
-    |--------------------------------------------------------------------------
-    | CLEAR AGE FILTER WHEN LOCATION CHANGES
-    |--------------------------------------------------------------------------
-    */
-
+    /* CLEAR AGE FILTER WHEN LOCATION CHANGES */
     $(document).on("input", "input[name='location_value']", function () {
         window.patientAgeFilter = "";
 
         updateActiveAgeFilter();
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | CLEAR AGE FILTER WHEN CUSTOM DATE CHANGES
-    |--------------------------------------------------------------------------
-    */
-
+    /* CLEAR AGE FILTER WHEN CUSTOM DATE CHANGES */
     $(document).on(
         "change",
         "input[name='from_date'], input[name='to_date']",
