@@ -8,6 +8,12 @@ $(function () {
             url: window.patientRoutes.index,
 
             data: function (d) {
+                /*
+                |--------------------------------------------------------------------------
+                | NORMAL FILTERS
+                |--------------------------------------------------------------------------
+                */
+
                 d.gender = $("select[name='gender']").val();
 
                 d.location_type = $("select[name='location_type']").val();
@@ -22,10 +28,23 @@ $(function () {
                 d.date_filter = $("select[name='date_filter']").val();
                 d.from_date = $("input[name='from_date']").val();
                 d.to_date = $("input[name='to_date']").val();
+
+                /*
+                |--------------------------------------------------------------------------
+                | AGE FILTER
+                |--------------------------------------------------------------------------
+                */
+
+                d.age_group = window.patientAgeFilter || "";
             },
 
             dataSrc: function (json) {
-                // Update age counters from filtered result
+                /*
+                |--------------------------------------------------------------------------
+                | UPDATE AGE COUNTERS
+                |--------------------------------------------------------------------------
+                */
+
                 $("#childCount").text(json.childPatients ?? 0);
                 $("#adultCount").text(json.adultPatients ?? 0);
                 $("#seniorCount").text(json.seniorPatients ?? 0);
@@ -55,17 +74,29 @@ $(function () {
                 orderable: false,
                 searchable: false,
             },
-            { data: "patient_code" },
-            { data: "name" },
-            { data: "age" },
-            { data: "gender" },
-            { data: "phone" },
+            {
+                data: "patient_code",
+            },
+            {
+                data: "name",
+            },
+            {
+                data: "age",
+            },
+            {
+                data: "gender",
+            },
+            {
+                data: "phone",
+            },
             {
                 data: "location",
                 orderable: false,
                 searchable: false,
             },
-            { data: "is_referred" },
+            {
+                data: "is_referred",
+            },
             {
                 data: "treatment",
             },
@@ -82,7 +113,9 @@ $(function () {
                 orderable: false,
                 searchable: false,
             },
-            { data: "date" },
+            {
+                data: "date",
+            },
             {
                 data: "action",
                 orderable: false,
@@ -91,11 +124,17 @@ $(function () {
         ],
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | MAKE TABLE AVAILABLE GLOBALLY
+    |--------------------------------------------------------------------------
+    */
+
     window.patientTable = table;
 
     /*
     |--------------------------------------------------------------------------
-    | FILTER CHANGE → RELOAD TABLE + AGE COUNTS
+    | NORMAL FILTER CHANGE
     |--------------------------------------------------------------------------
     */
 

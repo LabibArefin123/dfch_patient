@@ -16,35 +16,40 @@
             </div>
 
             <div class="d-flex flex-wrap">
+                <span id="childCount" class="badge badge-light border mr-2 px-3 py-2 age-filter-count age-filter-child">
+                    <span class="age-filter-label">
+                        👶 Child Patients
+                    </span>
 
-                <span class="badge badge-light border mr-2 px-3 py-2">
-                    🧒 Child Patients
-                    <strong id="childCount" class="text-primary ml-1">
+                    <strong class="text-primary ml-1">
                         {{ $childPatients }}
                     </strong>
                 </span>
 
-                <span class="badge badge-light border mr-2 px-3 py-2">
-                    🧑 Adult Patients
-                    <strong id="adultCount" class="text-success ml-1">
+                <span id="adultCount" class="badge badge-light border mr-2 px-3 py-2 age-filter-count age-filter-adult">
+                    <span class="age-filter-label">
+                        🧑 Adult Patients
+                    </span>
+
+                    <strong class="text-success ml-1">
                         {{ $adultPatients }}
                     </strong>
                 </span>
 
-                <span class="badge badge-light border px-3 py-2">
-                    👴 Senior Patients
-                    <strong id="seniorCount" class="text-danger ml-1">
+                <span id="seniorCount" class="badge badge-light border px-3 py-2 age-filter-count age-filter-senior">
+                    <span class="age-filter-label">
+                        👴 Senior Patients
+                    </span>
+
+                    <strong class="text-danger ml-1">
                         {{ $seniorPatients }}
                     </strong>
                 </span>
             </div>
-
         </div>
-
     </div>
 
     <div class="card-body">
-
         <form id="patientFilterForm" onsubmit="return false;">
             <div class="row">
 

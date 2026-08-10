@@ -1,17 +1,11 @@
 {{-- ========================= BACK SIDE - CARD DESIGN 3 ========================= --}}
-
 <div class="doctor-card-back-3">
-
-    {{-- =========================================================
-         TOP RED DECORATION
-    ========================================================== --}}
+    {{--  TOP RED DECORATION --}}
     <div class="back-3-top-shape"></div>
     <div class="back-3-top-line"></div>
 
 
-    {{-- =========================================================
-         HOSPITAL LOGO
-    ========================================================== --}}
+    {{-- HOSPITAL LOGO--}}
     @if ($specialistCard->show_logo)
         <div class="back-3-logo">
             <img src="{{ asset('uploads/images/logo.png') }}" alt="Hospital Logo">
@@ -19,11 +13,8 @@
     @endif
 
 
-    {{-- =========================================================
-         CARD TITLE
-    ========================================================== --}}
+    {{-- CARD TITLE--}}
     <div class="back-3-title">
-
         <span class="back-3-title-icon">
             <i class="fas fa-id-card"></i>
         </span>
@@ -32,13 +23,9 @@
             <h3>IDENTIFICATION CARD</h3>
             <p>AUTHORIZED SPECIALIST</p>
         </div>
-
     </div>
 
-
-    {{-- =========================================================
-         SPECIALIST INFORMATION BOX
-    ========================================================== --}}
+    {{-- SPECIALIST INFORMATION BOX--}}
     <div class="back-3-profile-box">
 
         <div class="back-3-profile-icon">
@@ -46,31 +33,16 @@
         </div>
 
         <div class="back-3-profile-content">
-
-            <span class="back-3-label">
-                CARD HOLDER
-            </span>
-
-            <strong>
-                {{ $specialistCard->specialist->name }}
-            </strong>
-
+            <span class="back-3-label"> CARD HOLDER </span>
+            <strong>{{ $specialistCard->specialist->name }} </strong>
             @if ($specialistCard->show_designation)
-                <small>
-                    {{ $specialistCard->specialist->designation }}
-                </small>
+                <small> {{ $specialistCard->specialist->designation }} </small>
             @endif
-
         </div>
-
     </div>
 
-
-    {{-- =========================================================
-         IMPORTANT INFORMATION
-    ========================================================== --}}
+    {{--  IMPORTANT INFORMATION--}}
     <div class="back-3-information">
-
         <div class="back-3-section-heading">
             <span></span>
             <h4>IMPORTANT INFORMATION</h4>

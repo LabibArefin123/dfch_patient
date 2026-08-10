@@ -1,0 +1,87 @@
+/*AGE FILTER COUNT*/
+.age-filter-count {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+
+    /* Make the entire badge clickable */
+    display: inline-flex;
+    align-items: center;
+
+    /* Prevent text selection while clicking */
+    -webkit-user-select: none;
+}
+
+
+/* HOVER*/
+.age-filter-count:hover {
+    transform: translateY(-2px);
+
+    box-shadow:
+        0 4px 10px rgba(0, 0, 0, 0.12);
+
+    background-color: #ffffff;
+}
+
+
+/*CLICK / ACTIVE*/
+.age-filter-count.age-filter-active {
+    transform: translateY(-1px);
+
+    background-color: #ffffff;
+
+    box-shadow:
+        0 0 0 2px rgba(0, 123, 255, 0.20),
+        0 4px 10px rgba(0, 0, 0, 0.10);
+}
+
+/* CHILD ACTIVE*/
+.age-filter-child.age-filter-active {
+    border-color: #007bff !important;
+
+    box-shadow:
+        0 0 0 2px rgba(0, 123, 255, 0.15),
+        0 4px 10px rgba(0, 123, 255, 0.12);
+}
+
+/* ADULT ACTIVE*/
+.age-filter-adult.age-filter-active {
+    border-color: #28a745 !important;
+
+    box-shadow:
+        0 0 0 2px rgba(40, 167, 69, 0.15),
+        0 4px 10px rgba(40, 167, 69, 0.12);
+}
+
+/*SENIOR ACTIVE*/
+.age-filter-senior.age-filter-active {
+    border-color: #dc3545 !important;
+
+    box-shadow:
+        0 0 0 2px rgba(220, 53, 69, 0.15),
+        0 4px 10px rgba(220, 53, 69, 0.12);
+}
+
+/* ACTIVE COUNT*/
+.age-filter-count.age-filter-active strong {
+    font-weight: 700;
+}
+
+/* HOVER LABEL*/
+.age-filter-count:hover .age-filter-label {
+    font-weight: 600;
+}
+
+/* MOBILE*/
+@media (max-width: 576px) {
+    .age-filter-count {
+        margin-bottom: 6px;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+}

@@ -74,6 +74,7 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_lost_data.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_image.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_search.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_age.css') }}">
     <div class="card shadow-sm">
         <div class="card-body table-responsive">
             <table class="table table-striped table-hover text-nowrap w-100" id="patientsTable">
@@ -140,6 +141,7 @@
         };
     </script>
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_filter_age.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ajax_tb_search.js') }}"></script>

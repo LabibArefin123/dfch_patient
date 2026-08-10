@@ -156,9 +156,37 @@ class PatientController extends Controller
         // If AJAX → return DataTable + counts
         if ($request->ajax()) {
             // Clone query for counts
-            $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
-            $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 60])->count();
-            $seniorPatients = (clone $baseQuery)->where('age', '>', 60)->count();
+            /* AGE COUNTS*/
+            $childPatients = (clone $baseQuery)
+                ->where('age', '<', 18)
+                ->count();
+
+            $adultPatients = (clone $baseQuery)
+                ->whereBetween('age', [18, 70])
+                ->count();
+
+            $seniorPatients = (clone $baseQuery)
+                ->where('age', '>', 70)
+                ->count();
+
+
+            /* AGE FILTER */
+            switch ($request->input('age_group')) {
+
+                case 'child':
+                    $baseQuery->where('age', '<', 18);
+                    break;
+
+                case 'adult':
+                    $baseQuery->whereBetween('age', [18, 70]);
+                    break;
+
+                case 'senior':
+                    $baseQuery->where('age', '>', 70);
+                    break;
+            }
+
+
             $search = trim($request->input('search.value', ''));
             $highlight = function ($text) use ($search) {
 
@@ -418,8 +446,8 @@ class PatientController extends Controller
 
         // Initial Load (no filters)
         $childPatients  = Patient::where('age', '<', 18)->count();
-        $adultPatients  = Patient::whereBetween('age', [18, 60])->count();
-        $seniorPatients = Patient::where('age', '>', 60)->count();
+        $adultPatients  = Patient::whereBetween('age', [18, 70])->count();
+        $seniorPatients = Patient::where('age', '>', 70)->count();
 
         return view(
             'backend.patient_management.index',
