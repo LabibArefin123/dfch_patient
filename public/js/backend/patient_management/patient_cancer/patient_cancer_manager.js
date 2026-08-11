@@ -27,13 +27,9 @@ function initializeCancerRemoveButtons(input, previewContainer) {
         .querySelectorAll(".cancer-remove-btn")
         .forEach((button) => {
             button.onclick = function (e) {
-                e.preventDefault();
                 e.stopPropagation();
-
                 const card = this.closest(".cancer-card");
-
                 if (!card) return;
-
                 removeCancerImage(card, input, previewContainer);
             };
         });
@@ -44,7 +40,6 @@ function initializeCancerRemoveButtons(input, previewContainer) {
  */
 function removeCancerImage(card, input, previewContainer) {
     const fileName = card.dataset.filename;
-
     if (!fileName) {
         card.remove();
         return;
@@ -86,9 +81,7 @@ function refreshCancerGrid(previewContainer) {
     });
 }
 
-/**
- * Remove All Images
- */
+/** Remove All Images*/
 function clearCancerImages(input, previewContainer) {
     if (!input || !previewContainer) return;
 
@@ -96,32 +89,22 @@ function clearCancerImages(input, previewContainer) {
     previewContainer.innerHTML = "";
 }
 
-/**
- * Get Valid Files
- */
+/** Get Valid Files*/
 function getCancerFiles(input) {
     return Array.from(input.files);
 }
 
-/**
- * Count Files
- */
+/** Count Files*/
 function getCancerFileCount(input) {
     return input.files.length;
 }
 
-/**
- * Check if Empty
- */
+/** Check if Empty*/
 function hasCancerImages(input) {
     return input.files.length > 0;
 }
 
-/**
- * Append New Files
- *
- * Optional helper for future drag & drop support.
- */
+/** Append New Files - Optional helper for future drag & drop support.*/
 function appendCancerFiles(input, files) {
     const dataTransfer = new DataTransfer();
 
@@ -140,28 +123,20 @@ function appendCancerFiles(input, files) {
     input.files = dataTransfer.files;
 }
 
-/**
- * Rebuild Preview
- *
- * Optional helper.
- */
+/** Rebuild Preview - Optional helper.*/
 function rebuildCancerPreview(input, previewContainer) {
     previewContainer.innerHTML = "";
 
     Array.from(input.files).forEach((file) => {
         const card = createCancerPreviewCard(file);
-
         previewContainer.appendChild(card);
-
         const reader = new FileReader();
 
         reader.onload = function (e) {
             const image = card.querySelector(".cancer-preview-image");
-
             if (image) {
                 image.src = e.target.result;
             }
-
             completeCancerProgress(card);
         };
 

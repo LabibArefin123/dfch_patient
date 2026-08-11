@@ -8,8 +8,6 @@ $(document).ready(function () {
     }
 
     $(".export-excel").on("click", function (e) {
-        e.preventDefault();
-
         const ids = getSelectedIds();
         if (ids.length === 0) {
             alert("Please select at least one patient to export.");

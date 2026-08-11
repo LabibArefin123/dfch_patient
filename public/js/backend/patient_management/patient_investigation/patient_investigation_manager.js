@@ -27,21 +27,15 @@ function initializeInvestigateRemoveButtons(input, previewContainer) {
         .querySelectorAll(".investigation-remove-btn")
         .forEach((button) => {
             button.onclick = function (e) {
-                e.preventDefault();
                 e.stopPropagation();
-
                 const card = this.closest(".investigation-card");
-
                 if (!card) return;
-
                 removeInvestigateImage(card, input, previewContainer);
             };
         });
 }
 
-/**
- * Remove One Image
- */
+/** Remove One Image*/
 function removeInvestigateImage(card, input, previewContainer) {
     const fileName = card.dataset.filename;
 

@@ -1,20 +1,8 @@
-/**
-|--------------------------------------------------------------------------
-| Patient Cancer Content
-|--------------------------------------------------------------------------
-| Load patient cancer photos into the Cancer Photos tab.
-|--------------------------------------------------------------------------
-*/
-
+/**Patient Cancer Content - Load patient cancer photos into the Cancer Photos tab.*/
 $(document).on("click", ".patient-summary-cancer-photos", function (e) {
-    e.preventDefault();
-
     const patientId = $(this).data("id");
-
     const url = patientCancerPhotoContentsUrl.replace(":id", patientId);
-
     $("#cancer-tab").tab("show");
-
     const body = $("#patientCancerContent");
 
     body.html(`
@@ -31,12 +19,9 @@ $(document).on("click", ".patient-summary-cancer-photos", function (e) {
 
     $.ajax({
         url: url,
-
         type: "GET",
-
         success: function (res) {
             body.empty();
-
             if (!res.status || !res.photos.length) {
                 body.html(`
                     <div class="alert alert-warning text-center">
@@ -58,7 +43,6 @@ $(document).on("click", ".patient-summary-cancer-photos", function (e) {
             }
 
             body.append('<div class="row"></div>');
-
             const row = body.find(".row");
 
             $.each(res.photos, function (_, photo) {
@@ -113,25 +97,17 @@ $(document).on("click", ".patient-summary-cancer-photos", function (e) {
         error: function () {
             body.html(`
                 <div class="alert alert-danger text-center">
-
                     <i class="fas fa-times-circle mr-2"></i>
-
                     Unable to load cancer photos.
-
                 </div>
             `);
         },
     });
 });
-/*
-|--------------------------------------------------------------------------
-| Cancer Photo Viewer
-|--------------------------------------------------------------------------
-*/
 
+/*Cancer Photo Viewer*/
 $(document).on("click", ".patient-cancer-photo-preview", function () {
     const image = $(this).data("image");
-
     $("#patientSummaryZoomImage")
         .attr("src", image)
         .css("transform", "scale(1)");
@@ -139,16 +115,10 @@ $(document).on("click", ".patient-cancer-photo-preview", function () {
     $("#patientSummaryImageViewer").removeClass("d-none").hide().fadeIn(200);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Close Viewer
-|--------------------------------------------------------------------------
-*/
-
+/* Close Viewer*/
 $(document).on("click", "#closePatientSummaryImageViewer", function () {
     $("#patientSummaryImageViewer").fadeOut(200, function () {
         $(this).addClass("d-none");
-
         $("#patientSummaryZoomImage").attr("src", "");
     });
 });
@@ -160,9 +130,7 @@ $(document).keyup(function (e) {
 });
 
 let zoom = 1;
-
 $(document).on("click", "#patientSummaryZoomImage", function () {
     zoom = zoom === 1 ? 2 : 1;
-
     $(this).css("transform", `scale(${zoom})`);
 });

@@ -8,8 +8,6 @@ $(document).ready(function () {
     }
 
     $(".export-pdf").on("click", function (e) {
-        e.preventDefault();
-
         const ids = getSelectedIds();
         console.log("Selected patient IDs:", ids); // Debug log
 

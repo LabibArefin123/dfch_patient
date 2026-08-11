@@ -4,8 +4,6 @@ $(function () {
 
     /* CLICK CHILD */
     $(document).on("click", "#childCount", function (e) {
-        e.preventDefault();
-
         if (window.patientAgeFilter === "child") {
             window.patientAgeFilter = "";
         } else {
@@ -18,8 +16,6 @@ $(function () {
 
     /*CLICK ADULT*/
     $(document).on("click", "#adultCount", function (e) {
-        e.preventDefault();
-
         if (window.patientAgeFilter === "adult") {
             window.patientAgeFilter = "";
         } else {
@@ -33,8 +29,6 @@ $(function () {
     /* CLICK SENIOR*/
 
     $(document).on("click", "#seniorCount", function (e) {
-        e.preventDefault();
-
         if (window.patientAgeFilter === "senior") {
             window.patientAgeFilter = "";
         } else {

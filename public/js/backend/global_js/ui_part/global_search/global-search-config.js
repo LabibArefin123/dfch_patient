@@ -55,8 +55,6 @@ function initGlobalSearch(form, config) {
     */
 
     form.addEventListener("submit", function (e) {
-        e.preventDefault();
-
         console.log("[GLOBAL SEARCH] Form submit prevented");
     });
 
@@ -68,18 +66,13 @@ function initGlobalSearch(form, config) {
 
     input.addEventListener("input", function () {
         const query = this.value.trim();
-
         console.log("[GLOBAL SEARCH][STEP 3] User typed:", query);
-
         clearTimeout(searchTimer);
 
         if (query.length < 2) {
             console.log("[GLOBAL SEARCH][STEP 3] Query too short");
-
             resultBox.style.display = "none";
-
             resultBox.innerHTML = "";
-
             return;
         }
 
@@ -93,12 +86,7 @@ function initGlobalSearch(form, config) {
         }, 300);
     });
 
-    /*
-    |--------------------------------------------------------------------------
-    | Hide Results When Clicking Outside
-    |--------------------------------------------------------------------------
-    */
-
+    /*Hide Results When Clicking Outside */
     document.addEventListener("click", function (e) {
         if (!resultBox.contains(e.target) && e.target !== input) {
             resultBox.style.display = "none";

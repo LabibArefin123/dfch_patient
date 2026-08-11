@@ -1,5 +1,4 @@
 $(document).on("click", ".import-excel, .import-word", function (e) {
-    e.preventDefault();
     let route = $(this).attr("href");
     let title = $(this).hasClass("import-excel")
         ? "Import Excel"
@@ -17,7 +16,6 @@ $(document).on("click", ".import-excel, .import-word", function (e) {
 $(document)
     .off("submit", "#importFileForm")
     .on("submit", "#importFileForm", function (e) {
-        e.preventDefault();
         const form = $(this);
         const formData = new FormData(this);
         const url = form.attr("action");

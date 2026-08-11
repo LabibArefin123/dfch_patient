@@ -1,14 +1,6 @@
-/**
-|--------------------------------------------------------------------------
-| Patient Document Content
-|--------------------------------------------------------------------------
-| Load and display patient referred documents.
-|--------------------------------------------------------------------------
-*/
+/** Patient Document Content - Load and display patient referred documents.*/
 
 $(document).on("click", ".patient-summary-documents", function (e) {
-    e.preventDefault();
-
     const patientId = $(this).data("id");
 
     const url = patientDocumentContentsUrl.replace(":id", patientId);

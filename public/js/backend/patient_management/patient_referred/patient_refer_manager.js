@@ -25,21 +25,15 @@ function initializeReferRemoveButtons(input, previewContainer) {
 
     previewContainer.querySelectorAll(".refer-remove-btn").forEach((button) => {
         button.onclick = function (e) {
-            e.preventDefault();
             e.stopPropagation();
-
             const card = this.closest(".refer-card");
-
             if (!card) return;
-
             removeReferImage(card, input, previewContainer);
         };
     });
 }
 
-/**
- * Remove One Image
- */
+/** Remove One Image */
 function removeReferImage(card, input, previewContainer) {
     const fileName = card.dataset.filename;
 

@@ -10,8 +10,6 @@ window.PatientSearch.bindEvents = function () {
     });
 
     $("#patientFilterForm").on("submit", function (e) {
-        e.preventDefault();
-
         if (window.patientTable) {
             window.patientTable.ajax.reload();
         }

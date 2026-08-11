@@ -1,6 +1,4 @@
 $(document).on("submit", "#patientEmergencyForm", function (e) {
-    e.preventDefault();
-
     // Prevent duplicate submit
     if (window.patientEmergencySubmit.submitting) {
         return;

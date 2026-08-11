@@ -27,21 +27,15 @@ function initializeTreatmentRemoveButtons(input, previewContainer) {
         .querySelectorAll(".treatment-remove-btn")
         .forEach((button) => {
             button.onclick = function (e) {
-                e.preventDefault();
                 e.stopPropagation();
-
                 const card = this.closest(".treatment-card");
-
                 if (!card) return;
-
                 removeTreatmentImage(card, input, previewContainer);
             };
         });
 }
 
-/**
- * Remove One Image
- */
+/** Remove One Image */
 function removeTreatmentImage(card, input, previewContainer) {
     const fileName = card.dataset.filename;
 
