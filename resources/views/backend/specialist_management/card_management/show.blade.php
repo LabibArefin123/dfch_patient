@@ -176,6 +176,10 @@
             <i class="fas fa-print"></i>
             Print Whole Card
         </button>
+
+        <button type="button" class="btn btn-secondary print-preview-email-btn">
+            <i class="fas fa-envelope"></i> Pass via Email
+        </button>
     </div>
 
     <div class="design-selection-card mt-4">
@@ -235,22 +239,27 @@
 @stop
 
 @section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    {{-- Individual Toggle Action --}}
+    <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
+
+    {{-- Individual Card Button Action --}}
+    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_email.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_common.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_front.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_back.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_whole.js') }}"></script>
-    <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/lanyard_print_action.js') }}">
-    </script>
+    {{-- Individual Lanyard Button Action --}}
     <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/lanyard_print_preview.js') }}">
     </script>
     <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whatsapp_action.js') }}">
     </script>
     <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_preview_action.js') }}">
     </script>
+
+    {{-- Whole Lanyard Button Action --}}
     <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whole_card.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whole_preview.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whole_whatsapp.js') }}">

@@ -1,124 +1,267 @@
-.lanyard-action-buttons {
-    position: absolute !important;
-    left: 4px !important;
-    right: 4px !important;
-    bottom: 4px !important;
-    display: flex !important;
-    flex-wrap: wrap !important;
-    justify-content: center !important;
-    align-items: center !important;
-    gap: 3px !important;
-    width: auto !important;
-    height: auto !important;
-    padding: 4px !important;
-    background: rgba(255, 255, 255, 0.96) !important;
-    border: 1px solid rgba(0, 0, 0, 0.12) !important;
-    border-radius: 6px !important;
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.16) !important;
-    z-index: 20 !important;
-    opacity: 1 !important;
-    visibility: visible !important;
-    transform: none !important;
+/* ==========================================================
+   SPECIALIST LANYARD SHOW PAGE
+   ACTION / MODAL / PREVIEW SYSTEM
+========================================================== */
+
+/* ==========================================================
+   LANYARD CARD
+========================================================== */
+
+.lanyard-card {
+    width: 100%;
+    position: relative;
+    overflow: visible !important;
 }
 
-.lanyard-action-buttons .btn {
-    position: relative !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-    gap: 3px !important;
-    width: auto !important;
-    min-width: 0 !important;
-    height: 24px !important;
-    margin: 0 !important;
-    padding: 3px 6px !important;
-    border-radius: 4px !important;
-    font-size: 9px !important;
-    line-height: 1 !important;
-    font-weight: 600 !important;
-    white-space: nowrap !important;
-    z-index: 21 !important;
-}
-
-.lanyard-action-buttons .btn i {
-    font-size: 9px !important;
-}
-
-.lanyard-strip,
-.lanyard02-strip,
-.lanyard03-strip {
-    position: relative !important;
-}
-
-.lanyard-action-buttons .btn:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
+.lanyard-body,
+.lanyard02-body,
+.lanyard03-body {
+    width: 100%;
+    overflow: visible !important;
 }
 
 /* ==========================================================
-   LANYARD MODALS
+   EACH LANYARD ROW
 ========================================================== */
 
+.lanyard-row {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: center;
+
+    margin: 0;
+    padding: 0;
+
+    overflow: visible !important;
+}
+
+/*
+|--------------------------------------------------------------------------
+| GAP BETWEEN STRIP AND BUTTONS
+|--------------------------------------------------------------------------
+*/
+
+.lanyard-row + .lanyard-row {
+    margin-top: 24px;
+}
+
+/* ==========================================================
+   LANYARD STRIP
+========================================================== */
+
+.lanyard-row > .lanyard-strip,
+.lanyard-row > .lanyard02-strip,
+.lanyard-row > .lanyard03-strip {
+    position: relative !important;
+
+    width: 100%;
+
+    flex: none;
+
+    overflow: hidden;
+}
+
+/*
+|--------------------------------------------------------------------------
+| IMPORTANT
+|--------------------------------------------------------------------------
+| The action area must NEVER be inside the strip.
+|--------------------------------------------------------------------------
+*/
+
+.lanyard-strip .lanyard-action-buttons,
+.lanyard02-strip .lanyard-action-buttons,
+.lanyard03-strip .lanyard-action-buttons {
+    position: static !important;
+
+    left: auto !important;
+    right: auto !important;
+    top: auto !important;
+    bottom: auto !important;
+
+    transform: none !important;
+}
+
+/* ==========================================================
+   ACTION AREA
+========================================================== */
+
+.lanyard-row > .lanyard-action-buttons {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-wrap: wrap;
+
+    gap: 7px;
+
+    margin-top: 10px;
+    margin-bottom: 0;
+
+    padding: 0;
+
+    background: transparent;
+
+    border: 0;
+    box-shadow: none;
+
+    position: static !important;
+
+    z-index: 10;
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.lanyard-row > .lanyard-action-buttons .btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    min-width: 76px;
+    height: 30px;
+
+    padding: 5px 10px;
+
+    border-radius: 6px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    border-width: 1px;
+
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+
+    transition:
+        transform 0.15s ease,
+        box-shadow 0.15s ease,
+        opacity 0.15s ease;
+}
+
+.lanyard-row > .lanyard-action-buttons .btn i {
+    font-size: 10px;
+}
+
+.lanyard-row > .lanyard-action-buttons .btn:hover {
+    transform: translateY(-1px);
+
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
+}
+
+.lanyard-row > .lanyard-action-buttons .btn:active {
+    transform: translateY(0);
+}
+
+/* ==========================================================
+   MODAL SYSTEM
+========================================================== */
+
+#lanyardPreviewModal,
 #lanyardWhatsAppModal,
 #lanyardEmailModal,
 #wholeLanyardPreviewModal {
     z-index: 1060 !important;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Bootstrap backdrop
+|--------------------------------------------------------------------------
+*/
+
 .modal-backdrop {
     z-index: 1050 !important;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Modal dialog
+|--------------------------------------------------------------------------
+*/
+
+#lanyardPreviewModal .modal-dialog,
 #lanyardWhatsAppModal .modal-dialog,
 #lanyardEmailModal .modal-dialog,
 #wholeLanyardPreviewModal .modal-dialog {
     position: relative;
+
     z-index: 1061 !important;
 }
 
+/*
+|--------------------------------------------------------------------------
+| Modal content
+|--------------------------------------------------------------------------
+*/
+
+#lanyardPreviewModal .modal-content,
 #lanyardWhatsAppModal .modal-content,
 #lanyardEmailModal .modal-content,
 #wholeLanyardPreviewModal .modal-content {
     position: relative;
+
     z-index: 1062 !important;
+
+    border: 0;
+
+    border-radius: 14px;
+
+    overflow: hidden;
 }
 
 /* ==========================================================
-   WHATSAPP / EMAIL MODAL
+   LANYARD PREVIEW MODAL
 ========================================================== */
 
-.lanyard-modal-icon {
-    width: 58px;
-    height: 58px;
-    margin: 0 auto 12px;
+.lanyard-preview-modal-body {
+    background: #f5f6f8;
+
+    padding: 25px;
+
+    min-height: 300px;
+
     display: flex;
+
     align-items: center;
+
     justify-content: center;
-    border-radius: 50%;
-    font-size: 30px;
+
+    overflow: auto;
 }
 
-.lanyard-whatsapp-icon {
-    background: #e9f8ef;
-    color: #198754;
+/*
+|--------------------------------------------------------------------------
+| Preview strip
+|--------------------------------------------------------------------------
+*/
+
+.lanyard-preview-modal-body .lanyard-preview-single {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
-.lanyard-email-icon {
-    background: #eef4ff;
-    color: #0d6efd;
-}
+/*
+|--------------------------------------------------------------------------
+| Remove actions from cloned preview
+|--------------------------------------------------------------------------
+*/
 
-.lanyard-modal-input {
-    font-weight: 600;
-    letter-spacing: 0.4px;
-}
-
-.lanyard-modal-help {
-    font-size: 12px;
-}
-
-.lanyard-modal-loading {
-    display: none;
+.lanyard-preview-modal-body .lanyard-action-buttons {
+    display: none !important;
 }
 
 /* ==========================================================
@@ -126,20 +269,23 @@
 ========================================================== */
 
 .whole-lanyard-preview-content {
-    display: flex !important;
-    justify-content: center !important;
-    align-items: flex-start !important;
-    width: 100% !important;
-    min-height: 400px !important;
-    padding: 25px !important;
-    background: #f5f6f8 !important;
-    border-radius: 8px !important;
-    overflow: auto !important;
-}
+    width: 100%;
 
-.whole-lanyard-preview-content .lanyard-card {
-    margin: 0 !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
+    min-height: 350px;
+
+    padding: 25px;
+
+    background: #f5f6f8;
+
+    border-radius: 10px;
+
+    display: flex;
+
+    align-items: flex-start;
+
+    justify-content: center;
+
+    overflow: auto;
 }
 
 .whole-lanyard-preview-content .lanyard-action-buttons {
@@ -147,25 +293,130 @@
 }
 
 /* ==========================================================
+   MODAL ICON
+========================================================== */
+
+.lanyard-modal-icon {
+    width: 58px;
+    height: 58px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    font-size: 28px;
+}
+
+.lanyard-whatsapp-icon {
+    background: #e9f8ef;
+
+    color: #198754;
+}
+
+.lanyard-email-icon {
+    background: #eef4ff;
+
+    color: #0d6efd;
+}
+
+.lanyard-modal-input {
+    font-weight: 600;
+
+    letter-spacing: 0.3px;
+}
+
+/* ==========================================================
+   HIDDEN / CLEAN CLONES
+========================================================== */
+
+.lanyard-export-clone {
+    position: fixed !important;
+
+    left: -100000px !important;
+
+    top: 0 !important;
+
+    pointer-events: none !important;
+
+    opacity: 1 !important;
+
+    z-index: -1 !important;
+}
+
+/* ==========================================================
    PRINT
 ========================================================== */
 
 @media print {
-    .lanyard-action-buttons,
-    .whole-lanyard-action-buttons,
-    .whole-card-action-buttons {
+    body * {
+        visibility: hidden !important;
+    }
+
+    .print-lanyard-target,
+    .print-lanyard-target * {
+        visibility: visible !important;
+    }
+
+    .print-lanyard-target {
+        position: absolute !important;
+
+        left: 0 !important;
+
+        top: 0 !important;
+
+        width: 100% !important;
+
+        margin: 0 !important;
+
+        padding: 0 !important;
+    }
+
+    .lanyard-action-buttons {
         display: none !important;
     }
+}
 
-    .lanyard-card {
-        box-shadow: none !important;
-        margin: 0 !important;
+/* ==========================================================
+   MOBILE
+========================================================== */
+
+@media (max-width: 576px) {
+    .lanyard-row > .lanyard-action-buttons {
+        gap: 5px;
+
+        margin-top: 8px;
     }
 
-    .lanyard-strip,
-    .lanyard02-strip,
-    .lanyard03-strip {
-        print-color-adjust: exact !important;
-        -webkit-print-color-adjust: exact !important;
+    .lanyard-row > .lanyard-action-buttons .btn {
+        min-width: 64px;
+
+        height: 28px;
+
+        padding: 4px 7px;
+
+        font-size: 9px;
     }
+
+    .lanyard-row > .lanyard-action-buttons .btn i {
+        font-size: 9px;
+    }
+}
+
+/* ==========================================================
+   SAFETY
+========================================================== */
+
+/*
+|--------------------------------------------------------------------------
+| Never leave an orphan Bootstrap backdrop over the page.
+|--------------------------------------------------------------------------
+*/
+
+body:not(.modal-open) > .modal-backdrop {
+    display: none !important;
 }

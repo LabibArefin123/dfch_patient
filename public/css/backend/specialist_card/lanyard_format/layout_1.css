@@ -1,79 +1,215 @@
-/* LANYARD SELECTOR */
+/* ==========================================================
+   LANYARD DESIGN 01
+========================================================== */
+
 .lanyard-preview {
     width: 170px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    overflow: visible;
 }
 
-/* LANYARD CARD */
+/* ==========================================================
+   CARD
+========================================================== */
+
 .lanyard-card {
+    width: 100%;
     background: #fff;
-    border-radius: 14px;
-    overflow: visible;
     border: 2px solid #ddd;
+    border-radius: 14px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+    /*
+     * IMPORTANT
+     * Buttons are outside the lanyard body.
+     */
+    overflow: visible;
+
+    position: relative;
+
+    box-sizing: border-box;
 }
 
 .lanyard-card.active {
     border-color: #8b0000;
+    box-shadow: 0 10px 25px rgba(139, 0, 0, 0.15);
 }
 
-/* TITLE */
+/* ==========================================================
+   TITLE
+========================================================== */
 
-/* Title */
 .lanyard-title {
+    width: 100%;
     padding: 10px;
+
     background: #8b0000;
     color: #fff;
+
     text-align: center;
+
+    font-size: 14px;
     font-weight: 700;
+    line-height: 1.2;
+
+    border-radius: 11px 11px 0 0;
+
+    box-sizing: border-box;
 }
 
-/* Body */
+/* ==========================================================
+   LANYARD BODY
+========================================================== */
+
 .lanyard-body {
-    height: 300px;
+    width: 100%;
+
     display: flex;
     flex-direction: column;
+
+    height: auto;
+
     overflow: visible;
+
+    box-sizing: border-box;
 }
 
-/* Each row */
+/* ==========================================================
+   STRIPS
+========================================================== */
+
 .lanyard-strip {
-    flex: 1;
-    position: relative;
+    width: 100%;
+
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+
+    flex: 0 0 100px;
+
     display: flex;
+
     align-items: center;
     justify-content: center;
+
     gap: 8px;
+
+    padding: 0 8px;
+
+    box-sizing: border-box;
+
     font-size: 25px;
     font-weight: 700;
-    overflow: visible;
+
+    line-height: 1;
+
+    overflow: hidden;
+
+    position: relative;
 }
 
-/* White */
+/* ==========================================================
+   LOGO
+========================================================== */
+
+.lanyard-logo {
+    width: 25px;
+    height: 25px;
+
+    min-width: 25px;
+    min-height: 25px;
+
+    object-fit: contain;
+
+    flex-shrink: 0;
+}
+
+/* ==========================================================
+   COLORS
+========================================================== */
+
 .lanyard-white {
     background: #fff;
     color: #8b0000;
     border-bottom: 1px dashed #ccc;
 }
 
-/* Red */
 .lanyard-red {
     background: #8b0000;
     color: #fff;
     border-bottom: 1px dashed rgba(255, 255, 255, 0.4);
 }
 
-/* Black */
 .lanyard-black {
     background: #000;
     color: #fff;
 }
 
-/* Logo */
-.lanyard-strip img {
-    width: 25px;
-    height: 25px;
-    object-fit: contain;
+/* ==========================================================
+   ACTION BUTTON AREA
+   OUTSIDE THE LANYARD BODY
+========================================================== */
+
+.lanyard-actions {
+    width: 100%;
+
+    min-height: 42px;
+
+    margin-top: 8px;
+    padding: 0 4px 8px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 5px;
+
+    box-sizing: border-box;
+
+    position: static;
+
+    background: transparent;
+
+    border: 0;
+
+    box-shadow: none;
+}
+
+/* ==========================================================
+   BUTTON
+========================================================== */
+
+.lanyard-actions .btn {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 4px;
+
+    height: 30px;
+
+    min-width: 34px;
+
+    padding: 5px 8px;
+
+    border-radius: 5px;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    flex: 0 0 auto;
+}
+
+.lanyard-actions .btn i {
+    font-size: 10px;
 }

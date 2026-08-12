@@ -147,4 +147,26 @@ $(function () {
         if (window.patientCardPrint.mode)
             window.patientCardPrint.generate(window.patientCardPrint.mode);
     });
+    (function ($) {
+        "use strict";
+
+        $(document).on(
+            "hidden.bs.modal.cardPrintCleanup",
+            "#printPreviewModal",
+            function () {
+                $("#printCardGrid").empty();
+
+                setTimeout(function () {
+                    if (!$(".modal.show").length) {
+                        $(".modal-backdrop").remove();
+
+                        $("body").removeClass("modal-open").css({
+                            paddingRight: "",
+                            overflow: "",
+                        });
+                    }
+                }, 100);
+            },
+        );
+    })(jQuery);
 });

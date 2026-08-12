@@ -1,17 +1,77 @@
-$(function () {
-    function getSelectedLanyard() {
-        const selected = window.selectedLanyard;
+/**
+ * ==========================================================
+ * WHOLE CARD / LANYARD PRINT
+ * ==========================================================
+ *
+ * Handles:
+ *
+ * .whole-card-print-btn
+ *
+ * Prints the currently selected lanyard design.
+ *
+ * No modal.
+ * No dark screen.
+ * No new browser window.
+ * ==========================================================
+ */
 
-        if (selected && selected.length) {
-            return selected.first();
+(function ($) {
+    "use strict";
+
+    /**
+     * ======================================================
+     * GET CURRENTLY SELECTED LANYARD
+     * ======================================================
+     *
+     * Your show page contains:
+     *
+     * .lanyard-preview-container
+     * .lanyard-preview-container2
+     * .lanyard-preview-container3
+     *
+     * initializeSpecialistLanyard() controls which one
+     * is visible.
+     *
+     * Therefore we first use the visible lanyard.
+     */
+
+    function getSelectedLanyard() {
+        /*
+         * Existing manually selected lanyard.
+         */
+        if (window.selectedLanyard && window.selectedLanyard.length) {
+            return window.selectedLanyard.first();
         }
 
+        /*
+         * Active card, if your other JS uses it.
+         */
         const active = $(".lanyard-card.active").first();
 
         if (active.length) {
             return active;
         }
 
+        /*
+         * Use the currently visible container.
+         */
+        const visibleContainers = $(
+            ".lanyard-preview-container:visible, " +
+                ".lanyard-preview-container2:visible, " +
+                ".lanyard-preview-container3:visible",
+        );
+
+        if (visibleContainers.length) {
+            const visibleCard = visibleContainers.find(".lanyard-card").first();
+
+            if (visibleCard.length) {
+                return visibleCard;
+            }
+        }
+
+        /*
+         * Final fallback.
+         */
         const first = $(".lanyard-card").first();
 
         if (first.length) {
@@ -21,174 +81,124 @@ $(function () {
         return null;
     }
 
-    function printWholeLanyard() {
-        const lanyard = getSelectedLanyard();
+    /**
+     * ======================================================
+     * CREATE CLEAN PRINT CLONE
+     * ======================================================
+     */
 
-        if (!lanyard) {
-            alert("Please select a lanyard first.");
-            return;
+    function createPrintClone(source) {
+        if (!source || !source.length) {
+            return null;
         }
 
-        const clone = lanyard.clone();
+        const clone = source.clone();
 
+        /*
+         * Remove every action/control element.
+         */
         clone
             .find(
-                ".lanyard-action-buttons,.whole-lanyard-action-buttons,.whole-card-action-buttons",
+                ".lanyard-action-buttons, " +
+                    ".lanyard-actions, " +
+                    ".whole-lanyard-action-buttons, " +
+                    ".whole-card-action-buttons, " +
+                    ".print-button-container",
             )
             .remove();
 
-        const wrapper = $("<div>", {
-            class: "print-whole-lanyard-wrapper",
-        });
+        /*
+         * Remove possible active/selection states.
+         */
+        clone.removeClass("active");
 
-        wrapper.append(clone);
+        return clone;
+    }
 
-        const win = window.open("", "_blank", "width=900,height=1000");
+    /**
+     * ======================================================
+     * PRINT WHOLE CARD
+     * ======================================================
+     */
 
-        if (!win) {
-            alert("Please allow pop-ups for this website.");
+    function printWholeCard() {
+        const source = getSelectedLanyard();
+
+        if (!source || !source.length) {
+            alert("Unable to find the selected lanyard.");
+
             return;
         }
 
-        const styles = [
-            ...document.querySelectorAll("link[rel='stylesheet'],style"),
-        ]
-            .map(function (el) {
-                return el.outerHTML;
-            })
-            .join("");
+        const clone = createPrintClone(source);
 
-        win.document.write(`
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Print Whole Lanyard</title>
-${styles}
-<style>
-@page{
-size:auto;
-margin:10mm;
-}
+        if (!clone) {
+            alert("Unable to prepare the lanyard for printing.");
 
-html,body{
-margin:0;
-padding:0;
-background:#fff;
-}
-
-body{
-display:flex;
-justify-content:center;
-align-items:flex-start;
-min-height:100vh;
-}
-
-.print-whole-lanyard-wrapper{
-display:flex;
-justify-content:center;
-align-items:flex-start;
-width:max-content;
-}
-
-.print-whole-lanyard-wrapper .lanyard-card{
-width:170px!important;
-margin:0!important;
-box-shadow:none!important;
-border:2px solid #ddd!important;
-overflow:hidden!important;
-}
-
-.print-whole-lanyard-wrapper .lanyard-title{
-display:block!important;
-}
-
-.print-whole-lanyard-wrapper .lanyard-body,
-.print-whole-lanyard-wrapper .lanyard02-body,
-.print-whole-lanyard-wrapper .lanyard03-body{
-height:300px!important;
-}
-
-.print-whole-lanyard-wrapper .lanyard-strip,
-.print-whole-lanyard-wrapper .lanyard02-strip,
-.print-whole-lanyard-wrapper .lanyard03-strip{
-margin-top:0!important;
-}
-
-.print-whole-lanyard-wrapper .lanyard-strip + .lanyard-strip,
-.print-whole-lanyard-wrapper .lanyard02-strip + .lanyard02-strip,
-.print-whole-lanyard-wrapper .lanyard03-strip + .lanyard03-strip{
-margin-top:16px!important;
-}
-
-.lanyard-action-buttons,
-.whole-lanyard-action-buttons,
-.whole-card-action-buttons{
-display:none!important;
-}
-
-*{
-print-color-adjust:exact!important;
--webkit-print-color-adjust:exact!important;
-}
-</style>
-</head>
-<body>
-${wrapper.prop("outerHTML")}
-</body>
-</html>
-`);
-
-        win.document.close();
-
-        const waitForImages = function () {
-            const images = win.document.images;
-
-            if (!images.length) {
-                startPrint();
-                return;
-            }
-
-            let loaded = 0;
-
-            function done() {
-                loaded++;
-
-                if (loaded >= images.length) {
-                    startPrint();
-                }
-            }
-
-            for (let i = 0; i < images.length; i++) {
-                if (images[i].complete) {
-                    done();
-                } else {
-                    images[i].addEventListener("load", done);
-                    images[i].addEventListener("error", done);
-                }
-            }
-        };
-
-        function startPrint() {
-            setTimeout(function () {
-                win.focus();
-                win.print();
-
-                setTimeout(function () {
-                    win.close();
-                }, 500);
-            }, 500);
+            return;
         }
 
-        setTimeout(waitForImages, 300);
+        /*
+         * Create temporary print container.
+         */
+        const target = $("<div>", {
+            class: "print-lanyard-target",
+        });
+
+        target.append(clone);
+
+        $("body").append(target);
+
+        /*
+         * Allow browser to render the print content first.
+         */
+        setTimeout(function () {
+            window.print();
+        }, 100);
+
+        /*
+         * Clean up after print dialog.
+         */
+        setTimeout(function () {
+            target.remove();
+        }, 1000);
     }
 
+    /**
+     * ======================================================
+     * CLICK HANDLER
+     * ======================================================
+     *
+     * IMPORTANT:
+     *
+     * Blade:
+     *
+     * .whole-card-print-btn
+     *
+     * Therefore JS must listen to the same class.
+     */
+
+    $(document).off("click.wholeCardPrint", ".whole-card-print-btn");
+
     $(document).on(
-        "click",
-        ".whole-lanyard-print-btn,.whole-card-print-btn",
+        "click.wholeCardPrint",
+        ".whole-card-print-btn",
         function (e) {
             e.preventDefault();
-            printWholeLanyard();
+
+            e.stopPropagation();
+
+            printWholeCard();
         },
     );
-});
+
+    /**
+     * ======================================================
+     * PUBLIC API
+     * ======================================================
+     */
+
+    window.WholeCardPrint = {
+        print: printWholeCard,
+    };
+})(jQuery);

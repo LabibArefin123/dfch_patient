@@ -1,31 +1,319 @@
-/* =========================
+/* ==========================================================
+   SPECIALIST CARD SELECTOR
+========================================================== */
+
+/* ==========================================================
+   PREVIEW CONTAINERS
+========================================================== */
+
+.lanyard-preview-container,
+.lanyard-preview-container2,
+.lanyard-preview-container3 {
+    width: 170px;
+
+    overflow: visible;
+
+    display: block;
+
+    box-sizing: border-box;
+}
+
+/* ==========================================================
+   LANYARD CARD
+========================================================== */
+
+.lanyard-preview-container .lanyard-card,
+.lanyard-preview-container2 .lanyard-card,
+.lanyard-preview-container3 .lanyard-card {
+    width: 170px;
+
+    overflow: visible;
+
+    position: relative;
+
+    box-sizing: border-box;
+}
+
+/* ==========================================================
+   EACH LANYARD + ITS BUTTONS
+========================================================== */
+
+.lanyard-row {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+
+    flex: 0 0 auto;
+
+    position: relative;
+
+    box-sizing: border-box;
+
+    overflow: visible;
+}
+
+/* ==========================================================
+   LANYARD STRIP
+========================================================== */
+
+.lanyard-row > .lanyard-strip,
+.lanyard-row > .lanyard02-strip,
+.lanyard-row > .lanyard03-strip {
+    width: 100%;
+
+    height: 100px;
+    min-height: 100px;
+    max-height: 100px;
+
+    flex: 0 0 100px;
+
+    box-sizing: border-box;
+}
+
+/* ==========================================================
+   BUTTON AREA
+========================================================== */
+
+.lanyard-row > .lanyard-actions {
+    width: 100%;
+
+    height: auto;
+    min-height: 34px;
+
+    margin: 6px 0 10px;
+
+    padding: 0 2px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: nowrap;
+
+    gap: 3px;
+
+    position: static !important;
+
+    transform: none !important;
+
+    overflow: visible;
+
+    background: transparent;
+
+    box-shadow: none;
+
+    border: 0;
+
+    box-sizing: border-box;
+}
+
+/* ==========================================================
+   BUTTONS
+========================================================== */
+
+.lanyard-row > .lanyard-actions .btn {
+    height: 28px;
+
+    min-width: 0;
+
+    padding: 4px 5px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    font-size: 9px;
+
+    line-height: 1;
+
+    border-radius: 5px;
+
+    white-space: nowrap;
+
+    flex: 1 1 auto;
+
+    box-sizing: border-box;
+}
+
+.lanyard-row > .lanyard-actions .btn i {
+    font-size: 9px;
+}
+
+/* ==========================================================
    EMPTY PREVIEW
-========================= */
+========================================================== */
 
 .lanyard-coming {
+    width: 100%;
+
     height: 300px;
+
+    min-height: 300px;
+    max-height: 300px;
 
     display: flex;
 
     flex-direction: column;
 
+    align-items: center;
     justify-content: center;
 
-    align-items: center;
+    padding: 20px;
+
+    box-sizing: border-box;
 
     color: #999;
 
     text-align: center;
+
+    background: #fafafa;
+
+    overflow: hidden;
+
+    border-radius: 0 0 11px 11px;
 }
 
 .lanyard-coming i {
     font-size: 42px;
 
     margin-bottom: 15px;
+
+    color: #aaa;
 }
 
 .lanyard-coming h6 {
-    margin-bottom: 5px;
+    margin: 0 0 5px;
 
     font-weight: 700;
+}
+
+/* ==========================================================
+   ACTIONS
+========================================================== */
+
+.lanyard-actions {
+    width: 100%;
+
+    margin-top: 8px;
+
+    padding: 0 3px 8px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+    gap: 4px;
+
+    box-sizing: border-box;
+
+    /*
+     * NEVER absolute.
+     * NEVER overlay the lanyard.
+     */
+    position: static !important;
+
+    transform: none !important;
+
+    background: transparent;
+
+    border: 0;
+
+    box-shadow: none;
+
+    z-index: 1;
+}
+
+/* ==========================================================
+   ACTION BUTTON
+========================================================== */
+
+.lanyard-actions .btn {
+    height: 28px;
+
+    min-width: 34px;
+
+    padding: 4px 6px;
+
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 3px;
+
+    border-radius: 5px;
+
+    font-size: 9px;
+
+    font-weight: 600;
+
+    line-height: 1;
+
+    white-space: nowrap;
+
+    box-sizing: border-box;
+
+    flex: 0 0 auto;
+}
+
+.lanyard-actions .btn i {
+    font-size: 9px;
+
+    line-height: 1;
+}
+
+/* ==========================================================
+   PREVENT OLD RULES FROM AFFECTING BUTTONS
+========================================================== */
+
+.lanyard-action-buttons {
+    position: static !important;
+
+    inset: auto !important;
+
+    transform: none !important;
+}
+
+/* ==========================================================
+   RESPONSIVE
+========================================================== */
+
+@media (max-width: 576px) {
+    .lanyard-preview-container,
+    .lanyard-preview-container2,
+    .lanyard-preview-container3 {
+        width: 170px;
+    }
+
+    .lanyard-preview-container .lanyard-card,
+    .lanyard-preview-container2 .lanyard-card,
+    .lanyard-preview-container3 .lanyard-card {
+        width: 170px;
+    }
+
+    .lanyard-actions {
+        gap: 3px;
+
+        margin-top: 7px;
+    }
+
+    .lanyard-actions .btn {
+        height: 27px;
+
+        padding: 4px 5px;
+
+        font-size: 8px;
+    }
+
+    .lanyard-actions .btn i {
+        font-size: 8px;
+    }
 }

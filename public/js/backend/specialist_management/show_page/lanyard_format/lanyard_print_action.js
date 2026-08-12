@@ -1,58 +1,130 @@
-$(function () {
-    function addLanyardPrintButtons() {
-        $(
-            ".lanyard-preview-container,.lanyard-preview-container2,.lanyard-preview-container3",
-        ).each(function () {
-            $(this)
-                .find(".lanyard-strip,.lanyard02-strip,.lanyard03-strip")
-                .each(function (index) {
-                    const strip = $(this);
-                    if (strip.find(".lanyard-action-buttons").length) return;
-                    const buttons = $("<div>", {
-                        class: "lanyard-action-buttons",
-                    });
-                    buttons.append(
-                        $("<button>", {
-                            type: "button",
-                            class: "btn btn-sm btn-danger lanyard-print-btn",
-                            "data-lanyard-index": index,
-                        }).html('<i class="fas fa-print"></i> Print'),
-                    );
-                    strip.css("position", "relative").append(buttons);
-                });
-        });
+/**
+ * ==========================================================
+ * LANYARD PRINT ACTION
+ * ==========================================================
+ *
+ * Each button belongs to one .lanyard-row.
+ *
+ * Structure:
+ *
+ * .lanyard-row
+ *   ├── .lanyard-strip
+ *   └── .lanyard-actions
+ *
+ * Therefore we find the parent row and then its strip.
+ */
+
+(function ($) {
+    "use strict";
+
+    /**
+     * Find the lanyard belonging to the clicked button.
+     */
+    function getLanyardFromButton(button) {
+        const row = $(button).closest(".lanyard-row");
+
+        if (!row.length) {
+            console.error("Lanyard row not found for clicked button.", button);
+
+            return null;
+        }
+
+        const lanyard = row
+            .children(
+                ".lanyard-strip, " + ".lanyard02-strip, " + ".lanyard03-strip",
+            )
+            .first();
+
+        if (!lanyard.length) {
+            console.error("Lanyard strip not found inside row.", row[0]);
+
+            return null;
+        }
+
+        return lanyard[0];
     }
-    function printLanyard(element) {
-        if (!element) return;
+
+    /**
+     * Create clean printable clone.
+     */
+    function createCleanClone(element) {
+        if (!element) {
+            return null;
+        }
+
         const clone = element.cloneNode(true);
-        $(clone).find(".lanyard-action-buttons").remove();
-        const win = window.open("", "_blank", "width=900,height=900");
-        if (!win) return;
-        const styles = [
-            ...document.querySelectorAll("link[rel='stylesheet'],style"),
-        ]
-            .map((el) => el.outerHTML)
-            .join("");
-        win.document.write(
-            "<!DOCTYPE html><html><head><title>Print Lanyard</title>" +
-                styles +
-                "<style>@page{margin:10mm}body{margin:0;display:flex;justify-content:center;align-items:center;min-height:100vh}.lanyard-strip,.lanyard02-strip,.lanyard03-strip{margin:0!important}</style></head><body>" +
-                clone.outerHTML +
-                "</body></html>",
-        );
-        win.document.close();
-        win.focus();
-        setTimeout(function () {
-            win.print();
-            win.close();
-        }, 700);
+
+        $(clone)
+            .find(
+                ".lanyard-action-buttons, " +
+                    ".lanyard-actions, " +
+                    ".whole-lanyard-action-buttons, " +
+                    ".whole-card-action-buttons",
+            )
+            .remove();
+
+        return clone;
     }
-    $(document).on("click", ".lanyard-print-btn", function () {
-        printLanyard(
-            $(this).closest(
-                ".lanyard-strip,.lanyard02-strip,.lanyard03-strip",
-            )[0],
-        );
+
+    /**
+     * Print lanyard.
+     */
+    function printLanyard(element) {
+        const clone = createCleanClone(element);
+
+        if (!clone) {
+            alert("Unable to find the selected lanyard.");
+
+            return;
+        }
+
+        const printArea = document.createElement("div");
+
+        printArea.className = "print-lanyard-target";
+
+        printArea.appendChild(clone);
+
+        document.body.appendChild(printArea);
+
+        /*
+         * Give browser time to render print area.
+         */
+        setTimeout(function () {
+            window.print();
+        }, 50);
+
+        /*
+         * Remove after print.
+         */
+        setTimeout(function () {
+            if (document.body.contains(printArea)) {
+                document.body.removeChild(printArea);
+            }
+        }, 500);
+    }
+
+    /**
+     * Remove previous handler.
+     */
+    $(document).off("click.lanyardPrint", ".lanyard-print-btn");
+
+    /**
+     * Print click.
+     */
+    $(document).on("click.lanyardPrint", ".lanyard-print-btn", function (e) {
+        e.preventDefault();
+
+        e.stopPropagation();
+
+        const element = getLanyardFromButton(this);
+
+        printLanyard(element);
     });
-    addLanyardPrintButtons();
-});
+
+    /**
+     * Public API.
+     */
+    window.LanyardPrint = {
+        print: printLanyard,
+    };
+})(jQuery);
