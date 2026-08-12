@@ -13,9 +13,7 @@
                 <i class="fas fa-plus-circle"></i>
                 Add Specialist
             </a>
-            <a href="{{ route('specialist-cards.index') }}" class="btn btn-primary">
-                See Specialist Card
-            </a>
+           
         </div>
     </div>
 @stop
