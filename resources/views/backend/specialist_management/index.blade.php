@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Specialists')
+@section('title', 'Specialists Information')
 
 @section('content_header')
     <div class="d-flex justify-content-between align-items-center">
@@ -21,6 +21,7 @@
 @stop
 
 @section('content')
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/index_page/index_action.css') }}">
     <div class="card card-outline card-primary shadow">
         <div class="card-header">
             <h3 class="card-title">
@@ -111,21 +112,44 @@
                             </td>
 
                             <td class="text-center align-middle">
-                                <a href="{{ route('specialists.show', $specialist->id) }}" class="btn btn-sm btn-warning">
-                                    <i class="fas fa-eye"></i>
-                                </a>
-                                <a href="{{ route('specialists.edit', $specialist->id) }}" class="btn btn-sm btn-primary">
-                                    <i class="fas fa-edit"></i>
-                                </a>
-                                <form action="{{ route('specialists.destroy', $specialist->id) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" class="btn btn-sm btn-danger"
-                                        onclick="triggerDeleteModal('{{ route('specialists.destroy', $specialist->id) }}')">
-                                        <i class="fas fa-trash"></i>
-                                    </button>
-                                </form>
+                                <div class="specialist-action-grid">
+
+                                    {{-- View Profile --}}
+                                    <a href="{{ route('specialists.show', $specialist->id) }}"
+                                        class="specialist-action-btn btn-profile" title="View Specialist Profile">
+                                        <i class="fas fa-user-md"></i>
+                                        <span>Profile</span>
+                                    </a>
+
+                                    {{-- View Card --}}
+                                    <a href="{{ route('specialist-cards.show', $specialist->id) }}"
+                                        class="specialist-action-btn btn-card" title="View Specialist Card">
+                                        <i class="fas fa-id-card"></i>
+                                        <span>Card</span>
+                                    </a>
+
+                                    {{-- Edit --}}
+                                    <a href="{{ route('specialists.edit', $specialist->id) }}"
+                                        class="specialist-action-btn btn-edit" title="Edit Specialist Information">
+                                        <i class="fas fa-edit"></i>
+                                        <span>Edit</span>
+                                    </a>
+
+                                    {{-- Delete --}}
+                                    <form action="{{ route('specialists.destroy', $specialist->id) }}" method="POST"
+                                        class="specialist-action-form">
+                                        @csrf
+                                        @method('DELETE')
+
+                                        <button type="button" class="specialist-action-btn btn-delete"
+                                            title="Delete Specialist"
+                                            onclick="triggerDeleteModal('{{ route('specialists.destroy', $specialist->id) }}')">
+                                            <i class="fas fa-trash-alt"></i>
+                                            <span>Delete</span>
+                                        </button>
+                                    </form>
+
+                                </div>
                             </td>
                         </tr>
                     @empty

@@ -1,0 +1,105 @@
+.specialist-action-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 6px;
+    width: 160px;
+    margin: 0 auto;
+}
+
+/* Every action occupies exactly the same space */
+.specialist-action-btn {
+    width: 100%;
+    height: 34px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    padding: 0 8px;
+
+    border: 1px solid transparent;
+    border-radius: 6px;
+
+    font-size: 12px;
+    font-weight: 500;
+
+    line-height: 1;
+    text-decoration: none;
+
+    white-space: nowrap;
+    cursor: pointer;
+
+    box-sizing: border-box;
+}
+
+/* Delete form must behave exactly like an action item */
+.specialist-action-form {
+    width: 100%;
+    height: 34px;
+    margin: 0;
+    padding: 0;
+}
+
+/* Make button fill the form */
+.specialist-action-form .specialist-action-btn {
+    width: 100%;
+    height: 34px;
+}
+
+/* Icons */
+.specialist-action-btn i {
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+/* Hover */
+.specialist-action-btn:hover {
+    text-decoration: none;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.12);
+}
+
+/* Profile */
+.btn-profile {
+    background-color: #f0ad00;
+    color: #fff;
+}
+
+.btn-profile:hover {
+    background-color: #d99c00;
+    color: #fff;
+}
+
+/* Card */
+.btn-card {
+    background-color: #6c757d;
+    color: #fff;
+}
+
+.btn-card:hover {
+    background-color: #5a6268;
+    color: #fff;
+}
+
+/* Edit */
+.btn-edit {
+    background-color: #0d6efd;
+    color: #fff;
+}
+
+.btn-edit:hover {
+    background-color: #0b5ed7;
+    color: #fff;
+}
+
+/* Delete */
+.btn-delete {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background-color: #bb2d3b;
+    color: #fff;
+}
