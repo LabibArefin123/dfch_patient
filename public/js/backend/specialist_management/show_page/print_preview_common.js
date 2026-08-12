@@ -1,74 +1,150 @@
-$(document).ready(function () {
-    window.printType = "front";
-
-    window.generatePrintCards = function () {
-        let copies = parseInt($("#cardPrintCopies").val()) || 1;
-
-        let grid = $("#printCardGrid");
-
-        grid.empty();
-
-        let source;
-
-        switch (window.printType) {
-            case "front":
-                source = $(".doctor-card").first();
-                break;
-
-            case "back":
-                source = $(".doctor-card-holder").first();
-                break;
-
-            case "whole":
-                source = $(".card-preview-middle").first();
-                break;
-
-            default:
-                return;
-        }
-
-        if (!source.length) {
-            console.error(window.printType + " source not found.");
-            return;
-        }
-
-        for (let i = 0; i < copies; i++) {
-            let clone = source.clone(false);
-
-            clone.removeAttr("id").addClass("print-clone-card");
-
-            $("<div>", {
-                class: "print-card-item",
-            })
-                .append(clone)
-                .appendTo(grid);
-        }
-
-        resizePrintCards();
+$(function () {
+    window.patientCardPrint = {
+        themeContainers: [
+            ".card-preview-container",
+            ".card-preview-container2",
+            ".card-preview-container3",
+        ],
+        getThemeContainer: function () {
+            let theme = $("#card_theme").val() || "1";
+            let container = $(
+                this.themeContainers[parseInt(theme) - 1],
+            ).first();
+            if (!container.length)
+                container = $(
+                    ".card-preview-middle,.card-preview-container,.card-preview-container2,.card-preview-container3",
+                )
+                    .filter(":visible")
+                    .first();
+            return container;
+        },
+        getFront: function () {
+            let container = this.getThemeContainer();
+            if (!container.length) return $();
+            let selectors = [".doctor-card", ".wide-card", ".doctor-card-3"];
+            for (let selector of selectors) {
+                let card = container.find(selector).first();
+                if (card.length) return card;
+            }
+            return container
+                .find("[class*='doctor-card'],[class*='wide-card']")
+                .filter(function () {
+                    return (
+                        !$(this).hasClass("doctor-card-back") &&
+                        !$(this).hasClass("doctor-card-back-3") &&
+                        !$(this).hasClass("wide-card-back")
+                    );
+                })
+                .first();
+        },
+        getBack: function () {
+            let container = this.getThemeContainer();
+            if (!container.length) return $();
+            let selectors = [
+                ".doctor-card-back",
+                ".wide-card-back",
+                ".doctor-card-back-3",
+            ];
+            for (let selector of selectors) {
+                let card = container.find(selector).first();
+                if (card.length) return card;
+            }
+            return $();
+        },
+        getCardType: function () {
+            let front = this.getFront();
+            if (!front.length) return "vertical";
+            if (front.hasClass("wide-card")) return "wide";
+            if (front.hasClass("doctor-card-3")) return "vertical";
+            return "vertical";
+        },
+        getCopies: function () {
+            return Math.max(1, parseInt($("#cardPrintCopies").val()) || 1);
+        },
+        clean: function (element) {
+            let clone = element.clone(false);
+            clone.removeAttr("id");
+            clone
+                .find(
+                    ".print-card-actions,.whole-card-action-buttons,.lanyard-action-buttons,.whole-lanyard-action-buttons",
+                )
+                .remove();
+            return clone;
+        },
+        clearGrid: function () {
+            $("#printCardGrid").empty();
+        },
+        createItem: function (front, back, type, index) {
+            let item = $("<div>", { class: "print-card-item" });
+            let sides = $("<div>", { class: "print-card-sides" });
+            if (front && front.length)
+                sides.append(this.clean(front).addClass("print-front-side"));
+            if (back && back.length)
+                sides.append(this.clean(back).addClass("print-back-side"));
+            item.attr("data-card-index", index);
+            item.attr("data-card-type", type);
+            item.append(sides);
+            return item;
+        },
+        generate: function (mode) {
+            let front = this.getFront();
+            let back = this.getBack();
+            let type = this.getCardType();
+            let copies = this.getCopies();
+            let grid = $("#printCardGrid");
+            if (!grid.length) return;
+            this.clearGrid();
+            if (mode === "front") {
+                for (let i = 0; i < copies; i++) {
+                    let item = $("<div>", {
+                        class: "print-card-item print-front-only",
+                    });
+                    item.append(this.clean(front).addClass("print-front-side"));
+                    grid.append(item);
+                }
+            } else if (mode === "back") {
+                for (let i = 0; i < copies; i++) {
+                    let item = $("<div>", {
+                        class: "print-card-item print-back-only",
+                    });
+                    item.append(this.clean(back).addClass("print-back-side"));
+                    grid.append(item);
+                }
+            } else {
+                for (let i = 0; i < copies; i++) {
+                    grid.append(this.createItem(front, back, type, i));
+                }
+            }
+            grid.attr("data-print-mode", mode);
+            grid.attr("data-card-type", type);
+            this.applyLayout(type, mode);
+        },
+        applyLayout: function (type, mode) {
+            let grid = $("#printCardGrid");
+            grid.removeClass(
+                "print-layout-vertical print-layout-wide print-mode-front print-mode-back print-mode-whole",
+            );
+            grid.addClass(
+                type === "wide" ? "print-layout-wide" : "print-layout-vertical",
+            );
+            grid.addClass("print-mode-" + mode);
+        },
+        open: function (mode) {
+            window.patientCardPrint.mode = mode;
+            $("#printPreviewModal").modal("show");
+            this.generate(mode);
+        },
     };
-
-    window.resizePrintCards = function () {
-        let scale = window.printType === "front" ? 0.36 : 0.38;
-
-        $(".print-clone-card").css({
-            transform: `scale(${scale})`,
-            transformOrigin: "top center",
-        });
-    };
-
     $(document).on("change", "#cardPrintCopies", function () {
-        generatePrintCards();
+        if (window.patientCardPrint.mode)
+            window.patientCardPrint.generate(window.patientCardPrint.mode);
     });
-
-    $(document).on("click", "#printCardButton", function () {
-        generatePrintCards();
-
-        setTimeout(function () {
-            window.print();
-        }, 500);
+    $(document).on("change", "#card_theme", function () {
+        if (window.patientCardPrint.mode)
+            window.patientCardPrint.generate(window.patientCardPrint.mode);
     });
-
     $("#printPreviewModal").on("shown.bs.modal", function () {
-        generatePrintCards();
+        if (window.patientCardPrint.mode)
+            window.patientCardPrint.generate(window.patientCardPrint.mode);
     });
 });

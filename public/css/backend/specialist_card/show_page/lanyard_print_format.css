@@ -1,180 +1,171 @@
-/* ==========================================================
-   LANYARD ACTION BUTTONS
-========================================================== */
-
 .lanyard-action-buttons {
     position: absolute !important;
     left: 4px !important;
     right: 4px !important;
     bottom: 4px !important;
-
     display: flex !important;
     flex-wrap: wrap !important;
     justify-content: center !important;
     align-items: center !important;
-
     gap: 3px !important;
-
     width: auto !important;
     height: auto !important;
-
     padding: 4px !important;
-
     background: rgba(255, 255, 255, 0.96) !important;
-
-    border-radius: 6px !important;
-
     border: 1px solid rgba(0, 0, 0, 0.12) !important;
-
-    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.18) !important;
-
-    z-index: 9999 !important;
-
+    border-radius: 6px !important;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.16) !important;
+    z-index: 20 !important;
     opacity: 1 !important;
     visibility: visible !important;
-
     transform: none !important;
 }
 
-/* ==========================================================
-   LANYARD BUTTONS
-========================================================== */
-
 .lanyard-action-buttons .btn {
     position: relative !important;
-
     display: inline-flex !important;
-
     align-items: center !important;
     justify-content: center !important;
-
     gap: 3px !important;
-
-    min-width: 0 !important;
-
     width: auto !important;
-
+    min-width: 0 !important;
     height: 24px !important;
-
     margin: 0 !important;
-
-    padding: 3px 5px !important;
-
+    padding: 3px 6px !important;
     border-radius: 4px !important;
-
     font-size: 9px !important;
-
     line-height: 1 !important;
-
     font-weight: 600 !important;
-
     white-space: nowrap !important;
-
-    z-index: 10000 !important;
+    z-index: 21 !important;
 }
 
 .lanyard-action-buttons .btn i {
     font-size: 9px !important;
 }
 
-/* ==========================================================
-   WHOLE CARD BUTTONS
-========================================================== */
-
-.whole-card-action-buttons {
-    display: flex !important;
-
-    flex-wrap: wrap !important;
-
-    align-items: center !important;
-
-    gap: 8px !important;
-
-    margin-bottom: 15px !important;
-}
-
-.whole-card-action-buttons .btn {
-    display: inline-flex !important;
-
-    align-items: center !important;
-    justify-content: center !important;
-
-    gap: 5px !important;
-}
-
-/* ==========================================================
-   MAKE LANYARD STRIPS SAFE FOR ABSOLUTE BUTTONS
-========================================================== */
-
 .lanyard-strip,
 .lanyard02-strip,
 .lanyard03-strip {
     position: relative !important;
+}
 
-    overflow: visible !important;
+.lanyard-action-buttons .btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.18);
 }
 
 /* ==========================================================
-   MAKE LANYARD CARDS SAFE
+   LANYARD MODALS
 ========================================================== */
 
-.lanyard-card {
-    overflow: visible !important;
+#lanyardWhatsAppModal,
+#lanyardEmailModal,
+#wholeLanyardPreviewModal {
+    z-index: 1060 !important;
 }
 
-.whole-lanyard-preview-content {
+.modal-backdrop {
+    z-index: 1050 !important;
+}
+
+#lanyardWhatsAppModal .modal-dialog,
+#lanyardEmailModal .modal-dialog,
+#wholeLanyardPreviewModal .modal-dialog {
+    position: relative;
+    z-index: 1061 !important;
+}
+
+#lanyardWhatsAppModal .modal-content,
+#lanyardEmailModal .modal-content,
+#wholeLanyardPreviewModal .modal-content {
+    position: relative;
+    z-index: 1062 !important;
+}
+
+/* ==========================================================
+   WHATSAPP / EMAIL MODAL
+========================================================== */
+
+.lanyard-modal-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 12px;
     display: flex;
-    justify-content: center;
     align-items: center;
-    width: 100%;
-    min-height: 400px;
-    padding: 20px;
-    background: #f5f5f5;
-    border-radius: 8px;
-    overflow: auto;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 30px;
+}
+
+.lanyard-whatsapp-icon {
+    background: #e9f8ef;
+    color: #198754;
+}
+
+.lanyard-email-icon {
+    background: #eef4ff;
+    color: #0d6efd;
+}
+
+.lanyard-modal-input {
+    font-weight: 600;
+    letter-spacing: 0.4px;
+}
+
+.lanyard-modal-help {
+    font-size: 12px;
+}
+
+.lanyard-modal-loading {
+    display: none;
+}
+
+/* ==========================================================
+   WHOLE LANYARD PREVIEW
+========================================================== */
+
+.whole-lanyard-preview-content {
+    display: flex !important;
+    justify-content: center !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    min-height: 400px !important;
+    padding: 25px !important;
+    background: #f5f6f8 !important;
+    border-radius: 8px !important;
+    overflow: auto !important;
 }
 
 .whole-lanyard-preview-content .lanyard-card {
-    width: 170px;
     margin: 0 !important;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15) !important;
 }
 
 .whole-lanyard-preview-content .lanyard-action-buttons {
     display: none !important;
 }
 
-.whole-lanyard-preview-content .lanyard-title {
-    display: block;
-}
 /* ==========================================================
-   MOBILE
+   PRINT
 ========================================================== */
 
-@media (max-width: 576px) {
-    .lanyard-action-buttons {
-        left: 3px !important;
-        right: 3px !important;
-        bottom: 3px !important;
-
-        gap: 2px !important;
-
-        padding: 3px !important;
-    }
-
-    .lanyard-action-buttons .btn {
-        height: 22px !important;
-
-        padding: 2px 4px !important;
-
-        font-size: 8px !important;
-    }
-
-    .lanyard-action-buttons .btn i {
-        font-size: 8px !important;
-    }
-
+@media print {
+    .lanyard-action-buttons,
+    .whole-lanyard-action-buttons,
     .whole-card-action-buttons {
-        gap: 5px !important;
+        display: none !important;
+    }
+
+    .lanyard-card {
+        box-shadow: none !important;
+        margin: 0 !important;
+    }
+
+    .lanyard-strip,
+    .lanyard02-strip,
+    .lanyard03-strip {
+        print-color-adjust: exact !important;
+        -webkit-print-color-adjust: exact !important;
     }
 }

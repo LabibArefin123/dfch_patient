@@ -1,35 +1,103 @@
 .print-card-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(5, auto);
-    gap: 12mm 8mm;
+    width: 100%;
+    box-sizing: border-box;
     justify-content: center;
+    align-items: start;
+    gap: 8mm;
+}
+
+.print-card-grid.print-layout-vertical {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.print-card-grid.print-layout-wide {
+    grid-template-columns: repeat(2, 1fr);
 }
 
 .print-card-item {
     width: 100%;
     height: auto;
-    min-height: 60mm;
+    min-height: 0;
     overflow: visible;
     display: flex;
     justify-content: center;
     align-items: flex-start;
+    box-sizing: border-box;
+    break-inside: avoid;
+    page-break-inside: avoid;
+}
+
+.print-card-sides {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 5mm;
+    width: max-content;
+}
+
+.print-front-side,
+.print-back-side {
+    position: relative;
+    display: block;
+    flex-shrink: 0;
+    margin: 0 !important;
 }
 
 .print-card-item img {
-    object-fit: cover !important;
+    object-fit: cover;
 }
-/* Front & Back print preview */
 
 .print-card-item .doctor-card,
-.print-card-item .doctor-card-back {
-    width: 350px !important;
-    height: 560px !important;
-    display: block;
+.print-card-item .doctor-card-back,
+.print-card-item .wide-card,
+.print-card-item .wide-card-back,
+.print-card-item .doctor-card-3,
+.print-card-item .doctor-card-back-3 {
     position: relative;
-    overflow: hidden;
-    border-radius: 22px;
+    display: block;
     box-sizing: border-box;
+    overflow: hidden;
+    margin: 0 !important;
+}
+
+.print-card-item .doctor-card,
+.print-card-item .doctor-card-back,
+.print-card-item .doctor-card-3,
+.print-card-item .doctor-card-back-3 {
+    width: 350px;
+    height: 560px;
+}
+
+.print-card-item .wide-card,
+.print-card-item .wide-card-back {
+    width: 520px;
+    height: 350px;
+}
+
+.print-card-grid.print-mode-whole {
+    grid-template-columns: 1fr;
+    gap: 8mm;
+}
+
+.print-card-grid.print-mode-whole .print-card-item {
+    width: 100%;
+}
+
+.print-card-grid.print-mode-whole .print-card-sides {
+    flex-direction: row;
+    gap: 6mm;
+}
+
+.print-card-grid.print-mode-front,
+.print-card-grid.print-mode-back {
+    gap: 8mm 6mm;
+}
+
+.print-card-grid.print-mode-front .print-card-item,
+.print-card-grid.print-mode-back .print-card-item {
+    width: 100%;
 }
 
 .print-clone-card {
@@ -37,6 +105,73 @@
     transform-origin: center top;
 }
 
-.print-card-item {
-    overflow: visible;
+@media (max-width: 1100px) {
+    .print-card-grid.print-layout-vertical {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .print-card-grid.print-layout-wide {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 700px) {
+    .print-card-grid.print-layout-vertical,
+    .print-card-grid.print-layout-wide {
+        grid-template-columns: 1fr;
+    }
+
+    .print-card-sides {
+        gap: 15px;
+    }
+}
+
+@media print {
+    .print-card-grid {
+        width: 100%;
+        display: grid;
+        box-sizing: border-box;
+    }
+
+    .print-card-grid.print-layout-vertical.print-mode-front,
+    .print-card-grid.print-layout-vertical.print-mode-back {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 7mm 4mm;
+    }
+
+    .print-card-grid.print-layout-wide.print-mode-front,
+    .print-card-grid.print-layout-wide.print-mode-back {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8mm 5mm;
+    }
+
+    .print-card-grid.print-mode-whole {
+        grid-template-columns: 1fr;
+        gap: 8mm;
+    }
+
+    .print-card-item {
+        break-inside: avoid !important;
+        page-break-inside: avoid !important;
+    }
+
+    .print-card-sides {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: flex-start !important;
+        justify-content: center !important;
+        gap: 5mm !important;
+    }
+
+    .print-card-item .doctor-card,
+    .print-card-item .doctor-card-back,
+    .print-card-item .doctor-card-3,
+    .print-card-item .doctor-card-back-3 {
+        box-shadow: none !important;
+    }
+
+    .print-card-item .wide-card,
+    .print-card-item .wide-card-back {
+        box-shadow: none !important;
+    }
 }

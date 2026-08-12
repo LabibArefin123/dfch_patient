@@ -6,4 +6,17 @@
 .print-control-box label {
     font-weight: 600;
     margin-bottom: 8px;
+    display: block;
+}
+
+.print-control-box select,
+.print-control-box input {
+    width: 100%;
+}
+
+@media (max-width: 576px) {
+    .print-control-box {
+        width: 100%;
+        max-width: 300px;
+    }
 }

@@ -1,12 +1,38 @@
-.back-print-card .doctor-card-back {
-    width: 350px;
-    height: 560px;
+.back-print-card {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    overflow: visible;
+}
+
+.back-print-card .doctor-card-back,
+.back-print-card .wide-card-back,
+.back-print-card .doctor-card-back-3 {
     position: relative;
     overflow: hidden;
     border-radius: 22px;
+    box-sizing: border-box;
+}
+
+.back-print-card .doctor-card-back,
+.back-print-card .doctor-card-back-3 {
+    width: 350px;
+    height: 560px;
+}
+
+.back-print-card .wide-card-back {
+    width: 520px;
+    height: 350px;
 }
 
 .back-print-card img {
     object-fit: contain;
     max-width: 100%;
+}
+
+@media (max-width: 700px) {
+    .back-print-card {
+        overflow: auto;
+        justify-content: flex-start;
+    }
 }

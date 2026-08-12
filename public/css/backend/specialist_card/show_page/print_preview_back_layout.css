@@ -2,12 +2,27 @@
     width: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
+    overflow: visible;
+    box-sizing: border-box;
 }
 
 .back-print-card {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    overflow: hidden;
+    overflow: visible;
+    width: auto;
+    max-width: 100%;
+}
+
+@media (max-width: 700px) {
+    .back-print-wrapper {
+        justify-content: flex-start;
+        overflow: auto;
+    }
+
+    .back-print-card {
+        justify-content: flex-start;
+    }
 }

@@ -1,0 +1,49 @@
+.whatsapp-modal-icon {
+    width: 58px;
+    height: 58px;
+    margin: 0 auto 12px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #e9f8ef;
+    color: #198754;
+    font-size: 32px;
+}
+
+#lanyardWhatsAppModal .modal-content {
+    /* border-radius: 14px; */
+    overflow: hidden;
+}
+
+#lanyardWhatsAppModal .modal-header {
+    border-bottom: 0;
+}
+
+#lanyardWhatsAppModal .modal-footer {
+    border-top: 1px solid #eee;
+}
+
+#lanyardWhatsAppModal .input-group-text {
+    background: #f8f9fa;
+    font-weight: 600;
+}
+
+#lanyardWhatsappNumber {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+#confirmLanyardWhatsapp {
+    min-width: 160px;
+}
+
+@media (max-width: 576px) {
+    #lanyardWhatsAppModal .modal-dialog {
+        margin: 12px;
+    }
+
+    #confirmLanyardWhatsapp {
+        min-width: auto;
+    }
+}

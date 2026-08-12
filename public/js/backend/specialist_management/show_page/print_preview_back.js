@@ -1,9 +1,6 @@
-$(document).ready(function () {
-    $(document).on("click", "#openBackPrintPreview", function () {
-        window.printType = "back";
-
-        $("#printPreviewModal").modal("show");
-
-        generatePrintCards();
+$(function () {
+    $(document).on("click", "#openBackPrintPreview", function (e) {
+        e.preventDefault();
+        window.patientCardPrint.open("back");
     });
 });

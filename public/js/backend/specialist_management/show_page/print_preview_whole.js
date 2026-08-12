@@ -1,9 +1,6 @@
-$(document).ready(function () {
-    $(document).on("click", "#openWholePrintPreview", function () {
-        window.printType = "whole";
-
-        $("#printPreviewModal").modal("show");
-
-        generatePrintCards();
+$(function () {
+    $(document).on("click", "#openWholePrintPreview", function (e) {
+        e.preventDefault();
+        window.patientCardPrint.open("whole");
     });
 });

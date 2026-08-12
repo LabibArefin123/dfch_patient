@@ -100,6 +100,7 @@
 
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/layout.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/lanyard_print_format.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/whatsapp_whole.css') }}">
     {{-- Print Preview Front Part --}}
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_buttons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_modal.css') }}">
@@ -141,7 +142,20 @@
             @include('backend.specialist_management.card_management.format_card.backcard_layout.back_1')
         </div>
     </div>
-
+    <div class="card-preview-container2">
+        {{-- ========================= CARD DESIGN 1B ========================= --}}
+        {{-- ========================= FRONT SIDE ========================= --}}
+        @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_2')
+        {{-- ========================= BACK SIDE ========================= --}}
+        @include('backend.specialist_management.card_management.format_card.backcard_layout.back_2')
+    </div>
+    <div class="card-preview-container3">
+        {{-- ========================= CARD DESIGN 1C ========================= --}}
+        {{-- ========================= FRONT SIDE ========================= --}}
+        @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_3')
+        {{-- ========================= BACK SIDE ========================= --}}
+        @include('backend.specialist_management.card_management.format_card.backcard_layout.back_3')
+    </div>
     <div class="print-button-container">
         <button type="button" class="btn btn-danger" id="openFrontPrintPreview">
 
@@ -162,20 +176,6 @@
             <i class="fas fa-print"></i>
             Print Whole Card
         </button>
-    </div>
-    <div class="card-preview-container2">
-        {{-- ========================= CARD DESIGN 1B ========================= --}}
-        {{-- ========================= FRONT SIDE ========================= --}}
-        @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_2')
-        {{-- ========================= BACK SIDE ========================= --}}
-        @include('backend.specialist_management.card_management.format_card.backcard_layout.back_2')
-    </div>
-    <div class="card-preview-container3">
-        {{-- ========================= CARD DESIGN 1C ========================= --}}
-        {{-- ========================= FRONT SIDE ========================= --}}
-        @include('backend.specialist_management.card_management.format_card.frontcard_layout.front_3')
-        {{-- ========================= BACK SIDE ========================= --}}
-        @include('backend.specialist_management.card_management.format_card.backcard_layout.back_3')
     </div>
 
     <div class="design-selection-card mt-4">
