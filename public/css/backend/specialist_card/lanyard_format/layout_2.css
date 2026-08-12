@@ -5,16 +5,18 @@
     height: 300px;
     display: flex;
     flex-direction: column;
+    overflow: visible;
 }
 
 /*  EACH STRIP */
 .lanyard02-strip {
     flex: 1;
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
     position: relative;
-    overflow: hidden;
+    overflow: visible;
 }
 
 /* CONTENT */
@@ -35,7 +37,6 @@
     width: 25px;
     height: 25px;
     object-fit: contain;
- 
 }
 
 /* TEXT*/

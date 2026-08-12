@@ -99,6 +99,7 @@
         href="{{ asset('css/backend/specialist_card/card_format/card_3/card_design_3_back_footer.css') }}">
 
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/layout.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/lanyard_print_format.css') }}">
     {{-- Print Preview Front Part --}}
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_buttons.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/specialist_card/show_page/print_preview_modal.css') }}">
@@ -196,6 +197,29 @@
         </select>
     </div>
 
+    <div class="print-button-container mb-4">
+        <button type="button" class="btn btn-danger whole-card-print-btn">
+            <i class="fas fa-print"></i>
+            Print Whole Card
+        </button>
+
+        <button type="button" class="btn btn-info whole-card-preview-btn">
+            <i class="fas fa-eye"></i>
+            Preview Whole Card
+        </button>
+
+        <button type="button" class="btn btn-success whole-card-whatsapp-btn">
+            <i class="fab fa-whatsapp"></i>
+            WhatsApp Whole Card
+        </button>
+
+        <button type="button" class="btn btn-secondary whole-card-email-btn">
+            <i class="fas fa-envelope"></i>
+            Email Whole Card
+        </button>
+
+    </div>
+
     <div class="lanyard-preview-container">
         @include('backend.specialist_management.card_management.format_card.lanyards.design_1')
     </div>
@@ -217,4 +241,19 @@
     <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_whole.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/lanyard_print_action.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/lanyard_print_preview.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whatsapp_action.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_preview_action.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whole_card.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whole_preview.js') }}"></script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whole_whatsapp.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/print_whole_email.js') }}"></script>
 @endsection

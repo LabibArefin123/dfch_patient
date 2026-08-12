@@ -40,12 +40,4 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
-    // Warn user if leaving by native browser navigation (refresh/back button)
-    window.addEventListener("beforeunload", function (e) {
-        if (isDirty) {
-            e.preventDefault();
-            e.returnValue = "";
-        }
-    });
 });

@@ -8,7 +8,7 @@
           <p>
               <strong>Dr. Fazlul Haque Colorectal Hospital Limited (DFCH)</strong> is a
               specialized center of excellence in colorectal surgery, established on
-              <strong>24th June 2024</strong>, committed to advanced and compassionate care.
+              <strong>24 June 2024</strong>, committed to advanced and compassionate care.
           </p>
 
           <button class="btn btn-outline-light rounded-pill mt-3" onclick="toggleAbout(true)">

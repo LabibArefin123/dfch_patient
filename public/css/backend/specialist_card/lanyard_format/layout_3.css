@@ -1,6 +1,4 @@
-/* =====================================
-   LANYARD DESIGN 03
-===================================== */
+/* LANYARD DESIGN 03 */
 
 .lanyard03-body {
     height: 300px;
@@ -10,66 +8,68 @@
     flex-direction: column;
 }
 
-/* =====================================
-   STRIP
-===================================== */
+/* STRIP */
 
 .lanyard03-strip {
     flex: 1;
-
     position: relative;
-
     display: flex;
-
     align-items: center;
-
     justify-content: center;
-
-    overflow: hidden;
+    overflow: visible;
 }
-/* =====================================
-   SIDE BANDS
-===================================== */
 
+/* SIDE BANDS */
 .left-band,
-.right-band{
-    position:absolute;
-    width:10px;
-    height:70%;
-    top:15%;
-    border-radius:30px;
+.right-band {
+    position: absolute;
+    width: 10px;
+    height: 70%;
+    top: 15%;
+    border-radius: 30px;
 }
 
 /* Left */
-.left-band-1{ left:15px; }
-.left-band-2{ left:30px; }
-.left-band-3{ left:45px; }
+.left-band-1 {
+    left: 15px;
+}
+.left-band-2 {
+    left: 30px;
+}
+.left-band-3 {
+    left: 45px;
+}
 
 /* Right */
-.right-band-1{ right:15px; }
-.right-band-2{ right:30px; }
-.right-band-3{ right:45px; }
-
+.right-band-1 {
+    right: 15px;
+}
+.right-band-2 {
+    right: 30px;
+}
+.right-band-3 {
+    right: 45px;
+}
 
 /* CENTER */
-.lanyard03-center{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    position:relative;
-    z-index:2;
+.lanyard03-center {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    position: relative;
+    z-index: 2;
 }
 
-.lanyard03-logo{
-    width:25px;
-    height:25px;
-    object-fit:contain;
+.lanyard03-logo {
+    width: 25px;
+    height: 25px;
+    object-fit: contain;
 }
 
-.lanyard03-center span{
-    font-size:25px;
-    font-weight:700;
-    letter-spacing:.5px;
+.lanyard03-center span {
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
 }
 
 /* WHITE */
@@ -118,9 +118,7 @@
     padding: 2px;
 }
 
-/* =====================================
-   BLACK
-===================================== */
+/* BLACK */
 
 .lanyard03-black {
     background: #000;
