@@ -458,7 +458,7 @@ class PatientController extends Controller
         );
     }
 
-    public function patient_recommend(Request $request)
+    public function patient_referred(Request $request)
     {
         // Clean "null" string values
         foreach ($request->all() as $key => $value) {
@@ -581,7 +581,7 @@ class PatientController extends Controller
             $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 70])->count();
             $seniorPatients = (clone $baseQuery)->where('age', '>', 70)->count();
 
-        /* AGE FILTER*/
+            /* AGE FILTER*/
             switch ($request->input('age_group')) {
                 case 'child':
                     $baseQuery->where('age', '<', 18);
