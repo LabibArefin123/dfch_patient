@@ -35,6 +35,7 @@
 
     {{-- Filter --}}
     @include('backend.patient_management.filter.filter')
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/index_page/patient_age.css') }}">
     <style>
         .patient-img {
             width: 45px;
@@ -98,6 +99,7 @@
             recommend: "{{ route('patients.recommend') }}"
         };
     </script>
+    <script src="{{ asset('js/backend/patient_management/patient_filter_age.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_shared_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ref_ajax_file.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_ref_ajax_filter.js') }}"></script>

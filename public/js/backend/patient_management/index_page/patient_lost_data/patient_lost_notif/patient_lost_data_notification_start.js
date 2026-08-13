@@ -1,28 +1,23 @@
-/* PATIENT LOST DATA - NOTIFICATION START*/
+/*PATIENT LOST DATA - NOTIFICATION START*/
 $(function () {
-    /* Notification must exist */
+    /* Make sure notification exists  */
     if (!window.patientLostDataNotification) {
+        console.warn("Patient lost-data notification not initialized.");
+
         return;
     }
 
-    /*Setup notification actions  */
-    setupLostPatientDataActions();
-
-
-    /* Only check drafts when: ?check_draft=1  */
-    const params = new URLSearchParams(
-        window.location.search
-    );
-
-    if (
-        params.get("check_draft") !== "1"
-    ) {
-        return;
+    /*Setup Actions*/
+    if (typeof setupLostPatientDataActions === "function") {
+        setupLostPatientDataActions();
     }
 
-    /*Small delay so the index page/UI is fully initialized  */
+    /* Check Pending Drafts */
     setTimeout(function () {
-        checkPendingPatientDrafts();
+        if (typeof checkPendingPatientDrafts === "function") {
+            checkPendingPatientDrafts();
+        } else {
+            console.error("checkPendingPatientDrafts() is not available.");
+        }
     }, 300);
 });
-

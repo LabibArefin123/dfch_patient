@@ -1,66 +1,69 @@
-/*
-|--------------------------------------------------------------------------
-| PATIENT TEMPORARY SAVE - REQUEST
-|--------------------------------------------------------------------------
-*/
+/*PATIENT TEMPORARY SAVE - REQUEST*/
 
 window.PatientTemporarySave = window.PatientTemporarySave || {};
 
 (function (module) {
     let saving = false;
-    let waitingCallbacks = [];
+    let queuedCallbacks = [];
 
+    /* Save Draft  */
     module.save = function (options = {}) {
-        /*
-        |--------------------------------------------------------------------------
-        | If already saving
-        |--------------------------------------------------------------------------
-        */
-
+        /* If a save is already running */
         if (saving) {
             if (typeof options.complete === "function") {
-                waitingCallbacks.push(options.complete);
+                queuedCallbacks.push(options.complete);
             }
 
             return;
         }
 
+        /* Get Form  */
         const form = module.getForm();
 
-        if (!form) {
+        if (!form || !form.length) {
+            console.warn("Patient temporary save: form not found.");
+
             if (typeof options.complete === "function") {
-                options.complete();
+                options.complete(false);
             }
 
             return;
         }
 
+        /* Collect Form Data  */
         const formData = module.collect();
 
-        /*
-        |--------------------------------------------------------------------------
-        | Don't save empty form
-        |--------------------------------------------------------------------------
-        */
+        /* Don't Save Empty Form */
 
         if (!module.hasData(formData)) {
+            console.warn("Patient temporary save: no form data found.");
+
             if (typeof options.complete === "function") {
-                options.complete();
+                options.complete(false);
             }
 
             return;
         }
 
+        /* Saving */
         saving = true;
-
         if (typeof options.complete === "function") {
-            waitingCallbacks.push(options.complete);
+            queuedCallbacks.push(options.complete);
         }
 
+        /* Draft Token  */
         const draftToken = module.getToken();
+
+        /* Route  */
 
         const saveUrl =
             window.patientRoutes?.lostDataSave || "/patients/drafts/save";
+
+        /*
+        |--------------------------------------------------------------------------
+        | AJAX
+        |--------------------------------------------------------------------------
+        */
 
         $.ajax({
             url: saveUrl,
@@ -71,6 +74,8 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
 
             headers: {
                 "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
+
+                Accept: "application/json",
             },
 
             data: {
@@ -85,7 +90,14 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
             },
 
             success: function (response) {
+                console.log("Patient draft saved:", response);
+
                 if (!response || !response.success) {
+                    console.warn(
+                        "Patient draft save returned an invalid response.",
+                        response,
+                    );
+
                     return;
                 }
 
@@ -101,7 +113,7 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
 
                 /*
                 |--------------------------------------------------------------------------
-                | Store Server Token
+                | Store Token
                 |--------------------------------------------------------------------------
                 */
 
@@ -124,7 +136,11 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
             },
 
             error: function (xhr) {
-                console.warn("Patient temporary save failed.", xhr);
+                console.error("Patient temporary save failed.", xhr);
+
+                console.error("Status:", xhr.status);
+
+                console.error("Response:", xhr.responseText);
             },
 
             complete: function () {
@@ -136,13 +152,13 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
                 |--------------------------------------------------------------------------
                 */
 
-                const callbacks = waitingCallbacks;
+                const callbacks = queuedCallbacks;
 
-                waitingCallbacks = [];
+                queuedCallbacks = [];
 
                 callbacks.forEach(function (callback) {
                     try {
-                        callback();
+                        callback(true);
                     } catch (error) {
                         console.error("Patient draft callback failed.", error);
                     }

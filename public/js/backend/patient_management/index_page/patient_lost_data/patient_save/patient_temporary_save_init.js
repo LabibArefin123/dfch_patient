@@ -72,28 +72,8 @@ $(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | Form Submit
+    | Browser Visibility
     |--------------------------------------------------------------------------
-    */
-
-    form.on("submit", function () {
-        if (window.patientTemporarySaveTimer) {
-            clearInterval(window.patientTemporarySaveTimer);
-
-            window.patientTemporarySaveTimer = null;
-        }
-
-        dirty = false;
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | Browser Visibility Change
-    |--------------------------------------------------------------------------
-    |
-    | This gives us another chance to save when the browser/tab becomes
-    | hidden.
-    |
     */
 
     document.addEventListener("visibilitychange", function () {
@@ -107,5 +87,21 @@ $(function () {
                 dirty = false;
             }
         }
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Submit
+    |--------------------------------------------------------------------------
+    */
+
+    form.on("submit", function () {
+        if (window.patientTemporarySaveTimer) {
+            clearInterval(window.patientTemporarySaveTimer);
+
+            window.patientTemporarySaveTimer = null;
+        }
+
+        dirty = false;
     });
 });

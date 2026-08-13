@@ -171,7 +171,6 @@ class PatientController extends Controller
                 ->where('age', '>', 70)
                 ->count();
 
-
             /* AGE FILTER */
             switch ($request->input('age_group')) {
 
@@ -431,11 +430,13 @@ class PatientController extends Controller
                     'checkbox',
                     'action'
                 ])
+
                 ->with([
-                    'childPatients'  => $childPatients,
-                    'adultPatients'  => $adultPatients,
+                    'childPatients' => $childPatients,
+                    'adultPatients' => $adultPatients,
                     'seniorPatients' => $seniorPatients,
                 ])
+
                 ->make(true);
         }
 
@@ -579,6 +580,21 @@ class PatientController extends Controller
             $childPatients  = (clone $baseQuery)->where('age', '<', 18)->count();
             $adultPatients  = (clone $baseQuery)->whereBetween('age', [18, 70])->count();
             $seniorPatients = (clone $baseQuery)->where('age', '>', 70)->count();
+
+        /* AGE FILTER*/
+            switch ($request->input('age_group')) {
+                case 'child':
+                    $baseQuery->where('age', '<', 18);
+                    break;
+
+                case 'adult':
+                    $baseQuery->whereBetween('age', [18, 70]);
+                    break;
+
+                case 'senior':
+                    $baseQuery->where('age', '>', 70);
+                    break;
+            }
 
             return DataTables::of($baseQuery)
                 ->addIndexColumn()

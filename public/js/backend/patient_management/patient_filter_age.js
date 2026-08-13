@@ -1,57 +1,83 @@
+/*PATIENT AGE FILTER*/
+
 $(function () {
     /*INITIAL AGE FILTER */
     window.patientAgeFilter = "";
 
-    /* CLICK CHILD */
-    $(document).on("click", "#childCount", function (e) {
+    /* GET ACTIVE TABLE  */
+    function getPatientAgeTable() {
+        /* Normal Patient Index */
+
+        if (
+            window.patientTable &&
+            $.fn.DataTable.isDataTable("#patientsTable")
+        ) {
+            return window.patientTable;
+        }
+
+        /* Recommend Patient Index*/
+        if (
+            window.recommendTable &&
+            $.fn.DataTable.isDataTable("#patientsRefTable")
+        ) {
+            return window.recommendTable;
+        }
+
+        return null;
+    }
+
+    /*RELOAD TABLE*/
+    function reloadPatientTable() {
+        const table = getPatientAgeTable();
+
+        if (!table) {
+            console.warn("Patient DataTable not found.");
+
+            return;
+        }
+
+        table.ajax.reload(null, false);
+    }
+
+    /* CHILD */
+    $(document).on("click", "#childCount", function () {
         if (window.patientAgeFilter === "child") {
             window.patientAgeFilter = "";
         } else {
             window.patientAgeFilter = "child";
         }
 
-        reloadPatientTable();
         updateActiveAgeFilter();
+        reloadPatientTable();
     });
 
-    /*CLICK ADULT*/
-    $(document).on("click", "#adultCount", function (e) {
+    /*ADULT */
+    $(document).on("click", "#adultCount", function () {
         if (window.patientAgeFilter === "adult") {
             window.patientAgeFilter = "";
         } else {
             window.patientAgeFilter = "adult";
         }
 
-        reloadPatientTable();
         updateActiveAgeFilter();
+        reloadPatientTable();
     });
 
-    /* CLICK SENIOR*/
-
-    $(document).on("click", "#seniorCount", function (e) {
+    /* SENIOR*/
+    $(document).on("click", "#seniorCount", function () {
         if (window.patientAgeFilter === "senior") {
             window.patientAgeFilter = "";
         } else {
             window.patientAgeFilter = "senior";
         }
 
-        reloadPatientTable();
         updateActiveAgeFilter();
+        reloadPatientTable();
     });
 
-    /* RELOAD TABLE*/
-    function reloadPatientTable() {
-        if (!window.patientTable) {
-            console.warn("Patient DataTable not found.");
-            return;
-        }
-
-        window.patientTable.ajax.reload(null, false);
-    }
-
-    /* ACTIVE FILTER STYLE*/
+    /*ACTIVE AGE FILTER STYLE */
     function updateActiveAgeFilter() {
-        $("#childCount, #adultCount, #seniorCount").removeClass(
+        $("#childCount, " + "#adultCount, " + "#seniorCount").removeClass(
             "age-filter-active",
         );
 
@@ -68,9 +94,10 @@ $(function () {
         }
     }
 
-    /* CLEAR AGE FILTER WHEN NORMAL FILTER CHANGES*/
+    /*CLEAR AGE FILTER*/
     $(document).on(
         "change",
+
         [
             "select[name='gender']",
             "select[name='location_type']",
@@ -81,28 +108,28 @@ $(function () {
             "select[name='is_old_cancer']",
             "select[name='date_filter']",
         ].join(","),
+
         function () {
             window.patientAgeFilter = "";
-
             updateActiveAgeFilter();
         },
     );
 
-    /* CLEAR AGE FILTER WHEN LOCATION CHANGES */
+    /* LOCATION INPUT*/
+
     $(document).on("input", "input[name='location_value']", function () {
         window.patientAgeFilter = "";
 
         updateActiveAgeFilter();
     });
 
-    /* CLEAR AGE FILTER WHEN CUSTOM DATE CHANGES */
+    /*CUSTOM DATE */
     $(document).on(
         "change",
         "input[name='from_date'], input[name='to_date']",
         function () {
             if ($("select[name='date_filter']").val() === "custom") {
                 window.patientAgeFilter = "";
-
                 updateActiveAgeFilter();
             }
         },

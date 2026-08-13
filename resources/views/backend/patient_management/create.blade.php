@@ -16,7 +16,7 @@
         </div>
 
         <div class="patient-header-right">
-            <a href="{{ route('patients.index', ['check_draft' => 1]) }}" class="btn btn-outline-secondary back-btn">
+            <a href="{{ route('patients.index') }}" class="btn btn-outline-secondary back-btn">
                 <i class="fas fa-arrow-left mr-2"></i>
                 Back to Patients
             </a>

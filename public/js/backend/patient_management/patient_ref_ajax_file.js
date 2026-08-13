@@ -8,12 +8,12 @@ $(function () {
             url: window.recommendRoutes.recommend,
 
             data: function (d) {
-                /* Basic Filters */
+                /* Basic Filters*/
                 d.gender = $("select[name='gender']").val();
                 d.location_type = $("select[name='location_type']").val();
                 d.location_value = $("input[name='location_value']").val();
 
-                /* Patient Status */
+                /*Patient Status  */
                 d.is_referred = $("select[name='is_referred']").val();
                 d.is_emergency = $("select[name='is_emergency']").val();
                 d.is_treatment = $("select[name='is_treatment']").val();
@@ -24,14 +24,18 @@ $(function () {
                 d.date_filter = $("select[name='date_filter']").val();
                 d.from_date = $("input[name='from_date']").val();
                 d.to_date = $("input[name='to_date']").val();
+
+                /*AGE FILTER */
+                d.age_group = window.patientAgeFilter || "";
             },
 
+            /* Response*/
             dataSrc: function (json) {
-                $("#childCount").text(json.childPatients ?? 0);
-                $("#adultCount").text(json.adultPatients ?? 0);
-                $("#seniorCount").text(json.seniorPatients ?? 0);
-
-                return json.data;
+                /* IMPORTANT:Update only the <strong> number. */
+                $("#childCount strong").text(json.childPatients ?? 0);
+                $("#adultCount strong").text(json.adultPatients ?? 0);
+                $("#seniorCount strong").text(json.seniorPatients ?? 0);
+                return json.data || [];
             },
         },
 

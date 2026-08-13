@@ -136,8 +136,8 @@
             photoSearch: "{{ route('patients.photo.search') }}",
             lostDataSave: "{{ route('patients.drafts.save') }}",
             lostDataPending: "{{ route('patients.drafts.pending') }}",
-            lostDataShow: "{{ route('patients.drafts.show', ':id') }}",
-            lostDataDelete: "{{ route('patients.drafts.destroy', ':id') }}"
+            lostDataShow: "{{ route('patients.drafts.show', '__ID__') }}",
+            lostDataDelete: "{{ route('patients.drafts.destroy', '__ID__') }}"
         };
     </script>
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>

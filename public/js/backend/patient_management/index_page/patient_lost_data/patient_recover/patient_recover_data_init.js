@@ -1,10 +1,21 @@
+/*PATIENT RECOVER DATA - INIT*/
+
 $(function () {
-    if (typeof window.recoverPatientDraft === "function") {
-        const draftId = sessionStorage.getItem("recover_patient_draft_id");
-        if (draftId) {
-            setTimeout(function () {
-                window.recoverPatientDraft(draftId);
-            }, 500);
-        }
+    if (typeof window.recoverPatientDraft !== "function") {
+        console.warn("recoverPatientDraft() is not available.");
+
+        return;
     }
+
+    const draftId = sessionStorage.getItem("recover_patient_draft_id");
+
+    if (!draftId) {
+        return;
+    }
+
+    /* Wait for Form / CKEditor / Patient UI */
+
+    setTimeout(function () {
+        window.recoverPatientDraft(draftId);
+    }, 700);
 });

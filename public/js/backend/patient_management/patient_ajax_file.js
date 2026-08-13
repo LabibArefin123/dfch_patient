@@ -39,17 +39,11 @@ $(function () {
             },
 
             dataSrc: function (json) {
-                /*
-                |--------------------------------------------------------------------------
-                | UPDATE AGE COUNTERS
-                |--------------------------------------------------------------------------
-                */
-
-                $("#childCount").text(json.childPatients ?? 0);
-                $("#adultCount").text(json.adultPatients ?? 0);
-                $("#seniorCount").text(json.seniorPatients ?? 0);
-
-                return json.data;
+                /* UPDATE AGE COUNTERS IMPORTANT: Update ONLY <strong>, not the parent #childCount.*/
+                $("#childCount strong").text(json.childPatients ?? 0);
+                $("#adultCount strong").text(json.adultPatients ?? 0);
+                $("#seniorCount strong").text(json.seniorPatients ?? 0);
+                return json.data || [];
             },
         },
 
