@@ -83,7 +83,7 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::get('/user_password_reset', [ProfileController::class, 'resetPassword'])->name('user_password_reset');
 
     Route::get('/ajax/patients/search', [GlobalAjaxController::class, 'patientAjax'])->name('ajax.patients.search');
-    Route::get('/ajax/patients/{patient}',[GlobalAjaxController::class, 'patientDetails'])->name('ajax.patient.details');
+    Route::get('/ajax/patients/{patient}', [GlobalAjaxController::class, 'patientDetails'])->name('ajax.patient.details');
 
     Route::post('patients/summary/search', [PatientController::class, 'patientSummarySearch'])->name('patients.summary.search');
     Route::get('patients/summary/animation/{patient}', [PatientController::class, 'patientSummaryAnimation'])->name('patients.summary.animation');
@@ -102,12 +102,12 @@ Route::group(['middleware' => ['auth', 'check_banned_device', 'detect.attack', '
     Route::post('patients/delete-selected', [PatientController::class, 'deleteSelected'])->name('patients.delete_selected');
     Route::get('patients/{patient}/document-contents', [PatientController::class, 'patientDocumentContents'])->name('patients.document.contents');
     Route::get('patients/{patient}/cancer-photo-contents', [PatientController::class, 'patientCancerPhotoContents'])->name('patients.cancer.photo.contents');
+    Route::post('patients/drafts/save', [PatientController::class, 'saveDraft'])->name('patients.drafts.save');
+    Route::get('patients/drafts/pending', [PatientController::class, 'pendingDrafts'])->name('patients.drafts.pending');
+    Route::get('patients/drafts/{draft}', [PatientController::class, 'showDraft'])->name('patients.drafts.show');
+    Route::delete('patients/drafts/{draft}', [PatientController::class, 'destroyDraft'])->name('patients.drafts.destroy');
     Route::resource('patients', PatientController::class);
 
-    Route::post('patient-drafts/save',[PatientDraftController::class, 'save'])->name('patients.drafts.save');
-    Route::get('patient-drafts/pending',[PatientDraftController::class, 'pending'])->name('patients.drafts.pending');
-    Route::get('patient-drafts/{draft}',[PatientDraftController::class, 'show'])->name('patients.drafts.show');
-    Route::delete('patient-drafts/{draft}',[PatientDraftController::class, 'destroy'])->name('patients.drafts.destroy');
     Route::resource('patient_emergencies', PatientEmergencyController::class);
 
     Route::get('patients/{patient}/cancer-photos', [PatientCancerPhotoController::class, 'patientCancerPhotos'])->name('patients.cancer.photos');

@@ -1,43 +1,154 @@
 document.addEventListener("DOMContentLoaded", function () {
     let isDirty = false;
     let lastBackHref = null;
+    let leavingPage = false;
 
-    // Track changes on all inputs inside forms
+    /*
+    |--------------------------------------------------------------------------
+    | Track Form Changes
+    |--------------------------------------------------------------------------
+    */
+
     document.querySelectorAll("form").forEach((form) => {
         form.querySelectorAll("input, textarea, select").forEach((input) => {
-            input.addEventListener("change", () => {
+            input.addEventListener("input", function () {
+                isDirty = true;
+            });
+
+            input.addEventListener("change", function () {
                 isDirty = true;
             });
         });
 
-        // Reset dirty flag on submit
-        form.addEventListener("submit", () => {
+        /*
+        |--------------------------------------------------------------------------
+        | Successful Form Submit
+        |--------------------------------------------------------------------------
+        */
+
+        form.addEventListener("submit", function () {
             isDirty = false;
+            leavingPage = true;
         });
     });
 
-    // Handle all custom back buttons
+    /*
+    |--------------------------------------------------------------------------
+    | Back Buttons ONLY
+    |--------------------------------------------------------------------------
+    |
+    | The confirmation modal is intentionally attached only to .back-btn.
+    |
+    */
+
     document.querySelectorAll(".back-btn").forEach((btn) => {
         btn.addEventListener("click", function (e) {
             const href = btn.getAttribute("href");
-            if (isDirty) {
-                e.preventDefault();
-                lastBackHref = href; // save the target URL
-                $("#backConfirmModal").modal("show");
-            } else {
-                window.location.href = href;
+
+            if (!href) {
+                return;
             }
+
+            /*
+            |--------------------------------------------------------------------------
+            | No unsaved changes
+            |--------------------------------------------------------------------------
+            */
+
+            if (!isDirty) {
+                e.preventDefault();
+
+                leavingPage = true;
+
+                window.location.href = href;
+
+                return;
+            }
+
+            /*
+            |--------------------------------------------------------------------------
+            | Unsaved changes
+            |--------------------------------------------------------------------------
+            */
+
+            e.preventDefault();
+
+            lastBackHref = href;
+
+            $("#backConfirmModal").modal("show");
         });
     });
 
-    // Leave page action from within the modal
+    /*
+    |--------------------------------------------------------------------------
+    | Leave Page
+    |--------------------------------------------------------------------------
+    */
+
     const leaveBtn = document.querySelector("#backConfirmModal .leave-page");
+
     if (leaveBtn) {
         leaveBtn.addEventListener("click", function () {
-            if (lastBackHref) {
-                isDirty = false;
-                window.location.href = lastBackHref;
+            if (!lastBackHref || leavingPage) {
+                return;
             }
+
+            leavingPage = true;
+
+            /*
+                |--------------------------------------------------------------------------
+                | Disable button to prevent double-click
+                |--------------------------------------------------------------------------
+                */
+
+            leaveBtn.disabled = true;
+
+            /*
+                |--------------------------------------------------------------------------
+                | Save latest data before leaving
+                |--------------------------------------------------------------------------
+                */
+
+            if (
+                window.PatientTemporarySave &&
+                typeof window.PatientTemporarySave.save === "function"
+            ) {
+                window.PatientTemporarySave.save({
+                    complete: function () {
+                        isDirty = false;
+
+                        window.location.href = lastBackHref;
+                    },
+                });
+
+                return;
+            }
+
+            /*
+                |--------------------------------------------------------------------------
+                | No temporary-save module
+                |--------------------------------------------------------------------------
+                */
+
+            isDirty = false;
+
+            window.location.href = lastBackHref;
         });
     }
+
+    /*
+    |--------------------------------------------------------------------------
+    | Cancel Modal
+    |--------------------------------------------------------------------------
+    */
+
+    const cancelButtons = document.querySelectorAll(
+        "#backConfirmModal .cancel-page",
+    );
+
+    cancelButtons.forEach((btn) => {
+        btn.addEventListener("click", function () {
+            lastBackHref = null;
+        });
+    });
 });

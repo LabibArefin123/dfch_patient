@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\Patient\PatientService;
 use App\Models\Organization;
 use App\Models\Patient;
+use App\Models\PatientDraft;
 use Carbon\Carbon;
 use Spatie\Image\Image;
 use App\Models\PatientCancerPhoto;
@@ -15,6 +16,7 @@ use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class PatientController extends Controller
@@ -2388,6 +2390,115 @@ class PatientController extends Controller
         $relativePath = str_replace(public_path(), '', $newFullPath);
 
         return str_replace('\\', '/', ltrim($relativePath, '/'));
+    }
+
+    /* Save / Update Patient Draft*/
+    public function saveDraft(Request $request)
+    {
+        abort_unless(Auth::check(), 401);
+
+        $user = Auth::user();
+
+        $request->validate([
+            'draft_token'  => ['required', 'uuid'],
+            'form_data'    => ['required', 'array'],
+            'current_step' => ['nullable', 'string'],
+        ]);
+
+        $draft = PatientDraft::updateOrCreate(
+            [
+                'draft_token' => $request->draft_token,
+                'user_id'     => $user->id,
+            ],
+            [
+                'form_data'     => $request->form_data,
+                'current_step'  => $request->current_step,
+                'last_saved_at' => now(),
+            ]
+        );
+
+        return response()->json([
+            'success'     => true,
+            'draft_id'    => $draft->id,
+            'draft_token' => $draft->draft_token,
+            'saved_at'    => $draft->last_saved_at?->toISOString(),
+        ]);
+    }
+
+    /* Get Pending Patient Drafts*/
+    public function pendingDrafts()
+    {
+        abort_unless(Auth::check(), 401);
+
+        $user = Auth::user();
+
+        $drafts = PatientDraft::where('user_id', $user->id)
+            ->orderByDesc('last_saved_at')
+            ->get();
+
+        return response()->json([
+            'success' => true,
+            'count'   => $drafts->count(),
+
+            'drafts' => $drafts->map(function ($draft) {
+                return [
+                    'id'            => $draft->id,
+                    'draft_token'   => $draft->draft_token,
+                    'current_step'  => $draft->current_step,
+                    'last_saved_at' => $draft->last_saved_at?->toISOString(),
+                ];
+            })->values(),
+        ]);
+    }
+
+    /*
+|--------------------------------------------------------------------------
+| Get One Patient Draft
+|--------------------------------------------------------------------------
+*/
+
+    public function showDraft(PatientDraft $draft)
+    {
+        abort_unless(Auth::check(), 401);
+        $user = Auth::user();
+
+        /* Security - A user can only access their own draft.*/
+        abort_unless(
+            (int) $draft->user_id === (int) $user->id,
+            403
+        );
+
+        return response()->json([
+            'success' => true,
+
+            'draft' => [
+                'id'            => $draft->id,
+                'draft_token'   => $draft->draft_token,
+                'form_data'     => $draft->form_data,
+                'current_step'  => $draft->current_step,
+                'last_saved_at' => $draft->last_saved_at?->toISOString(),
+            ],
+        ]);
+    }
+
+    /*Delete Patient Draft*/
+    public function destroyDraft(PatientDraft $draft)
+    {
+        abort_unless(Auth::check(), 401);
+        $user = Auth::user();
+
+        /* Security - A user can only delete their own draft. */
+        abort_unless(
+            (int) $draft->user_id === (int) $user->id,
+            403
+        );
+
+        $draft->delete();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Patient draft deleted successfully.',
+        ]);
     }
 
     public function destroy(Patient $patient)

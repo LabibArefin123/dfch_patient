@@ -1,25 +1,15 @@
-
 /*PATIENT TEMPORARY SAVE - CLEANUP*/
 window.PatientTemporarySave = window.PatientTemporarySave || {};
 (function (module) {
-
     /*Clear Draft*/
     module.clear = function () {
-
-        const draftId =
-            module.getId();
+        const draftId = module.getId();
 
         /* Stop Autosave  */
-        if (
-            window.patientTemporarySaveTimer
-        ) {
+        if (window.patientTemporarySaveTimer) {
+            clearInterval(window.patientTemporarySaveTimer);
 
-            clearInterval(
-                window.patientTemporarySaveTimer
-            );
-
-            window.patientTemporarySaveTimer =
-                null;
+            window.patientTemporarySaveTimer = null;
         }
 
         /* No Draft ID  */
@@ -30,31 +20,24 @@ window.PatientTemporarySave = window.PatientTemporarySave || {};
 
         /*Delete Database Draft */
         const deleteUrl =
-            window.patientRoutes?.lostDataDelete
-            ||
-            "/patient-drafts/" +
-            encodeURIComponent(draftId);
+            window.patientRoutes?.lostDataDelete ||
+            "/patients/drafts/" + encodeURIComponent(draftId);
 
         $.ajax({
             url: deleteUrl,
             method: "DELETE",
             headers: {
-                "X-CSRF-TOKEN":
-                    $('meta[name="csrf-token"]').attr(
-                        "content"
-                    )
+                "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr("content"),
             },
 
             complete: function () {
                 module.clearStorage();
-            }
+            },
         });
     };
 
     /* Global Helper  */
-    window.clearPatientTemporaryData =
-        function () {
-            module.clear();
-        };
-
+    window.clearPatientTemporaryData = function () {
+        module.clear();
+    };
 })(window.PatientTemporarySave);

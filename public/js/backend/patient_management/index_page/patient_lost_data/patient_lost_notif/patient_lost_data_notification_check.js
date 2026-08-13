@@ -14,14 +14,10 @@
 */
 
 function shouldCheckPatientDraft() {
-
-    const params = new URLSearchParams(
-        window.location.search
-    );
+    const params = new URLSearchParams(window.location.search);
 
     return params.get("check_draft") === "1";
 }
-
 
 /*
 |--------------------------------------------------------------------------
@@ -35,10 +31,7 @@ function shouldCheckPatientDraft() {
 */
 
 function removePatientDraftCheckParameter() {
-
-    const url = new URL(
-        window.location.href
-    );
+    const url = new URL(window.location.href);
 
     url.searchParams.delete("check_draft");
 
@@ -46,13 +39,12 @@ function removePatientDraftCheckParameter() {
         {},
         document.title,
         url.pathname +
-        (url.searchParams.toString()
-            ? "?" + url.searchParams.toString()
-            : "") +
-        url.hash
+            (url.searchParams.toString()
+                ? "?" + url.searchParams.toString()
+                : "") +
+            url.hash,
     );
 }
-
 
 /*
 |--------------------------------------------------------------------------
@@ -61,7 +53,6 @@ function removePatientDraftCheckParameter() {
 */
 
 function checkPendingPatientDrafts() {
-
     /*
     |--------------------------------------------------------------------------
     | Only check when explicitly requested
@@ -73,12 +64,9 @@ function checkPendingPatientDrafts() {
     }
 
     const url =
-        window.patientRoutes?.lostDataPending ||
-        "/patient-drafts/pending";
-
+        window.patientRoutes?.lostDataPending || "/patients/drafts/pending";
 
     $.ajax({
-
         url: url,
 
         method: "GET",
@@ -86,7 +74,6 @@ function checkPendingPatientDrafts() {
         dataType: "json",
 
         success: function (response) {
-
             /*
             |--------------------------------------------------------------------------
             | Remove the URL flag after the request succeeds
@@ -94,7 +81,6 @@ function checkPendingPatientDrafts() {
             */
 
             removePatientDraftCheckParameter();
-
 
             /*
             |--------------------------------------------------------------------------
@@ -112,7 +98,6 @@ function checkPendingPatientDrafts() {
                 return;
             }
 
-
             /*
             |--------------------------------------------------------------------------
             | Get latest draft
@@ -121,27 +106,17 @@ function checkPendingPatientDrafts() {
 
             const draft = response.drafts[0];
 
-
             /*
             |--------------------------------------------------------------------------
             | Show right-side notification
             |--------------------------------------------------------------------------
             */
 
-            showLostPatientDataNotification(
-                response.count,
-                draft
-            );
+            showLostPatientDataNotification(response.count, draft);
         },
 
         error: function (xhr) {
-
-            console.warn(
-                "Unable to check patient lost data.",
-                xhr
-            );
-        }
-
+            console.warn("Unable to check patient lost data.", xhr);
+        },
     });
 }
-

@@ -1,4 +1,8 @@
-/* PATIENT TEMPORARY SAVE - INIT */
+/*
+|--------------------------------------------------------------------------
+| PATIENT TEMPORARY SAVE - INIT
+|--------------------------------------------------------------------------
+*/
 
 $(function () {
     const form = $("#patientCreateForm");
@@ -9,13 +13,19 @@ $(function () {
         return;
     }
 
-    const SAVE_INTERVAL = 5000;
+    /*
+    |--------------------------------------------------------------------------
+    | Configuration
+    |--------------------------------------------------------------------------
+    */
+
+    const SAVE_INTERVAL = 3000;
 
     let dirty = false;
 
     /*
     |--------------------------------------------------------------------------
-    | Detect changes
+    | Detect Changes
     |--------------------------------------------------------------------------
     */
 
@@ -71,6 +81,31 @@ $(function () {
             clearInterval(window.patientTemporarySaveTimer);
 
             window.patientTemporarySaveTimer = null;
+        }
+
+        dirty = false;
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Browser Visibility Change
+    |--------------------------------------------------------------------------
+    |
+    | This gives us another chance to save when the browser/tab becomes
+    | hidden.
+    |
+    */
+
+    document.addEventListener("visibilitychange", function () {
+        if (document.visibilityState === "hidden" && dirty) {
+            if (
+                window.PatientTemporarySave &&
+                typeof window.PatientTemporarySave.save === "function"
+            ) {
+                window.PatientTemporarySave.save();
+
+                dirty = false;
+            }
         }
     });
 });

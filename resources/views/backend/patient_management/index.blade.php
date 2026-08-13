@@ -134,10 +134,10 @@
             documentContents: "{{ route('patients.document.contents', ':id') }}",
             cancerPhotoContents: "{{ route('patients.cancer.photo.contents', ':id') }}",
             photoSearch: "{{ route('patients.photo.search') }}",
-            draftSave: "{{ route('patients.drafts.save') }}",
-            draftPending: "{{ route('patients.drafts.pending') }}",
-            draftShow: "{{ route('patients.drafts.show', ':id') }}",
-            draftDestroy: "{{ route('patients.drafts.destroy', ':id') }}"
+            lostDataSave: "{{ route('patients.drafts.save') }}",
+            lostDataPending: "{{ route('patients.drafts.pending') }}",
+            lostDataShow: "{{ route('patients.drafts.show', ':id') }}",
+            lostDataDelete: "{{ route('patients.drafts.destroy', ':id') }}"
         };
     </script>
     <script src="{{ asset('js/backend/patient_management/zoom.js') }}"></script>
