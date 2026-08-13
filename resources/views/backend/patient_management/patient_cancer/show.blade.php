@@ -26,58 +26,217 @@
 
         {{-- Top Summary --}}
         <div class="row">
-            {{-- Patient --}}
-            <div class="col-lg-7 col-md-12 mb-3">
-                <div class="card border-0 shadow-sm patient-select-card h-100">
+            <div class="col-12 mb-3">
+                <div class="card border-0 shadow-sm patient-select-card">
+
                     <div class="card-body">
+
                         <label class="form-label fw-semibold text-dark mb-2">
                             <i class="fas fa-user-injured text-primary mr-1"></i>
                             Patient
                         </label>
 
                         <div class="border rounded-lg p-3 bg-light">
+
                             <h5 class="mb-1 font-weight-bold text-dark">
                                 {{ $patientCancerPhoto->patient->patient_name ?? 'N/A' }}
                             </h5>
 
                             @if (!empty($patientCancerPhoto->patient->patient_code))
                                 <small class="text-muted">
-                                    Patient Code: {{ $patientCancerPhoto->patient->patient_code }}
+                                    Patient Code:
+                                    {{ $patientCancerPhoto->patient->patient_code }}
                                 </small>
                             @endif
+
                         </div>
+
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-birthday-cake text-primary mr-1"></i>
+                            Age
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->age ?? 'N/A' }}" readonly>
+
                     </div>
                 </div>
             </div>
 
-            {{-- Total Cancer --}}
-            <div class="col-lg-5 col-md-12 mb-3">
-                <div class="card border-0 shadow-sm total-cancer-card h-100">
+
+            {{-- Primary Phone --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
-                        <label class="form-label fw-semibold text-dark mb-2">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-phone text-success mr-1"></i>
+                            Primary Number
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->phone_1 ?? 'N/A' }}" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- Alternative Phone --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-phone-alt text-info mr-1"></i>
+                            Alternative Number
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->phone_2 ?? 'N/A' }}" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- Father's Number --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-male text-secondary mr-1"></i>
+                            Father's Number
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->phone_f_1 ?? 'N/A' }}" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- Mother's Number --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-female text-secondary mr-1"></i>
+                            Mother's Number
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->phone_m_1 ?? 'N/A' }}" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- Total Cancer --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
                             <i class="fas fa-notes-medical text-danger mr-1"></i>
                             Total Cancer
                         </label>
 
-                        <div class="input-group cancer-input-group">
-                            <div class="input-group-prepend">
-                                <span class="input-group-text bg-white border-right-0">
-                                    <i class="fas fa-calculator text-danger"></i>
-                                </span>
-                            </div>
-
-                            <input type="text" class="form-control border-left-0 bg-white"
-                                value="{{ $patientCancerPhoto->total_cancer ?? 0 }}" readonly>
-                        </div>
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->total_cancer ?? 0 }}" readonly>
 
                         <small class="text-muted d-block mt-2">
                             Total cancer count recorded for this patient.
                         </small>
+
                     </div>
                 </div>
             </div>
-        </div>
 
+
+            {{-- Address --}}
+            <div class="col-md-12 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-map-marker-alt text-danger mr-1"></i>
+                            Address
+                        </label>
+
+                        <textarea class="form-control bg-light" rows="2" readonly>{{ $patientCancerPhoto->patient->full_location ?? 'N/A' }}</textarea>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- Referred --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-user-md text-primary mr-1"></i>
+                            Referred
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->is_referred ? 'Yes' : 'No' }}" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- Treatment --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-procedures text-warning mr-1"></i>
+                            Treatment
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->is_treatment ? 'Yes' : 'No' }}" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+
+            {{-- Investigated --}}
+            <div class="col-md-4 mb-3">
+                <div class="card border-0 shadow-sm h-100">
+                    <div class="card-body">
+
+                        <label class="form-label fw-semibold text-dark">
+                            <i class="fas fa-microscope text-success mr-1"></i>
+                            Investigated
+                        </label>
+
+                        <input type="text" class="form-control bg-light"
+                            value="{{ $patientCancerPhoto->patient->is_investigated ? 'Yes' : 'No' }}" readonly>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
         {{-- Remarks + Report Meta --}}
         <div class="row">
             {{-- Remarks --}}
@@ -170,8 +329,9 @@
 
 
                                     <div class="card-footer bg-white text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal"
-                                            data-bs-target="#imageZoomModal" data-bs-img-src="{{ asset($photo) }}">
+                                        <button type="button" class="btn btn-sm btn-outline-danger"
+                                            data-bs-toggle="modal" data-bs-target="#imageZoomModal"
+                                            data-bs-img-src="{{ asset($photo) }}">
                                             <i class="fas fa-eye"></i> View Full Image
                                         </button>
                                     </div>
@@ -225,5 +385,5 @@
     </div>
 
     <div style="height: 40px;"></div>
-
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/show_page/patient_data_load.js') }}"></script>
 @stop
