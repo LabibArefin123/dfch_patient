@@ -181,8 +181,7 @@
                     </label>
 
                     <textarea name="xray_description" id="edit_xray_description" class="form-control" rows="6"
-                        placeholder="Enter X-Ray / CT Scan findings...">{{ $patient?->cancerPhoto?->xray_description }}</textarea>
-
+                        placeholder="Enter X-Ray / CT Scan findings...">{{ $patient->xray_description }}</textarea>
                     <small class="text-muted">
                         Enter detailed X-Ray or CT scan findings, observations,
                         important points and clinical information.
@@ -199,11 +198,11 @@
                 </label>
 
                 <textarea name="cancer_remarks" id="edit_cancer_remarks" class="form-control" rows="5"
-                    placeholder="Enter additional observations, diagnosis or recommendations...">{{ $patient?->cancerPhoto?->cancer_remarks }}</textarea>
-
+                    placeholder="Enter additional observations, diagnosis or recommendations...">{{ $patient->cancer_remarks }}</textarea>
                 <small class="text-muted">
                     Additional observations, diagnosis or recommendations.
                 </small>
             </div>
         </div>
     </div>
+</div>

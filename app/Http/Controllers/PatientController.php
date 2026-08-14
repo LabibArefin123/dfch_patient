@@ -1748,16 +1748,58 @@ class PatientController extends Controller
             'cancerPhotos',
         ]);
 
+        $cancerPhoto = $patient->cancerPhotos->first();
+
+        $xrayDescription = '';
+
+        if ($cancerPhoto?->xray_description) {
+            $decoded = json_decode(
+                $cancerPhoto->xray_description,
+                true
+            );
+
+            $xrayDescription = is_array($decoded)
+                ? ($decoded['content'] ?? '')
+                : $cancerPhoto->xray_description;
+        }
+
+        $cancerRemarks = '';
+
+        if ($cancerPhoto?->cancer_remarks) {
+            $decoded = json_decode(
+                $cancerPhoto->cancer_remarks,
+                true
+            );
+
+            $cancerRemarks = is_array($decoded)
+                ? ($decoded['content'] ?? '')
+                : $cancerPhoto->cancer_remarks;
+        }
+
+        $patient->setAttribute(
+            'xray_description',
+            $xrayDescription
+        );
+
+        $patient->setAttribute(
+            'cancer_remarks',
+            $cancerRemarks
+        );
+
         $patientImage = $this->getPatientImageInfo($patient);
         $documents = $this->getReferredDocuments($patient);
 
-        return view('backend.patient_management.edit', array_merge(
-            [
-                'patient' => $patient,
-                'documents' => $documents,
-            ],
-            $patientImage
-        ));
+        return view(
+            'backend.patient_management.edit',
+            array_merge(
+                [
+                    'patient' => $patient,
+                    'cancerPhoto' => $cancerPhoto,
+                    'documents' => $documents,
+                ],
+                $patientImage
+            )
+        );
     }
 
     private function formatBytes($bytes, $precision = 2)
@@ -2297,7 +2339,7 @@ class PatientController extends Controller
             $hashes = $cancer->cancer_hashes ?? [];
 
             foreach ($photos as $key => $oldImage) {
-                $newPath = $this->migrateOldImage($oldImage,$cancerPath,'cancer');
+                $newPath = $this->migrateOldImage($oldImage, $cancerPath, 'cancer');
                 if ($newPath !== $oldImage) {
                     $photos[$key] = $newPath;
                     $hashes[$key] = hash_file('sha256', public_path($newPath));

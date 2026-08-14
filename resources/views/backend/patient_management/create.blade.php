@@ -120,7 +120,8 @@
 
         {{-- Progress --}}
         <div class="patient-progress-card">
-            <div class="progress-item">
+
+            <div class="progress-item" data-target="part_1_general">
                 <div class="step">
                     <i class="fas fa-user"></i>
                 </div>
@@ -129,7 +130,7 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item">
+            <div class="progress-item" data-target="part_2_address">
                 <div class="step">
                     <i class="fas fa-map-marker-alt"></i>
                 </div>
@@ -138,7 +139,7 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item">
+            <div class="progress-item" data-target="part_3_medical">
                 <div class="step">
                     <i class="fas fa-notes-medical"></i>
                 </div>
@@ -147,7 +148,7 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item">
+            <div class="progress-item" data-target="part_4_treatment">
                 <div class="step">
                     <i class="fas fa-procedures"></i>
                 </div>
@@ -156,7 +157,7 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item">
+            <div class="progress-item" data-target="part_5_investigation">
                 <div class="step">
                     <i class="fas fa-microscope"></i>
                 </div>
@@ -165,16 +166,16 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item">
+            <div class="progress-item" data-target="part_6_emergency">
                 <div class="step">
                     <i class="fas fa-ambulance"></i>
                 </div>
                 <span>Emergency</span>
-
             </div>
+
             <div class="progress-line"></div>
 
-            <div class="progress-item">
+            <div class="progress-item" data-target="part_7_cancer">
                 <div class="step">
                     <i class="fas fa-ribbon"></i>
                 </div>
@@ -317,6 +318,7 @@
     <script src="{{ asset('js/backend/patient_management/create_page/progress_5_investigate.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_6_emergency.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_7_cancer.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/patient_icon_jump.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_format.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_validate.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_location_toggle.js') }}"></script>
