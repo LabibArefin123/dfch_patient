@@ -22,7 +22,7 @@ class PatientEmergencyController extends Controller
             'backend.patient_management.patient_emergencies.index',
             compact('patientEmergencies')
         );
-    }   
+    }
     /**
      * Show the form for creating a new resource.
      */

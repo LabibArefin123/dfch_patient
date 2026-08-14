@@ -1420,7 +1420,6 @@ class PatientController extends Controller
             /* Cancer */
             'total_cancer' => 'nullable|integer|min:1',
             'xray_photo.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'xray_description' => 'nullable|array',
             'xray_description.*' => 'nullable|string',
             'cancer_remarks' => 'nullable|string',
 

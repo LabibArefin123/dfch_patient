@@ -322,7 +322,95 @@ class PatientCancerPhotoController extends Controller
      */
     public function show(PatientCancerPhoto $patientCancerPhoto)
     {
-        $patientCancerPhoto->load('patient');
+        $patientCancerPhoto->load([
+            'patient.documents',
+        ]);
+
+        $patient = $patientCancerPhoto->patient;
+
+        if ($patient) {
+
+            /*
+        |--------------------------------------------------------------------------
+        | Normalize Treatment Type
+        |--------------------------------------------------------------------------
+        */
+
+            $treatmentType = $patient->treatment_type;
+
+            if (is_string($treatmentType)) {
+                $decoded = json_decode($treatmentType, true);
+
+                $patient->treatment_type = is_array($decoded)
+                    ? $decoded
+                    : [$treatmentType];
+            } elseif (!is_array($treatmentType)) {
+                $patient->treatment_type = [];
+            }
+
+
+            /*
+        |--------------------------------------------------------------------------
+        | Normalize Treatment Images
+        |--------------------------------------------------------------------------
+        */
+
+            $treatmentImages = $patient->treatment_images;
+
+            if (is_string($treatmentImages)) {
+                $decoded = json_decode($treatmentImages, true);
+
+                $patient->treatment_images = is_array($decoded)
+                    ? $decoded
+                    : [];
+            } elseif (!is_array($treatmentImages)) {
+                $patient->treatment_images = [];
+            }
+
+
+            /*
+        |--------------------------------------------------------------------------
+        | Normalize Investigation Images
+        |--------------------------------------------------------------------------
+        */
+
+            $investigationImages = $patient->investigation_images;
+
+            if (is_string($investigationImages)) {
+                $decoded = json_decode($investigationImages, true);
+
+                $patient->investigation_images = is_array($decoded)
+                    ? $decoded
+                    : [];
+            } elseif (!is_array($investigationImages)) {
+                $patient->investigation_images = [];
+            }
+        }
+
+
+        /*
+    |--------------------------------------------------------------------------
+    | Normalize Cancer / X-Ray Images
+    |--------------------------------------------------------------------------
+    */
+
+        $xrayPhotos = $patientCancerPhoto->xray_photo;
+
+        if (is_string($xrayPhotos)) {
+
+            $decoded = json_decode($xrayPhotos, true);
+
+            $patientCancerPhoto->xray_photo = is_array($decoded)
+                ? $decoded
+                : [];
+        } elseif (is_array($xrayPhotos)) {
+
+            $patientCancerPhoto->xray_photo = $xrayPhotos;
+        } else {
+
+            $patientCancerPhoto->xray_photo = [];
+        }
+
 
         return view(
             'backend.patient_management.patient_cancer.show',

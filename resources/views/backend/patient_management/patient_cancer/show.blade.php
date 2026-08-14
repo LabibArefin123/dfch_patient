@@ -183,207 +183,611 @@
                 </div>
             </div>
 
-            {{-- Referred --}}
-            <div class="col-md-4 mb-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-user-md text-primary mr-1"></i>
-                            Referred
-                        </label>
-
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->is_referred ? 'Yes' : 'No' }}" readonly>
-
-                    </div>
-                </div>
-            </div>
-
-
-            {{-- Treatment --}}
-            <div class="col-md-4 mb-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-procedures text-warning mr-1"></i>
-                            Treatment
-                        </label>
-
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->is_treatment ? 'Yes' : 'No' }}" readonly>
-
-                    </div>
-                </div>
-            </div>
-
-
-            {{-- Investigated --}}
-            <div class="col-md-4 mb-3">
-                <div class="card border-0 shadow-sm h-100">
-                    <div class="card-body">
-
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-microscope text-success mr-1"></i>
-                            Investigated
-                        </label>
-
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->is_investigated ? 'Yes' : 'No' }}" readonly>
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        {{-- Remarks + Report Meta --}}
-        <div class="row">
-            {{-- Remarks --}}
-            <div class="col-lg-8 col-md-12 mb-3">
-                <div class="card card-outline card-info shadow-sm h-100">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-sticky-note text-info"></i> Remarks
-                        </h3>
-                    </div>
-
-                    <div class="card-body">
-                        @if (!empty($patientCancerPhoto->cancer_remarks))
-                            <div class="p-3 rounded bg-light border" style="min-height: 120px; white-space: pre-line;">
-                                {!! $patientCancerPhoto->cancer_remarks !!}
+            {{-- CLINICAL STATUS --}}
+            <div class="col-12 mb-3">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-header bg-white border-0 py-3">
+                        <div class="d-flex align-items-center">
+                            <div class="bg-primary rounded p-2 mr-3">
+                                <i class="fas fa-clipboard-check text-white"></i>
                             </div>
-                        @else
-                            <div class="alert alert-light border mb-0">
-                                <i class="fas fa-info-circle text-muted mr-1"></i>
-                                No remarks added for this cancer report.
-                            </div>
-                        @endif
-                    </div>
-                </div>
-            </div>
-
-            {{-- Report Information --}}
-            <div class="col-lg-4 col-md-12 mb-3">
-                <div class="card card-outline card-secondary shadow-sm h-100">
-                    <div class="card-header">
-                        <h3 class="card-title">
-                            <i class="fas fa-info-circle text-secondary"></i> Report Information
-                        </h3>
-                    </div>
-
-                    <div class="card-body">
-                        <div class="mb-3">
-                            <small class="text-muted d-block">Report ID</small>
-                            <div class="font-weight-bold">#{{ $patientCancerPhoto->id }}</div>
-                        </div>
-
-                        <div class="mb-3">
-                            <small class="text-muted d-block">Created At</small>
-                            <div class="font-weight-bold">
-                                {{ optional($patientCancerPhoto->created_at)->format('d M Y, h:i A') ?? 'N/A' }}
+                            <div>
+                                <h5 class="mb-0 font-weight-bold text-dark">
+                                    Clinical Status
+                                </h5>
+                                <small class="text-muted">
+                                    Referral, treatment and investigation information
+                                </small>
                             </div>
                         </div>
-
-                        <div class="mb-3">
-                            <small class="text-muted d-block">Last Updated</small>
-                            <div class="font-weight-bold">
-                                {{ optional($patientCancerPhoto->updated_at)->format('d M Y, h:i A') ?? 'N/A' }}
-                            </div>
-                        </div>
-
-                        @if (!empty($patientCancerPhoto->patient->patient_code))
-                            <div class="mb-0">
-                                <small class="text-muted d-block">Patient Code</small>
-                                <div class="font-weight-bold">
-                                    {{ $patientCancerPhoto->patient->patient_code }}
-                                </div>
-                            </div>
-                        @endif
                     </div>
-                </div>
-            </div>
-        </div>
 
-        {{-- X-Ray Images --}}
-        <div class="card card-danger card-outline shadow-sm">
-            <div class="card-header">
-                <h3 class="card-title">
-                    <i class="fas fa-images"></i> X-Ray Images
-                </h3>
-            </div>
+                    <div class="card-body pt-2">
+                        <div class="row">
 
-            <div class="card-body">
-                @php
-                    $photos = is_array($patientCancerPhoto->xray_photo) ? $patientCancerPhoto->xray_photo : [];
-                @endphp
+                            {{--  REFERRED --}}
+                            <div class="col-md-4 mb-3">
+                                <div class="card border h-100 shadow-sm">
+                                    <div class="card-body">
 
-                @if (count($photos))
-                    <div class="row">
-                        @foreach ($photos as $photo)
-                            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
-                                <div class="card shadow-sm border-0 h-100">
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mr-2"
+                                                    style="width:38px;height:38px;">
+                                                    <i class="fas fa-user-md text-white"></i>
+                                                </div>
 
-                                    <img src="{{ asset($photo) }}" alt="X-Ray Image" class="card-img-top"
-                                        style="height: 250px; object-fit: contain; border-radius: 0.35rem 0.35rem 0 0;">
+                                                <div>
+                                                    <h6 class="mb-0 font-weight-bold">
+                                                        Referred
+                                                    </h6>
+                                                    <small class="text-muted">
+                                                        Referral status
+                                                    </small>
+                                                </div>
+                                            </div>
 
+                                            @if ($patientCancerPhoto->patient->is_referred)
+                                                <span class="badge badge-success px-3 py-2">
+                                                    <i class="fas fa-check mr-1"></i>
+                                                    Yes
+                                                </span>
+                                            @else
+                                                <span class="badge badge-secondary px-3 py-2">
+                                                    <i class="fas fa-times mr-1"></i>
+                                                    No
+                                                </span>
+                                            @endif
+                                        </div>
 
-                                    <div class="card-footer bg-white text-center">
-                                        <button type="button" class="btn btn-sm btn-outline-danger"
-                                            data-bs-toggle="modal" data-bs-target="#imageZoomModal"
-                                            data-bs-img-src="{{ asset($photo) }}">
-                                            <i class="fas fa-eye"></i> View Full Image
-                                        </button>
+                                        @if ($patientCancerPhoto->patient->is_referred)
+
+                                            <div class="border-top pt-3">
+
+                                                @if ($patientCancerPhoto->patient->referred_doctor_name)
+                                                    <div class="mb-3">
+                                                        <small class="text-muted d-block mb-1">
+                                                            <i class="fas fa-user-md mr-1"></i>
+                                                            Referred Doctor
+                                                        </small>
+
+                                                        <strong class="text-dark">
+                                                            {{ $patientCancerPhoto->patient->referred_doctor_name }}
+                                                        </strong>
+                                                    </div>
+                                                @endif
+
+                                                @if ($patientCancerPhoto->patient->referred_note)
+                                                    <div class="mb-3">
+                                                        <small class="text-muted d-block mb-1">
+                                                            <i class="fas fa-sticky-note mr-1"></i>
+                                                            Referral Note
+                                                        </small>
+
+                                                        <div class="text-dark small">
+                                                            {!! $patientCancerPhoto->patient->referred_note !!}
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                                @php
+                                                    $referralDocuments = $patientCancerPhoto->patient->documents->where(
+                                                        'document_type',
+                                                        'recommendation',
+                                                    );
+
+                                                    $imageExtensions = [
+                                                        'jpg',
+                                                        'jpeg',
+                                                        'png',
+                                                        'gif',
+                                                        'webp',
+                                                        'bmp',
+                                                        'svg',
+                                                        'jfif',
+                                                    ];
+                                                @endphp
+
+                                                <div class="border-top pt-3">
+
+                                                    <small class="text-muted d-block mb-3">
+                                                        <i class="fas fa-paperclip mr-1"></i>
+                                                        Supporting Documents
+                                                    </small>
+
+                                                    @if ($referralDocuments->count())
+
+                                                        <div class="row">
+
+                                                            @foreach ($referralDocuments as $document)
+                                                                @php
+                                                                    $documentUrl = asset($document->file_path);
+                                                                    $extension = strtolower(
+                                                                        pathinfo(
+                                                                            $document->file_path,
+                                                                            PATHINFO_EXTENSION,
+                                                                        ),
+                                                                    );
+                                                                    $isImage = in_array($extension, $imageExtensions);
+                                                                @endphp
+
+                                                                <div class="col-6 mb-3">
+
+                                                                    <div class="border rounded p-2 bg-light h-100">
+
+                                                                        @if ($isImage)
+                                                                            <img src="{{ $documentUrl }}"
+                                                                                alt="{{ $document->document_name }}"
+                                                                                class="img-fluid rounded border"
+                                                                                style="width:100%;height:100px;object-fit:contain;cursor:pointer;"
+                                                                                data-toggle="modal"
+                                                                                data-target="#imageZoomModal"
+                                                                                data-image="{{ $documentUrl }}">
+
+                                                                            <button type="button"
+                                                                                class="btn btn-sm btn-outline-primary btn-block mt-2"
+                                                                                data-toggle="modal"
+                                                                                data-target="#imageZoomModal"
+                                                                                data-image="{{ $documentUrl }}">
+                                                                                <i class="fas fa-search-plus mr-1"></i>
+                                                                                View
+                                                                            </button>
+                                                                        @else
+                                                                            <div class="text-center py-3">
+                                                                                <i class="fas fa-file-alt text-primary"
+                                                                                    style="font-size:35px;"></i>
+
+                                                                                <small class="d-block text-muted mt-2">
+                                                                                    {{ strtoupper($extension) }}
+                                                                                </small>
+                                                                            </div>
+
+                                                                            <a href="{{ $documentUrl }}" target="_blank"
+                                                                                class="btn btn-sm btn-outline-primary btn-block">
+                                                                                <i
+                                                                                    class="fas fa-external-link-alt mr-1"></i>
+                                                                                Open
+                                                                            </a>
+                                                                        @endif
+
+                                                                    </div>
+
+                                                                </div>
+                                                            @endforeach
+
+                                                        </div>
+                                                    @else
+                                                        <div class="text-muted small">
+                                                            <i class="fas fa-folder-open mr-1"></i>
+                                                            No supporting documents available.
+                                                        </div>
+
+                                                    @endif
+
+                                                </div>
+
+                                            </div>
+                                        @else
+                                            <div class="text-muted small border-top pt-3">
+                                                <i class="fas fa-info-circle mr-1"></i>
+                                                This patient has not been referred.
+                                            </div>
+
+                                        @endif
+
                                     </div>
                                 </div>
                             </div>
-                        @endforeach
+
+
+                            {{-- TREATMENT --}}
+                            <div class="col-md-4 mb-3">
+                                <div class="card border h-100 shadow-sm">
+                                    <div class="card-body">
+
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-warning rounded-circle d-flex align-items-center justify-content-center mr-2"
+                                                    style="width:38px;height:38px;">
+                                                    <i class="fas fa-procedures text-white"></i>
+                                                </div>
+
+                                                <div>
+                                                    <h6 class="mb-0 font-weight-bold">
+                                                        Treatment
+                                                    </h6>
+                                                    <small class="text-muted">
+                                                        Treatment status
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            @if ($patientCancerPhoto->patient->is_treatment)
+                                                <span class="badge badge-success px-3 py-2">
+                                                    <i class="fas fa-check mr-1"></i>
+                                                    Yes
+                                                </span>
+                                            @else
+                                                <span class="badge badge-secondary px-3 py-2">
+                                                    <i class="fas fa-times mr-1"></i>
+                                                    No
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        @if ($patientCancerPhoto->patient->is_treatment)
+
+                                            <div class="border-top pt-3">
+
+                                                @if (!empty($patientCancerPhoto->patient->treatment_type))
+                                                    <div class="mb-3">
+                                                        <small class="text-muted d-block mb-2">
+                                                            <i class="fas fa-tags mr-1"></i>
+                                                            Treatment Type
+                                                        </small>
+
+                                                        @foreach ($patientCancerPhoto->patient->treatment_type as $type)
+                                                            <span class="badge badge-warning mr-1 mb-1">
+                                                                {{ $type }}
+                                                            </span>
+                                                        @endforeach
+                                                    </div>
+                                                @endif
+
+                                                @if ($patientCancerPhoto->patient->treatment_information)
+                                                    <div class="mb-3">
+                                                        <small class="text-muted d-block mb-1">
+                                                            <i class="fas fa-notes-medical mr-1"></i>
+                                                            Treatment Information
+                                                        </small>
+
+                                                        <div class="text-dark small">
+                                                            {!! $patientCancerPhoto->patient->treatment_information !!}
+                                                        </div>
+                                                    </div>
+                                                @endif
+
+                                                @if (!empty($patientCancerPhoto->patient->treatment_images))
+
+                                                    <div class="border-top pt-3">
+
+                                                        <small class="text-muted d-block mb-3">
+                                                            <i class="fas fa-images mr-1"></i>
+                                                            Treatment Images
+                                                        </small>
+
+                                                        <div class="row">
+
+                                                            @foreach ($patientCancerPhoto->patient->treatment_images as $image)
+                                                                @php
+                                                                    $imageUrl = asset($image);
+                                                                @endphp
+
+                                                                <div class="col-6 mb-3">
+
+                                                                    <div class="border rounded p-2 bg-light">
+
+                                                                        <img src="{{ $imageUrl }}"
+                                                                            alt="Treatment Image"
+                                                                            class="img-fluid rounded border"
+                                                                            style="width:100%;height:100px;object-fit:contain;cursor:pointer;"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#imageZoomModal"
+                                                                            data-bs-img-src="{{ $imageUrl }}">
+
+                                                                        <button type="button"
+                                                                            class="btn btn-sm btn-outline-warning btn-block mt-2"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#imageZoomModal"
+                                                                            data-bs-img-src="{{ $imageUrl }}">
+
+                                                                            <i class="fas fa-search-plus mr-1"></i>
+                                                                            Zoom
+
+                                                                        </button>
+
+                                                                    </div>
+
+                                                                </div>
+                                                            @endforeach
+
+                                                        </div>
+
+                                                    </div>
+                                                @else
+                                                    <div class="border-top pt-3 text-muted small">
+                                                        <i class="fas fa-image mr-1"></i>
+                                                        No treatment images available.
+                                                    </div>
+
+                                                @endif
+
+                                            </div>
+                                        @else
+                                            <div class="text-muted small border-top pt-3">
+                                                <i class="fas fa-info-circle mr-1"></i>
+                                                No treatment has been recorded.
+                                            </div>
+
+                                        @endif
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{--  INVESTIGATION --}}
+                            <div class="col-md-4 mb-3">
+                                <div class="card border h-100 shadow-sm">
+                                    <div class="card-body">
+
+                                        <div class="d-flex align-items-center justify-content-between mb-3">
+                                            <div class="d-flex align-items-center">
+                                                <div class="bg-success rounded-circle d-flex align-items-center justify-content-center mr-2"
+                                                    style="width:38px;height:38px;">
+                                                    <i class="fas fa-microscope text-white"></i>
+                                                </div>
+
+                                                <div>
+                                                    <h6 class="mb-0 font-weight-bold">
+                                                        Investigation
+                                                    </h6>
+                                                    <small class="text-muted">
+                                                        Investigation status
+                                                    </small>
+                                                </div>
+                                            </div>
+
+                                            @if ($patientCancerPhoto->patient->is_investigated)
+                                                <span class="badge badge-success px-3 py-2">
+                                                    <i class="fas fa-check mr-1"></i>
+                                                    Yes
+                                                </span>
+                                            @else
+                                                <span class="badge badge-secondary px-3 py-2">
+                                                    <i class="fas fa-times mr-1"></i>
+                                                    No
+                                                </span>
+                                            @endif
+                                        </div>
+
+                                        @if ($patientCancerPhoto->patient->is_investigated)
+
+                                            <div class="border-top pt-3">
+
+                                                @if ($patientCancerPhoto->patient->investigation_information)
+                                                    <div class="mb-3">
+
+                                                        <small class="text-muted d-block mb-1">
+                                                            <i class="fas fa-file-medical mr-1"></i>
+                                                            Investigation Information
+                                                        </small>
+
+                                                        <div class="text-dark small">
+                                                            {!! $patientCancerPhoto->patient->investigation_information !!}
+                                                        </div>
+
+                                                    </div>
+                                                @endif
+
+                                                @if (!empty($patientCancerPhoto->patient->investigation_images))
+
+                                                    <div class="border-top pt-3">
+
+                                                        <small class="text-muted d-block mb-3">
+                                                            <i class="fas fa-images mr-1"></i>
+                                                            Investigation Images
+                                                        </small>
+
+                                                        <div class="row">
+
+                                                            @foreach ($patientCancerPhoto->patient->investigation_images as $image)
+                                                                @php
+                                                                    $imageUrl = asset($image);
+                                                                @endphp
+
+                                                                <div class="col-6 mb-3">
+
+                                                                    <div class="border rounded p-2 bg-light">
+
+                                                                        <img src="{{ $imageUrl }}"
+                                                                            alt="Investigation Image"
+                                                                            class="img-fluid rounded border"
+                                                                            style="width:100%;height:100px;object-fit:contain;cursor:pointer;"
+                                                                            data-bs-toggle="modal"
+                                                                            data-bs-target="#imageZoomModal"
+                                                                            data-bs-img-src="{{ $imageUrl }}">
+
+                                                                        <button type="button"
+                                                                            class="btn btn-sm btn-outline-success btn-block mt-2"
+                                                                            data-toggle="modal"
+                                                                            data-target="#imageZoomModal"
+                                                                            data-image="{{ $imageUrl }}">
+                                                                            <i class="fas fa-search-plus mr-1"></i>
+                                                                            Zoom
+                                                                        </button>
+
+                                                                    </div>
+
+                                                                </div>
+                                                            @endforeach
+
+                                                        </div>
+
+                                                    </div>
+                                                @else
+                                                    <div class="border-top pt-3 text-muted small">
+                                                        <i class="fas fa-image mr-1"></i>
+                                                        No investigation images available.
+                                                    </div>
+
+                                                @endif
+
+                                            </div>
+                                        @else
+                                            <div class="text-muted small border-top pt-3">
+                                                <i class="fas fa-info-circle mr-1"></i>
+                                                No investigation has been recorded.
+                                            </div>
+
+                                        @endif
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
                     </div>
-                @else
-                    <div class="alert alert-light border mb-0">
-                        <i class="fas fa-image text-muted mr-1"></i>
-                        No X-Ray images found for this cancer report.
+                </div>
+            </div>
+
+            {{-- Remarks + Report Meta --}}
+            <div class="row">
+                {{-- Remarks --}}
+                <div class="col-lg-8 col-md-12 mb-3">
+                    <div class="card card-outline card-info shadow-sm h-100">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-sticky-note text-info"></i> Remarks
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            @if (!empty($patientCancerPhoto->cancer_remarks))
+                                <div class="p-3 rounded bg-light border"
+                                    style="min-height: 120px; white-space: pre-line;">
+                                    {!! $patientCancerPhoto->cancer_remarks !!}
+                                </div>
+                            @else
+                                <div class="alert alert-light border mb-0">
+                                    <i class="fas fa-info-circle text-muted mr-1"></i>
+                                    No remarks added for this cancer report.
+                                </div>
+                            @endif
+                        </div>
                     </div>
-                @endif
+                </div>
+
+                {{-- Report Information --}}
+                <div class="col-lg-4 col-md-12 mb-3">
+                    <div class="card card-outline card-secondary shadow-sm h-100">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-info-circle text-secondary"></i> Report Information
+                            </h3>
+                        </div>
+
+                        <div class="card-body">
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Report ID</small>
+                                <div class="font-weight-bold">#{{ $patientCancerPhoto->id }}</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Created At</small>
+                                <div class="font-weight-bold">
+                                    {{ optional($patientCancerPhoto->created_at)->format('d M Y, h:i A') ?? 'N/A' }}
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <small class="text-muted d-block">Last Updated</small>
+                                <div class="font-weight-bold">
+                                    {{ optional($patientCancerPhoto->updated_at)->format('d M Y, h:i A') ?? 'N/A' }}
+                                </div>
+                            </div>
+
+                            @if (!empty($patientCancerPhoto->patient->patient_code))
+                                <div class="mb-0">
+                                    <small class="text-muted d-block">Patient Code</small>
+                                    <div class="font-weight-bold">
+                                        {{ $patientCancerPhoto->patient->patient_code }}
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- X-Ray Images --}}
+            <div class="card card-danger card-outline shadow-sm">
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-images"></i> X-Ray Images
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    @php
+                        $photos = is_array($patientCancerPhoto->xray_photo) ? $patientCancerPhoto->xray_photo : [];
+                    @endphp
+
+                    @if (count($photos))
+                        <div class="row">
+                            @foreach ($photos as $photo)
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12 mb-4">
+                                    <div class="card shadow-sm border-0 h-100">
+
+                                        <img src="{{ asset($photo) }}" alt="X-Ray Image" class="card-img-top"
+                                            style="height: 250px; object-fit: contain; border-radius: 0.35rem 0.35rem 0 0;">
+
+
+                                        <div class="card-footer bg-white text-center">
+                                            <button type="button" class="btn btn-sm btn-outline-danger"
+                                                data-bs-toggle="modal" data-bs-target="#imageZoomModal"
+                                                data-bs-img-src="{{ asset($photo) }}">
+                                                <i class="fas fa-eye"></i> View Full Image
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <div class="alert alert-light border mb-0">
+                            <i class="fas fa-image text-muted mr-1"></i>
+                            No X-Ray images found for this cancer report.
+                        </div>
+                    @endif
+                </div>
+            </div>
+            {{-- X-Ray Descriptions --}}
+            <div class="card card-primary card-outline shadow-sm mt-4">
+
+                <div class="card-header">
+                    <h3 class="card-title">
+                        <i class="fas fa-notes-medical"></i>
+                        X-Ray Descriptions
+                    </h3>
+                </div>
+
+                <div class="card-body">
+                    @if (!empty($patientCancerPhoto->xray_description))
+                        <div class="p-3 rounded bg-light border" style="min-height: 120px; white-space: pre-line;">
+                            {!! $patientCancerPhoto->xray_description !!}
+                        </div>
+                    @else
+                        <div class="alert alert-light border mb-0">
+                            <i class="fas fa-info-circle text-muted mr-1"></i>
+                            No xray description for this cancer report.
+                        </div>
+                    @endif
+                </div>
+            </div>
+
+        </div>
+
+
+        {{-- Footer Action Buttons --}}
+        <div class="card mt-4 shadow-sm border-0">
+            <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
+                <div class="text-muted mb-2 mb-md-0">
+                    <i class="fas fa-heartbeat text-danger mr-1"></i>
+                    Review the report details, images, and descriptions before making any update.
+                </div>
             </div>
         </div>
-        {{-- X-Ray Descriptions --}}
-        <div class="card card-primary card-outline shadow-sm mt-4">
 
-            <div class="card-header">
-                <h3 class="card-title">
-                    <i class="fas fa-notes-medical"></i>
-                    X-Ray Descriptions
-                </h3>
-            </div>
-
-            <div class="card-body">
-                @if (!empty($patientCancerPhoto->xray_description))
-                    <div class="p-3 rounded bg-light border" style="min-height: 120px; white-space: pre-line;">
-                        {!! $patientCancerPhoto->xray_description !!}
-                    </div>
-                @else
-                    <div class="alert alert-light border mb-0">
-                        <i class="fas fa-info-circle text-muted mr-1"></i>
-                        No xray description for this cancer report.
-                    </div>
-                @endif
-            </div>
-        </div>
-
-    </div>
-
-
-    {{-- Footer Action Buttons --}}
-    <div class="card mt-4 shadow-sm border-0">
-        <div class="card-body d-flex flex-wrap justify-content-between align-items-center">
-            <div class="text-muted mb-2 mb-md-0">
-                <i class="fas fa-heartbeat text-danger mr-1"></i>
-                Review the report details, images, and descriptions before making any update.
-            </div>
-        </div>
-    </div>
-
-    <div style="height: 40px;"></div>
-    <script src="{{ asset('js/backend/patient_management/patient_cancer/show_page/patient_data_load.js') }}"></script>
-@stop
+        <div style="height: 40px;"></div>
+        <script src="{{ asset('js/backend/patient_management/patient_cancer/show_page/patient_data_load.js') }}"></script>
+    @stop
