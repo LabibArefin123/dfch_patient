@@ -1,4 +1,4 @@
-<div class="col-12" >
+<div class="col-12" id="part_4_referral">
     <div class="patient-section-card recommend-card">
         <div class="section-header">
             <div>
@@ -33,7 +33,7 @@
                 </div>
 
                 {{-- Doctor Note --}}
-                <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
                     <label>Referred Doctor's Note</label>
                     <textarea name="referred_note" id="edit_referred_note" class="form-control">{!! old('referred_note', $patient->referred_note) !!}</textarea>
                 </div>
@@ -126,10 +126,10 @@
                     <input type="file" name="documents[]" multiple class="form-control">
 
                 </div>
-                
+
                 <div id="referPreviewContainer" class="refer-preview-container mt-3"></div>
 
-                {{-- Date of Patient Added--}}
+                {{-- Date of Patient Added --}}
                 <div class="form-group col-md-6">
                     <label>Date of Patient Added</label>
 

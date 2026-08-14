@@ -119,6 +119,7 @@
         </div>
 
         <div class="progress-line"></div>
+        {{-- ========================= REFERRAL INFORMATION ========================= --}}
 
         <div class="progress-item" data-target="part_3_medical">
             <div class="step">
@@ -129,7 +130,19 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item" data-target="part_4_treatment">
+        <div class="progress-item" data-target="part_4_referral">
+            <div class="step">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <span>
+
+                Referral Information
+            </span>
+        </div>
+
+        <div class="progress-line"></div>
+
+        <div class="progress-item" data-target="part_5_treatment">
             <div class="step">
                 <i class="fas fa-procedures"></i>
             </div>
@@ -138,7 +151,7 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item" data-target="part_5_investigation">
+        <div class="progress-item" data-target="part_6_investigation">
             <div class="step">
                 <i class="fas fa-microscope"></i>
             </div>
@@ -147,7 +160,7 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item" data-target="part_6_emergency">
+        <div class="progress-item" data-target="part_7_emergency">
             <div class="step">
                 <i class="fas fa-ambulance"></i>
             </div>
@@ -156,7 +169,7 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item" data-target="part_7_cancer">
+        <div class="progress-item" data-target="part_8_cancer">
             <div class="step">
                 <i class="fas fa-ribbon"></i>
             </div>
@@ -199,10 +212,11 @@
     <script src="{{ asset('js/backend/patient_management/edit_page/progress_1_basic.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/progress_2_address.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/progress_3_medical.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_4_treatment.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_5_investigate.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_6_emergency.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_7_cancer.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_4_referral.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_5_treatment.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_6_investigate.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_7_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/progress_8_cancer.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_photo_edit_modal.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_validation.js') }}"></script>

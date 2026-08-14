@@ -284,31 +284,31 @@
             </div>
             {{-- MEDICAL --}}
             <div class="patient-section-card">
-             
-                        @include('backend.patient_management.partial_pages.create_page.part_4')
-                    
-                </div>
-            </div>
-            {{-- Treatment Part --}}
-            @include('backend.patient_management.partial_pages.create_page.part_5')
-            {{-- Investigation Part --}}
-            @include('backend.patient_management.partial_pages.create_page.part_6')
-            @include('backend.patient_management.partial_pages.create_page.part_7')
-            @include('backend.patient_management.partial_pages.create_page.part_8')
-            @include('backend.patient_management.modals.index_page.patient_future_date_modal')
-            {{-- Footer Actions --}}
-            <div class="patient-form-footer">
-                <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg">
-                    <i class="fas fa-times mr-2"></i>
-                    Cancel
-                </a>
 
-                <button type="submit" class="btn btn-primary btn-lg">
-                    <i class="fas fa-save mr-2"></i>
-                    Save Patient
-                </button>
+                @include('backend.patient_management.partial_pages.create_page.part_4')
+
             </div>
-        </form>
+    </div>
+    {{-- Treatment Part --}}
+    @include('backend.patient_management.partial_pages.create_page.part_5')
+    {{-- Investigation Part --}}
+    @include('backend.patient_management.partial_pages.create_page.part_6')
+    @include('backend.patient_management.partial_pages.create_page.part_7')
+    @include('backend.patient_management.partial_pages.create_page.part_8')
+    @include('backend.patient_management.modals.index_page.patient_future_date_modal')
+    {{-- Footer Actions --}}
+    <div class="patient-form-footer">
+        <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg">
+            <i class="fas fa-times mr-2"></i>
+            Cancel
+        </a>
+
+        <button type="submit" class="btn btn-primary btn-lg">
+            <i class="fas fa-save mr-2"></i>
+            Save Patient
+        </button>
+    </div>
+    </form>
     </div>
     <div style="height:80px"></div>
 @stop
@@ -319,10 +319,11 @@
     <script src="{{ asset('js/backend/patient_management/create_page/progress_1_basic.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_2_address.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/progress_3_medical.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_4_treatment.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_5_investigate.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_6_emergency.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_7_cancer.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_4_referral.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_5_treatment.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_6_investigate.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_7_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/progress_8_cancer.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_icon_jump.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_format.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_validate.js') }}"></script>

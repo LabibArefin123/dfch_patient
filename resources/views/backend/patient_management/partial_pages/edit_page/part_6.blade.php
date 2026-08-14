@@ -9,7 +9,7 @@
                 Emergency admission history & critical patient notes
             </span>
         </div>
-        <span class="section-badge badge-danger">
+        <span class="section-badge recommend-badge">
             Emergency Record
         </span>
     </div>
