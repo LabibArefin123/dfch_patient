@@ -102,7 +102,7 @@
                 </div>
 
                 {{-- Upload Images --}}
-                <div class="form-group col-lg-6">
+                <div class="form-group col-lg-12">
                     <label>Cancer Images</label>
                     <div class="global-upload-box">
                         <input type="file" name="xray_photo[]" class="form-control-file" accept="image/*" multiple>

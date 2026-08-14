@@ -1237,7 +1237,7 @@ class PatientController extends Controller
                     'report_id' => $report->id,
                     'photo' => asset($photo),
                     'description' => $report->xray_description[$index] ?? '',
-                    'remarks' => $report->remarks,
+                    'cancer_remarks' => $report->cancer_remarks,
                     'total_cancer' => $report->total_cancer,
                 ];
             }
@@ -1420,11 +1420,11 @@ class PatientController extends Controller
             /* Cancer */
             'total_cancer' => 'nullable|integer|min:1',
             'xray_photo.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'xray_description.*' => 'nullable|string',
+            'xray_description' => 'nullable|string',
             'cancer_remarks' => 'nullable|string',
 
             /* Emergency */
-            'reason' => 'nullable|string|max:500',
+            'reason' => 'nullable|string',
             'emergency_date' => 'nullable|date',
         ]);
 
@@ -1439,12 +1439,16 @@ class PatientController extends Controller
         if (!$validated['is_treatment']) {
             $validated['treatment_information'] = null;
             $validated['treatment_type'] = null;
+            $validated['treatment_images'] = null;
+            $validated['treatment_hashes'] = null;
         }
 
         /* Investigation Cleanup */
         if (!$validated['is_investigated']) {
             $validated['investigation_information'] = null;
             $validated['investigation_type'] = null;
+            $validated['investigation_images'] = null;
+            $validated['investigation_hashes'] = null;
         }
 
         /* Cancer Cleanup */
@@ -1591,15 +1595,29 @@ class PatientController extends Controller
 
 
         /*Upload Treatment Images  */
-        if ($validated['is_treatment'] && $request->hasFile('treatment_images')) {
+        if (
+            $validated['is_treatment'] &&
+            $request->hasFile('treatment_images')
+        ) {
+
             $treatmentImages = [];
             $treatmentHashes = [];
 
             $nextNumber = 1;
 
             foreach (File::files($treatmentPath) as $file) {
-                if (preg_match('/^treatment_(\d+)\.webp$/', $file->getFilename(), $match)) {
-                    $nextNumber = max($nextNumber, ((int)$match[1]) + 1);
+
+                if (
+                    preg_match(
+                        '/^treatment_(\d+)\.webp$/',
+                        $file->getFilename(),
+                        $match
+                    )
+                ) {
+                    $nextNumber = max(
+                        $nextNumber,
+                        ((int) $match[1]) + 1
+                    );
                 }
             }
 
@@ -1607,48 +1625,101 @@ class PatientController extends Controller
 
                 $filename = "treatment_{$nextNumber}.webp";
 
+                $fullPath =
+                    $treatmentPath . DIRECTORY_SEPARATOR . $filename;
+
                 Image::load($image->getRealPath())
                     ->width(1800)
                     ->format('webp')
                     ->quality(75)
-                    ->save($treatmentPath . DIRECTORY_SEPARATOR . $filename);
+                    ->save($fullPath);
 
-                $treatmentImages[] = "uploads/patients/{$patientFolder}/treatment_photos/{$filename}";
-                $treatmentHashes[] = hash_file('sha256', $treatmentPath . DIRECTORY_SEPARATOR . $filename);
+                $treatmentImages[] =
+                    "uploads/patients/{$patientFolder}/treatment_photos/{$filename}";
+
+                $treatmentHashes[] =
+                    hash_file('sha256', $fullPath);
 
                 $nextNumber++;
             }
+
+            /*
+            |--------------------------------------------------------------------------
+            | IMPORTANT: Save Treatment Images + Hashes
+            |--------------------------------------------------------------------------
+            */
+
+            $patient->update([
+                'treatment_images' => $treatmentImages,
+                'treatment_hashes' => $treatmentHashes,
+            ]);
         }
 
 
         /* Upload Investigation Images*/
-        if ($validated['is_investigated'] && $request->hasFile('investigation_images')) {
+        if (
+            $validated['is_investigated'] &&
+            $request->hasFile('investigation_images')
+        ) {
+
             $investigationImages = [];
             $investigationHashes = [];
 
             $nextNumber = 1;
 
             foreach (File::files($investigationPath) as $file) {
-                if (preg_match('/^investigation_(\d+)\.webp$/', $file->getFilename(), $match)) {
-                    $nextNumber = max($nextNumber, ((int)$match[1]) + 1);
+
+                if (
+                    preg_match(
+                        '/^investigation_(\d+)\.webp$/',
+                        $file->getFilename(),
+                        $match
+                    )
+                ) {
+                    $nextNumber = max(
+                        $nextNumber,
+                        ((int) $match[1]) + 1
+                    );
                 }
             }
 
-            foreach ($request->file('investigation_images') as $image) {
+            foreach (
+                $request->file('investigation_images') as $image
+            ) {
 
-                $filename = "investigation_{$nextNumber}.webp";
+                $filename =
+                    "investigation_{$nextNumber}.webp";
+
+                $fullPath =
+                    $investigationPath .
+                    DIRECTORY_SEPARATOR .
+                    $filename;
 
                 Image::load($image->getRealPath())
                     ->width(1800)
                     ->format('webp')
                     ->quality(75)
-                    ->save($investigationPath . DIRECTORY_SEPARATOR . $filename);
+                    ->save($fullPath);
 
-                $investigationImages[] = "uploads/patients/{$patientFolder}/investigation_photos/{$filename}";
-                $investigationHashes[] = hash_file('sha256', $investigationPath . DIRECTORY_SEPARATOR . $filename);
+                $investigationImages[] =
+                    "uploads/patients/{$patientFolder}/investigation_photos/{$filename}";
+
+                $investigationHashes[] =
+                    hash_file('sha256', $fullPath);
 
                 $nextNumber++;
             }
+
+            /*
+            |--------------------------------------------------------------------------
+            | IMPORTANT: Save Investigation Images + Hashes
+            |--------------------------------------------------------------------------
+            */
+
+            $patient->update([
+                'investigation_images' => $investigationImages,
+                'investigation_hashes' => $investigationHashes,
+            ]);
         }
 
 
@@ -1933,8 +2004,7 @@ class PatientController extends Controller
             /* Cancer */
             'total_cancer' => 'nullable|integer|min:1',
             'xray_photo.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
-            'xray_description' => 'nullable|array',
-            'xray_description.*' => 'nullable|string',
+            'xray_description' => 'nullable|string',
             'cancer_remarks' => 'nullable|string',
 
             /* Emergency */
@@ -2224,15 +2294,8 @@ class PatientController extends Controller
             $hashes = $cancer->cancer_hashes ?? [];
 
             foreach ($photos as $key => $oldImage) {
-
-                $newPath = $this->migrateOldImage(
-                    $oldImage,
-                    $cancerPath,
-                    'cancer'
-                );
-
+                $newPath = $this->migrateOldImage($oldImage,$cancerPath,'cancer');
                 if ($newPath !== $oldImage) {
-
                     $photos[$key] = $newPath;
                     $hashes[$key] = hash_file('sha256', public_path($newPath));
                 }
@@ -2245,54 +2308,89 @@ class PatientController extends Controller
         }
 
         /*Update Cancer Information*/
-        if ($validated['is_old_cancer']) {
-            $cancer = PatientCancerPhoto::firstOrNew(['patient_id' => $patient->id]);
-            $photos = $cancer->xray_photo ?? [];
-            $hashes = $cancer->cancer_hashes ?? [];
+        $cancer = PatientCancerPhoto::firstOrNew(['patient_id' => $patient->id]);
 
+        if ($validated['is_old_cancer']) {
+            $cancer = $cancer ?: new PatientCancerPhoto();
+
+            /* Existing Cancer Images  */
+            $photos = is_array($cancer->xray_photo) ? $cancer->xray_photo : [];
+            $hashes = is_array($cancer->cancer_hashes) ? $cancer->cancer_hashes : [];
+
+            /* Migrate Old Cancer Images */
+            foreach ($photos as $key => $oldImage) {
+                if (!$oldImage) {
+                    continue;
+                }
+
+                $newPath = $this->migrateOldImage($oldImage, $cancerPath, 'cancer');
+
+                if ($newPath !== $oldImage) {
+                    $photos[$key] = $newPath;
+                    $absolutePath = public_path($newPath);
+
+                    if (File::exists($absolutePath)) {
+                        $hashes[$key] = hash_file(
+                            'sha256',
+                            $absolutePath
+                        );
+                    }
+                }
+            }
+
+            /*Upload New Cancer Images */
             if ($request->hasFile('xray_photo')) {
                 $nextNumber = 1;
                 foreach (File::files($cancerPath) as $file) {
-                    if (preg_match('/^cancer_(\d+)\.webp$/', $file->getFilename(), $match)) {
-                        $nextNumber = max($nextNumber, ((int)$match[1]) + 1);
+                    if (
+                        preg_match('/^cancer_(\d+)\.webp$/', $file->getFilename(), $match)
+                    ) {
+                        $nextNumber = max($nextNumber, ((int) $match[1]) + 1);
                     }
                 }
 
                 foreach ($request->file('xray_photo') as $image) {
                     $filename = "cancer_{$nextNumber}.webp";
+                    $fullPath = $cancerPath . DIRECTORY_SEPARATOR . $filename;
+
                     Image::load($image->getRealPath())
                         ->width(1800)
                         ->format('webp')
                         ->quality(75)
-                        ->save($cancerPath . DIRECTORY_SEPARATOR . $filename);
+                        ->save($fullPath);
 
                     $photos[] = "uploads/patients/{$patientFolder}/cancer_photos/{$filename}";
-
-                    $hashes[] =
-                        hash_file(
-                            'sha256',
-                            $cancerPath . DIRECTORY_SEPARATOR . $filename
-                        );
+                    $hashes[] = hash_file('sha256', $fullPath);
                     $nextNumber++;
                 }
             }
 
+            /*
+            | Save Cancer Information
+            | xray_description and cancer_remarks are SINGLE values.
+            | They are not connected to individual images.
+            */
+
             $cancer->patient_id = $patient->id;
             $cancer->total_cancer = $request->total_cancer;
-            $cancer->xray_photo = $photos;
-            $cancer->cancer_hashes = $hashes;
+            $cancer->xray_photo = array_values($photos);
+            $cancer->cancer_hashes = array_values($hashes);
             $cancer->xray_description = $request->xray_description;
             $cancer->cancer_remarks = $request->cancer_remarks;
-
             $cancer->save();
         } else {
 
-            PatientCancerPhoto::where(
-                'patient_id',
-                $patient->id
-            )->delete();
-        }
+            /*Cancer Disabled */
+            if ($cancer) {
+                $cancer->delete();
+            }
 
+            /* Remove Cancer Files= */
+            if (File::exists($cancerPath)) {
+                File::deleteDirectory($cancerPath);
+                File::ensureDirectoryExists($cancerPath);
+            }
+        }
 
         /* Migrate Old Profile Photo */
 
@@ -2518,8 +2616,46 @@ class PatientController extends Controller
 
     public function destroy(Patient $patient)
     {
-        $patient->delete();
-        return back()->with('success', 'Patient deleted successfully');
+        try {
+            DB::beginTransaction();
+
+            /* Patient Folder */
+            $patientFolder = Str::slug(
+                $patient->patient_name . '-' . $patient->id
+            );
+
+            $patientRootPath = public_path(
+                "uploads/patients/{$patientFolder}"
+            );
+
+            /* Delete Related Database Records  */
+            PatientEmergency::where('patient_id', $patient->id)->delete();
+            PatientDocument::where('patient_id', $patient->id)->delete();
+            PatientCancerPhoto::where('patient_id', $patient->id)->delete();
+
+            /* Delete Patient */
+            $patient->delete();
+
+            /* Commit Database Changes */
+            DB::commit();
+
+            /* Delete Patient Files  */
+            if (File::exists($patientRootPath)) {
+                File::deleteDirectory($patientRootPath);
+            }
+
+            return back()->with(
+                'success',
+                'Patient and all associated files deleted successfully.'
+            );
+        } catch (\Throwable $e) {
+
+            DB::rollBack();
+            return back()->with(
+                'error',
+                'Unable to delete the patient. Please try again.'
+            );
+        }
     }
 
     public function deleteSelected(Request $request, PatientService $service)

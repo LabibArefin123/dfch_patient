@@ -26,8 +26,6 @@
                         <strong> {{ $patient->referred_doctor_name ?: 'N/A' }} </strong>
                     </div>
                 </div>
-
-              
             </div>
 
             <div class="medical-note-box mb-4">

@@ -112,7 +112,7 @@
                 </div>
 
                 {{-- Upload More Images --}}
-                <div class="form-group col-lg-6">
+                <div class="form-group col-lg-12">
                     <label>Add More Cancer Images</label>
                     <div class="global-upload-box">
                         <input type="file" name="xray_photo[]" class="form-control-file" accept="image/*" multiple>
@@ -160,6 +160,7 @@
             @endif
             {{-- Preview --}}
             <div id="cancerPreviewContainer" class="cancer-preview-container mt-3"></div>
+
             <div class="section-divider my-4"></div>
 
             {{-- X-Ray Description --}}
@@ -172,33 +173,36 @@
             </div>
 
             <div id="xrayDescriptionWrapper">
-                @php
-                    $descriptions = optional($patient->cancerPhotos)->xray_description ?? [];
-                @endphp
+                <div class="form-group">
+                    <label>
+                        <i class="fas fa-file-medical-alt text-danger mr-1"></i>
+                        X-Ray / CT Scan Findings
+                    </label>
 
-                @forelse($descriptions as $index => $description)
-                    <div class="form-group">
-                        <label>Cancer Description</label>
-                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4"
-                            placeholder="Enter X-Ray / CT Scan findings...">{{ $description }}</textarea>
-                    </div>
-                @empty
-                    <div class="form-group">
-                        <label>Description </label>
-                        <textarea name="xray_description[]" id="edit_xray_description" class="form-control" rows="4"
-                            placeholder="Enter X-Ray / CT Scan findings..."></textarea>
-                    </div>
-                @endforelse
+                    <textarea name="xray_description" id="edit_xray_description" class="form-control" rows="6"
+                        placeholder="Enter X-Ray / CT Scan findings...">{{ optional($patient->cancerPhotos)->xray_description }}</textarea>
+
+                    <small class="text-muted">
+                        Enter detailed X-Ray or CT scan findings, observations,
+                        important points and clinical information.
+                    </small>
+                </div>
+
             </div>
 
             {{-- Remarks --}}
             <div class="form-group">
-                <label>Remarks</label>
-                <textarea name="cancer_remarks" id="edit_cancer_remarks" class="form-control" rows="5">{{ $patient->cancer_remarks }}</textarea>
+                <label>
+                    <i class="fas fa-comment-medical text-primary mr-1"></i>
+                    Remarks
+                </label>
+
+                <textarea name="cancer_remarks" id="edit_cancer_remarks" class="form-control" rows="5"
+                    placeholder="Enter additional observations, diagnosis or recommendations...">{{ optional($patient->cancerPhotos)->cancer_remarks }}</textarea>
+
                 <small class="text-muted">
                     Additional observations, diagnosis or recommendations.
                 </small>
             </div>
         </div>
     </div>
-</div>

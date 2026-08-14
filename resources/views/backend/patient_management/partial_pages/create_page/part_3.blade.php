@@ -104,11 +104,29 @@
     </div>
 
     <div class="row">
+        <div class="form-group col-lg-12">
 
-        {{-- Doctor Note --}}
-        <div class="form-group col-lg-6">
+            <label>
+                <i class="fas fa-user-md text-primary mr-1"></i>
+                Referred Doctor Name
+            </label>
 
-            <label>Referred Doctor Note</label>
+            <input type="text" name="referred_doctor_name" class="form-control"
+                value="{{ old('referred_doctor_name') }}" placeholder="Enter referring doctor's name">
+
+            <small class="text-muted">
+                Enter the name of the doctor who referred the patient.
+            </small>
+
+        </div>
+
+
+        <div class="form-group col-lg-12">
+
+            <label>
+                <i class="fas fa-file-medical-alt text-primary mr-1"></i>
+                Referred Doctor Note
+            </label>
 
             <textarea name="referred_note" class="form-control ckeditor" rows="6">{{ old('referred_note') }}</textarea>
 
@@ -119,8 +137,9 @@
 
         </div>
 
+
         {{-- Documents --}}
-        <div class="form-group col-lg-6">
+        <div class="form-group col-lg-12">
 
             <label>Referral Documents</label>
 
