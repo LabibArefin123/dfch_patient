@@ -348,7 +348,6 @@ class PatientCancerPhotoController extends Controller
                 $patient->treatment_type = [];
             }
 
-
             /*
         |--------------------------------------------------------------------------
         | Normalize Treatment Images
@@ -367,7 +366,6 @@ class PatientCancerPhotoController extends Controller
                 $patient->treatment_images = [];
             }
 
-
             /*
         |--------------------------------------------------------------------------
         | Normalize Investigation Images
@@ -385,8 +383,89 @@ class PatientCancerPhotoController extends Controller
             } elseif (!is_array($investigationImages)) {
                 $patient->investigation_images = [];
             }
-        }
 
+            /*
+        |--------------------------------------------------------------------------
+        | Normalize Patient Location
+        |--------------------------------------------------------------------------
+        */
+
+            switch ((int) $patient->location_type) {
+
+                case 1:
+                    $patient->display_location = [
+                        'type' => 'Simple Location',
+                        'fields' => [
+                            [
+                                'label' => 'Location',
+                                'value' => $patient->location_simple,
+                                'icon' => 'fas fa-map-marker-alt',
+                                'col' => 'col-md-6',
+                            ],
+                        ],
+                    ];
+                    break;
+
+                case 2:
+                    $patient->display_location = [
+                        'type' => 'Bangladesh Address',
+                        'fields' => [
+                            [
+                                'label' => 'House / Address',
+                                'value' => $patient->house_address,
+                                'icon' => 'fas fa-home',
+                                'col' => 'col-md-6',
+                            ],
+                            [
+                                'label' => 'City',
+                                'value' => $patient->city,
+                                'icon' => 'fas fa-city',
+                                'col' => 'col-md-3',
+                            ],
+                            [
+                                'label' => 'District',
+                                'value' => $patient->district,
+                                'icon' => 'fas fa-map',
+                                'col' => 'col-md-3',
+                            ],
+                            [
+                                'label' => 'Post Code',
+                                'value' => $patient->post_code,
+                                'icon' => 'fas fa-mail-bulk',
+                                'col' => 'col-md-3',
+                            ],
+                        ],
+                    ];
+                    break;
+
+                case 3:
+                    $patient->display_location = [
+                        'type' => 'Outside Bangladesh',
+                        'fields' => [
+                            [
+                                'label' => 'Country',
+                                'value' => $patient->country,
+                                'icon' => 'fas fa-globe',
+                                'col' => 'col-md-6',
+                            ],
+                            [
+                                'label' => 'Passport Number',
+                                'value' => $patient->passport_no,
+                                'icon' => 'fas fa-passport',
+                                'col' => 'col-md-6',
+                            ],
+                        ],
+                    ];
+                    break;
+
+                default:
+                    $patient->display_location = [
+                        'type' => 'Location',
+                        'fields' => [],
+                    ];
+                    break;
+            }
+        }
 
         /*
     |--------------------------------------------------------------------------
@@ -411,13 +490,11 @@ class PatientCancerPhotoController extends Controller
             $patientCancerPhoto->xray_photo = [];
         }
 
-
         return view(
             'backend.patient_management.patient_cancer.show',
             compact('patientCancerPhoto')
         );
     }
-
     /**
      * Show the form for editing the specified resource.
      */

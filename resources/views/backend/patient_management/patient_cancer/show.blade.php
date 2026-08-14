@@ -56,17 +56,30 @@
                 </div>
             </div>
 
+            {{-- Age --}}
             <div class="col-md-4 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
 
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-birthday-cake text-primary mr-1"></i>
-                            Age
-                        </label>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-primary rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                style="width: 40px; height: 40px;">
+                                <i class="fas fa-birthday-cake text-white"></i>
+                            </div>
 
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->age ?? 'N/A' }}" readonly>
+                            <div>
+                                <small class="text-muted d-block">
+                                    Personal Information
+                                </small>
+
+                                <h6 class="mb-0 font-weight-bold text-dark">
+                                    Age
+                                </h6>
+                            </div>
+                        </div>
+
+                        <input type="text" class="form-control bg-light border-0"
+                            value="{{ $patientCancerPhoto->patient->age ?? 'Not provided' }}" readonly>
 
                     </div>
                 </div>
@@ -78,13 +91,25 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
 
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-phone text-success mr-1"></i>
-                            Primary Number
-                        </label>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-success rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                style="width: 40px; height: 40px;">
+                                <i class="fas fa-phone text-white"></i>
+                            </div>
 
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->phone_1 ?? 'N/A' }}" readonly>
+                            <div>
+                                <small class="text-muted d-block">
+                                    Contact Information
+                                </small>
+
+                                <h6 class="mb-0 font-weight-bold text-dark">
+                                    Primary Number
+                                </h6>
+                            </div>
+                        </div>
+
+                        <input type="text" class="form-control bg-light border-0"
+                            value="{{ $patientCancerPhoto->patient->phone_1 ?? 'Not provided' }}" readonly>
 
                     </div>
                 </div>
@@ -96,13 +121,25 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
 
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-phone-alt text-info mr-1"></i>
-                            Alternative Number
-                        </label>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-info rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                style="width: 40px; height: 40px;">
+                                <i class="fas fa-phone-alt text-white"></i>
+                            </div>
 
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->phone_2 ?? 'N/A' }}" readonly>
+                            <div>
+                                <small class="text-muted d-block">
+                                    Contact Information
+                                </small>
+
+                                <h6 class="mb-0 font-weight-bold text-dark">
+                                    Alternative Number
+                                </h6>
+                            </div>
+                        </div>
+
+                        <input type="text" class="form-control bg-light border-0"
+                            value="{{ $patientCancerPhoto->patient->phone_2 ?? 'Not provided' }}" readonly>
 
                     </div>
                 </div>
@@ -114,13 +151,25 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
 
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-male text-secondary mr-1"></i>
-                            Father's Number
-                        </label>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                style="width: 40px; height: 40px;">
+                                <i class="fas fa-male text-white"></i>
+                            </div>
 
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->phone_f_1 ?? 'N/A' }}" readonly>
+                            <div>
+                                <small class="text-muted d-block">
+                                    Family Contact
+                                </small>
+
+                                <h6 class="mb-0 font-weight-bold text-dark">
+                                    Father's Number
+                                </h6>
+                            </div>
+                        </div>
+
+                        <input type="text" class="form-control bg-light border-0"
+                            value="{{ $patientCancerPhoto->patient->phone_f_1 ?? 'Not provided' }}" readonly>
 
                     </div>
                 </div>
@@ -132,13 +181,25 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
 
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-female text-secondary mr-1"></i>
-                            Mother's Number
-                        </label>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                style="width: 40px; height: 40px;">
+                                <i class="fas fa-female text-white"></i>
+                            </div>
 
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->patient->phone_m_1 ?? 'N/A' }}" readonly>
+                            <div>
+                                <small class="text-muted d-block">
+                                    Family Contact
+                                </small>
+
+                                <h6 class="mb-0 font-weight-bold text-dark">
+                                    Mother's Number
+                                </h6>
+                            </div>
+                        </div>
+
+                        <input type="text" class="form-control bg-light border-0"
+                            value="{{ $patientCancerPhoto->patient->phone_m_1 ?? 'Not provided' }}" readonly>
 
                     </div>
                 </div>
@@ -150,13 +211,31 @@
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
 
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-notes-medical text-danger mr-1"></i>
-                            Total Cancer
-                        </label>
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                style="width: 40px; height: 40px;">
+                                <i class="fas fa-notes-medical text-white"></i>
+                            </div>
 
-                        <input type="text" class="form-control bg-light"
-                            value="{{ $patientCancerPhoto->total_cancer ?? 0 }}" readonly>
+                            <div>
+                                <small class="text-muted d-block">
+                                    Medical Information
+                                </small>
+
+                                <h6 class="mb-0 font-weight-bold text-dark">
+                                    Total Cancer
+                                </h6>
+                            </div>
+                        </div>
+
+                        <div class="d-flex align-items-center">
+                            <input type="text" class="form-control bg-light border-0"
+                                value="{{ $patientCancerPhoto->total_cancer ?? 0 }}" readonly>
+
+                            <span class="badge badge-danger ml-2 px-3 py-2">
+                                Records
+                            </span>
+                        </div>
 
                         <small class="text-muted d-block mt-2">
                             Total cancer count recorded for this patient.
@@ -168,20 +247,94 @@
 
 
             {{-- Address --}}
+            {{-- Location --}}
             <div class="col-md-12 mb-3">
                 <div class="card border-0 shadow-sm h-100">
                     <div class="card-body">
 
-                        <label class="form-label fw-semibold text-dark">
-                            <i class="fas fa-map-marker-alt text-danger mr-1"></i>
-                            Address
-                        </label>
+                        {{-- Header --}}
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div class="d-flex align-items-center">
+                                <div class="bg-danger rounded-circle d-flex align-items-center justify-content-center mr-3"
+                                    style="width: 42px; height: 42px;">
+                                    <i class="fas fa-map-marker-alt text-white"></i>
+                                </div>
 
-                        <textarea class="form-control bg-light" rows="2" readonly>{{ $patientCancerPhoto->patient->full_location ?? 'N/A' }}</textarea>
+                                <div>
+                                    <h5 class="mb-1 font-weight-bold text-dark">
+                                        Patient Location
+                                    </h5>
+
+                                    <span class="badge badge-light text-muted border">
+                                        <i class="fas fa-location-arrow mr-1"></i>
+                                        {{ $patientCancerPhoto->patient->display_location['type'] ?? 'Location' }}
+                                    </span>
+                                </div>
+                            </div>
+
+                            <span class="text-muted small">
+                                <i class="fas fa-info-circle mr-1"></i>
+                                Registered Address
+                            </span>
+                        </div>
+
+                        @if (!empty($patientCancerPhoto->patient->display_location['fields']))
+
+                            <div class="row">
+
+                                @foreach ($patientCancerPhoto->patient->display_location['fields'] as $field)
+                                    @php
+                                        $hasValue = filled($field['value']);
+                                    @endphp
+
+                                    <div class="{{ $field['col'] ?? 'col-md-6' }} mb-3">
+
+                                        <div class="card bg-light border-0 h-100 mb-0">
+                                            <div class="card-body py-3">
+
+                                                <div class="d-flex align-items-center mb-2">
+
+                                                    <span class="text-danger mr-2">
+                                                        <i class="{{ $field['icon'] ?? 'fas fa-map-marker-alt' }}"></i>
+                                                    </span>
+
+                                                    <label class="mb-0 text-muted small font-weight-bold text-uppercase">
+                                                        {{ $field['label'] }}
+                                                    </label>
+
+                                                </div>
+
+                                                <input type="text" class="form-control border-0 bg-white shadow-sm"
+                                                    value="{{ $hasValue ? $field['value'] : 'Not provided' }}" disabled>
+
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        @else
+                            <div class="text-center py-4">
+                                <div class="text-muted mb-2">
+                                    <i class="fas fa-map-marked-alt fa-2x"></i>
+                                </div>
+
+                                <h6 class="font-weight-bold text-dark mb-1">
+                                    No Location Information
+                                </h6>
+
+                                <small class="text-muted">
+                                    No registered location information is available for this patient.
+                                </small>
+                            </div>
+
+                        @endif
 
                     </div>
                 </div>
             </div>
+
 
             {{-- CLINICAL STATUS --}}
             <div class="col-12 mb-3">
@@ -206,7 +359,7 @@
                         <div class="row">
 
                             {{--  REFERRED --}}
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <div class="card border h-100 shadow-sm">
                                     <div class="card-body">
 
@@ -319,7 +472,7 @@
                                                                             <img src="{{ $documentUrl }}"
                                                                                 alt="{{ $document->document_name }}"
                                                                                 class="img-fluid rounded border"
-                                                                                style="width:100%;height:100px;object-fit:contain;cursor:pointer;"
+                                                                                style="width:100%;height:200px;object-fit:contain;cursor:pointer;"
                                                                                 data-toggle="modal"
                                                                                 data-target="#imageZoomModal"
                                                                                 data-image="{{ $documentUrl }}">
@@ -381,7 +534,7 @@
 
 
                             {{-- TREATMENT --}}
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <div class="card border h-100 shadow-sm">
                                     <div class="card-body">
 
@@ -470,7 +623,7 @@
                                                                         <img src="{{ $imageUrl }}"
                                                                             alt="Treatment Image"
                                                                             class="img-fluid rounded border"
-                                                                            style="width:100%;height:100px;object-fit:contain;cursor:pointer;"
+                                                                            style="width:100%;height:200px;object-fit:contain;cursor:pointer;"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#imageZoomModal"
                                                                             data-bs-img-src="{{ $imageUrl }}">
@@ -516,7 +669,7 @@
                             </div>
 
                             {{--  INVESTIGATION --}}
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-12 mb-3">
                                 <div class="card border h-100 shadow-sm">
                                     <div class="card-body">
 
@@ -592,7 +745,7 @@
                                                                         <img src="{{ $imageUrl }}"
                                                                             alt="Investigation Image"
                                                                             class="img-fluid rounded border"
-                                                                            style="width:100%;height:100px;object-fit:contain;cursor:pointer;"
+                                                                            style="width:100%;height:200px;object-fit:contain;cursor:pointer;"
                                                                             data-bs-toggle="modal"
                                                                             data-bs-target="#imageZoomModal"
                                                                             data-bs-img-src="{{ $imageUrl }}">
