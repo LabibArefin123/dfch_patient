@@ -172,6 +172,7 @@
                 <hr>
             </div>
 
+
             <div id="xrayDescriptionWrapper">
                 <div class="form-group">
                     <label>
@@ -180,7 +181,7 @@
                     </label>
 
                     <textarea name="xray_description" id="edit_xray_description" class="form-control" rows="6"
-                        placeholder="Enter X-Ray / CT Scan findings...">{{ optional($patient->cancerPhotos)->xray_description }}</textarea>
+                        placeholder="Enter X-Ray / CT Scan findings...">{{ $patient?->cancerPhoto?->xray_description }}</textarea>
 
                     <small class="text-muted">
                         Enter detailed X-Ray or CT scan findings, observations,
@@ -198,7 +199,7 @@
                 </label>
 
                 <textarea name="cancer_remarks" id="edit_cancer_remarks" class="form-control" rows="5"
-                    placeholder="Enter additional observations, diagnosis or recommendations...">{{ optional($patient->cancerPhotos)->cancer_remarks }}</textarea>
+                    placeholder="Enter additional observations, diagnosis or recommendations...">{{ $patient?->cancerPhoto?->cancer_remarks }}</textarea>
 
                 <small class="text-muted">
                     Additional observations, diagnosis or recommendations.

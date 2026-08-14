@@ -1742,15 +1742,18 @@ class PatientController extends Controller
         return view('backend.patient_management.show', compact('patient'));
     }
 
-
     public function edit(Patient $patient)
     {
+        $patient->load([
+            'cancerPhotos',
+        ]);
+
         $patientImage = $this->getPatientImageInfo($patient);
         $documents = $this->getReferredDocuments($patient);
 
         return view('backend.patient_management.edit', array_merge(
             [
-                'patient'   => $patient,
+                'patient' => $patient,
                 'documents' => $documents,
             ],
             $patientImage
@@ -2375,8 +2378,17 @@ class PatientController extends Controller
             $cancer->total_cancer = $request->total_cancer;
             $cancer->xray_photo = array_values($photos);
             $cancer->cancer_hashes = array_values($hashes);
-            $cancer->xray_description = $request->xray_description;
-            $cancer->cancer_remarks = $request->cancer_remarks;
+            $cancer->xray_description = $request->filled('xray_description')
+                ? json_encode([
+                    'content' => $request->xray_description,
+                ], JSON_UNESCAPED_UNICODE)
+                : null;
+
+            $cancer->cancer_remarks = $request->filled('cancer_remarks')
+                ? json_encode([
+                    'content' => $request->cancer_remarks,
+                ], JSON_UNESCAPED_UNICODE)
+                : null;
             $cancer->save();
         } else {
 
