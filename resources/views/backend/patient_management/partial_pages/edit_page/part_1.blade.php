@@ -1,5 +1,5 @@
 {{-- Patient Name --}}
-<div class="col-12" >
+<div class="col-12" id="part_1_general">
     <div class="patient-section-card">
 
         <div class="section-header">

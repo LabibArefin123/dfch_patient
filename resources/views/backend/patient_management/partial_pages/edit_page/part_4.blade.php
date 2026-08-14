@@ -1,120 +1,151 @@
-<div class="col-12">
-    <div class="patient-section-card treatment-card">
+<div class="col-12" id="part_4_referral">
+    <div class="patient-section-card recommend-card">
         <div class="section-header">
             <div>
-                <h5>
-                    <i class="fas fa-procedures text-warning"></i>
-                    Treatment Information
-                </h5>
-                <span>Treatment history & image archive</span>
+                <h5><i class="fas fa-user-md text-success"></i>Reffered Information </h5>
+                <span> Doctor referral & patient documents archive </span>
             </div>
-
-            <span class="section-badge treatment-badge">
-                Medical Record
+            <span class="section-badge recommend-badge">
+                Referral Record
             </span>
         </div>
 
         <div class="row">
             <div class="form-group col-md-6">
-                <label>Is Treatment?</label>
-                <select name="is_treatment" id="is_treatment" class="form-control">
-                    <option value="0" {{ old('is_treatment', $patient->is_treatment) == 0 ? 'selected' : '' }}>
+                <label>Is Patient Referred?</label>
+                <select name="is_referred" id="is_referred" class="form-control">
+                    <option value="0" {{ old('is_referred', $patient->is_referred) == 0 ? 'selected' : '' }}>
                         No
                     </option>
-
-                    <option value="1" {{ old('is_treatment', $patient->is_treatment) == 1 ? 'selected' : '' }}>
+                    <option value="1" {{ old('is_referred', $patient->is_referred) == 1 ? 'selected' : '' }}>
                         Yes
                     </option>
                 </select>
             </div>
         </div>
 
-        <div class="treatment-section">
+        <div class="recommend-section">
             <div class="row">
-                <div class="form-group col-md-12">
-                    <label>Treatment Type</label>
-                    <select name="treatment_type" id="treatment_type" class="form-control">
-                        <option value="">Select Treatment Type</option>
-
-                        <option value="OPD"
-                            {{ old('treatment_type', $patient->treatment_type) == 'OPD' ? 'selected' : '' }}>
-                            OPD
-                        </option>
-
-                        <option value="OT"
-                            {{ old('treatment_type', $patient->treatment_type) == 'OT' ? 'selected' : '' }}>
-                            OT
-                        </option>
-                    </select>
+                <div class="form-group col-md-6">
+                    <label>Referred Doctor Name</label>
+                    <input type="text" name="referred_doctor_name" class="form-control"
+                        value="{{ old('referred_doctor_name', $patient->referred_doctor_name) }}">
                 </div>
 
+                {{-- Doctor Note --}}
                 <div class="form-group col-md-12">
-                    <label>Treatment Information</label>
-                    <textarea name="treatment_information" id="edit_treatment_information" class="form-control">{{ old('treatment_information', $patient->treatment_information) }}</textarea>
+                    <label>Referred Doctor's Note</label>
+                    <textarea name="referred_note" id="edit_referred_note" class="form-control">{!! old('referred_note', $patient->referred_note) !!}</textarea>
                 </div>
 
-                {{-- Existing Images --}}
+                {{-- Existing Documents --}}
                 <div class="form-group col-md-12">
-                    <label>Treatment Images</label>
-                    <div class="card shadow-sm border-0">
+                    <label>Patient Documents</label>
+                    <div class="card border-0 shadow-sm">
                         <div class="card-body">
-                            @if (!empty($patient->treatment_images))
+                            @if ($documents->count() > 0)
                                 <div class="row">
-                                    @foreach ($patient->treatment_images as $image)
-                                        <div class="col-md-4 col-lg-3 mb-3">
-                                            <div class="card h-100 shadow-sm border">
-                                                <a href="#" data-bs-toggle="modal"
-                                                    data-bs-target="#imageZoomModal"
-                                                    data-bs-img-src="{{ asset($image) }}" class="text-decoration-none">
-
-                                                    <img src="{{ asset($image) }}"
-                                                        class="img-fluid rounded-top magnify-img" alt="Treatment Image"
-                                                        style="
-                                                    height:180px;
-                                                    width:100%;
-                                                    object-fit:contain;
-                                                    cursor:zoom-in;
-                                                    transition:transform .2s ease, box-shadow .2s ease;
-                                                ">
-
-                                                </a>
-
-                                                <div class="card-body text-center">
-
-                                                    <a href="#" class="btn btn-sm btn-primary"
-                                                        data-bs-toggle="modal" data-bs-target="#imageZoomModal"
-                                                        data-bs-img-src="{{ asset($image) }}">
-                                                        View Image
-
-                                                    </a>
-
+                                    @foreach ($documents as $doc)
+                                        <div class="col-md-4 col-lg-3 mb-4">
+                                            <div class="card h-100 border-0 recommendation-document-card">
+                                                <div class="document-preview-3x2">
+                                                    @if ($doc->is_image)
+                                                        <img src="{{ $doc->file_url }}" alt="{{ $doc->document_name }}"
+                                                            class="document-preview-image">
+                                                    @else
+                                                        <div class="document-file-placeholder">
+                                                            <div class="document-file-placeholder-inner">
+                                                                <i
+                                                                    class="fas fa-file-medical-alt document-file-icon"></i>
+                                                                <span class="document-file-ext">
+                                                                    {{ strtoupper($doc->extension ?: 'FILE') }}
+                                                                </span>
+                                                            </div>
+                                                        </div>
+                                                    @endif
                                                 </div>
 
-                                            </div>
+                                                <div class="card-body">
+                                                    <div class="document-title" title="{{ $doc->document_name }}">
+                                                        {{ $doc->document_name }}
+                                                    </div>
 
+                                                    <div class="document-meta">
+                                                        <span class="document-meta-line">
+                                                            {{ strtoupper($doc->extension ?: 'FILE') }}
+                                                            •
+                                                            {{ $doc->file_size_formatted }}
+                                                        </span>
+
+                                                        @if ($doc->is_image && $doc->width && $doc->height)
+                                                            <span class="document-meta-line">
+                                                                {{ $doc->width }}
+                                                                ×
+                                                                {{ $doc->height }} px
+                                                            </span>
+                                                        @endif
+                                                    </div>
+
+                                                    <div class="document-actions">
+                                                        <a href="{{ $doc->file_url }}" target="_blank"
+                                                            class="btn btn-sm btn-primary">
+                                                            <i class="fas fa-eye mr-1"></i>
+                                                            View
+                                                        </a>
+
+                                                        <a href="{{ $doc->file_url }}" download
+                                                            class="btn btn-sm btn-success">
+
+                                                            <i class="fas fa-download mr-1"></i>
+                                                            Download
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     @endforeach
-
                                 </div>
                             @else
-                                <div class="text-center text-muted py-4">
-
-                                    No treatment images available
-
+                                <div class="empty-document-box">
+                                    <i class="fas fa-file-medical"></i>
+                                    <h6>No Documents Available</h6>
+                                    <p>
+                                        Patient referred files have not been uploaded.
+                                    </p>
                                 </div>
-
                             @endif
-
                         </div>
                     </div>
                 </div>
 
-                {{-- Upload More --}}
+                {{-- Upload --}}
                 <div class="form-group col-md-6">
-                    <label>Add More Treatment Images</label>
-                    <input type="file" name="treatment_images[]" multiple class="form-control">
+
+                    <label>Add More Documents</label>
+
+                    <input type="file" name="documents[]" multiple class="form-control">
+
                 </div>
-                <div id="treatmentPreviewContainer" class="treatment-preview-container mt-3"></div>
+
+                <div id="referPreviewContainer" class="refer-preview-container mt-3"></div>
+
+                {{-- Date of Patient Added --}}
+                <div class="form-group col-md-6">
+                    <label>Date of Patient Added</label>
+
+                    <input type="date" name="date_of_patient_added"
+                        class="form-control @error('date_of_patient_added') is-invalid @enderror"
+                        value="{{ old(
+                            'date_of_patient_added',
+                            $patient->date_of_patient_added ? \Carbon\Carbon::parse($patient->date_of_patient_added)->format('Y-m-d') : '',
+                        ) }}">
+
+                    @error('date_of_patient_added')
+                        <div class="invalid-feedback">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                </div>
             </div>
         </div>
     </div>

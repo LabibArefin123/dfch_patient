@@ -3,9 +3,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!progressCard) return;
 
     const progressItems = progressCard.querySelectorAll(".progress-item");
-    if (progressItems.length < 3) return;
+    if (progressItems.length < 4) return;
 
-    const referralItem = progressItems[2];
+    const referralItem = progressItems[3];
     const step = referralItem.querySelector(".step");
 
     if (!step) return;

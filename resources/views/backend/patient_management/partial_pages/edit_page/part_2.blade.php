@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12" id="part_2_address">
     <div class="patient-section-card">
         <div class="section-header">
             <div>
@@ -49,7 +49,7 @@
 
                     <div class="form-group col-md-2">
                         <label>City</label>
-                        <input type="text" name="city" id="city"  class="form-control"
+                        <input type="text" name="city" id="city" class="form-control"
                             value="{{ old('city', $patient->city) }}">
                     </div>
 
@@ -86,5 +86,5 @@
                 </div>
             </div>
         </div>
-    </div>          
+    </div>
 </div>

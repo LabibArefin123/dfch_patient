@@ -1,151 +1,45 @@
-<div class="col-12" id="part_4_referral">
-    <div class="patient-section-card recommend-card">
+<div class="col-12" id="part_3_medical">
+    <div class="patient-section-card remarks-card">
         <div class="section-header">
             <div>
-                <h5><i class="fas fa-user-md text-success"></i>Reffered Information </h5>
-                <span> Doctor referral & patient documents archive </span>
+                <h5>
+                    <i class="fas fa-notes-medical text-danger"></i>
+                    Medical Notes & Prescriptions
+                </h5>
+
+                <span>
+                    Patient observations, problems and medication history
+                </span>
             </div>
-            <span class="section-badge recommend-badge">
-                Referral Record
+
+            <span class="section-badge remarks-badge">
+                Doctor Notes
             </span>
         </div>
 
         <div class="row">
-            <div class="form-group col-md-6">
-                <label>Is Patient Referred?</label>
-                <select name="is_referred" id="is_referred" class="form-control">
-                    <option value="0" {{ old('is_referred', $patient->is_referred) == 0 ? 'selected' : '' }}>
-                        No
-                    </option>
-                    <option value="1" {{ old('is_referred', $patient->is_referred) == 1 ? 'selected' : '' }}>
-                        Yes
-                    </option>
-                </select>
+            <div class="form-group col-md-12">
+                <label>
+                    <i class="fas fa-clipboard-list mr-1"></i>
+                    Remarks
+                </label>
+                <textarea name="remarks" id="remarks" class="form-control">{!! old('remarks', $patient->remarks) !!}</textarea>
             </div>
-        </div>
 
-        <div class="recommend-section">
-            <div class="row">
-                <div class="form-group col-md-6">
-                    <label>Referred Doctor Name</label>
-                    <input type="text" name="referred_doctor_name" class="form-control"
-                        value="{{ old('referred_doctor_name', $patient->referred_doctor_name) }}">
-                </div>
+            <div class="form-group col-md-12">
+                <label>
+                    <i class="fas fa-user-injured mr-1"></i>
+                    Patient's Problem
+                </label>
+                <textarea name="patient_problem_description" id="edit_patient_problem_description" class="form-control">{!! old('patient_problem_description', $patient->patient_problem_description) !!}</textarea>
+            </div>
 
-                {{-- Doctor Note --}}
-                <div class="form-group col-md-12">
-                    <label>Referred Doctor's Note</label>
-                    <textarea name="referred_note" id="edit_referred_note" class="form-control">{!! old('referred_note', $patient->referred_note) !!}</textarea>
-                </div>
-
-                {{-- Existing Documents --}}
-                <div class="form-group col-md-12">
-                    <label>Patient Documents</label>
-                    <div class="card border-0 shadow-sm">
-                        <div class="card-body">
-                            @if ($documents->count() > 0)
-                                <div class="row">
-                                    @foreach ($documents as $doc)
-                                        <div class="col-md-4 col-lg-3 mb-4">
-                                            <div class="card h-100 border-0 recommendation-document-card">
-                                                <div class="document-preview-3x2">
-                                                    @if ($doc->is_image)
-                                                        <img src="{{ $doc->file_url }}" alt="{{ $doc->document_name }}"
-                                                            class="document-preview-image">
-                                                    @else
-                                                        <div class="document-file-placeholder">
-                                                            <div class="document-file-placeholder-inner">
-                                                                <i
-                                                                    class="fas fa-file-medical-alt document-file-icon"></i>
-                                                                <span class="document-file-ext">
-                                                                    {{ strtoupper($doc->extension ?: 'FILE') }}
-                                                                </span>
-                                                            </div>
-                                                        </div>
-                                                    @endif
-                                                </div>
-
-                                                <div class="card-body">
-                                                    <div class="document-title" title="{{ $doc->document_name }}">
-                                                        {{ $doc->document_name }}
-                                                    </div>
-
-                                                    <div class="document-meta">
-                                                        <span class="document-meta-line">
-                                                            {{ strtoupper($doc->extension ?: 'FILE') }}
-                                                            •
-                                                            {{ $doc->file_size_formatted }}
-                                                        </span>
-
-                                                        @if ($doc->is_image && $doc->width && $doc->height)
-                                                            <span class="document-meta-line">
-                                                                {{ $doc->width }}
-                                                                ×
-                                                                {{ $doc->height }} px
-                                                            </span>
-                                                        @endif
-                                                    </div>
-
-                                                    <div class="document-actions">
-                                                        <a href="{{ $doc->file_url }}" target="_blank"
-                                                            class="btn btn-sm btn-primary">
-                                                            <i class="fas fa-eye mr-1"></i>
-                                                            View
-                                                        </a>
-
-                                                        <a href="{{ $doc->file_url }}" download
-                                                            class="btn btn-sm btn-success">
-
-                                                            <i class="fas fa-download mr-1"></i>
-                                                            Download
-                                                        </a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            @else
-                                <div class="empty-document-box">
-                                    <i class="fas fa-file-medical"></i>
-                                    <h6>No Documents Available</h6>
-                                    <p>
-                                        Patient referred files have not been uploaded.
-                                    </p>
-                                </div>
-                            @endif
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Upload --}}
-                <div class="form-group col-md-6">
-
-                    <label>Add More Documents</label>
-
-                    <input type="file" name="documents[]" multiple class="form-control">
-
-                </div>
-
-                <div id="referPreviewContainer" class="refer-preview-container mt-3"></div>
-
-                {{-- Date of Patient Added --}}
-                <div class="form-group col-md-6">
-                    <label>Date of Patient Added</label>
-
-                    <input type="date" name="date_of_patient_added"
-                        class="form-control @error('date_of_patient_added') is-invalid @enderror"
-                        value="{{ old(
-                            'date_of_patient_added',
-                            $patient->date_of_patient_added ? \Carbon\Carbon::parse($patient->date_of_patient_added)->format('Y-m-d') : '',
-                        ) }}">
-
-                    @error('date_of_patient_added')
-                        <div class="invalid-feedback">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
+            <div class="form-group col-md-12">
+                <label>
+                    <i class="fas fa-pills mr-1"></i>
+                    Drug Description
+                </label>
+                <textarea name="patient_drug_description" id="edit_patient_drug_description" class="form-control">{!! old('patient_drug_description', $patient->patient_drug_description) !!}</textarea>
             </div>
         </div>
     </div>
