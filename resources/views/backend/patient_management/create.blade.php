@@ -138,6 +138,7 @@
             </div>
 
             <div class="progress-line"></div>
+            {{-- ========================= REFERRAL INFORMATION ========================= --}}
 
             <div class="progress-item" data-target="part_3_medical">
                 <div class="step">
@@ -148,7 +149,19 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item" data-target="part_4_treatment">
+            <div class="progress-item" data-target="part_4_referral">
+                <div class="step">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <span>
+
+                    Referral Information
+                </span>
+            </div>
+
+            <div class="progress-line"></div>
+
+            <div class="progress-item" data-target="part_5_treatment">
                 <div class="step">
                     <i class="fas fa-procedures"></i>
                 </div>
@@ -157,7 +170,7 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item" data-target="part_5_investigation">
+            <div class="progress-item" data-target="part_6_investigation">
                 <div class="step">
                     <i class="fas fa-microscope"></i>
                 </div>
@@ -166,7 +179,7 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item" data-target="part_6_emergency">
+            <div class="progress-item" data-target="part_7_emergency">
                 <div class="step">
                     <i class="fas fa-ambulance"></i>
                 </div>
@@ -175,7 +188,7 @@
 
             <div class="progress-line"></div>
 
-            <div class="progress-item" data-target="part_7_cancer">
+            <div class="progress-item" data-target="part_8_cancer">
                 <div class="step">
                     <i class="fas fa-ribbon"></i>
                 </div>
@@ -271,17 +284,9 @@
             </div>
             {{-- MEDICAL --}}
             <div class="patient-section-card">
-                <div class="section-header red">
-                    <div>
-                        <h3><i class="fas fa-heartbeat mr-2"></i> Medical Information</h3>
-                        <p> Current condition and patient history.</p>
-                    </div>
-                </div>
-
-                <div class="section-body">
-                    <div class="row">
+             
                         @include('backend.patient_management.partial_pages.create_page.part_4')
-                    </div>
+                    
                 </div>
             </div>
             {{-- Treatment Part --}}

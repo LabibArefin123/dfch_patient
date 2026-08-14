@@ -1,30 +1,30 @@
-{{-- ========================= RECOMMENDED PATIENT ========================= --}}
+{{-- ========================= MEDICAL INFORMATION ========================= --}}
 
-<div class="section-subtitle">
+<div class="section-subtitle" id="part_3_medical">
 
     <span>
-        <i class="fas fa-user-md"></i>
-        Referral Status
+        <i class="fas fa-notes-medical"></i>
+        Medical Information
     </span>
 
     <hr>
 
 </div>
 
-<div class="section-note primary">
+<div class="section-note danger">
 
     <div class="section-note-icon">
-        <i class="fas fa-hospital-user"></i>
+        <i class="fas fa-stethoscope"></i>
     </div>
 
     <div class="section-note-content">
 
-        <strong>Patient Referral</strong>
+        <strong>Patient Clinical Information</strong>
 
         <p>
-            Select whether the patient has been referred by another doctor or
-            medical institution. Additional referral information will appear
-            automatically.
+            Record the patient's current health problem, medication history
+            and any additional medical observations that may be important
+            for diagnosis and treatment.
         </p>
 
     </div>
@@ -33,144 +33,62 @@
 
 <div class="row">
 
-    {{-- Referral Status --}}
+    {{-- Patient's Problem --}}
     <div class="form-group col-lg-6">
 
-        <label>Is Referred Patient?</label>
+        <label>
+            <i class="fas fa-user-injured text-danger mr-1"></i>
+            Patient's Problem
+            <span class="text-danger">*</span>
+        </label>
 
-        <div class="input-group modern-input">
-
-            <div class="input-group-prepend">
-                <span class="input-group-text">
-                    <i class="fas fa-share-square"></i>
-                </span>
-            </div>
-
-            <select name="is_referred" id="is_referred" class="form-control">
-
-                <option value="0" {{ old('is_referred') == '0' ? 'selected' : '' }}>
-                    No
-                </option>
-
-                <option value="1" {{ old('is_referred') == '1' ? 'selected' : '' }}>
-                    Yes
-                </option>
-
-            </select>
-
-        </div>
+        <textarea name="patient_problem_description" id="patient_problem_description" class="form-control" rows="7"
+            placeholder="Describe the patient's current problem, symptoms, complaints or diagnosis..."></textarea>
 
         <small class="text-muted">
-            Choose whether this patient was referred by another doctor.
+            Describe the patient's main complaint, symptoms, diagnosis
+            or other relevant medical problems.
         </small>
 
     </div>
 
-</div>
 
-{{-- ========================= Referral Details ========================= --}}
-<div class="recommend-section d-none">
+    {{-- Patient's Drug Description --}}
+    <div class="form-group col-lg-6">
 
-    <div class="section-divider"></div>
+        <label>
+            <i class="fas fa-pills text-primary mr-1"></i>
+            Medication / Drug Description
+            <span class="text-danger">*</span>
+        </label>
 
-    <div class="section-subtitle">
+        <textarea name="patient_drug_description" id="patient_drug_description" class="form-control" rows="7"
+            placeholder="Enter current medicines, dosage, duration or previous medication history..."></textarea>
 
-        <span>
-            <i class="fas fa-file-medical"></i>
-            Referral Details
-        </span>
-
-        <hr>
-
-    </div>
-
-    <div class="section-note info">
-
-        <div class="section-note-icon">
-            <i class="fas fa-notes-medical"></i>
-        </div>
-
-        <div class="section-note-content">
-
-            <strong>Referral Information</strong>
-
-            <p>
-                Record the referring doctor's notes, upload referral documents
-                and preserve any supporting medical records.
-            </p>
-
-        </div>
+        <small class="text-muted">
+            Record medicines currently being taken, dosage information,
+            duration or relevant medication history.
+        </small>
 
     </div>
 
-    <div class="row">
-        <div class="form-group col-lg-12">
 
-            <label>
-                <i class="fas fa-user-md text-primary mr-1"></i>
-                Referred Doctor Name
-            </label>
+    {{-- Medical Remarks --}}
+    <div class="form-group col-lg-12">
 
-            <input type="text" name="referred_doctor_name" class="form-control"
-                value="{{ old('referred_doctor_name') }}" placeholder="Enter referring doctor's name">
+        <label>
+            <i class="fas fa-comment-medical text-info mr-1"></i>
+            Medical Remarks
+        </label>
 
-            <small class="text-muted">
-                Enter the name of the doctor who referred the patient.
-            </small>
+        <textarea name="remarks" id="remarks" class="form-control" rows="5"
+            placeholder="Add additional clinical observations, important notes or recommendations..."></textarea>
 
-        </div>
+        <small class="text-muted">
+            Add any additional clinical observations, important notes
+            or recommendations that do not belong in the fields above.
+        </small>
 
-
-        <div class="form-group col-lg-12">
-
-            <label>
-                <i class="fas fa-file-medical-alt text-primary mr-1"></i>
-                Referred Doctor Note
-            </label>
-
-            <textarea name="referred_note" class="form-control ckeditor" rows="6">{{ old('referred_note') }}</textarea>
-
-            <small class="text-muted">
-                Enter diagnosis, referral reason, treatment advice and any
-                additional recommendations from the referring doctor.
-            </small>
-
-        </div>
-
-
-        {{-- Documents --}}
-        <div class="form-group col-lg-12">
-
-            <label>Referral Documents</label>
-
-            <div class="global-upload-box">
-
-                <input type="file" name="documents[]" class="form-control-file" accept=".pdf,image/*" multiple>
-
-                <div class="upload-placeholder">
-
-                    <i class="fas fa-cloud-upload-alt"></i>
-
-                    <h6>Upload Referral Documents</h6>
-
-                    <p>
-                        Upload referral letters, prescriptions,
-                        PDF reports or medical images.
-                    </p>
-
-                </div>
-
-            </div>
-
-            <small class="text-muted">
-                Supported formats: PDF, JPG, JPEG, PNG and other image files.
-            </small>
-
-        </div>
-
-    </div>
-
-    <div id="referPreviewContainer" class="refer-preview-container mt-3">
     </div>
 
 </div>

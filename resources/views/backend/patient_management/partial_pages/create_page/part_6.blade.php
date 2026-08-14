@@ -1,6 +1,6 @@
 {{-- ========================= INVESTIGATION INFORMATION ========================= --}}
 
-<div class="patient-section-card">
+<div class="patient-section-card" id="part_6_investigation">
 
     <div class="section-header warning">
 

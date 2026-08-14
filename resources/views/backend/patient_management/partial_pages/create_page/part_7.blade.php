@@ -1,5 +1,5 @@
 {{-- ========================= EMERGENCY INFORMATION ========================= --}}
-<div class="patient-section-card">
+<div class="patient-section-card" id="part_7_emergency">
     <div class="section-header danger">
         <div class="section-icon">
             <i class="fas fa-ambulance"></i>

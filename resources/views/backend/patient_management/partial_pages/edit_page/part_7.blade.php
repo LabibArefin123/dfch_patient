@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12" id="part_3_medical">
     <div class="patient-section-card remarks-card">
         <div class="section-header">
             <div>

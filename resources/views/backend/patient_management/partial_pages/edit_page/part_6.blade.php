@@ -1,4 +1,4 @@
-<div class="patient-section-card emergency-card">
+<div class="patient-section-card emergency-card" id="part_6_emergency">
     <div class="section-header danger">
         <div>
             <h5>

@@ -1,5 +1,5 @@
 {{-- TREATMENT INFORMATION --}}
-<div class="patient-section-card">
+<div class="patient-section-card" id="part_5_treatment">
     <div class="section-header success">
         <div class="section-icon">
             <i class="fas fa-procedures"></i>

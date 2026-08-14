@@ -1,5 +1,5 @@
 {{-- CANCER INFORMATION --}}
-<div class="patient-section-card">
+<div class="patient-section-card" id="part_8_cancer">
     {{-- Header --}}
     <div class="section-header danger">
         <div class="section-icon">

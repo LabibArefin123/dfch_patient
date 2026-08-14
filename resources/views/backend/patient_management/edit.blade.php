@@ -101,7 +101,8 @@
 
     {{-- Progress --}}
     <div class="patient-progress-card">
-        <div class="progress-item">
+
+        <div class="progress-item" data-target="part_1_general">
             <div class="step">
                 <i class="fas fa-user"></i>
             </div>
@@ -110,7 +111,7 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item">
+        <div class="progress-item" data-target="part_2_address">
             <div class="step">
                 <i class="fas fa-map-marker-alt"></i>
             </div>
@@ -119,7 +120,7 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item">
+        <div class="progress-item" data-target="part_3_medical">
             <div class="step">
                 <i class="fas fa-notes-medical"></i>
             </div>
@@ -128,7 +129,7 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item">
+        <div class="progress-item" data-target="part_4_treatment">
             <div class="step">
                 <i class="fas fa-procedures"></i>
             </div>
@@ -137,7 +138,7 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item">
+        <div class="progress-item" data-target="part_5_investigation">
             <div class="step">
                 <i class="fas fa-microscope"></i>
             </div>
@@ -146,16 +147,16 @@
 
         <div class="progress-line"></div>
 
-        <div class="progress-item">
+        <div class="progress-item" data-target="part_6_emergency">
             <div class="step">
                 <i class="fas fa-ambulance"></i>
             </div>
             <span>Emergency</span>
-
         </div>
+
         <div class="progress-line"></div>
 
-        <div class="progress-item">
+        <div class="progress-item" data-target="part_7_cancer">
             <div class="step">
                 <i class="fas fa-ribbon"></i>
             </div>
@@ -194,6 +195,7 @@
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_treatment_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_cancer_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_edit_form.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/patient_icon_jump.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/progress_1_basic.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/progress_2_address.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/progress_3_medical.js') }}"></script>

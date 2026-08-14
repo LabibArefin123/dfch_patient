@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12" >
     <div class="patient-section-card recommend-card">
         <div class="section-header">
             <div>

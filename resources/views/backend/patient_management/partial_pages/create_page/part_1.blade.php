@@ -1,4 +1,4 @@
-<div class="patient-section-card">
+<div class="patient-section-card" id="part_1_general">
     <div class="section-body">
 
         {{-- ========================================================= --}}

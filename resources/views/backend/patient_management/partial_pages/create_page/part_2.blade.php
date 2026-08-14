@@ -2,7 +2,7 @@
 {{-- ADDRESS INFORMATION --}}
 {{-- ========================================================= --}}
 
-<div class="patient-section-card">
+<div class="patient-section-card" id="part_2_address">
 
     <div class="section-header info">
 
