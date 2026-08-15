@@ -44,11 +44,8 @@ document.addEventListener("DOMContentLoaded", () => {
         */
 
         if (referredField.value === "0") {
-            percent = 100;
-
-            step.style.setProperty("--fill", "100%");
-            referralItem.classList.add("completed");
-
+            percent = 0;
+            step.style.setProperty("--fill", "0%");
             return;
         }
 

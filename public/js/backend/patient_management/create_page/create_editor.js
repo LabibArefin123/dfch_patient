@@ -7,15 +7,18 @@ function initializeEditors() {
         // Patient
         "#patient_problem_description",
         "#patient_drug_description",
-
-        // Emergency
+        "#remarks",
+        // Refer Part
+        "#referred_note",
+        // Emergency Part
         "#emergency_details",
-
-        // Treatment
+        // Treatment Part
         "#treatment_information",
-
-        // Investigation
+        // Investigation Part
         "#investigation_information",
+        // Cancer Part
+        "#xray_description",
+        "#cancer_remarks",
     ];
 
     editors.forEach(function (selector) {

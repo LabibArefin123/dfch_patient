@@ -145,7 +145,7 @@
             <div id="xrayDescriptionWrapper">
                 <div class="form-group">
                     <label>Diagnostic Description</label>
-                    <textarea name="xray_description[]" class="form-control" rows="4"
+                    <textarea name="xray_description" id="xray_description" class="form-control" rows="4"
                         placeholder="Enter X-Ray / CT Scan / MRI findings..."></textarea>
                     <small class="text-muted">One description will be generated for each uploaded image.</small>
                 </div>
@@ -172,7 +172,7 @@
 
             <div class="form-group">
                 <label>Doctor's Remarks</label>
-                <textarea name="cancer_remarks" class="form-control ckeditor" rows="5"></textarea>
+                <textarea name="cancer_remarks" id="cancer_remarks" class="form-control ckeditor" rows="5"></textarea>
                 <small class="text-muted">
                     Enter diagnosis, recommendations, follow-up schedule and additional observations.
                 </small>

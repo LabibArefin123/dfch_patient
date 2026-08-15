@@ -212,103 +212,78 @@
                         <p> Registration and referred details.</p>
                     </div>
                 </div>
+
                 <div class="section-body">
                     <div class="registration-wrapper">
                         {{-- Left Side --}}
                         <div class="registration-form">
-
                             <div class="form-group mb-0">
-
                                 <label>
                                     <i class="fas fa-calendar-plus mr-2 text-danger"></i>
                                     Date of Registration
                                 </label>
-
                                 <input type="date" id="date_of_patient_added" name="date_of_patient_added"
                                     class="form-control registration-date-input"
                                     value="{{ old('date_of_patient_added') }}">
-
                                 <small class="text-muted mt-2 d-block">
                                     Select the official patient registration date.
                                 </small>
-
                             </div>
-
                         </div>
 
                         {{-- Right Side --}}
                         <div class="registration-preview">
-
                             <div class="registration-preview-header">
-
                                 <div class="registration-preview-icon">
                                     <i class="fas fa-calendar-check"></i>
                                 </div>
 
                                 <div>
-
                                     <h5>Registration Summary</h5>
-
                                     <p class="mb-0">
                                         Live overview of the selected date.
                                     </p>
-
                                 </div>
-
                             </div>
 
                             <div class="registration-preview-body" id="patientAddedDateInfo">
-
                                 <div class="registration-empty">
-
                                     <i class="far fa-calendar-alt"></i>
-
                                     <h6>No Date Selected</h6>
-
                                     <p>
                                         Choose a registration date to view
                                         the formatted calendar information.
                                     </p>
-
                                 </div>
-
                             </div>
-
                         </div>
-
                     </div>
-
                     @include('backend.patient_management.partial_pages.create_page.part_3')
-
                 </div>
             </div>
             {{-- MEDICAL --}}
-            <div class="patient-section-card">
+            @include('backend.patient_management.partial_pages.create_page.part_4')
 
-                @include('backend.patient_management.partial_pages.create_page.part_4')
+            {{-- Treatment Part --}}
+            @include('backend.patient_management.partial_pages.create_page.part_5')
+            {{-- Investigation Part --}}
+            @include('backend.patient_management.partial_pages.create_page.part_6')
+            @include('backend.patient_management.partial_pages.create_page.part_7')
+            @include('backend.patient_management.partial_pages.create_page.part_8')
+            @include('backend.patient_management.modals.index_page.patient_future_date_modal')
+            {{-- Footer Actions --}}
+            <div class="patient-form-footer">
+                <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg">
+                    <i class="fas fa-times mr-2"></i>
+                    Cancel
+                </a>
 
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fas fa-save mr-2"></i>
+                    Save Patient
+                </button>
             </div>
-    </div>
-    {{-- Treatment Part --}}
-    @include('backend.patient_management.partial_pages.create_page.part_5')
-    {{-- Investigation Part --}}
-    @include('backend.patient_management.partial_pages.create_page.part_6')
-    @include('backend.patient_management.partial_pages.create_page.part_7')
-    @include('backend.patient_management.partial_pages.create_page.part_8')
-    @include('backend.patient_management.modals.index_page.patient_future_date_modal')
-    {{-- Footer Actions --}}
-    <div class="patient-form-footer">
-        <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg">
-            <i class="fas fa-times mr-2"></i>
-            Cancel
-        </a>
-
-        <button type="submit" class="btn btn-primary btn-lg">
-            <i class="fas fa-save mr-2"></i>
-            Save Patient
-        </button>
-    </div>
-    </form>
+        </form>
     </div>
     <div style="height:80px"></div>
 @stop
