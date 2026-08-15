@@ -244,12 +244,146 @@
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_card_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/specialist_management/show_page/specialist_lanyard_toggle.js') }}"></script>
 
-    {{-- Individual Card Button Action --}}
-    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_email.js') }}"></script>
-    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_common.js') }}"></script>
-    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_front.js') }}"></script>
-    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_back.js') }}"></script>
-    <script src="{{ asset('js/backend/specialist_management/show_page/print_preview_whole.js') }}"></script>
+    {{-- START OF GENERIC PRINT --}}
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview/print_preview_init.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview/print_preview_state.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview/print_preview_validation.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview/print_preview_print.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview/print_preview_cleanup.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview/print_preview_events.js') }}">
+    </script>
+    {{-- END OF GENERIC PRINT --}}
+
+    {{-- Email Preview Start --}}
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_email/print_preview_email_init.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_email/print_preview_email_theme.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_email/print_preview_email_modal.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_email/print_preview_email_image.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_email/print_preview_email_send.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_email/print_preview_email_events.js') }}">
+    </script>
+    {{-- EMAIL PREVIEW END --}}
+
+    {{-- PRINT PREVIEW COMMON START --}}
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_common/print_preview_common_init.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_common/print_preview_common_theme.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_common/print_preview_common_cards.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_common/print_preview_common_generate.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_common/print_preview_common_layout.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_common/print_preview_common_events.js') }}">
+    </script>
+    {{-- PRINT PREVIEW COMMON END --}}
+
+    {{-- Front Print Preview Start --}}
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_init.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_source.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_generate.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_scale.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_print.js') }}">
+    </script>
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_events.js') }}">
+    </script>
+    {{-- Front Print Preview End --}}
+
+    {{-- Back Print Preview Start --}}
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_init.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_source.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_generate.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_scale.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_print.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_events.js') }}">
+    </script>
+    {{-- Back Print Preview End --}}
+
+    {{-- Whole Print Preview Start --}}
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_init.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_source.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_generate.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_scale.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_print.js') }}">
+    </script>
+
+    <script
+        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_events.js') }}">
+    </script>
+    {{-- Whole Print Preview End --}}
 
     {{-- Individual Lanyard Button Action --}}
     <script src="{{ asset('js/backend/specialist_management/show_page/lanyard_format/lanyard_print_preview.js') }}">
