@@ -1,51 +1,115 @@
 /**
  * ==========================================================================
- * Progress 6 - Cancer
+ * PATIENT PROGRESS - CANCER
  * ==========================================================================
- * File:
- * progress_6_cancer.js
  *
- * Responsibilities
- * ----------------
- * ✔ Cancer Progress
- * ✔ Water Fill Animation
- * ✔ CKEditor Support
+ * File:
+ * progress_8_cancer.js
+ *
+ * Works with:
+ * ✔ Create page
+ * ✔ Edit page
+ * ✔ Existing cancer values
+ * ✔ Existing cancer images
+ * ✔ Newly selected cancer images
+ * ✔ X-Ray / CT description
+ * ✔ Cancer remarks
+ * ✔ CKEditor 5
+ *
+ * Progress
+ * --------------------------------------------------------------------------
+ *
+ * Cancer Status        = required
+ * Total Cancer         = 25%
+ * Cancer Images        = 35%
+ * X-Ray Description    = 20%
+ * Cancer Remarks       = 20%
+ *
+ * If Cancer Status = No:
+ *      Cancer section is considered complete = 100%
  * ==========================================================================
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-    const progressCard = document.querySelector(".patient-progress-card");
-    if (!progressCard) return;
+    // ----------------------------------------------------------------------
+    // Find cancer progress item directly
+    // ----------------------------------------------------------------------
 
-    const progressItems = progressCard.querySelectorAll(".progress-item");
+    const cancerItem = document.querySelector(
+        '.patient-progress-card .progress-item[data-target="part_8_cancer"]',
+    );
 
-    // Cancer is the 7th progress item
-    if (progressItems.length < 7) return;
+    if (!cancerItem) {
+        console.warn("Cancer progress item not found.");
+        return;
+    }
 
-    const cancerItem = progressItems[6];
     const step = cancerItem.querySelector(".step");
+
+    if (!step) {
+        console.warn("Cancer progress step not found.");
+        return;
+    }
+
+    // ----------------------------------------------------------------------
+    // Inject CSS
+    // ----------------------------------------------------------------------
 
     injectCancerWaterCSS();
 
+    // ----------------------------------------------------------------------
+    // Fields
+    // ----------------------------------------------------------------------
+
     const statusField = document.getElementById("is_old_cancer");
-    const totalField = document.getElementById("total_cancer");
+
+    const totalField =
+        document.getElementById("edit_total_cancer") ||
+        document.getElementById("total_cancer");
+
     const imageField = document.querySelector("input[name='xray_photo[]']");
-    const remarksField = document.querySelector("textarea[name='remarks']");
+
+    const descriptionField = document.querySelector(
+        "textarea[name='xray_description']",
+    );
+
+    const remarksField = document.querySelector(
+        "textarea[name='cancer_remarks']",
+    );
+
+    // ----------------------------------------------------------------------
+    // Get editor value
+    // ----------------------------------------------------------------------
 
     function getEditorValue(textarea) {
-        if (!textarea) return "";
+        if (!textarea) {
+            return "";
+        }
+
+        // --------------------------------------------------------------
+        // CKEditor 5
+        // --------------------------------------------------------------
 
         if (textarea.ckeditorInstance) {
             return textarea.ckeditorInstance
                 .getData()
                 .replace(/<[^>]*>/g, "")
+                .replace(/&nbsp;/g, " ")
                 .trim();
         }
+
+        // --------------------------------------------------------------
+        // Old CKEditor support, if present
+        // --------------------------------------------------------------
 
         if (window.CKEDITOR && textarea.name) {
             const instance = Object.values(CKEDITOR.instances).find(
                 function (editor) {
-                    return editor.element.$.name === textarea.name;
+                    return (
+                        editor.element &&
+                        editor.element.$ &&
+                        editor.element.$.name === textarea.name
+                    );
                 },
             );
 
@@ -53,161 +117,410 @@ document.addEventListener("DOMContentLoaded", () => {
                 return instance
                     .getData()
                     .replace(/<[^>]*>/g, "")
+                    .replace(/&nbsp;/g, " ")
                     .trim();
             }
         }
 
-        return textarea.value.trim();
+        // --------------------------------------------------------------
+        // Normal textarea
+        // --------------------------------------------------------------
+
+        return textarea.value
+            .replace(/<[^>]*>/g, "")
+            .replace(/&nbsp;/g, " ")
+            .trim();
     }
 
-    function updateCancerProgress() {
-        let percent = 0;
+    // ----------------------------------------------------------------------
+    // Existing cancer images
+    // ----------------------------------------------------------------------
+    //
+    // IMPORTANT:
+    //
+    // On edit page the browser will NOT put existing images inside
+    // input[type=file].
+    //
+    // Therefore:
+    //
+    // input.files.length === 0
+    //
+    // even when the patient already has cancer images.
+    //
+    // We detect the existing gallery cards instead.
+    // ----------------------------------------------------------------------
 
-        if (!statusField || statusField.value !== "1") {
+    function hasExistingCancerImages() {
+        const existingImages = document.querySelectorAll(
+            "#part_8_cancer .investigation-image-card",
+        );
+
+        return existingImages.length > 0;
+    }
+
+    // ----------------------------------------------------------------------
+    // Newly selected images
+    // ----------------------------------------------------------------------
+
+    function hasNewCancerImages() {
+        return imageField && imageField.files && imageField.files.length > 0;
+    }
+
+    // ----------------------------------------------------------------------
+    // Check X-Ray description
+    // ----------------------------------------------------------------------
+
+    function hasDescription() {
+        return getEditorValue(descriptionField) !== "";
+    }
+
+    // ----------------------------------------------------------------------
+    // Check cancer remarks
+    // ----------------------------------------------------------------------
+
+    function hasRemarks() {
+        return getEditorValue(remarksField) !== "";
+    }
+
+    // ----------------------------------------------------------------------
+    // Update cancer progress
+    // ----------------------------------------------------------------------
+
+    function updateCancerProgress() {
+        // --------------------------------------------------------------
+        // No cancer status field
+        // --------------------------------------------------------------
+
+        if (!statusField) {
             step.style.setProperty("--fill", "0%");
             cancerItem.classList.remove("completed");
 
             return;
         }
 
-        // Total Reports = 25%
-        if (totalField && parseInt(totalField.value) > 0) {
+        const cancerStatus = String(statusField.value).trim();
+
+        // --------------------------------------------------------------
+        // NO PREVIOUS CANCER
+        //
+        // Nothing else is required.
+        // --------------------------------------------------------------
+
+        if (cancerStatus === "0") {
+            step.style.setProperty("--fill", "100%");
+
+            cancerItem.classList.add("completed");
+
+            return;
+        }
+
+        // --------------------------------------------------------------
+        // YES - Previous / Existing Cancer
+        // --------------------------------------------------------------
+
+        let percent = 0;
+
+        // --------------------------------------------------------------
+        // Cancer Status
+        //
+        // Selecting Yes means the cancer section is active.
+        // --------------------------------------------------------------
+
+        // We do not give percentage for status itself because the
+        // remaining fields represent the actual cancer information.
+        //
+        // Total = 25 + 35 + 20 + 20 = 100
+        // --------------------------------------------------------------
+
+        // --------------------------------------------------------------
+        // Total Cancer = 25%
+        // --------------------------------------------------------------
+
+        if (totalField && parseInt(totalField.value, 10) > 0) {
             percent += 25;
         }
 
-        // Images = 35%
-        if (imageField && imageField.files.length > 0) {
+        // --------------------------------------------------------------
+        // Cancer Images = 35%
+        //
+        // Either:
+        // - Existing images
+        // - Newly selected images
+        // --------------------------------------------------------------
+
+        if (hasExistingCancerImages() || hasNewCancerImages()) {
             percent += 35;
         }
 
-        // Diagnostic Description = 20%
-        const descriptions = document.querySelectorAll(
-            "textarea[name='xray_description[]']",
-        );
+        // --------------------------------------------------------------
+        // X-Ray / CT Description = 20%
+        // --------------------------------------------------------------
 
-        let filled = true;
-
-        descriptions.forEach(function (textarea) {
-            if (textarea.value.trim() === "") {
-                filled = false;
-            }
-        });
-
-        if (descriptions.length > 0 && filled) {
+        if (hasDescription()) {
             percent += 20;
         }
 
-        // Doctor Remarks = 20%
-        if (getEditorValue(remarksField) !== "") {
+        // --------------------------------------------------------------
+        // Cancer Remarks = 20%
+        // --------------------------------------------------------------
+
+        if (hasRemarks()) {
             percent += 20;
         }
 
-        step.style.setProperty("--fill", percent + "%");
+        // --------------------------------------------------------------
+        // Safety
+        // --------------------------------------------------------------
+
+        percent = Math.min(100, Math.max(0, percent));
+
+        // --------------------------------------------------------------
+        // Apply water fill
+        // --------------------------------------------------------------
+
+        step.style.setProperty("--fill", `${percent}%`);
+
+        // --------------------------------------------------------------
+        // Completed
+        // --------------------------------------------------------------
 
         cancerItem.classList.toggle("completed", percent === 100);
     }
 
-    [statusField, totalField, imageField]
-        .filter(Boolean)
-        .forEach(function (field) {
-            field.addEventListener("change", updateCancerProgress);
-            field.addEventListener("input", updateCancerProgress);
-        });
+    // ----------------------------------------------------------------------
+    // Cancer status
+    // ----------------------------------------------------------------------
 
-    document.addEventListener("input", function (e) {
-        if (e.target.matches("textarea[name='xray_description[]']")) {
-            updateCancerProgress();
+    if (statusField) {
+        statusField.addEventListener("change", updateCancerProgress);
+
+        statusField.addEventListener("input", updateCancerProgress);
+    }
+
+    // ----------------------------------------------------------------------
+    // Total cancer
+    // ----------------------------------------------------------------------
+
+    if (totalField) {
+        totalField.addEventListener("change", updateCancerProgress);
+
+        totalField.addEventListener("input", updateCancerProgress);
+    }
+
+    // ----------------------------------------------------------------------
+    // Cancer image upload
+    // ----------------------------------------------------------------------
+
+    if (imageField) {
+        imageField.addEventListener("change", updateCancerProgress);
+    }
+
+    // ----------------------------------------------------------------------
+    // Normal textarea events
+    // ----------------------------------------------------------------------
+
+    if (descriptionField) {
+        descriptionField.addEventListener("input", updateCancerProgress);
+
+        descriptionField.addEventListener("change", updateCancerProgress);
+    }
+
+    if (remarksField) {
+        remarksField.addEventListener("input", updateCancerProgress);
+
+        remarksField.addEventListener("change", updateCancerProgress);
+    }
+
+    // ----------------------------------------------------------------------
+    // CKEditor watcher
+    // ----------------------------------------------------------------------
+    //
+    // Your edit page may initialize CKEditor after this script.
+    //
+    // Wait for both fields independently.
+    // ----------------------------------------------------------------------
+
+    let editorCheckCount = 0;
+
+    const waitForEditors = setInterval(() => {
+        editorCheckCount++;
+
+        let descriptionReady =
+            !descriptionField || !!descriptionField.ckeditorInstance;
+
+        let remarksReady = !remarksField || !!remarksField.ckeditorInstance;
+
+        // --------------------------------------------------------------
+        // CKEditor 5
+        // --------------------------------------------------------------
+
+        if (descriptionField && descriptionField.ckeditorInstance) {
+            if (!descriptionField.dataset.cancerProgressListener) {
+                descriptionField.ckeditorInstance.model.document.on(
+                    "change:data",
+                    updateCancerProgress,
+                );
+
+                descriptionField.dataset.cancerProgressListener = "true";
+            }
         }
-    });
 
-    const waitEditor = setInterval(function () {
-        if (!remarksField) return;
+        if (remarksField && remarksField.ckeditorInstance) {
+            if (!remarksField.dataset.cancerProgressListener) {
+                remarksField.ckeditorInstance.model.document.on(
+                    "change:data",
+                    updateCancerProgress,
+                );
 
-        if (remarksField.ckeditorInstance) {
-            clearInterval(waitEditor);
+                remarksField.dataset.cancerProgressListener = "true";
+            }
+        }
 
-            remarksField.ckeditorInstance.model.document.on(
-                "change:data",
-                updateCancerProgress,
-            );
+        // --------------------------------------------------------------
+        // Both ready
+        // --------------------------------------------------------------
+
+        if (descriptionReady && remarksReady) {
+            clearInterval(waitForEditors);
 
             updateCancerProgress();
 
             return;
         }
 
-        if (window.CKEDITOR) {
-            const instance = Object.values(CKEDITOR.instances).find(
-                function (editor) {
-                    return editor.element.$.name === "remarks";
-                },
-            );
+        // --------------------------------------------------------------
+        // Do not wait forever
+        // --------------------------------------------------------------
 
-            if (instance) {
-                clearInterval(waitEditor);
+        if (editorCheckCount >= 50) {
+            clearInterval(waitForEditors);
 
-                instance.on("change", updateCancerProgress);
-
-                updateCancerProgress();
-            }
+            updateCancerProgress();
         }
     }, 200);
+
+    // ----------------------------------------------------------------------
+    // Initial calculation
+    //
+    // This is especially important for EDIT page.
+    //
+    // Blade already contains the patient's existing values.
+    // ----------------------------------------------------------------------
 
     updateCancerProgress();
 });
 
+/**
+ * ==========================================================================
+ * CANCER WATER PROGRESS CSS
+ * ==========================================================================
+ */
+
 function injectCancerWaterCSS() {
-    if (document.getElementById("cancer-progress-style")) return;
+    if (document.getElementById("cancer-progress-style")) {
+        return;
+    }
 
     const style = document.createElement("style");
 
     style.id = "cancer-progress-style";
 
     style.innerHTML = `
-.patient-progress-card .progress-item:nth-child(13) .step{
-    position:relative;
-    overflow:hidden;
-}
+        /*
+         * Cancer progress icon
+         */
+        .patient-progress-card
+        .progress-item[data-target="part_8_cancer"]
+        .step {
+            position: relative;
+            overflow: hidden;
+        }
 
-.patient-progress-card .progress-item:nth-child(13) .step::before{
-    content:"";
-    position:absolute;
-    left:0;
-    right:0;
-    bottom:0;
-    height:var(--fill,0%);
-    background:linear-gradient(180deg,#ef4444,#b91c1c);
-    transition:height .4s ease;
-    z-index:0;
-}
+        /*
+         * Cancer water fill
+         */
+        .patient-progress-card
+        .progress-item[data-target="part_8_cancer"]
+        .step::before {
+            content: "";
 
-.patient-progress-card .progress-item:nth-child(13) .step::after{
-    content:"";
-    position:absolute;
-    left:-50%;
-    width:200%;
-    height:14px;
-    bottom:calc(var(--fill,0%) - 7px);
-    background:rgba(255,255,255,.35);
-    border-radius:50%;
-    animation:cancerWave 2.5s linear infinite;
-    z-index:1;
-}
+            position: absolute;
 
-.patient-progress-card .progress-item:nth-child(13) .step i{
-    position:relative;
-    z-index:2;
-}
+            left: 0;
+            right: 0;
+            bottom: 0;
 
-@keyframes cancerWave{
-    from{
-        transform:translateX(0);
-    }
-    to{
-        transform:translateX(50%);
-    }
-}
-`;
+            height: var(--fill, 0%);
+
+            background: linear-gradient(
+                180deg,
+                #ef4444,
+                #b91c1c
+            );
+
+            transition: height 0.4s ease;
+
+            z-index: 0;
+        }
+
+        /*
+         * Moving water wave
+         */
+        .patient-progress-card
+        .progress-item[data-target="part_8_cancer"]
+        .step::after {
+            content: "";
+
+            position: absolute;
+
+            left: -50%;
+
+            width: 200%;
+            height: 14px;
+
+            bottom: calc(
+                var(--fill, 0%) - 7px
+            );
+
+            background: rgba(
+                255,
+                255,
+                255,
+                0.35
+            );
+
+            border-radius: 50%;
+
+            animation:
+                cancerWave
+                2.5s linear infinite;
+
+            z-index: 1;
+        }
+
+        /*
+         * Keep cancer ribbon icon above water
+         */
+        .patient-progress-card
+        .progress-item[data-target="part_8_cancer"]
+        .step i {
+            position: relative;
+            z-index: 2;
+        }
+
+        /*
+         * Cancer water animation
+         */
+        @keyframes cancerWave {
+            from {
+                transform: translateX(0);
+            }
+
+            to {
+                transform: translateX(50%);
+            }
+        }
+    `;
 
     document.head.appendChild(style);
 }

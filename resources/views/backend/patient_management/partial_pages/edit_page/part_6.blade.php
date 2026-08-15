@@ -1,4 +1,4 @@
-<div class="col-12">
+<div class="col-12" id="part_6_investigation">
     <div class="patient-section-card investigation-card">
         <div class="section-header">
             <div>
@@ -62,7 +62,7 @@
                                                     <a href="#" class="btn btn-sm btn-primary"
                                                         data-bs-toggle="modal" data-bs-target="#imageZoomModal"
                                                         data-bs-img-src="{{ asset($image) }}">
-                                                       View Image
+                                                        View Image
                                                     </a>
                                                 </div>
                                             </div>

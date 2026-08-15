@@ -1,5 +1,5 @@
 {{-- CANCER INFORMATION (EDIT) --}}
-<div class="patient-section-card cancer-card" id="part_7_cancer">
+<div class="patient-section-card cancer-card" id="part_8_cancer">
     <div class="section-header">
         <div>
             <h5>
