@@ -201,33 +201,45 @@
 @section('js')
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_editor.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/patient_location_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/patient_emergency_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/patient_recommend_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/patient_investigation_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/patient_treatment_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/patient_cancer_toggle.js') }}"></script>
+    {{-- TOGGLE ACTION PART --}}
+    <script src="{{ asset('js/backend/patient_management/edit_page/toggle_action/patient_location_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/toggle_action/patient_emergency_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/toggle_action/patient_recommend_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/toggle_action/patient_investigation_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/toggle_action/patient_treatment_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/toggle_action/patient_cancer_toggle.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_edit_form.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/patient_icon_jump.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_1_basic.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_2_address.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_3_medical.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_4_referral.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_5_treatment.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_6_investigate.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_7_emergency.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/edit_page/progress_8_cancer.js') }}"></script>
+
+    {{-- ICON ACTION PART --}}
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/patient_icon_jump.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_1_basic.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_2_address.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_3_medical.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_4_referral.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_5_treatment.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_6_investigate.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_7_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/edit_page/icon_action/progress_8_cancer.js') }}"></script>
+
     <script src="{{ asset('js/backend/patient_management/edit_page/patient_photo_edit_modal.js') }}"></script>
+
+    {{-- START OF SHARED JS MODEL FOR DIFFERENT CARDS --}}
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_validation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_progress.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_preview.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_referred/patient_refer_manager.js') }}"></script>
+
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_validation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_progress.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_preview.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_treatment/patient_treatment_manager.js') }}"></script>
+
     <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_card.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_validation.js') }}">
@@ -238,9 +250,11 @@
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_investigation/patient_investigation_manager.js') }}">
     </script>
+
     <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_card.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_validation.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_progress.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_preview.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/patient_cancer_manager.js') }}"></script>
+    {{-- END OF SHARED JS MODEL FOR DIFFERENT CARDS --}}
 @stop

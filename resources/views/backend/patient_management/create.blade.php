@@ -316,23 +316,31 @@
 @section('js')
 
     <script src="https://cdn.ckeditor.com/ckeditor5/39.0.1/classic/ckeditor.js"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_1_basic.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_2_address.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_3_medical.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_4_referral.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_5_treatment.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_6_investigate.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_7_emergency.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/progress_8_cancer.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/patient_icon_jump.js') }}"></script>
+    {{-- TOGGLE ACTION PART --}}
+    <script src="{{ asset('js/backend/patient_management/create_page/toggle_action/patient_location_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/create_page/toggle_action/patient_refer_toggle.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/toggle_action/patient_treatment_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/create_page/toggle_action/patient_investigation_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/create_page/toggle_action/patient_emergency_toggle.js') }}">
+    </script>
+    <script src="{{ asset('js/backend/patient_management/create_page/toggle_action/patient_cancer_toggle.js') }}"></script>
+
+    {{-- ICON ACTION PART --}}
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/patient_icon_jump.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_1_basic.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_2_address.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_3_medical.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_4_referral.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_5_treatment.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_6_investigate.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_7_emergency.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/create_page/icon_action/progress_8_cancer.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_format.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/patient_added_date_validate.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/patient_location_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/patient_recommend_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/patient_treatment_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/patient_investigation_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/patient_emergency_toggle.js') }}"></script>
-    <script src="{{ asset('js/backend/patient_management/create_page/patient_cancer_toggle.js') }}"></script>
+
     <script src="{{ asset('js/backend/patient_management/create_page/patient_create_form.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/create_page/create_editor.js') }}"></script>
 
