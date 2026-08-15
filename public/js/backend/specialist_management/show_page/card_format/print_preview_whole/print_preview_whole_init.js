@@ -1,7 +1,10 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
     window.specialistWholePrint = window.specialistWholePrint || {};
 
-    window.specialistWholePrint.printType = "whole";
-});
+    const WholePrint = window.specialistWholePrint;
+
+    WholePrint.printType = "whole";
+    WholePrint.isPrinting = false;
+})(window, jQuery);

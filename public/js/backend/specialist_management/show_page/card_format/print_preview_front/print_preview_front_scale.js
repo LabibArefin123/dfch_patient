@@ -1,14 +1,11 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.specialistFrontPrint = window.specialistFrontPrint || {};
 
     const FrontPrint = window.specialistFrontPrint;
 
     FrontPrint.scale = function () {
-        /*
-         * Front card scaling is now handled
-         * by the common print-preview CSS.
-         */
-
         if (
             window.patientCardPrint &&
             typeof window.patientCardPrint.applyLayout === "function"
@@ -18,4 +15,4 @@ $(function () {
             window.patientCardPrint.applyLayout(type, "front");
         }
     };
-});
+})(window, jQuery);

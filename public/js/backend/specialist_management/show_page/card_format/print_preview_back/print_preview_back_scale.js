@@ -1,12 +1,18 @@
 (function (window, $) {
     "use strict";
 
+    window.specialistBackPrint = window.specialistBackPrint || {};
+
     const BackPrint = window.specialistBackPrint;
 
     BackPrint.scale = function () {
-        $(".print-clone-card").css({
-            transform: "scale(0.38)",
-            transformOrigin: "top center",
-        });
+        if (
+            window.patientCardPrint &&
+            typeof window.patientCardPrint.applyLayout === "function"
+        ) {
+            const type = window.patientCardPrint.getCardType();
+
+            window.patientCardPrint.applyLayout(type, "back");
+        }
     };
 })(window, jQuery);

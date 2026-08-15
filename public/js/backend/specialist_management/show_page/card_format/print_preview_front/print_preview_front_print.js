@@ -1,26 +1,22 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.specialistFrontPrint = window.specialistFrontPrint || {};
 
     const FrontPrint = window.specialistFrontPrint;
 
     FrontPrint.print = function () {
         if (
-            !window.patientCardPrint ||
-            typeof window.patientCardPrint.generate !== "function"
+            !window.patientPrintPreview ||
+            typeof window.patientPrintPreview.print !== "function"
         ) {
-            console.error("patientCardPrint.generate() is not available.");
+            console.error("patientPrintPreview.print() is not available.");
 
-            return;
+            return false;
         }
 
-        const generated = window.patientCardPrint.generate("front");
+        FrontPrint.isPrinting = true;
 
-        if (generated === false) {
-            return;
-        }
-
-        setTimeout(function () {
-            window.print();
-        }, 500);
+        return window.patientPrintPreview.print("front");
     };
-});
+})(window, jQuery);

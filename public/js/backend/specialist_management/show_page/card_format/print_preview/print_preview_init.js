@@ -1,4 +1,4 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
     window.patientPrintPreview = window.patientPrintPreview || {};
@@ -7,4 +7,4 @@ $(function () {
 
     Preview.mode = null;
     Preview.isPrinting = false;
-});
+})(window, jQuery);

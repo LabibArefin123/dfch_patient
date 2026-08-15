@@ -1,29 +1,27 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
-    const Print = window.patientCardPrint;
+    window.patientCardPrint = window.patientCardPrint || {};
 
-    if (!Print) {
-        console.error("patientCardPrint is not initialized.");
-        return;
-    }
+    const Print = window.patientCardPrint;
 
     Print.getTheme = function () {
         return $("#card_theme").val() || "1";
     };
 
     Print.getThemeContainer = function () {
-        const theme = Print.getTheme();
+        const theme = parseInt(Print.getTheme(), 10) || 1;
 
-        let container = $(
-            Print.themeContainers[parseInt(theme, 10) - 1],
-        ).first();
+        const selector =
+            Print.themeContainers && Print.themeContainers[theme - 1];
+
+        let container = selector ? $(selector).first() : $();
 
         if (!container.length) {
             container = $(
-                ".card-preview-middle," +
-                    ".card-preview-container," +
-                    ".card-preview-container2," +
+                ".card-preview-middle, " +
+                    ".card-preview-container, " +
+                    ".card-preview-container2, " +
                     ".card-preview-container3",
             )
                 .filter(":visible")
@@ -32,4 +30,4 @@ $(function () {
 
         return container;
     };
-});
+})(window, jQuery);

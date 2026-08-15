@@ -1,14 +1,16 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.patientPrintPreview = window.patientPrintPreview || {};
 
     const Preview = window.patientPrintPreview;
 
-    if (!Preview) {
-        console.error("patientPrintPreview is not initialized.");
-        return;
-    }
-
     Preview.validate = function (mode) {
+        if (!["front", "back", "whole"].includes(mode)) {
+            console.error("Invalid print mode:", mode);
+            return false;
+        }
+
         if (
             !window.patientCardPrint ||
             typeof window.patientCardPrint.generate !== "function"
@@ -18,12 +20,6 @@ $(function () {
             return false;
         }
 
-        if (!["front", "back", "whole"].includes(mode)) {
-            console.error("Invalid print mode:", mode);
-
-            return false;
-        }
-
         return true;
     };
-});
+})(window, jQuery);

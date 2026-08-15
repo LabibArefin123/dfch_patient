@@ -1,24 +1,30 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.specialistWholePrint = window.specialistWholePrint || {};
 
     const WholePrint = window.specialistWholePrint;
 
-    if (!WholePrint) {
-        console.error("specialistWholePrint is not initialized.");
-        return;
-    }
-
     WholePrint.getSource = function () {
-        const source = $(".card-preview-middle").first();
+        if (
+            window.patientCardPrint &&
+            typeof window.patientCardPrint.getFront === "function"
+        ) {
+            const front = window.patientCardPrint.getFront();
 
-        if (!source.length) {
-            console.error(
-                "Whole card source (.card-preview-middle) not found.",
-            );
-
-            return $();
+            if (front.length) {
+                return front;
+            }
         }
 
-        return source;
+        const source = $(".card-preview-middle").filter(":visible").first();
+
+        if (source.length) {
+            return source;
+        }
+
+        console.error("Whole card source not found.");
+
+        return $();
     };
-});
+})(window, jQuery);

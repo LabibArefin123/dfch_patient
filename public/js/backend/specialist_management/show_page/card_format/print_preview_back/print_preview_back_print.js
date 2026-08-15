@@ -1,36 +1,22 @@
 (function (window, $) {
     "use strict";
 
+    window.specialistBackPrint = window.specialistBackPrint || {};
+
     const BackPrint = window.specialistBackPrint;
 
     BackPrint.print = function () {
-        const generated = BackPrint.generate();
+        if (
+            !window.patientPrintPreview ||
+            typeof window.patientPrintPreview.print !== "function"
+        ) {
+            console.error("patientPrintPreview.print() is not available.");
 
-        if (!generated) {
-            return;
+            return false;
         }
 
-        setTimeout(function () {
-            window.print();
-        }, 500);
+        BackPrint.isPrinting = true;
+
+        return window.patientPrintPreview.print("back");
     };
-
-    /*
-    |--------------------------------------------------------------------------
-    | CLEANUP AFTER PRINT
-    |--------------------------------------------------------------------------
-    */
-
-    $(window).on("afterprint", function () {
-        setTimeout(function () {
-            $(".modal-backdrop").remove();
-
-            if (!$(".modal.show").length) {
-                $("body").removeClass("modal-open").css({
-                    paddingRight: "",
-                    overflow: "",
-                });
-            }
-        }, 50);
-    });
 })(window, jQuery);

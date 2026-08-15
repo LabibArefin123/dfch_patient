@@ -6,4 +6,5 @@
     const BackPrint = window.specialistBackPrint;
 
     BackPrint.printType = "back";
+    BackPrint.isPrinting = false;
 })(window, jQuery);

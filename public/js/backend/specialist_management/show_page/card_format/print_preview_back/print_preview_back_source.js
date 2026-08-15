@@ -1,17 +1,24 @@
 (function (window, $) {
     "use strict";
 
+    window.specialistBackPrint = window.specialistBackPrint || {};
+
     const BackPrint = window.specialistBackPrint;
 
     BackPrint.getSource = function () {
-        const source = $(".doctor-card-holder").first();
+        if (
+            window.patientCardPrint &&
+            typeof window.patientCardPrint.getBack === "function"
+        ) {
+            const source = window.patientCardPrint.getBack();
 
-        if (!source.length) {
-            console.error("Back card source (.doctor-card-holder) not found.");
-
-            return null;
+            if (source.length) {
+                return source;
+            }
         }
 
-        return source;
+        console.error("Back card not found.");
+
+        return $();
     };
 })(window, jQuery);

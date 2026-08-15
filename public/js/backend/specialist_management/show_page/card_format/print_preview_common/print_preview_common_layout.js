@@ -1,12 +1,9 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
-    const Print = window.patientCardPrint;
+    window.patientCardPrint = window.patientCardPrint || {};
 
-    if (!Print) {
-        console.error("patientCardPrint is not initialized.");
-        return;
-    }
+    const Print = window.patientCardPrint;
 
     Print.applyLayout = function (type, mode) {
         const grid = $("#printCardGrid");
@@ -16,11 +13,13 @@ $(function () {
         }
 
         grid.removeClass(
-            "print-layout-vertical " +
-                "print-layout-wide " +
-                "print-mode-front " +
-                "print-mode-back " +
+            [
+                "print-layout-vertical",
+                "print-layout-wide",
+                "print-mode-front",
+                "print-mode-back",
                 "print-mode-whole",
+            ].join(" "),
         );
 
         grid.addClass(
@@ -29,4 +28,4 @@ $(function () {
 
         grid.addClass("print-mode-" + mode);
     };
-});
+})(window, jQuery);

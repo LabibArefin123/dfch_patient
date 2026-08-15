@@ -1,5 +1,7 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.specialistFrontPrint = window.specialistFrontPrint || {};
 
     const FrontPrint = window.specialistFrontPrint;
 
@@ -7,6 +9,8 @@ $(function () {
         const source = FrontPrint.getSource();
 
         if (!source.length) {
+            console.error("Front card source not found.");
+
             return false;
         }
 
@@ -21,4 +25,4 @@ $(function () {
 
         return window.patientCardPrint.generate("front");
     };
-});
+})(window, jQuery);

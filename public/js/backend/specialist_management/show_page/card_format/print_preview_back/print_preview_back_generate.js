@@ -1,43 +1,20 @@
 (function (window, $) {
     "use strict";
 
+    window.specialistBackPrint = window.specialistBackPrint || {};
+
     const BackPrint = window.specialistBackPrint;
 
     BackPrint.generate = function () {
-        const copies = parseInt($("#cardPrintCopies").val(), 10) || 1;
-
-        const $grid = $("#printCardGrid");
-
-        if (!$grid.length) {
-            console.error("#printCardGrid not found.");
+        if (
+            !window.patientCardPrint ||
+            typeof window.patientCardPrint.generate !== "function"
+        ) {
+            console.error("patientCardPrint.generate() is not available.");
 
             return false;
         }
 
-        $grid.empty();
-
-        const $source = BackPrint.getSource();
-
-        if (!$source) {
-            return false;
-        }
-
-        for (let i = 0; i < copies; i++) {
-            const $clone = $source.clone(false);
-
-            $clone.removeAttr("id").addClass("print-clone-card");
-
-            const $wrapper = $("<div>", {
-                class: "print-card-item",
-            });
-
-            $wrapper.append($clone);
-
-            $grid.append($wrapper);
-        }
-
-        BackPrint.scale();
-
-        return true;
+        return window.patientCardPrint.generate("back");
     };
 })(window, jQuery);

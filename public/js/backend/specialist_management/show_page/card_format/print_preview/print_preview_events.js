@@ -1,78 +1,75 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.patientPrintPreview = window.patientPrintPreview || {};
 
     const Preview = window.patientPrintPreview;
 
-    if (!Preview) {
-        console.error("patientPrintPreview is not initialized.");
-        return;
-    }
+    Preview.cleanup = function () {
+        /*
+        |--------------------------------------------------------------------------
+        | REMOVE BACKDROPS
+        |--------------------------------------------------------------------------
+        */
+
+        $(".modal-backdrop").remove();
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESET BODY
+        |--------------------------------------------------------------------------
+        */
+
+        if (!$(".modal.show").length) {
+            $("body").removeClass("modal-open").css({
+                paddingRight: "",
+                overflow: "",
+            });
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESET PRINT STATE
+        |--------------------------------------------------------------------------
+        */
+
+        Preview.mode = null;
+        Preview.isPrinting = false;
+
+        if (window.patientCardPrint) {
+            window.patientCardPrint.mode = null;
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESET SPECIALIZED PRINT MODULES
+        |--------------------------------------------------------------------------
+        */
+
+        if (window.specialistFrontPrint) {
+            window.specialistFrontPrint.isPrinting = false;
+        }
+
+        if (window.specialistBackPrint) {
+            window.specialistBackPrint.isPrinting = false;
+        }
+
+        if (window.specialistWholePrint) {
+            window.specialistWholePrint.isPrinting = false;
+        }
+    };
 
     /*
     |--------------------------------------------------------------------------
-    | PRINT BUTTON
+    | AFTER PRINT
     |--------------------------------------------------------------------------
     */
 
-    $(document).on("click", "#printCardButton", function (e) {
-        e.preventDefault();
-        e.stopPropagation();
-
-        const mode =
-            window.patientCardPrint && window.patientCardPrint.mode
-                ? window.patientCardPrint.mode
-                : Preview.getMode();
-
-        if (!mode) {
-            console.error("No print preview mode selected.");
-
-            return false;
-        }
-
-        Preview.print(mode);
-
-        return false;
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | COPY CHANGE
-    |--------------------------------------------------------------------------
-    */
-
-    $(document).on("change", "#cardPrintCopies", function () {
-        const mode =
-            window.patientCardPrint && window.patientCardPrint.mode
-                ? window.patientCardPrint.mode
-                : Preview.getMode();
-
-        if (
-            mode &&
-            window.patientCardPrint &&
-            typeof window.patientCardPrint.generate === "function"
-        ) {
-            window.patientCardPrint.generate(mode);
-        }
-    });
-
-    /*
-    |--------------------------------------------------------------------------
-    | THEME CHANGE
-    |--------------------------------------------------------------------------
-    */
-
-    $(document).on("change", "#card_theme", function () {
-        const mode =
-            window.patientCardPrint && window.patientCardPrint.mode
-                ? window.patientCardPrint.mode
-                : Preview.getMode();
-
-        if (
-            mode &&
-            window.patientCardPrint &&
-            typeof window.patientCardPrint.generate === "function"
-        ) {
-            window.patientCardPrint.generate(mode);
-        }
-    });
-});
+    $(window)
+        .off("afterprint.patientPrintCleanup")
+        .on("afterprint.patientPrintCleanup", function () {
+            setTimeout(function () {
+                Preview.cleanup();
+            }, 100);
+        });
+})(window, jQuery);

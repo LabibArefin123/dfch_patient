@@ -1,15 +1,24 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.patientPrintPreview = window.patientPrintPreview || {};
 
     const Preview = window.patientPrintPreview;
 
-    if (!Preview) {
-        console.error("patientPrintPreview is not initialized.");
-        return;
-    }
-
     Preview.cleanup = function () {
+        /*
+        |--------------------------------------------------------------------------
+        | REMOVE BACKDROPS
+        |--------------------------------------------------------------------------
+        */
+
         $(".modal-backdrop").remove();
+
+        /*
+        |--------------------------------------------------------------------------
+        | RESET BODY
+        |--------------------------------------------------------------------------
+        */
 
         if (!$(".modal.show").length) {
             $("body").removeClass("modal-open").css({
@@ -18,16 +27,36 @@ $(function () {
             });
         }
 
-        const modal = $("#printPreviewModal");
+        /*
+        |--------------------------------------------------------------------------
+        | RESET PRINT STATE
+        |--------------------------------------------------------------------------
+        */
 
-        if (modal.length) {
-            modal
-                .removeClass("show")
-                .attr("aria-hidden", "true")
-                .css("display", "none");
+        Preview.mode = null;
+        Preview.isPrinting = false;
+
+        if (window.patientCardPrint) {
+            window.patientCardPrint.mode = null;
         }
 
-        Preview.isPrinting = false;
+        /*
+        |--------------------------------------------------------------------------
+        | RESET SPECIALIZED PRINT MODULES
+        |--------------------------------------------------------------------------
+        */
+
+        if (window.specialistFrontPrint) {
+            window.specialistFrontPrint.isPrinting = false;
+        }
+
+        if (window.specialistBackPrint) {
+            window.specialistBackPrint.isPrinting = false;
+        }
+
+        if (window.specialistWholePrint) {
+            window.specialistWholePrint.isPrinting = false;
+        }
     };
 
     /*
@@ -36,9 +65,11 @@ $(function () {
     |--------------------------------------------------------------------------
     */
 
-    $(window).on("afterprint", function () {
-        setTimeout(function () {
-            Preview.cleanup();
-        }, 50);
-    });
-});
+    $(window)
+        .off("afterprint.patientPrintCleanup")
+        .on("afterprint.patientPrintCleanup", function () {
+            setTimeout(function () {
+                Preview.cleanup();
+            }, 100);
+        });
+})(window, jQuery);

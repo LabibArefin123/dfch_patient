@@ -1,28 +1,36 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
-    const Preview = window.patientPrintPreview;
+    window.patientPrintPreview = window.patientPrintPreview || {};
 
-    if (!Preview) {
-        console.error("patientPrintPreview is not initialized.");
-        return;
-    }
+    const Preview = window.patientPrintPreview;
 
     Preview.setMode = function (mode) {
         const allowedModes = ["front", "back", "whole"];
 
         if (!allowedModes.includes(mode)) {
             console.error("Invalid print preview mode:", mode);
-
             return false;
         }
 
         Preview.mode = mode;
 
+        if (window.patientCardPrint) {
+            window.patientCardPrint.mode = mode;
+        }
+
         return true;
     };
 
     Preview.getMode = function () {
-        return Preview.mode;
+        if (Preview.mode) {
+            return Preview.mode;
+        }
+
+        if (window.patientCardPrint && window.patientCardPrint.mode) {
+            return window.patientCardPrint.mode;
+        }
+
+        return null;
     };
-});
+})(window, jQuery);

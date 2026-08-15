@@ -1,50 +1,22 @@
-$(function () {
+(function (window, $) {
     "use strict";
+
+    window.specialistWholePrint = window.specialistWholePrint || {};
 
     const WholePrint = window.specialistWholePrint;
 
-    if (!WholePrint) {
-        console.error("specialistWholePrint is not initialized.");
-        return;
-    }
-
     WholePrint.print = function () {
         if (
-            !window.patientCardPrint ||
-            typeof window.patientCardPrint.generate !== "function"
+            !window.patientPrintPreview ||
+            typeof window.patientPrintPreview.print !== "function"
         ) {
-            console.error("patientCardPrint.generate() is not available.");
+            console.error("patientPrintPreview.print() is not available.");
 
-            return;
+            return false;
         }
 
-        const generated = window.patientCardPrint.generate("whole");
+        WholePrint.isPrinting = true;
 
-        if (generated === false) {
-            return;
-        }
-
-        setTimeout(function () {
-            window.print();
-        }, 500);
+        return window.patientPrintPreview.print("whole");
     };
-
-    /*
-    |--------------------------------------------------------------------------
-    | AFTER PRINT CLEANUP
-    |--------------------------------------------------------------------------
-    */
-
-    $(window).on("afterprint", function () {
-        setTimeout(function () {
-            $(".modal-backdrop").remove();
-
-            if (!$(".modal.show").length) {
-                $("body").removeClass("modal-open").css({
-                    paddingRight: "",
-                    overflow: "",
-                });
-            }
-        }, 50);
-    });
-});
+})(window, jQuery);

@@ -156,6 +156,7 @@
         {{-- ========================= BACK SIDE ========================= --}}
         @include('backend.specialist_management.card_management.format_card.backcard_layout.back_3')
     </div>
+
     <div class="print-button-container">
         <button type="button" class="btn btn-danger" id="openFrontPrintPreview">
 
@@ -328,34 +329,23 @@
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_print.js') }}">
     </script>
-    <script
-        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_front/print_preview_front_events.js') }}">
-    </script>
     {{-- Front Print Preview End --}}
 
     {{-- Back Print Preview Start --}}
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_init.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_source.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_generate.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_scale.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_print.js') }}">
-    </script>
-
-    <script
-        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_back/print_preview_back_events.js') }}">
     </script>
     {{-- Back Print Preview End --}}
 
@@ -363,25 +353,17 @@
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_init.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_source.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_generate.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_scale.js') }}">
     </script>
-
     <script
         src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_print.js') }}">
-    </script>
-
-    <script
-        src="{{ asset('js/backend/specialist_management/show_page/card_format/print_preview_whole/print_preview_whole_events.js') }}">
     </script>
     {{-- Whole Print Preview End --}}
 

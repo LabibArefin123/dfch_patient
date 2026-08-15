@@ -1,12 +1,9 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
-    const Print = window.patientCardPrint;
+    window.patientCardPrint = window.patientCardPrint || {};
 
-    if (!Print) {
-        console.error("patientCardPrint is not initialized.");
-        return;
-    }
+    const Print = window.patientCardPrint;
 
     /*
     |--------------------------------------------------------------------------
@@ -20,13 +17,15 @@ $(function () {
 
     /*
     |--------------------------------------------------------------------------
-    | CREATE WHOLE CARD ITEM
+    | CREATE WHOLE CARD
     |--------------------------------------------------------------------------
     */
 
     Print.createItem = function (front, back, type, index) {
         const item = $("<div>", {
             class: "print-card-item",
+            "data-card-index": index,
+            "data-card-type": type,
         });
 
         const sides = $("<div>", {
@@ -40,10 +39,6 @@ $(function () {
         if (back && back.length) {
             sides.append(Print.clean(back).addClass("print-back-side"));
         }
-
-        item.attr("data-card-index", index);
-
-        item.attr("data-card-type", type);
 
         item.append(sides);
 
@@ -59,40 +54,42 @@ $(function () {
     Print.generate = function (mode) {
         mode = mode || Print.mode || "front";
 
-        const front = Print.getFront();
-
-        const back = Print.getBack();
-
-        const type = Print.getCardType();
-
-        const copies = Print.getCopies();
+        if (!["front", "back", "whole"].includes(mode)) {
+            console.error("Invalid print mode:", mode);
+            return false;
+        }
 
         const grid = $("#printCardGrid");
 
         if (!grid.length) {
             console.error("#printCardGrid not found.");
-
             return false;
         }
+
+        const front = Print.getFront();
+        const back = Print.getBack();
+
+        const type = Print.getCardType();
+        const copies = Print.getCopies();
 
         Print.clearGrid();
 
         /*
         |--------------------------------------------------------------------------
-        | FRONT ONLY
+        | FRONT
         |--------------------------------------------------------------------------
         */
 
         if (mode === "front") {
             if (!front.length) {
                 console.error("Front card not found.");
-
                 return false;
             }
 
             for (let i = 0; i < copies; i++) {
                 const item = $("<div>", {
                     class: "print-card-item print-front-only",
+                    "data-card-index": i,
                 });
 
                 item.append(Print.clean(front).addClass("print-front-side"));
@@ -102,18 +99,18 @@ $(function () {
         } else if (mode === "back") {
             /*
         |--------------------------------------------------------------------------
-        | BACK ONLY
+        | BACK
         |--------------------------------------------------------------------------
         */
             if (!back.length) {
                 console.error("Back card not found.");
-
                 return false;
             }
 
             for (let i = 0; i < copies; i++) {
                 const item = $("<div>", {
                     class: "print-card-item print-back-only",
+                    "data-card-index": i,
                 });
 
                 item.append(Print.clean(back).addClass("print-back-side"));
@@ -123,7 +120,7 @@ $(function () {
         } else {
             /*
         |--------------------------------------------------------------------------
-        | WHOLE CARD
+        | WHOLE
         |--------------------------------------------------------------------------
         */
             if (!front.length && !back.length) {
@@ -139,12 +136,13 @@ $(function () {
 
         /*
         |--------------------------------------------------------------------------
-        | GRID DATA
+        | SAVE STATE
         |--------------------------------------------------------------------------
         */
 
-        grid.attr("data-print-mode", mode);
+        Print.mode = mode;
 
+        grid.attr("data-print-mode", mode);
         grid.attr("data-card-type", type);
 
         /*
@@ -153,8 +151,10 @@ $(function () {
         |--------------------------------------------------------------------------
         */
 
-        Print.applyLayout(type, mode);
+        if (typeof Print.applyLayout === "function") {
+            Print.applyLayout(type, mode);
+        }
 
         return true;
     };
-});
+})(window, jQuery);

@@ -1,4 +1,4 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
     window.patientCardPrint = window.patientCardPrint || {};
@@ -12,4 +12,4 @@ $(function () {
         ".card-preview-container2",
         ".card-preview-container3",
     ];
-});
+})(window, jQuery);

@@ -1,12 +1,9 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
-    const Print = window.patientCardPrint;
+    window.patientCardPrint = window.patientCardPrint || {};
 
-    if (!Print) {
-        console.error("patientCardPrint is not initialized.");
-        return;
-    }
+    const Print = window.patientCardPrint;
 
     /*
     |--------------------------------------------------------------------------
@@ -18,21 +15,27 @@ $(function () {
         const container = Print.getThemeContainer();
 
         if (!container.length) {
+            console.error("Card theme container not found.");
             return $();
         }
 
-        const selectors = [".doctor-card", ".wide-card", ".doctor-card-3"];
+        const selectors = [".doctor-card", ".doctor-card-3", ".wide-card"];
 
         for (const selector of selectors) {
             const card = container.find(selector).first();
 
-            if (card.length) {
+            if (
+                card.length &&
+                !card.hasClass("doctor-card-back") &&
+                !card.hasClass("doctor-card-back-3") &&
+                !card.hasClass("wide-card-back")
+            ) {
                 return card;
             }
         }
 
         return container
-            .find("[class*='doctor-card']," + "[class*='wide-card']")
+            .find(".doctor-card, .doctor-card-3, .wide-card")
             .filter(function () {
                 return (
                     !$(this).hasClass("doctor-card-back") &&
@@ -53,13 +56,14 @@ $(function () {
         const container = Print.getThemeContainer();
 
         if (!container.length) {
+            console.error("Card theme container not found.");
             return $();
         }
 
         const selectors = [
             ".doctor-card-back",
-            ".wide-card-back",
             ".doctor-card-back-3",
+            ".wide-card-back",
         ];
 
         for (const selector of selectors) {
@@ -90,10 +94,6 @@ $(function () {
             return "wide";
         }
 
-        if (front.hasClass("doctor-card-3")) {
-            return "vertical";
-        }
-
         return "vertical";
     };
 
@@ -104,12 +104,14 @@ $(function () {
     */
 
     Print.getCopies = function () {
-        return Math.max(1, parseInt($("#cardPrintCopies").val(), 10) || 1);
+        const value = parseInt($("#cardPrintCopies").val(), 10);
+
+        return Math.max(1, value || 1);
     };
 
     /*
     |--------------------------------------------------------------------------
-    | CLEAN CARD CLONE
+    | CLEAN CARD
     |--------------------------------------------------------------------------
     */
 
@@ -124,13 +126,15 @@ $(function () {
 
         clone
             .find(
-                ".print-card-actions," +
-                    ".whole-card-action-buttons," +
-                    ".lanyard-action-buttons," +
+                [
+                    ".print-card-actions",
+                    ".whole-card-action-buttons",
+                    ".lanyard-action-buttons",
                     ".whole-lanyard-action-buttons",
+                ].join(","),
             )
             .remove();
 
         return clone;
     };
-});
+})(window, jQuery);

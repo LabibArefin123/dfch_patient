@@ -1,12 +1,9 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
-    const WholePrint = window.specialistWholePrint;
+    window.specialistWholePrint = window.specialistWholePrint || {};
 
-    if (!WholePrint) {
-        console.error("specialistWholePrint is not initialized.");
-        return;
-    }
+    const WholePrint = window.specialistWholePrint;
 
     WholePrint.generate = function () {
         if (
@@ -26,4 +23,4 @@ $(function () {
 
         return window.patientCardPrint.generate("whole");
     };
-});
+})(window, jQuery);

@@ -1,7 +1,10 @@
-$(function () {
+(function (window, $) {
     "use strict";
 
     window.specialistFrontPrint = window.specialistFrontPrint || {};
 
-    window.specialistFrontPrint.printType = "front";
-});
+    const FrontPrint = window.specialistFrontPrint;
+
+    FrontPrint.printType = "front";
+    FrontPrint.isPrinting = false;
+})(window, jQuery);
