@@ -2618,12 +2618,7 @@ class PatientController extends Controller
         ]);
     }
 
-    /*
-|--------------------------------------------------------------------------
-| Get One Patient Draft
-|--------------------------------------------------------------------------
-*/
-
+    /*Get One Patient Draft*/
     public function showDraft(PatientDraft $draft)
     {
         abort_unless(Auth::check(), 401);
@@ -2667,49 +2662,17 @@ class PatientController extends Controller
             'message' => 'Patient draft deleted successfully.',
         ]);
     }
+    
+    public function destroy(
+        Patient $patient,
+        PatientService $service
+    ) {
+        $result = $service->destroy($patient);
 
-    public function destroy(Patient $patient)
-    {
-        try {
-            DB::beginTransaction();
-
-            /* Patient Folder */
-            $patientFolder = Str::slug(
-                $patient->patient_name . '-' . $patient->id
-            );
-
-            $patientRootPath = public_path(
-                "uploads/patients/{$patientFolder}"
-            );
-
-            /* Delete Related Database Records  */
-            PatientEmergency::where('patient_id', $patient->id)->delete();
-            PatientDocument::where('patient_id', $patient->id)->delete();
-            PatientCancerPhoto::where('patient_id', $patient->id)->delete();
-
-            /* Delete Patient */
-            $patient->delete();
-
-            /* Commit Database Changes */
-            DB::commit();
-
-            /* Delete Patient Files  */
-            if (File::exists($patientRootPath)) {
-                File::deleteDirectory($patientRootPath);
-            }
-
-            return back()->with(
-                'success',
-                'Patient and all associated files deleted successfully.'
-            );
-        } catch (\Throwable $e) {
-
-            DB::rollBack();
-            return back()->with(
-                'error',
-                'Unable to delete the patient. Please try again.'
-            );
-        }
+        return back()->with(
+            $result['status'],
+            $result['message']
+        );
     }
 
     public function deleteSelected(Request $request, PatientService $service)
@@ -2757,151 +2720,26 @@ class PatientController extends Controller
         );
     }
 
-    public function patientCardListSearch(Request $request)
+    public function patientCardListSearch(Request $request, PatientService $service)
     {
-        $search = $request->input('search');
-
-        $organization = Organization::first();
-
-        $organizationLogo = $this->getOrganizationLogo(
-            $organization
-        );
-
-        $patients = Patient::query()
-
-            ->when($search, function ($query) use ($search) {
-
-                $query->where(function ($q) use ($search) {
-
-                    $q->where(
-                        'patient_name',
-                        'like',
-                        "%{$search}%"
-                    )
-
-                        ->orWhere(
-                            'patient_code',
-                            'like',
-                            "%{$search}%"
-                        )
-
-                        ->orWhere(
-                            'phone_1',
-                            'like',
-                            "%{$search}%"
-                        )
-
-                        ->orWhere(
-                            'phone_2',
-                            'like',
-                            "%{$search}%"
-                        )
-
-                        ->orWhere(
-                            'patient_f_name',
-                            'like',
-                            "%{$search}%"
-                        )
-
-                        ->orWhere(
-                            'patient_m_name',
-                            'like',
-                            "%{$search}%"
-                        );
-                });
-            })
-
-            ->orderByRaw(
-                'LOWER(patient_name) ASC'
-            )
-
-            ->paginate(20);
-
+        $data = $service->patientCardListSearch($request);
+        $patients = $data['patients'];
         return response()->json([
-
             'html' => view(
-
                 'backend.patient_management.patient_card_items',
-
                 [
-
                     'patients' => $patients,
-
-                    'organization' => $organization,
-
-                    'organizationLogo' => $organizationLogo,
-
+                    'organization' => $data['organization'],
+                    'organizationLogo' => $data['organizationLogo'],
                 ]
-
             )->render(),
 
-
             'pagination' => $patients
-
-                ->links(
-                    'pagination::bootstrap-5'
-                )
-
+                ->links('pagination::bootstrap-5')
                 ->render(),
 
-
             'total' => $patients->total(),
-
         ]);
-    }
-
-    private function getOrganizationLogo(
-        ?Organization $organization
-    ): ?string {
-
-        if (
-            !$organization ||
-            !$organization->organization_picture
-        ) {
-
-            return null;
-        }
-
-
-        $basePath =
-            'uploads/images/backend/organization/';
-
-
-        $extensions = [
-            'jpg',
-            'jpeg',
-            'png',
-            'webp',
-        ];
-
-
-        foreach (
-            $extensions as $extension
-        ) {
-
-            $relativePath =
-                $basePath .
-                $organization->organization_picture .
-                '.' .
-                $extension;
-
-
-            if (
-                file_exists(
-                    public_path(
-                        $relativePath
-                    )
-                )
-            ) {
-
-                return asset(
-                    $relativePath
-                );
-            }
-        }
-
-
-        return null;
     }
 
     public function printCard($id, PatientService $service)
