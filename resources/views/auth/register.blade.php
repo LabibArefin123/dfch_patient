@@ -51,10 +51,8 @@
                 </div>
 
             </div>
-
             {{-- RIGHT PANEL --}}
             <div class="login-panel">
-
                 <div class="login-panel-scroll">
 
                     <div class="text-center mb-4">
@@ -66,12 +64,12 @@
                             Complete the form below to register
                         </p>
                     </div>
+
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
 
                         {{-- FULL NAME --}}
                         <div class="mb-3">
-
                             <label class="form-label fw-semibold">
                                 Full Name
                             </label>
@@ -85,12 +83,10 @@
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @enderror
-
                         </div>
 
                         {{-- PHONE --}}
                         <div class="mb-3">
-
                             <label class="form-label fw-semibold">
                                 Phone Number
                             </label>
@@ -104,12 +100,10 @@
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @enderror
-
                         </div>
 
                         {{-- EMAIL --}}
                         <div class="mb-3">
-
                             <label class="form-label fw-semibold">
                                 Email Address
                             </label>
@@ -123,12 +117,10 @@
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @enderror
-
                         </div>
 
                         {{-- PASSWORD --}}
                         <div class="mb-3">
-
                             <label class="form-label fw-semibold">
                                 Password
                             </label>
@@ -142,26 +134,21 @@
                                     <strong>{{ $message }}</strong>
                                 </div>
                             @enderror
-
                         </div>
 
                         {{-- CONFIRM PASSWORD --}}
                         <div class="mb-3">
-
                             <label class="form-label fw-semibold">
                                 Confirm Password
                             </label>
 
                             <input id="password-confirm" type="password" name="password_confirmation" class="form-control"
                                 placeholder="Confirm your password" required>
-
                         </div>
 
                         {{-- REGISTER BUTTON --}}
                         <button type="submit" class="btn login-btn w-100 rounded-pill mt-3">
-
                             Create Account
-
                         </button>
 
                     </form>
@@ -180,4 +167,31 @@
 
 
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+
+            const scrollContainers = document.querySelectorAll('.login-panel-scroll');
+
+            scrollContainers.forEach(function(container) {
+
+                let scrollTimer;
+
+                container.addEventListener('scroll', function() {
+
+                    // Show scrollbar
+                    container.classList.add('is-scrolling');
+
+                    // Hide it after scrolling stops
+                    clearTimeout(scrollTimer);
+
+                    scrollTimer = setTimeout(function() {
+                        container.classList.remove('is-scrolling');
+                    }, 800);
+
+                });
+
+            });
+
+        });
+    </script>
 @endsection

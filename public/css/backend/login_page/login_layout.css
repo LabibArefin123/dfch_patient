@@ -14,29 +14,56 @@
     background: #fff;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     overflow: hidden;
-    padding: 0;
+    /* Normal authentication pages */
+    padding: 40px;
 }
+/* ==========================================
+   REGISTER PAGE SCROLL CONTAINER
+========================================== */
 
 .login-panel-scroll {
     padding: 50px;
     overflow-y: auto;
     height: 100%;
+    padding: 0;
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
 }
 
-/* Nice scrollbar */
+
+/* Chrome, Edge, Safari */
 .login-panel-scroll::-webkit-scrollbar {
     width: 6px;
 }
 
-.login-panel-scroll::-webkit-scrollbar-thumb {
-    background: #d0d0d0;
-    border-radius: 10px;
+.login-panel-scroll::-webkit-scrollbar-track {
+    background: transparent;
 }
 
-.login-panel-scroll::-webkit-scrollbar-thumb:hover {
+.login-panel-scroll::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 10px;
+    transition: background 0.3s ease;
+}
+
+/* JS adds this class while scrolling */
+.login-panel-scroll.is-scrolling {
+    scrollbar-color: #d0d0d0 transparent;
+}
+
+.login-panel-scroll.is-scrolling::-webkit-scrollbar-thumb {
+    background: #d0d0d0;
+}
+
+.login-panel-scroll.is-scrolling::-webkit-scrollbar-thumb:hover {
     background: #b0b0b0;
 }
+
+/* ==========================================
+   ABOUT CONTENT
+========================================== */
 
 .about-content {
     transition: all 0.5s ease;

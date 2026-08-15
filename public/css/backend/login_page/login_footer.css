@@ -1,0 +1,63 @@
+/* ==========================================
+   AUTHENTICATION FOOTER
+========================================== */
+
+.auth-card-footer {
+    width: 95%;
+    max-width: 1200px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    padding: 10px 5px 0;
+
+    font-size: 12px;
+    line-height: 1.4;
+}
+
+/* Left / Right sections */
+
+.auth-footer-hospital,
+.auth-footer-developer {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    min-width: 0;
+}
+
+/* DFCH / Designed text */
+
+.auth-footer-label {
+    color: #ffffff;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+/* Links */
+
+.auth-footer-link {
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+
+    transition:
+        color 0.25s ease,
+        opacity 0.25s ease;
+}
+
+.auth-footer-link:hover {
+    color: #ffffff;
+    text-decoration: underline;
+}
+
+/* ==========================================
+   FOOTER DEVELOPER SIDE
+========================================== */
+
+.auth-footer-developer {
+    justify-content: flex-end;
+    text-align: right;
+}

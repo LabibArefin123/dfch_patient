@@ -39,7 +39,7 @@
 
             {{-- RIGHT PANEL --}}
             <div class="login-panel">
-                <div class="login-panel-scroll">
+            
                     <div class="text-center mb-4">
                         <h4 class="fw-bold">
                             Forgot Password
@@ -97,7 +97,7 @@
 
                     </form>
 
-                </div>
+               
             </div>
 
         </div>
