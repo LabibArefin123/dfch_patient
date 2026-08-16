@@ -1,25 +1,30 @@
 <div class="card card-outline card-primary shadow meeting-dashboard">
-    <div class="card-header d-flex justify-content-between align-items-center">
-        <div>
-            <h3 class="card-title mb-0">
-                <i class="fas fa-calendar-week mr-2"></i>
-                Meeting Dashboard
-            </h3>
-            <div class="text-muted small mt-1">
-                Specialist wise patient meeting overview
+    <div class="card-header meeting-dashboard-header">
+        <div class="meeting-dashboard-heading">
+            <div class="meeting-dashboard-title">
+                <i class="fas fa-calendar-week"></i>
+                <div>
+                    <h3>Meeting Dashboard</h3>
+                    <div class="meeting-dashboard-subtitle">
+                        Specialist wise patient meeting overview
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="d-flex align-items-center gap-2">
-            <button type="button" id="meetingViewToggle" class="btn btn-sm btn-outline-primary mr-2" data-view="summary">
-                <i class="fas fa-table mr-1"></i>
-                Date Wise
+
+        <div class="meeting-dashboard-actions">
+            <button type="button" id="meetingViewToggle" class="meeting-view-toggle" data-view="summary">
+                <i class="fas fa-table"></i>
+                <span>Date Wise</span>
             </button>
-            <span class="badge badge-primary px-3 py-2">
-                {{ $patientMeetings->total() }}
-                Meetings
+
+            <span class="meeting-count-badge">
+                <strong>{{ $patientMeetings->total() }}</strong>
+                <span>Meetings</span>
             </span>
         </div>
     </div>
+    
     <div class="card-body p-0">
         <div class="table-responsive dashboard-table-wrapper">
             <table class="table table-bordered table-hover meeting-grid mb-0">
