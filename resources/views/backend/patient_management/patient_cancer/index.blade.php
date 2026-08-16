@@ -44,42 +44,51 @@
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_phone.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_info_responsive.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_cancer/index_page/patient_filter_button.css') }}">
+
     @include('backend.patient_management.modals.patient_cancer.index_page.patient_sync_modal')
     <div class="container-fluid">
         <div class="card card-outline card-danger">
             <div class="card-header">
                 <div class="row">
                     <div class="col-md-8">
-                        <h3 class="card-title">
-                            <i class="fas fa-list"></i>
-                            Cancer Report List
-                        </h3>
+                        <div class="cancer-header">
+                            <h5 class="cancer-header-title">
+                                <i class="fas fa-ambulance text-danger mr-2"></i>
+                                Cancer List
+                            </h5>
+
+                            <button type="button" class="btn btn-danger btn-sm cancer-filter-btn"
+                                id="patientCancerFilterButton">
+                                <i class="fas fa-filter mr-1"></i>
+                                Filter
+                            </button>
+                        </div>
                     </div>
+                </div>
+                <div class="card-body border-bottom d-none" id="patientCancerFilterPanel">
+                    <div class="row align-items-end">
+                        <div class="col-lg-12 col-md-12 mb-2">
+                            <label class="font-weight-semibold">
+                                <i class="fas fa-search text-primary mr-1"></i>
+                                Patient Search
+                            </label>
 
-                    <div class="col-md-4">
-                        <form method="GET" action="{{ route('patient-cancer-photos.index') }}">
-                            <div class="input-group">
-                                <input type="text" name="search" class="form-control"
-                                    placeholder="Search Patient Name / Code" value="{{ request('search') }}">
-
-                                <div class="input-group-append">
-                                    <button class="btn btn-primary">
-                                        <i class="fas fa-search"></i>
-                                    </button>
-
-                                    @if (request('search'))
-                                        <a href="{{ route('patient-cancer-photos.index') }}" class="btn btn-secondary">
-                                            <i class="fas fa-sync"></i>
-                                        </a>
-                                    @endif
-                                </div>
-                            </div>
-                        </form>
+                            <input type="text" id="patientCancerSearch" class="form-control"
+                                placeholder="Search patient name, patient code or cancer remarks...">
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div class="card-body table-responsive">
+                <div id="patientCancerFilterLoading" class="text-center py-3 d-none">
+                    <i class="fas fa-spinner fa-spin fa-lg text-danger"></i>
+                    <div class="mt-2 text-muted">
+                        Loading cancer history...
+                    </div>
+                </div>
                 <table class="table table-hover table-bordered" id="dataTables">
                     <thead class="bg-danger text-white">
                         <tr>
@@ -93,11 +102,11 @@
                         </tr>
                     </thead>
                     {{-- PATIENT AGE INFO --}}
-                    <tbody>
+                    <tbody id="patientCancerTableBody">
                         @forelse($patientCancerPhotos as $report)
                             <tr>
                                 <td class="text-center align-middle">
-                                    {{ $loop->iteration + ($patientCancerPhotos->firstItem() - 1) }}
+                                    {{ $loop->iteration }}
                                 </td>
 
                                 <td class="patient-info-td">
@@ -222,10 +231,6 @@
 
                                 </td>
 
-
-
-
-
                                 <td class="text-center align-middle">
                                     <span class="badge badge-danger p-2">
                                         {{ $report->total_cancer }}
@@ -325,18 +330,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <div class="card-footer clearfix">
-                <div class="float-left mt-2">
-                    Showing
-                    <strong>{{ $patientCancerPhotos->firstItem() ?? 0 }}</strong>
-                    to
-                    <strong>{{ $patientCancerPhotos->lastItem() ?? 0 }}</strong>
-                    of
-                    <strong>{{ $patientCancerPhotos->total() }}</strong>
-                    record(s)
-                </div>
-            </div>
         </div>
     </div>
 @stop
@@ -347,7 +340,16 @@
             syncUrl: @json(route('patient-cancer-photos.sync'))
         };
     </script>
+    <script>
+        window.patientCancerRoutes = {
+            show: "{{ route('patient-cancer-photos.show', '__ID__') }}",
+            edit: "{{ route('patient-cancer-photos.edit', '__ID__') }}",
+            destroy: "{{ route('patient-cancer-photos.destroy', '__ID__') }}",
+            csrf: "{{ csrf_token() }}"
+        };
+    </script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_age.js') }}"></script>
+    <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_filter.js') }}"></script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_init.js') }}">
     </script>
     <script src="{{ asset('js/backend/patient_management/patient_cancer/index_page/patient_cancer_sync_ui.js') }}">

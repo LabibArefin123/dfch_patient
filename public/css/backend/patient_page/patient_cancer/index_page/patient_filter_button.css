@@ -1,0 +1,14 @@
+.cancer-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.cancer-header-title {
+    margin: 0;
+}
+
+.cancer-filter-btn {
+    margin-left: auto;
+}

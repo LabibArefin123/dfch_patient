@@ -19,35 +19,23 @@ class PatientCancerPhotoController extends Controller
     public function index(Request $request)
     {
         $search = $request->search;
+        $query = PatientCancerPhoto::with('patient')->latest();
 
-        $patientCancerPhotos = PatientCancerPhoto::with('patient')
-            ->when($search, function ($query) use ($search) {
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->whereHas('patient', function ($patientQuery) use ($search) {
+                    $patientQuery->where('patient_name', 'like', "%{$search}%")
+                        ->orWhere('patient_code', 'like', "%{$search}%");
+                })->orWhere('cancer_remarks', 'like', "%{$search}%");
+            });
+        }
 
-                $query->where(function ($q) use ($search) {
+        $patientCancerPhotos = $query->get();
 
-                    $q->whereHas('patient', function ($patientQuery) use ($search) {
+        $patientCancerPhotos->transform(function ($report) {
 
-                        $patientQuery
-                            ->where('patient_name', 'like', "%{$search}%")
-                            ->orWhere('patient_code', 'like', "%{$search}%");
-                    })
-                        ->orWhere('cancer_remarks', 'like', "%{$search}%");
-                });
-            })
-            ->latest()
-            ->paginate(10)
-            ->withQueryString();
-
-
-        /* Prepare Preview Text  */
-        $patientCancerPhotos->getCollection()->transform(function ($report) {
-
-            /* X-Ray Description Preview */
-            $report->description_preview = collect(
-                $report->xray_description ?? []
-            )
+            $report->description_preview = collect($report->xray_description ?? [])
                 ->map(function ($description) {
-
                     if (empty($description)) {
                         return null;
                     }
@@ -58,30 +46,17 @@ class PatientCancerPhotoController extends Controller
                         'UTF-8'
                     );
 
-
-                    /* Remove empty list items first */
                     $text = preg_replace('/<li>\s*(?:<br\s*\/?>)?\s*<\/li>/i', '', $text);
-                    /* Convert list items to bullets */
                     $text = preg_replace('/<li[^>]*>\s*/i', '• ', $text);
                     $text = preg_replace('/<\/li>/i', "\n", $text);
-
-
-                    /* Convert common HTML line breaks  */
                     $text = preg_replace('/<br\s*\/?>/i', "\n", $text);
                     $text = preg_replace('/<\/p>/i', "\n", $text);
-
-                    /* Remove remaining HTML  */
                     $text = strip_tags($text);
-
-                    /* Normalize whitespace  */
                     $text = str_replace(["\r\n", "\r"], "\n", $text);
                     $text = preg_replace("/[ \t]+/", " ", $text);
                     $text = preg_replace("/\n{2,}/", "\n", $text);
-
-                    /*Remove empty bullet lines */
                     $text = preg_replace('/^[ \t]*•[ \t]*(?=\n|$)/m', '', $text);
 
-                    /* Remove trailing whitespace/newlines */
                     return trim($text);
                 })
                 ->filter(function ($description) {
@@ -90,39 +65,60 @@ class PatientCancerPhotoController extends Controller
                 ->values()
                 ->toArray();
 
-
-            /*| Cancer Remarks Preview */
             $remarks = $report->cancer_remarks;
 
             if (is_array($remarks)) {
                 $remarks = implode("\n", $remarks);
             }
 
-            $remarks = html_entity_decode($remarks ?? '', ENT_QUOTES | ENT_HTML5, 'UTF-8');
-            /* Remove Empty List Items*/
-            $remarks = preg_replace('/<li>\s*(?:<br\s*\/?>)?\s*<\/li>/i', '', $remarks);
+            $remarks = html_entity_decode(
+                $remarks ?? '',
+                ENT_QUOTES | ENT_HTML5,
+                'UTF-8'
+            );
 
-            /*| Convert Lists */
+            $remarks = preg_replace('/<li>\s*(?:<br\s*\/?>)?\s*<\/li>/i', '', $remarks);
             $remarks = preg_replace('/<li[^>]*>\s*/i', '• ', $remarks);
             $remarks = preg_replace('/<\/li>/i', "\n", $remarks);
-
-            /*Convert Line Breaks */
             $remarks = preg_replace('/<br\s*\/?>/i', "\n", $remarks);
             $remarks = preg_replace('/<\/p>/i', "\n", $remarks);
-
-            /*Remove HTML*/
             $remarks = strip_tags($remarks);
-
-            /* Normalize Whitespace */
             $remarks = str_replace(["\r\n", "\r"], "\n", $remarks);
             $remarks = preg_replace("/[ \t]+/", " ", $remarks);
             $remarks = preg_replace("/\n{2,}/", "\n", $remarks);
-
-            /* Remove Empty Bullet Lines */
             $remarks = preg_replace('/^[ \t]*•[ \t]*(?=\n|$)/m', '', $remarks);
+
             $report->remarks_preview = trim($remarks);
+
             return $report;
         });
+
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => true,
+                'data' => $patientCancerPhotos->map(function ($report) {
+
+                    return [
+                        'id' => $report->id,
+                        'patient_id' => $report->patient_id,
+                        'patient_code' => $report->patient?->patient_code ?? '-',
+                        'patient_name' => $report->patient?->patient_name ?? '-',
+                        'patient_photo' => $report->patient?->patient_image
+                            ? asset('uploads/images/patients/' . $report->patient->patient_image)
+                            : asset('uploads/images/default.jpg'),
+                        'description_preview' => $report->description_preview,
+                        'remarks_preview' => $report->remarks_preview,
+                        'created_at' => $report->created_at
+                            ? $report->created_at->format('d M Y h:i A')
+                            : '-',
+                        'updated_at' => $report->updated_at
+                            ? $report->updated_at->format('d M Y h:i A')
+                            : '-',
+                    ];
+                })->values(),
+                'count' => $patientCancerPhotos->count(),
+            ]);
+        }
 
         return view(
             'backend.patient_management.patient_cancer.index',
@@ -132,6 +128,7 @@ class PatientCancerPhotoController extends Controller
             )
         );
     }
+
 
     public function patientsSync()
     {
