@@ -1,0 +1,55 @@
+/* ==========================================================
+   MEETING DASHBOARD TITLE
+   ========================================================== */
+
+.meeting-dashboard-heading {
+    flex: 1 1 auto;
+    min-width: 0;
+}
+
+.meeting-dashboard-title {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+}
+
+.meeting-dashboard-title > i {
+    flex: 0 0 38px;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 11px;
+    color: #007bff;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 123, 255, 0.12),
+        rgba(0, 160, 214, 0.08)
+    );
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    border-radius: 10px;
+    font-size: 0.92rem;
+    box-shadow:
+        0 3px 8px rgba(0, 123, 255, 0.06),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.meeting-dashboard-title:hover > i {
+    transform: translateY(-1px);
+    box-shadow:
+        0 5px 12px rgba(0, 123, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.meeting-dashboard-title h3 {
+    margin: 0;
+    color: #1e293b;
+    font-size: 1.08rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.2px;
+}

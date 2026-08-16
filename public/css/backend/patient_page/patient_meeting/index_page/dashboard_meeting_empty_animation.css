@@ -1,0 +1,24 @@
+/* ==========================================================
+   EMPTY STATE ANIMATION
+   ========================================================== */
+
+@keyframes meetingEmptyFloat {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+/* ==========================================================
+   ACCESSIBILITY
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .empty-meeting-state .empty-icon {
+        animation: none;
+    }
+}

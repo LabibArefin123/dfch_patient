@@ -1,0 +1,28 @@
+/* ==========================================================
+   EMPTY STATE DECORATIONS
+   ========================================================== */
+
+.empty-meeting-state::before {
+    content: "";
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    top: -95px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 123, 255, 0.035);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+.empty-meeting-state::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    bottom: 0;
+    width: 80px;
+    height: 3px;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #007bff, #00a0d6);
+    border-radius: 5px 5px 0 0;
+}

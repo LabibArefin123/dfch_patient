@@ -37,10 +37,36 @@
     </div>
 
     <div style="height: 50px;"></div>
+
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_layout.css') }}">
+
+    {{-- DASHBOARD MEETING EMPTY START --}}
     <link rel="stylesheet"
         href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_meeting_empty.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_meeting_empty_decorations.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_meeting_empty_icon.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_meeting_empty_content.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_meeting_empty_animation.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_meeting_empty_responsive.css') }}">
+    {{-- DASHBOARD MEETING EMPTY END --}}
+
+    {{-- DASHBOARD TABLE HEADER START --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_header.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_header_title.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_header_subtitle.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_header_buttons.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_header_badge.css') }}">
+    <link rel="stylesheet"
+        href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_header_responsive.css') }}">
+    {{-- DASHBOARD TABLE HEADER END --}}
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_grid.css') }}">
     <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_filter.css') }}">
     <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_section.css') }}">

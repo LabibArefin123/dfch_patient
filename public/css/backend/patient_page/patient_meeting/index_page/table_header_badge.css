@@ -1,0 +1,32 @@
+/* ==========================================================
+   MEETING COUNT BADGE
+   ========================================================== */
+
+.meeting-count-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 100px;
+    height: 36px;
+    padding: 0 14px;
+    color: #0066a1;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 160, 214, 0.12),
+        rgba(0, 123, 255, 0.08)
+    );
+    border: 1px solid rgba(0, 160, 214, 0.16);
+    border-radius: 9px;
+    font-size: 0.76rem;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow:
+        0 2px 6px rgba(0, 123, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+.meeting-count-badge strong {
+    margin-right: 4px;
+    font-size: 0.82rem;
+    font-weight: 800;
+}
