@@ -4,7 +4,7 @@
 
     <span>
         <i class="fas fa-notes-medical"></i>
-        Medical Information
+        Symptoms & Clinical Information
     </span>
 
     <hr>

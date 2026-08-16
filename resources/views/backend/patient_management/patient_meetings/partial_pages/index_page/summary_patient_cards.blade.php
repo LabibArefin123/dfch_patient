@@ -1,33 +1,12 @@
-@php
-    $chunks = $meetings->values()->chunk(3);
-@endphp
-
-@if ($chunks->count())
+@if ($specialist->summary_pages->count())
     <div class="summary-slider">
-        @foreach ($chunks as $index => $meetingsChunk)
-            <div class="summary-page {{ $index === 0 ? 'active' : '' }}">
+        @foreach ($specialist->summary_pages as $page)
+            <div class="summary-page {{ $page['active'] ? 'active' : '' }}">
                 <div class="row g-3">
-                    @foreach ($meetingsChunk as $meeting)
-                        @php
-                            $patient = $meeting->patient;
-                            $patientName = $patient?->patient_name ?? 'Unknown Patient';
-                            $initial = strtoupper(substr($patientName, 0, 1));
-
-                            $meetingTypeLabels = [
-                                'consultation' => 'Consultation',
-                                'follow_up' => 'Follow Up',
-                                'report_review' => 'Report Review',
-                                'emergency' => 'Emergency',
-                                'other' => 'Other',
-                            ];
-
-                            $meetingType = $meetingTypeLabels[$meeting->meeting_type] ?? 'Meeting';
-                        @endphp
-
+                    @foreach ($page['meetings'] as $meeting)
                         <div class="col-md-4">
                             <div class="patient-summary-card">
                                 <div class="card-accent"></div>
-
                                 <a href="{{ route('patient_meetings.show', $meeting->id) }}" class="summary-eye"
                                     title="View Meeting">
                                     <i class="fas fa-eye"></i>
@@ -35,33 +14,34 @@
 
                                 <div class="patient-summary-content">
                                     <div class="patient-photo">
-                                        @if ($patient?->patient_photo)
-                                            <img src="{{ asset($patient->patient_photo) }}" alt="{{ $patientName }}">
+                                        @if ($meeting->summary_patient_photo)
+                                            <img src="{{ $meeting->summary_patient_photo }}"
+                                                alt="{{ $meeting->summary_patient_name }}">
                                         @else
                                             <div class="patient-avatar">
-                                                {{ $initial }}
+                                                {{ $meeting->summary_patient_initial }}
                                             </div>
                                         @endif
                                     </div>
 
                                     <div class="patient-info">
                                         <h6 class="patient-name">
-                                            {{ $patientName }}
+                                            {{ $meeting->summary_patient_name }}
                                         </h6>
 
                                         <div class="patient-code">
                                             <i class="fas fa-id-card"></i>
-                                            {{ $patient?->patient_code ?? 'N/A' }}
+                                            {{ $meeting->summary_patient_code }}
                                         </div>
 
                                         <div class="meeting-date">
                                             <i class="far fa-calendar-alt"></i>
-                                            {{ $meeting->meeting_date?->format('d M Y') ?? 'Date unavailable' }}
+                                            {{ $meeting->summary_meeting_date }}
                                         </div>
 
                                         <div class="meeting-type">
                                             <i class="fas fa-stethoscope"></i>
-                                            {{ $meetingType }}
+                                            {{ $meeting->summary_meeting_type }}
                                         </div>
                                     </div>
                                 </div>
@@ -78,8 +58,7 @@
         @endforeach
     </div>
 
-    {{-- Pagination --}}
-    @if ($chunks->count() > 1)
+    @if ($specialist->summary_pages->count() > 1)
         <div class="summary-pagination">
             <div class="pagination-label">
                 <i class="fas fa-layer-group"></i>
@@ -87,12 +66,10 @@
             </div>
 
             <div class="pagination-buttons">
-                @foreach ($chunks as $index => $item)
-                    <button type="button" class="summary-dot {{ $index === 0 ? 'active' : '' }}"
-                        data-page="{{ $index }}">
-
-                        {{ str_pad($index + 1, 2, '0', STR_PAD_LEFT) }}
-
+                @foreach ($specialist->summary_pages as $page)
+                    <button type="button" class="summary-dot {{ $page['active'] ? 'active' : '' }}"
+                        data-page="{{ $page['index'] }}">
+                        {{ str_pad($page['index'] + 1, 2, '0', STR_PAD_LEFT) }}
                     </button>
                 @endforeach
             </div>

@@ -206,10 +206,16 @@
             @include('backend.patient_management.partial_pages.create_page.part_2')
             {{-- REGISTRATION --}}
             <div class="patient-section-card">
-                <div class="section-header blue">
-                    <div>
-                        <h3><i class="fas fa-calendar-check mr-2"></i> Registration </h3>
-                        <p> Registration and referred details.</p>
+                <div class="section-header primary">
+                    <div class="section-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+
+                    <div class="section-content">
+                        <h3>Registration Summary</h3>
+                        <p class="mb-0">
+                            Live overview of patient registration, symptoms and clinical information.
+                        </p>
                     </div>
                 </div>
 
