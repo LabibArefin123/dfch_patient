@@ -19,38 +19,120 @@ class PatientMeetingController extends Controller
         $status = $request->input('status');
         $meetingType = $request->input('meeting_type');
         $date = $request->input('date');
+        $specialistId = $request->input('specialist_id');
+
+        $filterSpecialists = Specialist::select('id', 'name')->orderBy('name')->get();
+
+        $meetingFilters = function ($query) use ($status, $meetingType, $date) {
+            $query->when($status, function ($query) use ($status) {
+                $query->where('status', $status);
+            });
+            $query->when($meetingType, function ($query) use ($meetingType) {
+                $query->where('meeting_type', $meetingType);
+            });
+            $query->when($date, function ($query) use ($date) {
+                $query->whereDate('meeting_date', $date);
+            });
+        };
+
         $specialists = Specialist::with([
-            'meetings.patient:id,patient_name,patient_code,patient_photo',
+            'meetings' => function ($query) use ($meetingFilters) {
+                $meetingFilters($query);
+                $query->with('patient:id,patient_name,patient_code,patient_photo');
+                $query->latest('meeting_date')->latest('start_time');
+            },
         ])
-            ->paginate(6);
+            ->when($specialistId, function ($query) use ($specialistId) {
+                $query->where('id', $specialistId);
+            })
+            ->paginate(6)
+            ->withQueryString();
+
+        $today = \Carbon\Carbon::today();
+        $yesterdayDate = $today->copy()->subDay();
+        $dayBeforeDate = $today->copy()->subDays(2);
+
+        foreach ($specialists as $specialist) {
+            $specialist->doctor_image = $specialist->photo ? asset('uploads/images/welcome_page/doctors/' . $specialist->photo) : null;
+            $specialist->doctor_initial = strtoupper(substr($specialist->name, 0, 1));
+
+            $meetings = $specialist->meetings;
+
+            $recent = $meetings->filter(function ($meeting) use ($today) {
+                return optional($meeting->meeting_date)->isSameDay($today);
+            });
+
+            $yesterday = $meetings->filter(function ($meeting) use ($yesterdayDate) {
+                return optional($meeting->meeting_date)->isSameDay($yesterdayDate);
+            });
+
+            $dayBefore = $meetings->filter(function ($meeting) use ($dayBeforeDate) {
+                return optional($meeting->meeting_date)->isSameDay($dayBeforeDate);
+            });
+
+            $week = $meetings->filter(function ($meeting) {
+                return optional($meeting->meeting_date)->isCurrentWeek();
+            });
+
+            $month = $meetings->filter(function ($meeting) {
+                return optional($meeting->meeting_date)->isCurrentMonth();
+            });
+
+            $summaryMeetings = collect()
+                ->merge($recent)
+                ->merge($yesterday)
+                ->merge($dayBefore)
+                ->merge($week)
+                ->merge($month)
+                ->unique('id')
+                ->sortByDesc('meeting_date')
+                ->values();
+
+            $specialist->meeting_summary = [
+                'recent' => $recent,
+                'yesterday' => $yesterday,
+                'day_before' => $dayBefore,
+                'week' => $week,
+                'month' => $month,
+                'meetings' => $summaryMeetings,
+                'counts' => [
+                    'today' => $recent->count(),
+                    'yesterday' => $yesterday->count(),
+                    'day_before' => $dayBefore->count(),
+                    'week' => $week->count(),
+                    'month' => $month->count(),
+                    'total' => $summaryMeetings->count(),
+                ],
+            ];
+        }
+
         $patientMeetings = PatientMeeting::with([
             'patient:id,patient_name,patient_code,patient_photo',
             'specialist:id,name,designation,photo',
         ])
-
             ->when($status, function ($query) use ($status) {
                 $query->where('status', $status);
             })
-
             ->when($meetingType, function ($query) use ($meetingType) {
                 $query->where('meeting_type', $meetingType);
             })
-
             ->when($date, function ($query) use ($date) {
                 $query->whereDate('meeting_date', $date);
             })
-
+            ->when($specialistId, function ($query) use ($specialistId) {
+                $query->where('specialist_id', $specialistId);
+            })
             ->latest('meeting_date')
             ->latest('start_time')
-            ->paginate(10)
+            ->paginate(10);
 
-            ->withQueryString();
+        if ($request->ajax()) {
+            return view('backend.patient_management.patient_meetings.partial_pages.index_page.summary_patient_cards', compact('specialists', 'patientMeetings'))->render();
+        }
 
-        return view(
-            'backend.patient_management.patient_meetings.index',
-            compact('patientMeetings', 'search', 'status', 'meetingType', 'date', 'specialists')
-        );
+        return view('backend.patient_management.patient_meetings.index', compact('patientMeetings', 'search', 'status', 'meetingType', 'date', 'specialistId', 'specialists', 'filterSpecialists'));
     }
+
 
     public function patientsHistory(Specialist $specialist)
     {

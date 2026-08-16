@@ -1,0 +1,231 @@
+/* ==========================================================
+   PREMIUM MEETING DASHBOARD HEADER
+   ========================================================== */
+
+.meeting-dashboard-card .card-header {
+    position: relative;
+    padding: 1.15rem 1.35rem;
+    background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+    border-bottom: 1px solid rgba(0, 123, 255, 0.08);
+    box-shadow: 0 4px 18px rgba(15, 23, 42, 0.035);
+}
+
+/* Small accent line */
+.meeting-dashboard-card .card-header::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 4px;
+    background: linear-gradient(180deg, #007bff 0%, #00a0d6 50%, #6610f2 100%);
+    border-radius: 0 4px 4px 0;
+}
+
+/* ----------------------------------------------------------
+   TITLE
+   ---------------------------------------------------------- */
+
+.meeting-dashboard-card .card-title {
+    display: flex;
+    align-items: center;
+    color: #1e293b;
+    font-size: 1.08rem;
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.meeting-dashboard-card .card-title i {
+    width: 34px;
+    height: 34px;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-right: 10px !important;
+
+    color: #007bff;
+    background: linear-gradient(
+        135deg,
+        rgba(0, 123, 255, 0.12),
+        rgba(0, 160, 214, 0.08)
+    );
+
+    border: 1px solid rgba(0, 123, 255, 0.1);
+    border-radius: 10px;
+
+    font-size: 0.9rem;
+}
+
+/* Subtitle */
+
+.meeting-dashboard-card .card-header .text-muted {
+    margin-left: 44px;
+    color: #94a3b8 !important;
+    font-size: 0.76rem;
+    font-weight: 500;
+    letter-spacing: 0.15px;
+}
+
+/* ==========================================================
+   RIGHT SIDE ACTION AREA
+   ========================================================== */
+
+.meeting-dashboard-card .card-header > .d-flex {
+    gap: 10px !important;
+}
+
+/* ==========================================================
+   DATE WISE TOGGLE
+   ========================================================== */
+
+#meetingViewToggle {
+    position: relative;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 108px;
+    height: 36px;
+
+    padding: 0 13px;
+
+    color: #475569;
+    background: #ffffff;
+
+    border: 1px solid #dbe4ef;
+    border-radius: 9px;
+
+    font-size: 0.78rem;
+    font-weight: 600;
+
+    box-shadow:
+        0 2px 5px rgba(15, 23, 42, 0.04),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+}
+
+#meetingViewToggle i {
+    color: #007bff;
+    font-size: 0.78rem;
+    transition: transform 0.2s ease;
+}
+
+#meetingViewToggle:hover {
+    color: #007bff;
+    background: #f5f9ff;
+    border-color: rgba(0, 123, 255, 0.3);
+
+    box-shadow:
+        0 5px 14px rgba(0, 123, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+    transform: translateY(-1px);
+}
+
+#meetingViewToggle:hover i {
+    transform: rotate(8deg);
+}
+
+#meetingViewToggle:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(0, 123, 255, 0.08);
+}
+
+#meetingViewToggle:focus {
+    outline: none;
+    box-shadow:
+        0 0 0 3px rgba(0, 123, 255, 0.1),
+        0 4px 12px rgba(0, 123, 255, 0.08);
+}
+
+/* ==========================================================
+   MEETING COUNT BADGE
+   ========================================================== */
+
+.meeting-dashboard-card .badge-primary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 92px;
+    height: 36px;
+
+    padding: 0 14px !important;
+
+    color: #0066a1;
+
+    background: linear-gradient(
+        135deg,
+        rgba(0, 160, 214, 0.12),
+        rgba(0, 123, 255, 0.08)
+    );
+
+    border: 1px solid rgba(0, 160, 214, 0.16);
+    border-radius: 9px;
+
+    font-size: 0.76rem;
+    font-weight: 700;
+    letter-spacing: 0.15px;
+
+    box-shadow:
+        0 2px 6px rgba(0, 123, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+
+@media (max-width: 767.98px) {
+    .meeting-dashboard-card .card-header {
+        align-items: flex-start !important;
+        padding: 1rem;
+    }
+
+    .meeting-dashboard-card .card-header > .d-flex {
+        margin-top: 10px;
+        width: 100%;
+        justify-content: flex-start;
+    }
+
+    .meeting-dashboard-card .card-title {
+        font-size: 1rem;
+    }
+
+    .meeting-dashboard-card .card-header .text-muted {
+        margin-left: 44px;
+        font-size: 0.72rem;
+    }
+
+    #meetingViewToggle,
+    .meeting-dashboard-card .badge-primary {
+        height: 34px;
+    }
+}
+
+@media (max-width: 480px) {
+    .meeting-dashboard-card .card-header {
+        flex-direction: column;
+    }
+
+    .meeting-dashboard-card .card-header > .d-flex {
+        margin-top: 12px;
+    }
+
+    #meetingViewToggle {
+        flex: 1;
+    }
+
+    .meeting-dashboard-card .badge-primary {
+        flex: 0 0 auto;
+    }
+}

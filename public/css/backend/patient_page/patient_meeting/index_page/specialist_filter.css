@@ -1,0 +1,130 @@
+.patient-filter-card {
+    border: 0 !important;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 5px 20px rgba(15, 23, 42, 0.06) !important;
+}
+.patient-filter-card .card-header {
+    padding: 14px 18px;
+    background: linear-gradient(135deg, #fff, #f7fbff);
+    border-bottom: 1px solid #edf2f7;
+}
+.patient-filter-card .card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #26364a;
+}
+.patient-filter-card .card-title i {
+    color: #007bff;
+    margin-right: 7px;
+}
+.patient-filter-card .card-body {
+    padding: 18px;
+}
+.patient-filter-card label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.76rem;
+    font-weight: 700;
+    color: #526174;
+    letter-spacing: 0.15px;
+}
+.patient-filter-card label i {
+    color: #007bff;
+    font-size: 0.72rem;
+}
+.patient-filter-card .form-control {
+    height: 38px;
+    border: 1px solid #dfe7f0;
+    border-radius: 8px;
+    background: #fbfdff;
+    color: #334155;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: inset 0 1px 2px rgba(15, 23, 42, 0.025);
+    transition: all 0.2s ease;
+}
+.patient-filter-card .form-control:hover {
+    border-color: #c5d5e7;
+    background: #fff;
+}
+.patient-filter-card .form-control:focus {
+    border-color: #80bdff;
+    background: #fff;
+    box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.08);
+}
+.patient-filter-card select.form-control {
+    cursor: pointer;
+}
+.patient-filter-card .btn {
+    height: 38px;
+    border-radius: 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+.patient-filter-card .btn-primary {
+    border: 0;
+    background: linear-gradient(135deg, #007bff, #0069d9);
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.16);
+}
+.patient-filter-card .btn-primary:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 14px rgba(0, 123, 255, 0.22);
+}
+.patient-filter-card .btn-outline-secondary {
+    width: 38px;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-color: #d9e2ec;
+    color: #64748b;
+    background: #fff;
+}
+.patient-filter-card .btn-outline-secondary:hover {
+    color: #007bff;
+    border-color: #b9d5f2;
+    background: #f7fbff;
+}
+#meetingTableContainer {
+    position: relative;
+    transition: opacity 0.2s ease;
+}
+#meetingTableContainer.meeting-table-loading {
+    opacity: 0.45;
+    pointer-events: none;
+}
+#meetingTableContainer.meeting-table-loading::after {
+    content: "";
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    width: 28px;
+    height: 28px;
+    margin: -14px 0 0 -14px;
+    border: 3px solid rgba(0, 123, 255, 0.18);
+    border-top-color: #007bff;
+    border-radius: 50%;
+    animation: meetingFilterSpin 0.7s linear infinite;
+    z-index: 10;
+}
+@keyframes meetingFilterSpin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+@media (max-width: 991.98px) {
+    .patient-filter-card .card-body {
+        padding: 15px;
+    }
+}
+@media (max-width: 575.98px) {
+    .patient-filter-card .btn-primary {
+        flex: 1;
+    }
+    .patient-filter-card .btn-outline-secondary {
+        width: 38px;
+    }
+}
