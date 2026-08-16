@@ -26,18 +26,6 @@
 @stop
 
 @section('content')
-    {{-- Summary Cards --}}
-    @include('backend.patient_management.patient_meetings.partial_pages.index_page.part_1')
-    {{-- Filters --}}
-    @include('backend.patient_management.patient_meetings.partial_pages.index_page.part_2')
-
-    {{-- Schedule --}}
-    <div id="meetingTableContainer">
-        @include('backend.patient_management.patient_meetings.partial_pages.index_page.meeting_dashboard')
-    </div>
-
-    <div style="height: 50px;"></div>
-
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/dashboard_layout.css') }}">
 
     {{-- DASHBOARD MEETING EMPTY START --}}
@@ -67,12 +55,15 @@
     <link rel="stylesheet"
         href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_header_responsive.css') }}">
     {{-- DASHBOARD TABLE HEADER END --}}
+
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/table_grid.css') }}">
     <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_filter.css') }}">
     <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/specialist_section.css') }}">
     <link rel="stylesheet"href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_card.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/pagination.css') }}">
     <link rel="stylesheet" href="{{ asset('css/backend/patient_page/patient_meeting/index_page/responsive.css') }}">
+
+    {{-- PATIENT SUMMARY CARD START --}}
     <link rel="stylesheet"
         href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_layout.css') }}">
     <link rel="stylesheet"
@@ -87,6 +78,20 @@
         href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_status.css') }}">
     <link rel="stylesheet"
         href="{{ asset('css/backend/patient_page/patient_meeting/index_page/patient_summary_cards/patient_summary_pagination.css') }}">
+    {{-- PATIENT SUMMARY CARD END --}}
+
+    {{-- Summary Cards --}}
+    @include('backend.patient_management.patient_meetings.partial_pages.index_page.part_1')
+    {{-- Filters --}}
+    @include('backend.patient_management.patient_meetings.partial_pages.index_page.part_2')
+
+    {{-- Schedule --}}
+    <div id="meetingTableContainer">
+        @include('backend.patient_management.patient_meetings.partial_pages.index_page.meeting_dashboard')
+    </div>
+
+    <div style="height: 50px;"></div>
+
 @stop
 
 @section('js')

@@ -278,8 +278,8 @@
             @include('backend.patient_management.partial_pages.create_page.part_8')
             @include('backend.patient_management.modals.index_page.patient_future_date_modal')
             {{-- Footer Actions --}}
-            <div class="patient-form-footer">
-                <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg">
+            <div class="patient-form-footer d-flex justify-content-end align-items-center">
+                <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg mr-2">
                     <i class="fas fa-times mr-2"></i>
                     Cancel
                 </a>

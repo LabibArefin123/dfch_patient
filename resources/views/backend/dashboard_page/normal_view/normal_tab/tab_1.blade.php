@@ -71,7 +71,7 @@
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">
             <x-adminlte-small-box title="{{ $weeklyEmergencyPatientHistory }}" text="Weekly Emergency History"
                 theme="warning" icon="fas fa-first-aid"
-                url="{{ route('patient_emergencies.index', ['date_filter' => 'weekly']) }}" />
+                url="{{ route('patient_emergencies.index', ['date_filter' => 'this_week']) }}" />
         </div>
 
         <div class="col-lg-3 col-md-6 col-sm-12 mb-1">

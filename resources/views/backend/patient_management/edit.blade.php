@@ -193,7 +193,17 @@
         @include('backend.patient_management.partial_pages.edit_page.part_8')
         @include('backend.patient_management.partial_pages.edit_page.part_9')
         @include('backend.patient_management.modals.edit_page.patient_photo_validate_modal')
-        <button class="btn btn-primary mt-2">Update</button>
+        <div class="patient-form-footer d-flex justify-content-end align-items-center">
+            <a href="{{ route('patients.index') }}" class="btn btn-light btn-lg mr-2">
+                <i class="fas fa-times mr-2"></i>
+                Cancel
+            </a>
+
+            <button class="btn btn-primary btn-lg">
+                <i class="fas fa-save mr-2"></i>
+                Update Patient
+            </button>
+        </div>
     </form>
     <div style="height: 50px;"></div>
 @stop

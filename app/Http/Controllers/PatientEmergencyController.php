@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Patient;
 use App\Models\PatientEmergency;
 use Illuminate\Http\Request;
@@ -12,17 +13,114 @@ class PatientEmergencyController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+
+    public function index(Request $request)
     {
-        $patientEmergencies = PatientEmergency::with('patient')
-            ->latest()
-            ->get();
+        $totalEmergencyPatientHistory = PatientEmergency::count();
+        $todayEmergencyPatientHistory = PatientEmergency::whereDate('created_at', today())->count();
+        $weeklyEmergencyPatientHistory = PatientEmergency::whereBetween('created_at', [now()->startOfWeek(), now()->endOfWeek()])->count();
+        $monthlyEmergencyPatientHistory = PatientEmergency::whereBetween('created_at', [now()->startOfMonth(), now()->endOfMonth()])->count();
+
+        $query = PatientEmergency::with('patient')->latest();
+
+        if ($request->filled('search')) {
+            $search = trim($request->search);
+            $query->whereHas('patient', function ($q) use ($search) {
+                $q->where('patient_code', 'like', "%{$search}%")
+                    ->orWhere('patient_name', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            if ($request->status === 'emergency') {
+                $query->where('is_emergency', 1);
+            } elseif ($request->status === 'normal') {
+                $query->where('is_emergency', 0);
+            }
+        }
+
+        if ($request->filled('date_filter')) {
+            switch ($request->date_filter) {
+                case 'today':
+                    $query->whereBetween('emergency_date', [now()->startOfDay(), now()->endOfDay()]);
+                    break;
+
+                case 'yesterday':
+                    $query->whereBetween('emergency_date', [now()->subDay()->startOfDay(), now()->subDay()->endOfDay()]);
+                    break;
+
+                case 'this_week':
+                    $query->whereBetween('emergency_date', [now()->startOfWeek(), now()->endOfWeek()]);
+                    break;
+
+                case 'last_week':
+                    $query->whereBetween('emergency_date', [now()->subWeek()->startOfWeek(), now()->subWeek()->endOfWeek()]);
+                    break;
+
+                case 'last_2_weeks':
+                    $query->whereBetween('emergency_date', [now()->subWeeks(2)->startOfWeek(), now()->subWeek()->endOfWeek()]);
+                    break;
+
+                case 'this_month':
+                    $query->whereBetween('emergency_date', [now()->startOfMonth(), now()->endOfMonth()]);
+                    break;
+
+                case 'custom':
+                    if ($request->filled('date_from')) {
+                        $query->where('emergency_date', '>=', Carbon::parse($request->date_from)->startOfDay());
+                    }
+
+                    if ($request->filled('date_to')) {
+                        $query->where('emergency_date', '<=', Carbon::parse($request->date_to)->endOfDay());
+                    }
+                    break;
+            }
+        }
+
+        $patientEmergencies = $query->get();
+
+        if ($request->ajax()) {
+            return response()->json([
+                'status' => true,
+                'data' => $patientEmergencies->map(function ($emergency) {
+                    $patient = $emergency->patient;
+
+                    $photo = $patient?->patient_image
+                        ? asset('uploads/images/patients/' . $patient->patient_image)
+                        : asset('uploads/images/default.jpg');
+
+                    return [
+                        'id' => $emergency->id,
+                        'patient_photo' => $photo,
+                        'patient_code' => $patient?->patient_code ?? '-',
+                        'patient_name' => $patient?->patient_name ?? '-',
+                        'is_emergency' => (bool)$emergency->is_emergency,
+                        'reason' => $emergency->reason ?: '-',
+                        'emergency_date' => $emergency->emergency_date
+                            ? $emergency->emergency_date->format('d M Y h:i A')
+                            : '-',
+                        'created_at' => $emergency->created_at
+                            ? $emergency->created_at->format('d M Y')
+                            : '-',
+                    ];
+                })->values(),
+                'count' => $patientEmergencies->count(),
+            ]);
+        }
 
         return view(
             'backend.patient_management.patient_emergencies.index',
-            compact('patientEmergencies')
+            compact(
+                'patientEmergencies',
+                'totalEmergencyPatientHistory',
+                'todayEmergencyPatientHistory',
+                'weeklyEmergencyPatientHistory',
+                'monthlyEmergencyPatientHistory'
+            )
         );
     }
+
+
     /**
      * Show the form for creating a new resource.
      */

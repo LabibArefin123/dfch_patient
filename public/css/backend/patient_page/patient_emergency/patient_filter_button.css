@@ -1,0 +1,14 @@
+.emergency-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.emergency-header-title {
+    margin: 0;
+}
+
+.emergency-filter-btn {
+    margin-left: auto;
+}
